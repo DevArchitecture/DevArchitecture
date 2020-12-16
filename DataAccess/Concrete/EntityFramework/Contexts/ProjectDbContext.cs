@@ -1,6 +1,6 @@
 using Core.Entities;
 using Core.Entities.Concrete;
-//using Entities.Concrete;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
