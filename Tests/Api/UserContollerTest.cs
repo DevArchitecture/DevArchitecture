@@ -15,7 +15,7 @@ namespace Tests.Api
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
 			_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-			var response = await _client.GetAsync("api/animals/getall");
+			var response = await _client.GetAsync("api/users/getall");
 
 		}
 	}
