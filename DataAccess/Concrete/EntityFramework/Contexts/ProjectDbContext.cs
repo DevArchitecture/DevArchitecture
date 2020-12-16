@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Entities.Concrete;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -61,7 +62,6 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 		public DbSet<GroupClaim> GroupClaims { get; set; }
 		public DbSet<Log> Logs { get; set; }
 		public DbSet<MobileLogin> MobileLogins { get; set; }
-
 
 	}
 }
