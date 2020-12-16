@@ -1,17 +1,17 @@
 ﻿namespace Core.Utilities.Messages
 {
-    public static class SwaggerMessages
-    {
-        public static string Version => "v1";
-        public static string Title => "SFw";
-        public static string TermsOfService => "https://example.com/terms";
-        public static string ContactName => "SennedjemFw";
-        public static string LicenceName => "Use under LICX";
-        public static string ContactEMail => "Use under LICX";
-        public static string ContactUrl => "http://keremvaris.com";
-        public static string LicenceUrl => "https://example.com/license";
-        public static string Description => "";
-        public static string Description1 => @"### Login
+	public static class SwaggerMessages
+	{
+		public static string Version => "v1";
+		public static string Title => "DevArchitecture";
+		public static string TermsOfService => "https://example.com/terms";
+		public static string ContactName => "DevArchitecture";
+		public static string LicenceName => "Use under LICX";
+		public static string ContactEMail => "Use under LICX";
+		public static string ContactUrl => "http://keremvaris.com";
+		public static string LicenceUrl => "https://example.com/license";
+		public static string Description => "";
+		public static string Description1 => @"### Login
 
 Sisteme Person, Staff ve Agent'lar tarfından giriş yapılabilir. 
 Bu bölümde providerlara göre API kullanım akışları anlatılmaktadır.
@@ -141,5 +141,5 @@ Hatalı ise BadRequest (Kod 400) döner.
 **Adım 4:** Login tamamlanmıştır. Client Kurum personelinin göreceği ana
 sayfaya geçer.
 ";
-    }
+	}
 }

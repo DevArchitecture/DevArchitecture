@@ -5,29 +5,29 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using WebAPI;
 
-namespace SennedjemTests.Helpers.TokenHelpers
+namespace Tests.Helpers.TokenHelpers
 {
-    [TestFixture]
-    public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
-    {
+	[TestFixture]
+	public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
+	{
 
-        protected HttpClient _client;
+		protected HttpClient _client;
 
-        protected WebApplicationFactory<Startup> Factory => new WebApplicationFactory<Startup>();
+		protected WebApplicationFactory<Startup> Factory => new WebApplicationFactory<Startup>();
 
-        public string Issuer { get; } = "www.keremvaris.com";
-        public string Audience { get; } = "www.keremvaris.com";
+		public string Issuer { get; } = "www.keremvaris.com";
+		public string Audience { get; } = "www.keremvaris.com";
 
-        public SigningCredentials SigningCredentials { get; }
+		public SigningCredentials SigningCredentials { get; }
 
-        private static readonly JwtSecurityTokenHandler s_tokenHandler = new JwtSecurityTokenHandler();
+		private static readonly JwtSecurityTokenHandler s_tokenHandler = new JwtSecurityTokenHandler();
 
 
 
-        [SetUp]
-        public void Setup()
-        {
-            _client = this.CreateClient();
-        }
-    }
+		[SetUp]
+		public void Setup()
+		{
+			_client = this.CreateClient();
+		}
+	}
 }

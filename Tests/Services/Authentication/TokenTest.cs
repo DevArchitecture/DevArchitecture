@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
-using SennedjemTests.Helpers;
-using SennedjemTests.Helpers.TokenHelpers;
+using Tests.Helpers;
+using Tests.Helpers.TokenHelpers;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SennedjemTests.Services.Authentication
+namespace Tests.Services.Authentication
 {
 	[TestFixture]
 	public class TokenTest : BaseIntegrationTest

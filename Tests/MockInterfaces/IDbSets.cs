@@ -3,7 +3,7 @@ using Core.Entities;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace SennedjemTests.MockInterfaces
+namespace Tests.MockInterfaces
 {
 	public interface IDbSets
 	{

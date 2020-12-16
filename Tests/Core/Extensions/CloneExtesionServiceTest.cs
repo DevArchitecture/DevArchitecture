@@ -1,25 +1,25 @@
 ﻿using Core.Entities.Concrete;
 using Core.Extensions;
 using NUnit.Framework;
-using SennedjemTests.Helpers;
+using Tests.Helpers;
 
 
-namespace SennedjemTests.Core.Extensions
+namespace Tests.Core.Extensions
 {
-    [TestFixture]
-    public class CloneExtesionServiceTest
-    {
-        [Test]
-        public void CloneServiceExtensionTest()
-        {
-            var _user = DataHelper.GetUser("murat");
+	[TestFixture]
+	public class CloneExtesionServiceTest
+	{
+		[Test]
+		public void CloneServiceExtensionTest()
+		{
+			var _user = DataHelper.GetUser("murat");
 
-            var cloneUser = _user.Clone();
+			var cloneUser = _user.Clone();
 
-            Assert.That(cloneUser, Is.TypeOf(typeof(User)));
-            Assert.That(cloneUser.FullName, Is.EqualTo(_user.FullName));
+			Assert.That(cloneUser, Is.TypeOf(typeof(User)));
+			Assert.That(cloneUser.FullName, Is.EqualTo(_user.FullName));
 
-        }
+		}
 
-    }
+	}
 }

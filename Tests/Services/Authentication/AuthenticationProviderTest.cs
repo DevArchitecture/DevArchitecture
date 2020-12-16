@@ -8,13 +8,13 @@ using DataAccess.Abstract;
 using Core.Entities;
 using Moq;
 using NUnit.Framework;
-using SennedjemTests.Helpers;
+using Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace SennedjemTests.Services.Authentication
+namespace Tests.Services.Authentication
 {
 	[TestFixture]
 	public class AuthenticationProviderTest
