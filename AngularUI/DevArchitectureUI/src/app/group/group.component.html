@@ -1,0 +1,135 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Group List</h4>
+            <a *ngIf="checkClaim('CreateGroupCommand')" class="pull-right" data-toggle="modal" data-target="#group"><i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i> </a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>
+                    ID
+                  </th>
+                  <th>
+                    Group Name
+                  </th>
+                  
+                  <th colspan="4">
+                    Actions
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let group of groupList">
+                    <td>
+                      {{group.id}}
+                    </td>
+                    <td>
+                      {{group.groupName}}
+                    </td>
+                    <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#groupClaims"(click)="getGroupClaims(group.id)"><i title="Grup Yetkileri" style="color:blue;" class="fas fa-shield-alt" aria-hidden="true"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('UpdateUserGroupByGroupIdCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(group.id)"><i title="Kullanıcı Grupları" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('UpdateGroupCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#group" (click)="getGroupById(group.id)"><i title="Güncelle" style="color:blue;" class="far fa-edit"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('DeleteGroupCommand')" style="width: 25px;">
+                      <a (click)="deleteGroup(group.id)"><i title="Sil" class="fas fa-trash"></i></a>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" #closeButton class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(groupAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Group
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="groupAddForm" [formGroup]="groupAddForm" (ngSubmit)="save()">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder=" groupName" type="text" id="groupName" name="groupName"
+                  formControlName="groupName">
+                <div class="alert alert-danger"
+                  *ngIf="groupAddForm.get('groupName')!.hasError('required') && groupAddForm.get('groupName')!.touched">Grup İsim
+                  zorunlu</div>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal modal-angular fade" id="groupUsers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Group Users
+        </h4>
+        <div class="separator"></div>
+
+        <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Users'" [data]="userDropdownList"
+          [(ngModel)]="userSelectedItems" (onSelect)="onItemSelect('User')" (onSelectAll)="onSelectAll('User')"
+          (onDeSelect)="onItemDeSelect('User')">
+        </ng-multiselect-dropdown>
+
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary pull-right" (click)="saveGroupUsers()"> Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="groupClaims" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Group Claims
+        </h4>
+        <div class="separator"></div>
+
+        <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Claims'" [data]="claimDropdownList"
+          [(ngModel)]="claimSelectedItems" (onSelect)="onItemSelect('Claim')" (onSelectAll)="onSelectAll('Claim')"
+          (onDeSelect)="onItemDeSelect('Claim')">
+        </ng-multiselect-dropdown>
+
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary pull-right" (click)="saveGroupClaims()"> Save</a>
+      </div>
+    </div>
+  </div>
+</div>

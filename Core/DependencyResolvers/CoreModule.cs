@@ -36,15 +36,15 @@ namespace Core.DependencyResolvers
                     Version = SwaggerMessages.Version,
                     Title = SwaggerMessages.Title,
                     Description = SwaggerMessages.Description,
-                    TermsOfService = new Uri(SwaggerMessages.TermsOfService),
-                    Contact = new OpenApiContact
-                    {
-                        Name = SwaggerMessages.ContactName,
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = SwaggerMessages.LicenceName,
-                    },
+                    //TermsOfService = new Uri(SwaggerMessages.TermsOfService),
+                    //Contact = new OpenApiContact
+                    //{
+                    //    Name = SwaggerMessages.ContactName,
+                    //},
+                    //License = new OpenApiLicense
+                    //{
+                    //    Name = SwaggerMessages.LicenceName,
+                    //},
                 });
 
                 c.OperationFilter<AddAuthHeaderOperationFilter>();

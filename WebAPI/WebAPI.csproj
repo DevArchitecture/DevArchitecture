@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SwaggerMessages.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="log4net.config" />
     <Content Remove="nlog.config" />
     <Content Remove="nlog.development.config" />
