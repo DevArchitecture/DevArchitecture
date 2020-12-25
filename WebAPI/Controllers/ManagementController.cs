@@ -23,11 +23,12 @@ namespace WebAPI.Controllers
             this.monitor = monitor;
         }
 
-        /// <summary>
-        /// Metot çağırma ve kullanıcı istatistiklerini verir.
-        /// </summary>
-        /// <returns></returns>
-        [ProducesResponseType(typeof(ActivityMonitor.ActivitySummary), 200)]
+    /// <summary>
+    /// Uygulamanın performans metriklerini sunar. 
+    /// Metot çağırma ve kullanıcı istatistiklerini verir.
+    /// </summary>
+    /// <returns></returns>
+    [ProducesResponseType(typeof(ActivityMonitor.ActivitySummary), 200)]
         [HttpGet("performance")]
         public ActionResult Performance()
         {

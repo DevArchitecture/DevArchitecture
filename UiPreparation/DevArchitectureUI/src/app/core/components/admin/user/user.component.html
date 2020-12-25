@@ -1,0 +1,199 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">User List</h4>
+            <a *ngIf="checkClaim('UpdateProductCommand')" class="pull-right" data-toggle="modal" data-target="#user"> <i style="color:white" title="Ekle" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      Email
+                    </th>
+                    <th>
+                      Full Name
+                    </th>
+                    <th>
+                      Address
+                    </th>
+                    <th>
+                      Status
+                    </th>
+                    <th>
+                      Notes
+                    </th>
+                    <th colspan="4">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of userList">
+                    <td>
+                      {{user.userId}}
+                    </td>
+                    <td>
+                      {{user.email}}
+                    </td>
+                    <td>
+                      {{user.fullName}}
+                    </td>
+                    <td>
+                      {{user.address}}
+                    </td>
+                    <td>
+                      <input type="checkbox" [(ngModel)]="user.status" disabled>
+                    </td>
+                    <td>
+                      {{user.notes}}
+                    </td>
+                    <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#claimsPermissions"(click)="getUserClaimsPermissions(user.userId)"><i title="Kullanıcı Yetkileri" style="color:blue;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="Kullanıcı Grupları" class="fas fa-user-lock" aria-hidden="true"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="Güncelle" style="color:blue;" class="far fa-edit"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('DeleteUserCommand')"  style="width: 25px;">
+                      <a (click)="deleteUser(user.userId)"><i title="Sil" class="fas fa-trash"></i></a>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" #closeButton class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(userAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Add User
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="userAddForm" [formGroup]="userAddForm" (ngSubmit)="save()">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder=" Full Name" type="text" id="fullName" name="fullName"
+                  formControlName="fullName">
+                <div class="alert alert-danger"
+                  *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">İsim
+                  zorunlu</div>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email address" type="email" id="email" name="email"
+                  formControlName="email">
+                <div class="alert alert-danger"
+                  *ngIf="userAddForm.get('email')!.hasError('required') && userAddForm.get('email')!.dirty"></div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Password" id="password" name="password" formControlName="password"
+                  type="password">
+                <div class="alert alert-danger"
+                  *ngIf="userAddForm.get('password')!.hasError('required') && userAddForm.get('password')!.dirty"></div>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Adress" type="text" id="address" name="address" formControlName="address">
+                <div class="alert alert-danger"
+                  *ngIf="userAddForm.get('address')!.hasError('address') && userAddForm.get('address')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Notes" type="text" id="notes" name="notes" formControlName="notes">
+                <div class="alert alert-danger"
+                  *ngIf="userAddForm.get('notes')!.hasError('notes') && userAddForm.get('notes')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal modal-angular fade" id="groupPermissions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Permissions
+        </h4>
+        <div class="separator"></div>
+
+        <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Groups'" [data]="groupDropdownList"
+          [(ngModel)]="groupSelectedItems" (onSelect)="onItemSelect('Group')" (onSelectAll)="onSelectAll('Group')"
+          (onDeSelect)="onItemDeSelect('Group')">
+        </ng-multiselect-dropdown>
+
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary pull-right" (click)="saveUserGroupsPermissions()"> Save</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="claimsPermissions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Permissions
+        </h4>
+        <div class="separator"></div>
+
+        <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Claims'" [data]="claimDropdownList"
+          [(ngModel)]="claimSelectedItems" (onSelect)="onItemSelect('Claim')" (onSelectAll)="onSelectAll('Claim')"
+          (onDeSelect)="onItemDeSelect('Claim')">
+        </ng-multiselect-dropdown>
+
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary pull-right" (click)="saveUserClaimsPermission()"> Save</a>
+      </div>
+    </div>
+  </div>
+</div>

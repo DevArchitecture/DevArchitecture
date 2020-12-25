@@ -1,0 +1,83 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Product List</h4>
+            <a *ngIf="checkClaim('CreateProductCommand')" class="pull-right" data-toggle="modal" data-target="#product"> <i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead> 
+                <tbody>
+                  <tr *ngFor="let product of productListDto">
+                    <td>
+                      {{product.productId}}
+                    </td>
+                    <td>
+                      {{product.categoryName}}
+                    </td>
+                    <td>
+                      {{product.productName}}
+                    </td>
+
+                    <td *ngIf="checkClaim('UpdateProductCommand')"  style="width: 25px;">
+                      <a data-toggle="modal" data-target="#product" (click)="getProductById(product.productId)">
+                        <i style="color:blue;" class="far fa-edit"></i></a>
+                    </td>
+                    <td *ngIf="checkClaim('DeleteProductCommand')" style="width: 25px;">
+                      <a (click)="deleteProduct(product.productId)"><i class="fas fa-trash"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal modal-angular fade" id="product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(productAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Add Product
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="productAddForm" [formGroup]="productAddForm" (ngSubmit)="save()">
+          <div class="row">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="productName" type="text" id="productName" name="productName"
+                formControlName="productName" />
+              <div class="alert alert-danger"
+                *ngIf="productAddForm.get('productName')!.hasError('productName') && productAddForm.get('productName')!.dirty">
+              </div>
+            </mat-form-field>
+          </div>
+          <div class="row">
+              <select id="categorySelect" formControlName="categoryId"  id="productName" name="productName">
+                <option *ngFor="let ctr of categorylookUp" [value]="ctr.id"> {{ctr.label}}</option>
+              </select>
+          </div>            
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
