@@ -1,0 +1,73 @@
+﻿
+using Business.BusinessAspects;
+using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using Entities.Concrete;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using Business.Handlers.Translates.ValidationRules;
+using Core.Entities.Concrete;
+
+namespace Business.Handlers.Translates.Commands
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    [SecuredOperation]
+    public class CreateTranslateCommand : IRequest<IResult>
+    {
+        ///Request'ten gelecek degerler buraya yazılır.Örneğin:
+
+        public int LangId { get; set; }
+        public string Value { get; set; }
+        public string Code { get; set; }
+
+
+        public class CreateTranslateCommandHandler : IRequestHandler<CreateTranslateCommand, IResult>
+        {
+            private readonly ITranslateRepository _translateRepository;
+            private readonly IMediator _mediator;
+            public CreateTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
+            {
+                _translateRepository = translateRepository;
+                _mediator = mediator;
+            }
+            /// <summary>
+            /// Eğer farklı bir sınıf veya metod çağırılması gerekiyorsa MediatR kütüphanesi yardımıyla çağırılır
+            /// Örneğin:  var result = await _mediator.Send(new GetAnimalsCountQuery());
+            /// </summary>
+            /// <param name="request"></param>
+            /// <param name="cancellationToken"></param>
+            /// <returns></returns>
+            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+            public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
+            {
+                var isThereTranslateRecord = _translateRepository.Query().Any(u => u.LangId == request.LangId);
+
+                if (isThereTranslateRecord == true)
+                    return new ErrorResult(Messages.NameAlreadyExist);
+
+                var addedTranslate = new Translate
+                {
+                    LangId = request.LangId,
+                    Value = request.Value,
+                    Code = request.Code,
+
+                };
+
+                _translateRepository.Add(addedTranslate);
+                await _translateRepository.SaveChangesAsync();
+                return new SuccessResult(Messages.Added);
+            }
+        }
+    }
+}

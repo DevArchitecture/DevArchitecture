@@ -111,6 +111,8 @@ namespace Business
 		{
 
 			ConfigureServices(services);
+   services.AddTransient<ITranslateRepository, TranslateRepository>();
+   services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IUserClaimRepository, UserClaimRepository>();
@@ -133,6 +135,8 @@ namespace Business
 		{
 
 			ConfigureServices(services);
+   services.AddTransient<ITranslateRepository, TranslateRepository>();
+   services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 
 			services.AddTransient<IUserRepository, UserRepository>();
@@ -153,6 +157,8 @@ namespace Business
 		public void ConfigureStagingServices(IServiceCollection services)
 		{
 			ConfigureServices(services);
+   services.AddTransient<ITranslateRepository, TranslateRepository>();
+   services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IUserClaimRepository, UserClaimRepository>();
@@ -174,6 +180,8 @@ namespace Business
 		public void ConfigureProductionServices(IServiceCollection services)
 		{
 			ConfigureServices(services);
+   services.AddTransient<ITranslateRepository, TranslateRepository>();
+   services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IUserClaimRepository, UserClaimRepository>();
