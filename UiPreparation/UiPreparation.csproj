@@ -7,11 +7,11 @@
 
   <ItemGroup>
     <Compile Remove="%2a%2a\**" />
-    <Compile Remove="DevArchitectureUI\node_modules\**" />
+    <Compile Remove="UI\node_modules\**" />
     <EmbeddedResource Remove="%2a%2a\**" />
-    <EmbeddedResource Remove="DevArchitectureUI\node_modules\**" />
+    <EmbeddedResource Remove="UI\node_modules\**" />
     <None Remove="%2a%2a\**" />
-    <None Remove="DevArchitectureUI\node_modules\**" />
+    <None Remove="UI\node_modules\**" />
   </ItemGroup>
 
 
