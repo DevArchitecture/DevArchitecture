@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace WebAPI.Controllers
 {
     /// <summary>
@@ -92,6 +93,24 @@ namespace WebAPI.Controllers
             if (result.Success)
             {
                 return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+
+        ///<summary>
+        ///LanguageLookUp listeler
+        ///</summary>
+        ///<remarks>bla bla bla Languages</remarks>
+        ///<return>Languages Listesi</return>
+        ///<response code="200"></response>  
+        [HttpGet("getlookup")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLookupList()
+        {
+            var result = await Mediator.Send(new GetLanguagesLookUpQuery());
+            if (result.Success)
+            {
+                return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }

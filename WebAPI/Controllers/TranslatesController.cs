@@ -3,7 +3,6 @@ using Business.Handlers.Translates.Commands;
 using Business.Handlers.Translates.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -24,6 +23,23 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetList()
         {
             var result = await Mediator.Send(new GetTranslatesQuery());
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        ///<summary>
+        ///Translate listeler
+        ///</summary>
+        ///<remarks>bla bla bla Translates</remarks>
+        ///<return>Translates Listesi</return>
+        ///<response code="200"></response>  
+        [HttpGet("gettranslatelistdto")]
+        public async Task<IActionResult> GetTranslateListDto()
+        {
+            var result = await Mediator.Send(new GetTranslateListDtoQuery());
             if (result.Success)
             {
                 return Ok(result.Data);

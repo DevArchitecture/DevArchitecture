@@ -1,6 +1,6 @@
 ﻿
 
-namespace Core.Entities.Concrete.Dtos
+namespace Core.Entities.Dtos
 {
     public class UserDto : IEntity
     {

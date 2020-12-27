@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Core.Entities.Concrete;
-using Core.Entities.Concrete.Dtos;
+using Core.Entities.Dtos;
 
 
 

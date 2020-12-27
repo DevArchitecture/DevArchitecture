@@ -1,4 +1,5 @@
 ﻿using Business.Constants;
+using Business.Handlers.Translates.Queries;
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
@@ -16,16 +17,19 @@ namespace Business.Handlers.Authorizations.Commands
     {
         public string Email { get; set; }
         public string Password { get; set; }
+        public int LangId { get; set; }
 
         public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, IDataResult<AccessToken>>
         {
             private readonly IUserRepository _userRepository;
             private readonly ITokenHelper _tokenHelper;
+            private readonly IMediator _mediator;
 
-            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper)
+            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IMediator mediator)
             {
                 _userRepository = userRepository;
                 _tokenHelper = tokenHelper;
+                _mediator = mediator;
             }
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
@@ -40,6 +44,8 @@ namespace Business.Handlers.Authorizations.Commands
 
                 var claims = _userRepository.GetClaims(user.UserId);
                 var accessToken = _tokenHelper.CreateToken<SFwToken>(user, claims);
+                var translateList = await _mediator.Send(new GetTranslateWordListQuery() { LangId=request.LangId });
+                accessToken.Translates = translateList.Data;
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }

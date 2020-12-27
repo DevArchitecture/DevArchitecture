@@ -51,7 +51,7 @@ namespace Business.Handlers.Translates.Commands
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
             {
-                var isThereTranslateRecord = _translateRepository.Query().Any(u => u.LangId == request.LangId);
+                var isThereTranslateRecord = _translateRepository.Query().Any(u => u.LangId == request.LangId && u.Code==request.Code);
 
                 if (isThereTranslateRecord == true)
                     return new ErrorResult(Messages.NameAlreadyExist);

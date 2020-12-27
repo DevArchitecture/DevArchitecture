@@ -32,6 +32,23 @@ namespace WebAPI.Controllers
         }
 
         ///<summary>
+        ///OperationClaim getirir
+        ///</summary>
+        ///<remarks>bla bla bla OperationClaims</remarks>
+        ///<return>OperationClaims Listesi</return>
+        ///<response code="200"></response>  
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetByid(int id)
+        {
+            var result = await Mediator.Send(new GetOperationClaimQuery() { Id=id });
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        ///<summary>
         ///OperationClaims listeler
         ///</summary>
         ///<remarks>bla bla bla OperationClaims</remarks>
