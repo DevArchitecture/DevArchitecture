@@ -4,5 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="UI\node_modules\**" />
+    <EmbeddedResource Remove="UI\node_modules\**" />
+    <None Remove="UI\node_modules\**" />
+  </ItemGroup>
 	
 </Project>
