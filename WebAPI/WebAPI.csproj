@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Properties\PublishProfiles\**" />
+    <Content Remove="Properties\PublishProfiles\**" />
+    <EmbeddedResource Remove="Properties\PublishProfiles\**" />
+    <None Remove="Properties\PublishProfiles\**" />
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="SwaggerMessages.cs" />
   </ItemGroup>
 
@@ -40,10 +48,6 @@
 
   <ItemGroup>
     <Folder Include="logs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml.user" />
   </ItemGroup>
 
 </Project>

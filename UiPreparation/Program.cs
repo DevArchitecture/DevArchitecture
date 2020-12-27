@@ -9,7 +9,7 @@ namespace UiPreparation
 		static void Main(string[] args)
 		{
 			var path = Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.IndexOf("bin"));
-			var exePath = Path.Combine(path, "DevArchitectureUI");
+			var exePath = Path.Combine(path, "UI");
 			var deletePath = exePath + @"\node_modules\selenium-webdriver\lib\test\data";
 			StringBuilder bld = new StringBuilder();
 
