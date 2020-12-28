@@ -5,35 +5,33 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title ">User List</h4>
-            <a *ngIf="checkClaim('CreateUserCommand')" class="pull-right" data-toggle="modal" data-target="#user"> <i style="color:white" title="Ekle" class="far fa-plus-square fa-2x"></i></a>
+            <a *ngIf="checkClaim('CerateUserCommand')" class="pull-right" data-toggle="modal" data-target="#user"> <i style="color:white" title="Ekle" class="far fa-plus-square fa-2x"></i></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
                 <thead class=" text-primary">
-                  <tr>
-                    <th>
-                      ID
-                    </th>
-                    <th>
-                      Email
-                    </th>
-                    <th>
-                      Full Name
-                    </th>
-                    <th>
-                      Address
-                    </th>
-                    <th>
-                      Status
-                    </th>
-                    <th>
-                      Notes
-                    </th>
-                    <th colspan="4">
-                      Actions
-                    </th>
-                  </tr>
+                  <th>
+                    ID
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Full Name
+                  </th>
+                  <th>
+                    Address
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                  <th>
+                    Notes
+                  </th>
+                  <th colspan="4">  
+                    Actions
+                  </th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let user of userList">

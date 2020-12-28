@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
 using static Business.Handlers.Authorizations.Commands.LoginUserQuery;
 using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
+using MediatR;
 
 namespace Tests.Business.HandlersTest
 {
@@ -23,6 +24,7 @@ namespace Tests.Business.HandlersTest
 	{
 		Mock<IUserRepository> _userRepository;
 		Mock<ITokenHelper> _tokenHelper;
+		Mock<IMediator> _mediator;
 
 		LoginUserQueryHandler loginUserQueryHandler;
 		LoginUserQuery loginUserQuery;
@@ -36,7 +38,9 @@ namespace Tests.Business.HandlersTest
 		{
 			_userRepository = new Mock<IUserRepository>();
 			_tokenHelper = new Mock<ITokenHelper>();
-			loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object);
+			_mediator = new Mock<IMediator>();
+
+			loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,_mediator.Object);
 			registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}

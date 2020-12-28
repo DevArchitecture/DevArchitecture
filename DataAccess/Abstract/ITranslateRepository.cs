@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
     public interface ITranslateRepository : IEntityRepository<Translate>
     {
         Task<List<TranslateDto>> GetTranslateDto();
-        Task<Dictionary<string, string>> GetTranslateWordList(int langId);
+        Task<Dictionary<string, string>> GetTranslateWordList(string lang);
+        Task<string> GetTranslatesByLang(string langCode);
     }
 }

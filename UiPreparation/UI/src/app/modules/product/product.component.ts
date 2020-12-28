@@ -41,8 +41,6 @@ export class ProductComponent implements OnInit {
     drpSetting.singleSelection = true;
     this.dropdownSettings = drpSetting;
 
-    jQuery("#categorySelect").selectpicker();
-
     this.createGroupAddForm();
 
     this.getProductList();
@@ -65,7 +63,7 @@ export class ProductComponent implements OnInit {
 
     this.productService.getProduct(id).subscribe(data => {
       this.product = data;
-      this.productAddForm.patchValue(data);
+      this.productAddForm.setValue(data);
     })
   }
 
@@ -73,7 +71,7 @@ export class ProductComponent implements OnInit {
 
     this.productAddForm = this.formBuilder.group({
       productId: [0],
-      categoryId: ["", Validators.required],
+      categoryId: [0,Validators.required],
       productName: ["", Validators.required]
     })
   }
@@ -115,6 +113,10 @@ export class ProductComponent implements OnInit {
 
     })
 
+  }
+
+  deleteProduct(id:number){
+    this.alertifyService.confirmDelete(environment.getApiUrl+"/products",{body:{productId:id}});
   }
 
   clearFormGroup(group: FormGroup) {

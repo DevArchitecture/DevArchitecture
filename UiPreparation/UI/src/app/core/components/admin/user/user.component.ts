@@ -8,6 +8,7 @@ import { AlertifyService } from 'app/core/services/Alertify.service';
 import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from '../login/Services/Auth.service';
 import { environment } from '../../../../../environments/environment'
+import { TranslateService } from '@ngx-translate/core';
 
 declare var jQuery: any;
 
@@ -39,7 +40,8 @@ export class UserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertifyService: AlertifyService,
     private lookUpService: LookUpService,
-    private authService:AuthService) { }
+    private authService:AuthService,
+    private translateService:TranslateService) { }
 
 
   userAddForm: FormGroup;
@@ -47,6 +49,9 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.getUserList();
     this.createUserAddForm();
+
+    debugger;
+    this.translateService.use(localStorage.getItem("lang"));
 
     this.dropdownSettings = environment.getDropDownSetting;
 

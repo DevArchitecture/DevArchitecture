@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
 import { AuthService } from 'app/core/components/admin/login/Services/Auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -20,8 +21,8 @@ export class AdminLayoutComponent implements OnInit {
 
 
 
-    constructor(public location: Location, private router: Router, private authService: AuthService) {
-
+    constructor(public location: Location, private router: Router, private authService: AuthService,private translateService:TranslateService) {
+        translateService.use(localStorage.getItem('lang') || 'tr-TR');
     }
 
     isLoggedIn(): boolean {
@@ -30,6 +31,9 @@ export class AdminLayoutComponent implements OnInit {
     }
 
     ngOnInit() {
+        debugger;
+        var lang=localStorage.getItem('lang') || 'tr-TR'
+        this.translateService.use(lang);
 
         if (this.isLoggedIn()) {
             const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;

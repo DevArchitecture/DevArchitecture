@@ -1,4 +1,5 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -8,4 +9,9 @@ import { Component} from '@angular/core';
 })
 export class AppComponent {
 
+  constructor(private translateService: TranslateService) {
+    translateService.addLangs(['en', 'klingon'])
+    translateService.setDefaultLang('tr-TR');
+    translateService.use(localStorage.getItem('lang') || 'tr-TR');
+  }
 }

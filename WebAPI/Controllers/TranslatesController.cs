@@ -1,6 +1,7 @@
 ﻿
 using Business.Handlers.Translates.Commands;
 using Business.Handlers.Translates.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -107,6 +108,25 @@ namespace WebAPI.Controllers
             var result = await Mediator.Send(deleteTranslate);
             if (result.Success)
             {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+
+        [AllowAnonymous]
+        [HttpGet("gettranslatesbylang")]
+
+        public async Task<IActionResult> GetTranslatesByLang(string lang)
+        {
+            var result = await Mediator.Send(new GetTranslatesByLangQuery() {Lang=lang });
+            if (result.Success)
+            {
+                
                 return Ok(result.Message);
             }
             return BadRequest(result.Message);

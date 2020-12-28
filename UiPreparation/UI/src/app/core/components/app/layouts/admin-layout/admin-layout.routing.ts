@@ -5,6 +5,9 @@ import { UserComponent } from 'app/core/components/admin/user/user.component';
 import { LoginGuard } from 'app/core/guards/login-guard';
 import { ProductComponent } from 'app/modules/product/product.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { LanguageComponent } from '../../language/language.component';
+import { OperationClaimComponent } from '../../operationclaim/operationClaim.component';
+import { TranslateComponent } from '../../translate/translate.component';
 
 
 
@@ -14,6 +17,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'user',           component: UserComponent, canActivate:[LoginGuard] },
     { path: 'group',          component: GroupComponent, canActivate:[LoginGuard] },
     { path: 'product',        component: ProductComponent, canActivate:[LoginGuard] },
-    { path: 'login',          component:LoginComponent },
+    { path: 'login',          component: LoginComponent },
+    { path: 'language',       component: LanguageComponent,canActivate:[LoginGuard]},
+    { path: 'translate',      component: TranslateComponent,canActivate:[LoginGuard]},
+    { path: 'operationclaim', component: OperationClaimComponent,canActivate:[LoginGuard]}
     
 ];

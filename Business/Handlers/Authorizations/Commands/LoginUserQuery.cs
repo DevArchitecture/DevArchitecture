@@ -17,7 +17,7 @@ namespace Business.Handlers.Authorizations.Commands
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public int LangId { get; set; }
+        public string Lang { get; set; }
 
         public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, IDataResult<AccessToken>>
         {
@@ -44,8 +44,6 @@ namespace Business.Handlers.Authorizations.Commands
 
                 var claims = _userRepository.GetClaims(user.UserId);
                 var accessToken = _tokenHelper.CreateToken<SFwToken>(user, claims);
-                var translateList = await _mediator.Send(new GetTranslateWordListQuery() { LangId=request.LangId });
-                accessToken.Translates = translateList.Data;
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }

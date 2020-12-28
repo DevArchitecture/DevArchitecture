@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest,HttpResponse,HttpErrorResponse } from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
 import { AlertifyService } from '../services/Alertify.service';
@@ -9,19 +9,23 @@ import { AlertifyService } from '../services/Alertify.service';
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(private alertifyService:AlertifyService) {
+  constructor(private alertifyService: AlertifyService) {
 
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+    var lang = localStorage.getItem("lang") || "tr-TR"
+
     if (!req.url.endsWith("api/Auth/login")) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          'Accept-Language': lang,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+
         },
-        responseType:req.method=="DELETE"? "text":req.responseType
+        responseType: req.method == "DELETE" ? "text" : req.responseType
       });
-      
+
     }
 
     return next.handle(req).pipe(

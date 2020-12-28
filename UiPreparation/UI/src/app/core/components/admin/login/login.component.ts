@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LookUp } from 'app/core/models/LookUp';
 import { LocalStorageService } from 'app/core/services/LocalStorage.service';
+import { LookUpService } from 'app/core/services/LookUp.service';
 import { LoginUser } from './Model/LoginUser';
 import { AuthService } from './Services/Auth.service';
 
@@ -11,15 +14,23 @@ import { AuthService } from './Services/Auth.service';
 export class LoginComponent implements OnInit {
 
   username:string="";
-   loginUser:LoginUser=new LoginUser();
+  loginUser:LoginUser=new LoginUser();
+  langugelookUp:LookUp[];
+
 
   constructor(private auth:AuthService,
-    private storageService:LocalStorageService) { }
+    private storageService:LocalStorageService,
+    private lookupService:LookUpService,
+    private translateService:TranslateService) { }
 
   ngOnInit() {
 
-    debugger;
     this.username=this.auth.userName;
+
+    this.lookupService.getLanguageLookup().subscribe(data=>{
+			this.langugelookUp=data;
+    })
+    
   }
 
   getUserName(){
@@ -32,6 +43,12 @@ export class LoginComponent implements OnInit {
 
   logOut(){
       this.storageService.removeToken();
+  }
+
+  changeLang(lang){
+    console.log(lang);
+    localStorage.setItem("lang",lang);
+    this.translateService.use(lang);
   }
 
 }

@@ -1,5 +1,5 @@
 export class LookUp
 {
-    id:number;
+    id:any;
     label:string;
 }

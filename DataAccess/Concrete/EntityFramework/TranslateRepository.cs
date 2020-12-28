@@ -8,6 +8,7 @@ using Core.Entities.Dtos;
 using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -33,9 +34,21 @@ namespace DataAccess.Concrete.EntityFramework
             return list;
         }
 
-        public async Task<Dictionary<string, string>> GetTranslateWordList(int langId)
+        public async Task<string> GetTranslatesByLang(string langCode)
         {
-            var list = await context.Translates.Where(x => x.LangId == langId).ToListAsync();
+            var data= await (from trs in context.Translates
+                              join lng in context.Languages on trs.LangId equals lng.Id
+                              where lng.Code == langCode
+                              select trs).ToDictionaryAsync(x => (string)x.Code, x => (string)x.Value);
+
+            var str=JsonConvert.SerializeObject(data);
+            return str;
+       
+        }
+
+        public async Task<Dictionary<string, string>> GetTranslateWordList(string lang)
+        {
+            var list = await context.Translates.Where(x => x.Code == lang).ToListAsync();
 
             return list.ToDictionary(x => x.Code, x => x.Value);
         }

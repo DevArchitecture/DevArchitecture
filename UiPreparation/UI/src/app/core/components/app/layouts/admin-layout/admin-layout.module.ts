@@ -16,8 +16,18 @@ import { LoginComponent } from 'app/core/components/admin/login/login.component'
 import { GroupComponent } from 'app/core/components/admin/group/group.component';
 import { UserComponent } from 'app/core/components/admin/user/user.component';
 import { ProductComponent } from 'app/modules/product/product.component';
+import { LanguageComponent } from '../../language/language.component';
+import { TranslateComponent } from '../../translate/translate.component';
+import { OperationClaimComponent } from '../../operationclaim/operationClaim.component';
+import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslationService } from 'app/core/services/Translation.service';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
 
+  return new TranslateHttpLoader(http,'../assets/i18n/','.json');
+}
 
 @NgModule({
   imports: [
@@ -32,14 +42,29 @@ import { ProductComponent } from 'app/modules/product/product.component';
     MatSelectModule,
     MatTooltipModule,
     NgbModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
+    TranslateModule.forChild({
+      loader: {
+       provide: TranslateLoader,
+        //useClass: TranslationService,
+        useFactory: HttpLoaderFactory,
+       deps: [HttpClient]
+     },
+
+    })
+
+
   ],
   declarations: [
     DashboardComponent,
     UserComponent,
     LoginComponent,
     GroupComponent,
-    ProductComponent
+    ProductComponent,
+    LanguageComponent,
+    TranslateComponent,
+    OperationClaimComponent
+    
   ]
 })
 
