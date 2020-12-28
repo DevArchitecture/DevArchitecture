@@ -18,7 +18,6 @@ namespace UiPreparation
 			bld.Append("ng update @angular/material&");
 			bld.Append("npm install&");
 			bld.Append("npm install popper.js --save&");
-			bld.Append("npm audit fix&");
 			bld.Append("npm prune&");
 			bld.Append("code .&");
 			bld.Append($"RD /S /Q {deletePath} &");
