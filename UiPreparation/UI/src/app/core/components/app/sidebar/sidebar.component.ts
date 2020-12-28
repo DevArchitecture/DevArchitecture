@@ -11,11 +11,11 @@ declare interface RouteInfo {
     claim:string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/user', title: 'Users',  icon: 'person', class: '', claim:"GetUsersQuery" },
-    { path: '/group', title: 'Groups',  icon:'content_paste', class: '',claim:"GetGroupsQuery" },
-    { path: '/operationclaim', title: 'Operation Claim',  icon:'done', class: '', claim:"GetOperationClaimsQuery"},
-    { path: '/language', title: 'Languages', icon:'content_paste', class: '', claim:"GetLanguagesQuery" },
-    { path: '/translate', title: 'Translate Words',  icon:'autorenew', class: '', claim:"GetTranslatesQuery"  }
+  { path: '/user', title: 'Users', icon: 'how_to_reg', class: '', claim:"GetUsersQuery" },
+  { path: '/group', title: 'Groups', icon:'groups', class: '',claim:"GetGroupsQuery" },
+  { path: '/operationclaim', title: 'Operation Claim', icon:'local_police', class: '', claim:"GetOperationClaimsQuery"},
+    { path: '/language', title: 'Languages', icon:'language', class: '', claim:"GetLanguagesQuery" },
+    { path: '/translate', title: 'Translate Words',  icon:'translate', class: '', claim:"GetTranslatesQuery"  }
 ];
 
 @Component({
