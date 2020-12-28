@@ -1,6 +1,8 @@
 ﻿using Business.Services.Authentication;
 using Business.Services.Authentication.Model;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using MediatR;
 using System.Threading;
@@ -25,10 +27,9 @@ namespace Business.Handlers.Authorizations.Queries
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [ValidationAspect(typeof(LoginUserValidator), Priority = 1)]
-        // [LogAspect(typeof(FileLogger))]
+        [LogAspect(typeof(FileLogger))]
         public async Task<IDataResult<LoginUserResult>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            // Uygun providerı al ve login ol.
             var provider = _coordinator.SelectProvider(request.Provider);
             return new SuccessDataResult<LoginUserResult>(await provider.Login(request));
         }

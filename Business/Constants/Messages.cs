@@ -1,7 +1,7 @@
 ﻿namespace Business.Constants
 {
     /// <summary>
-    /// Bu sınıf magic stringlerden kurtulmak daha okunur bir kod yazmak için oluşturulmuştur.
+    /// Bu sınıf magic stringlerden kurtulmak ve daha okunur bir kod yazmak için oluşturulmuştur.
     /// </summary>
     public static class Messages
     {

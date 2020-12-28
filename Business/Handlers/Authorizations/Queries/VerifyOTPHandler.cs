@@ -1,5 +1,7 @@
 ﻿using Business.Services.Authentication;
 using Business.Services.Authentication.Model;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using MediatR;
 using System.Threading;
@@ -24,10 +26,9 @@ namespace Business.Handlers.Authorizations.Queries
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        // [LogAspect(typeof(FileLogger))]
+        [LogAspect(typeof(FileLogger))]
         public async Task<IDataResult<SFwToken>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
-            // Uygun providerı al ve login ol.
             var provider = _coordinator.SelectProvider(request.Provider);
             return await provider.Verify(request);
         }

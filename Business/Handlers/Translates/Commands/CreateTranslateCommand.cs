@@ -22,8 +22,7 @@ namespace Business.Handlers.Translates.Commands
     /// </summary>
     [SecuredOperation]
     public class CreateTranslateCommand : IRequest<IResult>
-    {
-        ///Request'ten gelecek degerler buraya yazılır.Örneğin:
+    {      
 
         public int LangId { get; set; }
         public string Value { get; set; }

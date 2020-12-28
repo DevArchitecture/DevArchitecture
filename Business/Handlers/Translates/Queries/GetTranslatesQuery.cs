@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Translates.Queries
 {
@@ -29,7 +30,7 @@ namespace Business.Handlers.Translates.Queries
             }
 
             [PerformanceAspect(5)]
-            //[CacheAspect(10)]
+            [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken)
             {

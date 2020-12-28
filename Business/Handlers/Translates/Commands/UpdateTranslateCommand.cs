@@ -23,7 +23,6 @@ namespace Business.Handlers.Translates.Commands
     [SecuredOperation]
     public class UpdateTranslateCommand : IRequest<IResult>
     {
-        //Request olarak gelmesi beklenen propertyler buraya yazılacak
         public int Id { get; set; }
         public int LangId { get; set; }
         public string Value { get; set; }
@@ -59,7 +58,6 @@ namespace Business.Handlers.Translates.Commands
             {
                 var isThereTranslateRecord = await _translateRepository.GetAsync(u => u.Id == request.Id);
 
-                //Güncellenmesi istenen alanlar aşağıdaki Örnekteki gibi yazılmalıdır.
                 isThereTranslateRecord.Id = request.Id;
                 isThereTranslateRecord.LangId = request.LangId;
                 isThereTranslateRecord.Value = request.Value;
