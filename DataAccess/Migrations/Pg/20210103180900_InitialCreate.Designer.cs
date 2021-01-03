@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations.Pg
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20201226141222_InitialCreate")]
+    [Migration("20210103180900_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,14 +59,32 @@ namespace DataAccess.Migrations.Pg
                         .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Code")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "tr-TR",
+                            Name = "Türkçe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "en-US",
+                            Name = "English"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>

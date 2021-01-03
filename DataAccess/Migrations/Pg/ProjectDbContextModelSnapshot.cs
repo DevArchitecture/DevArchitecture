@@ -57,14 +57,32 @@ namespace DataAccess.Migrations.Pg
                         .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Code")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "tr-TR",
+                            Name = "Türkçe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "en-US",
+                            Name = "English"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
