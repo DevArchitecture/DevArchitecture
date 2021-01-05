@@ -10,5 +10,9 @@
     <EmbeddedResource Remove="UI\node_modules\**" />
     <None Remove="UI\node_modules\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\src\assets\i18n\" />
+  </ItemGroup>
 	
 </Project>

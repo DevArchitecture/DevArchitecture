@@ -17,7 +17,6 @@ namespace Business.Handlers.Authorizations.Commands
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Lang { get; set; }
 
         public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, IDataResult<AccessToken>>
         {
