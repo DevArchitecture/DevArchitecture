@@ -31,7 +31,7 @@ namespace Business.Handlers.Translates.Queries
             }
 
             [PerformanceAspect(5)]
-            [CacheAspect(10)]
+           // [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
             {

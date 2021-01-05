@@ -57,10 +57,9 @@ export class OperationClaimComponent implements OnInit {
 			this.operationClaimList[index] = this.operationClaim;
 
 			this.operationClaim = new OperationClaim();
-			jQuery('#operationClaim').modal('hide');
+			jQuery('#operationclaim').modal('hide');
 			this.alertifyService.success(data);
 			this.clearFormGroup(this.operationClaimAddForm);
-
 		})
 
 	}
