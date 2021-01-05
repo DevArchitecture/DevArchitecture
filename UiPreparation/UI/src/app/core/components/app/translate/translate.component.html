@@ -10,7 +10,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              <table datatable [dtTrigger]="dtTrigger" class="stripe">
                 <thead class="text-primary">
                   <tr>
                     <th>Id</th>
@@ -18,7 +18,8 @@
                     <th>Code</th>
                     <th>Value</th>
 
-                    <th colspan="2">Actions</th>
+                    <th class="no-sort"></th>
+                    <th class="no-sort"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -30,7 +31,8 @@
 
                     <td *ngIf="checkClaim('UpdateTranslateCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#translate" (click)="getTranslateById(translate.id)">
-                        <i style="color:blue;" class="far fa-edit"></i></a>
+                        <i style="color:blue;" class="far fa-edit"></i>
+                      </a>
                     </td>
                     <td *ngIf="checkClaim('DeleteTranslateCommand')" style="width: 25px;">
                       <a (click)="deleteTranslate(translate.id)"><i class="fas fa-trash"></i></a>

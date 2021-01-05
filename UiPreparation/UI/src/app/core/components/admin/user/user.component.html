@@ -9,34 +9,33 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table datatable  [dtTrigger]="dtTrigger"  class="table">
+              <table datatable [dtTrigger]="dtTrigger"  class="stripe">
                 <thead class=" text-primary">
                   <tr>
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Email
-                  </th>
-                  <th>
-                    Full Name
-                  </th>
-                  <th>
-                    Address
-                  </th>
-                  <th>
-                    Status
-                  </th>
-                  <th>
-                    Notes
-                  </th>
-                  <th>  
-                    Actions
-                  </th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
+                    <th>
+                      ID
+                    </th>
+                    <th>
+                      Email
+                    </th>
+                    <th>
+                      Full Name
+                    </th>
+                    <th>
+                      Address
+                    </th>
+                    <th>
+                      Status
+                    </th>
+                    <th>
+                      Notes
+                    </th>
+                    <th class="no-sort"></th>
+                    <th class="no-sort"></th>
+                    <th class="no-sort"></th>
+                    <th class="no-sort"></th>
+
+                  </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let user of userList">
@@ -59,7 +58,7 @@
                       {{user.notes}}
                     </td>
                     <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#claimsPermissions"(click)="getUserClaimsPermissions(user.userId)"><i title="{{'users_claims' | translate}}" style="color:blue;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{'users_claims' | translate}}" style="color:blue;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'users_Groups' | translate}}" class="fas fa-user-lock" aria-hidden="true"></i></a>
@@ -67,7 +66,7 @@
                     <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'update' | translate}}" style="color:blue;" class="far fa-edit"></i></a>
                     </td>
-                    <td *ngIf="checkClaim('DeleteUserCommand')"  style="width: 25px;">
+                    <td *ngIf="checkClaim('DeleteUserCommand')" style="width: 25px;">
                       <a (click)="deleteUser(user.userId)"><i title="{{'delete' | translate}}" class="fas fa-trash"></i></a>
                     </td>
                   </tr>
@@ -200,3 +199,10 @@
     </div>
   </div>
 </div>
+<script>
+	$(document).ready(function () {
+		$('#foo').DataTable({
+      "ordering": false
+		});
+  });
+</script>

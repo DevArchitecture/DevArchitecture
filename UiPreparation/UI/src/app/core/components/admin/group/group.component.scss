@@ -25,3 +25,31 @@
 :host ::ng-deep .multiselect-item-checkbox >input[type=checkbox]:checked + div:before {
     background: #9c27b0 !important;
 }
+
+.no-sort::after {
+  display: none !important;
+  background-image: url() !important;
+}
+
+.no-sort {
+  pointer-events: none !important;
+  cursor: default !important;
+  background-image: url() !important;
+}
+
+.card .card-header .card-title {
+  margin-bottom: -28px !important;
+}
+
+table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+  /*  cursor: pointer;
+  *cursor: hand;
+  background-repeat: no-repeat;*/
+  background-position: center left !important;
+}
+
+.card [class*=card-header-]:not(.card-header-icon):not(.card-header-text):not(.card-header-image) {
+  border-radius: 3px;
+  margin-top: -20px;
+  padding: 15px !important;
+}
