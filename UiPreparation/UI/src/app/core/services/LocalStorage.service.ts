@@ -15,6 +15,11 @@ export class LocalStorageService {
     localStorage.removeItem("token");
   }
 
+  removeItem(itemName:string)
+  {
+    localStorage.removeItem(itemName);
+  }
+
   getToken():string {
     return localStorage.getItem("token");
   }

@@ -11,7 +11,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ComponentsModule } from './core/modules/components.module';
 import { AdminLayoutComponent } from './core/components/app/layouts/admin-layout/admin-layout.component';
-import { CategoryComponent } from './modules/category/category.component';
 import { AlertifyService } from './core/services/Alertify.service';
 import { AuthService } from './core/components/admin/login/Services/Auth.service';
 import { LocalStorageService } from './core/services/LocalStorage.service';
@@ -19,18 +18,17 @@ import { LoginGuard } from './core/guards/login-guard';
 import { AuthInterceptorService } from './core/interceptors/AuthInterceptor.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { environment } from 'environments/environment';
 import { TranslationService } from './core/services/Translation.service';
+import { DataTablesModule } from 'angular-datatables';
+
+
+// i18 kullanıclak ise aşağıdaki metod aktif edilecek
 
 //  export function HttpLoaderFactory(http: HttpClient) {
-
-//    return new TranslateHttpLoader(http,environment.getApiUrl+'/translates/gettranslatesbylang?lang=','');
+//    debugger;
+//    var asd=new TranslateHttpLoader(http, '../../../../assets/i18n/', '.json'); 
+//    return asd;
 //  }
-
- export function HttpLoaderFactory(http: HttpClient) {
-
-  return new TranslateHttpLoader(http,'../assets/i18n/','.json');
-}
 
 
 export function tokenGetter() {
@@ -57,15 +55,17 @@ export function tokenGetter() {
         tokenGetter: tokenGetter
       }
     }),
-    TranslateModule.forRoot({
-       loader: {
-        provide: TranslateLoader,
-         //useClass: TranslationService,
-         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
-      isolate:true
-     })
+     TranslateModule.forRoot({
+       loader:{
+         provide:TranslateLoader,
+         //useFactory:HttpLoaderFactory, //i18 kullanılacak ise useClass kapatılıp yukarıda bulunan HttpLoaderFactory ve bu satır aktif edilecek
+         useClass:TranslationService,
+         deps:[HttpClient]
+       }
+       
+    }),
+    DataTablesModule
+      
   ],
   declarations: [
     AppComponent,

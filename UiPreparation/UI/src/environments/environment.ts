@@ -14,6 +14,10 @@ export const environment = {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
     allowSearchFilter: true
+  },
+  getDatatableSettings:  {
+    pagingType: 'full_numbers',
+    pageLength: 2
   }
 
 };

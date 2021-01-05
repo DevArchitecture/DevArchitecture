@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.Translates.ValidationRules;
 using Core.Entities.Concrete;
+using System;
 
 namespace Business.Handlers.Translates.Commands
 {
@@ -22,8 +23,7 @@ namespace Business.Handlers.Translates.Commands
     /// </summary>
     [SecuredOperation]
     public class CreateTranslateCommand : IRequest<IResult>
-    {
-        ///Request'ten gelecek degerler buraya yazılır.Örneğin:
+    {      
 
         public int LangId { get; set; }
         public string Value { get; set; }

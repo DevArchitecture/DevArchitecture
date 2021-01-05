@@ -13,14 +13,14 @@
               <div class="row">
                 <div class="col-md-12">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Email" name="email" [(ngModel)]="loginUser.email">
+                    <input matInput placeholder="{{'email' | translate}}"  name="email" [(ngModel)]="loginUser.email">
                   </mat-form-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Password" type="password" name="password" [(ngModel)]="loginUser.password">
+                    <input matInput placeholder="{{'password' | translate}}" type="password"  name="password" [(ngModel)]="loginUser.password">
                   </mat-form-field>
                 </div>
               </div>
@@ -31,15 +31,13 @@
                   </select>
                 </div>
               </div>
-              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Login</button>
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'LOGIN'| translate}}</button>
               <div class="clearfix"></div>
             </form>
           </div>
         </div>
       </div>
-      <div class="col-md-5 " ></div>
+      <div class="col-md-5" ></div>
     </div>
   </div>
 </div>
-
-<!-- {{"LOGIN | translate"}} -->

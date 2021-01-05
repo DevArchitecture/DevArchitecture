@@ -32,7 +32,7 @@ namespace Business.Handlers.Translates.Commands
                 _mediator = mediator;
             }
             /// <summary>
-            /// Aspectler her zaman hadler üzerinde kullanılmalıdır.
+            /// Aspectler her zaman handle üzerinde kullanılmalıdır.
             /// Kullanıcı arayüzünden bir Id alır ve silinmek istenen kategori doğrulanır.
             /// Kategori silinebilirse sadece mesaj döner.
             /// iş kuralları burada yazılır.

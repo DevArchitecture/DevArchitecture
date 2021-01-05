@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Dtos;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Languages.Queries
 {
@@ -29,7 +30,7 @@ namespace Business.Handlers.Languages.Queries
             }
 
             [PerformanceAspect(5)]
-            //[CacheAspect(10)]
+            [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpQuery request, CancellationToken cancellationToken)
             {

@@ -42,7 +42,7 @@ namespace Business.Handlers.Authorizations.Commands
             /// <param name="request"></param>
             /// <param name="cancellationToken"></param>
             /// <returns></returns>
-            //[ValidationAspect(typeof(CreateBagisciValidator), Priority = 1)]
+         
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)

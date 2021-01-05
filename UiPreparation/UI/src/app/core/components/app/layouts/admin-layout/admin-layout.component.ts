@@ -20,9 +20,10 @@ export class AdminLayoutComponent implements OnInit {
     private yScrollStack: number[] = [];
 
 
-
-    constructor(public location: Location, private router: Router, private authService: AuthService,private translateService:TranslateService) {
-        translateService.use(localStorage.getItem('lang') || 'tr-TR');
+    constructor(public location: Location, private router: Router, private authService: AuthService ,public translate: TranslateService ) {
+               
+            this.translate.setDefaultLang("tr-TR");
+            this.translate.use('tr-TR')         
     }
 
     isLoggedIn(): boolean {
@@ -31,10 +32,9 @@ export class AdminLayoutComponent implements OnInit {
     }
 
     ngOnInit() {
-        debugger;
-        var lang=localStorage.getItem('lang') || 'tr-TR'
-        this.translateService.use(lang);
+            this.translate.use('tr-TR')  
 
+            
         if (this.isLoggedIn()) {
             const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 

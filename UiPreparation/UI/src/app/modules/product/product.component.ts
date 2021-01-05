@@ -45,9 +45,9 @@ export class ProductComponent implements OnInit {
 
     this.getProductList();
 
-    this.lookUpService.getCategoryLookUp().subscribe(data => {
-      this.categorylookUp = data
-    });
+    // this.lookUpService.getCategoryLookUp().subscribe(data => {
+    //   this.categorylookUp = data
+    // });
 
 
   }

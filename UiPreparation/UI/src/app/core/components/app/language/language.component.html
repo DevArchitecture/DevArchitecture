@@ -10,14 +10,15 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              <table datatable [dtTrigger]="dtTrigger" class="stripe">
                 <thead class="text-primary">
                   <tr>
                     <th>Id</th>
                     <th>Name</th>
                     <th>Code</th>
 
-                    <th colspan="2">Actions</th>
+                    <th class="no-sort"></th>
+                    <th class="no-sort"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -28,7 +29,8 @@
 
                     <td *ngIf="checkClaim('UpdateLanguageCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#language" (click)="getLanguageById(language.id)">
-                        <i style="color:blue;" class="far fa-edit"></i></a>
+                        <i style="color:blue;" class="far fa-edit"></i>
+                      </a>
                     </td>
                     <td *ngIf="checkClaim('DeleteLanguageCommand')" style="width: 25px;">
                       <a (click)="deleteLanguage(language.id)"><i class="fas fa-trash"></i></a>
@@ -62,7 +64,7 @@
             <div class="col col-md-12">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder=" Full Name" type="text" id="name" name="name"
-                  formControlName="fullName">
+                  formControlName="name">
                 <div class="alert alert-danger"
                   *ngIf="languageAddForm.get('name')!.hasError('required') && languageAddForm.get('name')!.touched">İsim
                   zorunlu</div>
@@ -72,7 +74,7 @@
           <div class="row">
             <div class="col col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="code" type="text" id="code" name="code" formControlName="code" />
+                <input matInput placeholder="Code" type="text" id="code" name="code" formControlName="code" />
                 <div class="alert alert-danger"
                   *ngIf="languageAddForm.get('code')!.hasError('code') && languageAddForm.get('code')!.dirty">
                 </div>

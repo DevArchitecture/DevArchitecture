@@ -39,8 +39,8 @@ namespace DataAccess.Migrations.Pg
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Code = table.Column<string>(type: "text", nullable: true)
+                    Name = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    Code = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,6 +157,15 @@ namespace DataAccess.Migrations.Pg
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Languages",
+                columns: new[] { "Id", "Code", "Name" },
+                values: new object[,]
+                {
+                    { 1, "tr-TR", "Türkçe" },
+                    { 2, "en-US", "English" }
                 });
 
             migrationBuilder.CreateIndex(
