@@ -35,7 +35,6 @@ export class OperationClaimComponent implements OnInit {
 
 	getOperationClaimList() {
 		this.operationClaimService.getOperationClaimList().subscribe(data => {
-			debugger;
 			this.operationClaimList = data
 		});
 	}
@@ -43,7 +42,6 @@ export class OperationClaimComponent implements OnInit {
 	save() {
 
 		if (this.operationClaimAddForm.valid) {
-			debugger;
 			this.operationClaim = Object.assign({}, this.operationClaimAddForm.value)
 			this.updateOperationClaim();
 		}
@@ -82,8 +80,6 @@ export class OperationClaimComponent implements OnInit {
 		this.operationClaimService.getOperationClaim(operationClaimId).subscribe(data => {
 			this.operationClaimAddForm.patchValue(data);
 			this.operationClaim = data;
-			
-			debugger;
 		})
 	}
 

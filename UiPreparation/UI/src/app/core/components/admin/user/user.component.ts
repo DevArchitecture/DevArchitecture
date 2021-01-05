@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from "./models/User";
 import { UserService } from './Services/User.service';
@@ -9,6 +9,8 @@ import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from '../login/Services/Auth.service';
 import { environment } from '../../../../../environments/environment'
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 declare var jQuery: any;
 
@@ -17,7 +19,7 @@ declare var jQuery: any;
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnDestroy, OnInit {
 
   @ViewChild('closebutton') closebutton: ElementRef
 
@@ -34,24 +36,27 @@ export class UserComponent implements OnInit {
   isClaimChange: boolean = false;
 
   userId:number;
+  dtTrigger:  Subject<any>=new Subject<any>();
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
     private alertifyService: AlertifyService,
     private lookUpService: LookUpService,
-    private authService:AuthService,
-    private translateService:TranslateService) { }
+    private authService:AuthService) { }
+
+    
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 
 
   userAddForm: FormGroup;
 
   ngOnInit() {
+
     this.getUserList();
     this.createUserAddForm();
-
-    debugger;
-    this.translateService.use(localStorage.getItem("lang"));
 
     this.dropdownSettings = environment.getDropDownSetting;
 
@@ -157,7 +162,8 @@ export class UserComponent implements OnInit {
 
   getUserList() {
     this.userService.getUserList().subscribe(data => {
-      this.userList = data
+      this.userList = data;
+      this.dtTrigger.next();
     });
   }
 
@@ -226,7 +232,6 @@ export class UserComponent implements OnInit {
   deleteUser(id: number) {
 
     this.userService.deleteUser(id).subscribe(data => {
-      debugger;
       this.alertifyService.success(data.toString());
       var index=this.userList.findIndex(x=>x.userId==id);
       this.userList[index].status=false;

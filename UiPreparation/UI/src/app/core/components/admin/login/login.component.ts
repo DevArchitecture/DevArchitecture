@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(private auth:AuthService,
     private storageService:LocalStorageService,
     private lookupService:LookUpService,
-    private translateService:TranslateService) { }
+    public translateService:TranslateService) { }
 
   ngOnInit() {
 
@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
 
   logOut(){
       this.storageService.removeToken();
+      this.storageService.removeItem("lang");
   }
 
   changeLang(lang){

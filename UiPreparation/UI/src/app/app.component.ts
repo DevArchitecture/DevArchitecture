@@ -9,9 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  constructor(private translateService: TranslateService) {
-    translateService.addLangs(['en', 'klingon'])
-    translateService.setDefaultLang('tr-TR');
-    translateService.use(localStorage.getItem('lang') || 'tr-TR');
+  constructor(private translate:TranslateService){
+    translate.setDefaultLang("tr-TR");
+    translate.use('tr-TR')
   }
 }

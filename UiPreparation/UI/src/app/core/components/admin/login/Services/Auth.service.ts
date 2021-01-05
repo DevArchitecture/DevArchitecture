@@ -77,14 +77,14 @@ export class AuthService {
 
   logOut() {
     this.storageService.removeToken();
+    this.storageService.removeItem("lang")
     this.claims = [];
   }
 
   loggedIn(): boolean {
 
     let isExpired = this.jwtHelper.isTokenExpired(this.storageService.getToken());
-
-    return !isExpired;
+      return !isExpired; 
   }
 
   getCurrentUserId() {

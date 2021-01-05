@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../admin/login/Services/Auth.service';
 
 
@@ -26,13 +27,15 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor(private authService:AuthService) { 
+  constructor(private authService:AuthService,public translateService:TranslateService) { 
   }
 
   ngOnInit() {
-    console.log(ROUTES.filter(menuItem => menuItem));
   
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    
+    var lang=localStorage.getItem('lang') || 'tr-TR'
+    this.translateService.use(lang);
   }
   isMobileMenu() {
       if ($(window).width() > 991) {

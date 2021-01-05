@@ -19,7 +19,8 @@ const routes: Routes =[
     component: AdminLayoutComponent,
     children: [{
       path: '',
-      loadChildren: './core/components/app/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+      // loadChildren: './core/components/app/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+      loadChildren: './core/modules/admin-layout.module#AdminLayoutModule'
     }]
   }
 ];
@@ -29,9 +30,8 @@ const routes: Routes =[
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes,{
-    useHash: true,
-    relativeLinkResolution: 'legacy'
-})
+       useHash: true
+    })
   ],
   exports: [
     [RouterModule]

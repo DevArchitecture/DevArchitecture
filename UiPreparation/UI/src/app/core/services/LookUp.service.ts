@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { LookUp } from '../models/LookUp';
-import { environment } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,6 @@ export class LookUpService {
 
   getUserLookUp():Observable<LookUp[]>{
     return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Users/getuserlookup")
-  }
-
-  getCategoryLookUp():Observable<LookUp[]>{
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Categories/getcategorylookupquery")
   }
 
   getLanguageLookup():Observable<LookUp[]>{

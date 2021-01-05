@@ -15,7 +15,7 @@
         <li  *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
             <a *ngIf="checkClaim(menuItem.claim)" class="nav-link" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title}}</p>
+                <p>{{ menuItem.title |translate}}</p>
             </a>
         </li>
     </ul>
