@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LookUp } from 'app/core/models/LookUp';
 import { AlertifyService } from 'app/core/services/Alertify.service';
@@ -6,6 +6,9 @@ import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from '../../admin/login/Services/Auth.service';
 import { Translate } from './Models/Translate';
 import { TranslateService } from './Services/Translate.service';
+import { Subject } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import { DataTableDirective } from 'angular-datatables';
 
 declare var jQuery: any;
 
@@ -14,8 +17,9 @@ declare var jQuery: any;
 	templateUrl: './translate.component.html',
 	styleUrls: ['./translate.component.scss']
 })
-export class TranslateComponent implements OnInit {
-
+export class TranslateComponent implements OnDestroy,AfterViewInit, OnInit {
+	
+	@ViewChild(DataTableDirective) dtElement: DataTableDirective;
 	
 
 	translateList:Translate[];
@@ -27,21 +31,31 @@ export class TranslateComponent implements OnInit {
 
 
 	translateId:number;
+	dtTrigger:  Subject<any>=new Subject<any>();
 
 	constructor(private translateService:TranslateService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
+	
+	ngAfterViewInit(): void {
+		this.getTranslateList();
+	}
+
+	ngOnDestroy(): void {
+		this.dtTrigger.unsubscribe();
+	  }
 
 	ngOnInit() {
 		this.lookupService.getLanguageLookup().subscribe(data=>{
 			this.langugelookUp=data;
 		})
-		this.getTranslateList();
+		
 		this.createTranslateAddForm();
 	}
 
 
 	getTranslateList() {
 		this.translateService.getTranslateList().subscribe(data => {
-			this.translateList = data
+			this.translateList = data;
+			this.rerender();
 		});
 	}
 
@@ -54,6 +68,7 @@ export class TranslateComponent implements OnInit {
 				this.addTranslate();
 			else
 				this.updateTranslate();
+	
 		}
 
 	}
@@ -74,10 +89,12 @@ export class TranslateComponent implements OnInit {
 	updateTranslate(){
 
 		this.translateService.updateTranslate(this.translate).subscribe(data => {
+			debugger;
 
 			var index=this.translateList.findIndex(x=>x.id==this.translate.id);
 			this.translateList[index]=this.translate;
 
+			this.rerender();
 			this.translate = new Translate();
 			jQuery('#translate').modal('hide');
 			this.alertifyService.success(data);
@@ -100,6 +117,7 @@ export class TranslateComponent implements OnInit {
 		this.translateService.deleteTranslate(translateId).subscribe(data=>{
 			this.alertifyService.success(data.toString());
 			this.translateList=this.translateList.filter(x=> x.id!=translateId);
+			this.rerender();
 		})
 	}
 
@@ -127,5 +145,21 @@ export class TranslateComponent implements OnInit {
 	checkClaim(claim:string):boolean{
 		return this.authService.claimGuard(claim)
 	}
+
+	rerender(): void {
+		debugger;
+		if (this.dtElement.dtInstance == undefined) {
+		  this.dtTrigger.next();
+		}
+		else {
+		  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+	
+			// Destroy the table first
+			dtInstance.destroy();
+			// Call the dtTrigger to rerender again
+			this.dtTrigger.next();
+		  });
+		}
+	  }
 
 }

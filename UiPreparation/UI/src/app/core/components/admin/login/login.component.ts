@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LookUp } from 'app/core/models/LookUp';
 import { LocalStorageService } from 'app/core/services/LocalStorage.service';
 import { LookUpService } from 'app/core/services/LookUp.service';
+import { environment } from 'environments/environment';
 import { LoginUser } from './Model/LoginUser';
 import { AuthService } from './Services/Auth.service';
 
@@ -21,14 +23,15 @@ export class LoginComponent implements OnInit {
   constructor(private auth:AuthService,
     private storageService:LocalStorageService,
     private lookupService:LookUpService,
-    public translateService:TranslateService) { }
+    public translateService:TranslateService,
+    private httpClient:HttpClient) { }
 
   ngOnInit() {
 
     this.username=this.auth.userName;
 
-    this.lookupService.getLanguageLookup().subscribe(data=>{
-			this.langugelookUp=data;
+    this.httpClient.get<LookUp[]>(environment.getApiUrl +"/languages/getlookupwithcode").subscribe(data=>{
+      this.langugelookUp=data;
     })
     
   }

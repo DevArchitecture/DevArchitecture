@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LookUp } from 'app/core/models/LookUp';
 import { AlertifyService } from 'app/core/services/Alertify.service';
@@ -8,6 +8,9 @@ import { AuthService } from '../login/Services/Auth.service';
 import { Group } from './Models/Group';
 import { GroupService } from './Services/Group.service';
 import { environment } from '../../../../../environments/environment';
+import { Subject } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import { DataTableDirective } from 'angular-datatables';
 
 declare var jQuery: any;
 
@@ -16,8 +19,9 @@ declare var jQuery: any;
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.scss']
 })
-export class GroupComponent implements OnInit {
-
+export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
+  
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
   
   userDropdownList:LookUp[];
   userSelectedItems:LookUp[];
@@ -36,12 +40,20 @@ export class GroupComponent implements OnInit {
   isClaimChange: boolean = false;
 
   groupId:number;
+  dtTrigger:  Subject<any>=new Subject<any>();
 
   constructor(private groupService:GroupService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+  ngAfterViewInit(): void {
 
     this.getGroupList();
+
+  }
+  ngOnInit() {
+
     this.createGroupAddForm();
 
     this.dropdownSettings=environment.getDropDownSetting;
@@ -58,7 +70,8 @@ export class GroupComponent implements OnInit {
 
   getGroupList() {
     this.groupService.getGroupList().subscribe(data => {
-      this.groupList = data
+      this.groupList = data,
+      this.rerender();
     });
   }
 
@@ -71,6 +84,7 @@ export class GroupComponent implements OnInit {
         this.addGroup();
       else
         this.updateGroup();
+
     }
 
   }
@@ -94,7 +108,7 @@ export class GroupComponent implements OnInit {
 
       var index=this.groupList.findIndex(x=>x.id==this.group.id);
       this.groupList[index]=this.group;
-
+      this.rerender();
       this.group = new Group();
       jQuery("#group").modal("hide");
       this.alertifyService.success(data);
@@ -115,6 +129,7 @@ export class GroupComponent implements OnInit {
     this.groupService.deleteGroup(groupId).subscribe(data=>{
       this.alertifyService.success(data.toString());
       this.groupList=this.groupList.filter(x=> x.id!=groupId);
+      this.rerender();
     })
   }
 
@@ -208,6 +223,23 @@ export class GroupComponent implements OnInit {
 
   checkClaim(claim:string):boolean{
     return this.authService.claimGuard(claim)
+  }
+
+  rerender(): void {
+    debugger;
+    if (this.dtElement.dtInstance == undefined) {
+      this.dtTrigger.next();
+    }
+    else {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      });
+    }
+
   }
 
 }

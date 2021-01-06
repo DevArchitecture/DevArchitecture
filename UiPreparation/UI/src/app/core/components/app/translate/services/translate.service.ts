@@ -18,7 +18,7 @@ export class TranslateService {
   }
 
   getTranslate(id: number): Observable<Translate> {
-    return this.httpClient.get<Translate>(environment.getApiUrl + '/translates/id='+id)
+    return this.httpClient.get<Translate>(environment.getApiUrl + '/translates/getbyid?translateId='+id)
   }
 
   addTranslate(translate: Translate): Observable<any> {
