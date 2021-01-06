@@ -98,12 +98,12 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Animal Siler.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="deleteUser"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteUserCommand deleteUser)
         {
-            var result = await Mediator.Send(new DeleteUserCommand { UserId = id });
+            var result = await Mediator.Send(deleteUser);
             if (result.Success)
             {
                 return Ok(result.Message);

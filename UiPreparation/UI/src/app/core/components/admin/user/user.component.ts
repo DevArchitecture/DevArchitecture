@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from "./models/User";
 import { UserService } from './Services/User.service';
@@ -8,9 +8,9 @@ import { AlertifyService } from 'app/core/services/Alertify.service';
 import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from '../login/Services/Auth.service';
 import { environment } from '../../../../../environments/environment'
-import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import { DataTableDirective } from 'angular-datatables';
 
 declare var jQuery: any;
 
@@ -19,9 +19,10 @@ declare var jQuery: any;
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnDestroy, OnInit {
+export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
 
   @ViewChild('closebutton') closebutton: ElementRef
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
 
   user: User;
   userList: User[];
@@ -35,27 +36,30 @@ export class UserComponent implements OnDestroy, OnInit {
   isGroupChange: boolean = false;
   isClaimChange: boolean = false;
 
-  userId:number;
-  dtTrigger:  Subject<any>=new Subject<any>();
+  userId: number;
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
     private alertifyService: AlertifyService,
     private lookUpService: LookUpService,
-    private authService:AuthService) { }
+    private authService: AuthService) { }
 
-    
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
+  ngAfterViewInit(): void {
 
+    this.getUserList();
+
+  }
 
   userAddForm: FormGroup;
 
   ngOnInit() {
 
-    this.getUserList();
     this.createUserAddForm();
 
     this.dropdownSettings = environment.getDropDownSetting;
@@ -73,7 +77,7 @@ export class UserComponent implements OnDestroy, OnInit {
 
   getUserGroupPermissions(userId: number) {
 
-    this.userId=userId;
+    this.userId = userId;
 
     this.userService.getUserGroupPermissions(userId).subscribe(data => {
       this.groupSelectedItems = data;
@@ -82,47 +86,47 @@ export class UserComponent implements OnDestroy, OnInit {
 
   getUserClaimsPermissions(userId: number) {
 
-    this.userId=userId;
+    this.userId = userId;
 
     this.userService.getUserClaims(userId).subscribe(data => {
       this.claimSelectedItems = data;
     })
   }
 
-  saveUserGroupsPermissions(){
+  saveUserGroupsPermissions() {
 
-    if(this.isGroupChange){
+    if (this.isGroupChange) {
 
-      var ids=this.groupSelectedItems.map(function(x){ return x.id as number});
-      this.userService.saveUserGroupPermissions(this.userId, ids).subscribe(x=>{
+      var ids = this.groupSelectedItems.map(function (x) { return x.id as number });
+      this.userService.saveUserGroupPermissions(this.userId, ids).subscribe(x => {
         jQuery("#groupPermissions").modal("hide");
-        this.isGroupChange=false;
+        this.isGroupChange = false;
         this.alertifyService.success(x);
       },
-      error=>{
-        this.alertifyService.error(error.error);
-        jQuery("#groupPermissions").modal("hide");
-      }
+        error => {
+          this.alertifyService.error(error.error);
+          jQuery("#groupPermissions").modal("hide");
+        }
       );
-      }
+    }
 
 
   }
-  
-  saveUserClaimsPermission(){
-   
-    if(this.isClaimChange){
 
-    var ids=this.claimSelectedItems.map(function(x){ return x.id as number});
-    this.userService.saveUserClaims(this.userId, ids).subscribe(x=>{
-      jQuery("#claimsPermissions").modal("hide");
-      this.isClaimChange=false;
-      this.alertifyService.success(x);
-    },
-    error=>{
-      this.alertifyService.error(error.error);
-      jQuery("#claimsPermissions").modal("hide");
-    });
+  saveUserClaimsPermission() {
+
+    if (this.isClaimChange) {
+
+      var ids = this.claimSelectedItems.map(function (x) { return x.id as number });
+      this.userService.saveUserClaims(this.userId, ids).subscribe(x => {
+        jQuery("#claimsPermissions").modal("hide");
+        this.isClaimChange = false;
+        this.alertifyService.success(x);
+      },
+        error => {
+          this.alertifyService.error(error.error);
+          jQuery("#claimsPermissions").modal("hide");
+        });
     }
   }
 
@@ -163,7 +167,7 @@ export class UserComponent implements OnDestroy, OnInit {
   getUserList() {
     this.userService.getUserList().subscribe(data => {
       this.userList = data;
-      this.dtTrigger.next();
+      this.rerender();
     });
   }
 
@@ -176,6 +180,8 @@ export class UserComponent implements OnDestroy, OnInit {
       group.get(key).setErrors(null);
       if (key == "userId")
         group.get(key).setValue(0);
+      else if (key == "status")
+        group.get(key).setValue(true);
     });
   }
 
@@ -189,6 +195,7 @@ export class UserComponent implements OnDestroy, OnInit {
         this.addUser();
       else
         this.updateUser();
+
     }
   }
 
@@ -218,9 +225,9 @@ export class UserComponent implements OnDestroy, OnInit {
 
     this.userService.updateUser(this.user).subscribe(data => {
 
-      var index=this.userList.findIndex(x=>x.userId==this.user.userId);
-      this.userList[index]=this.user;
-
+      var index = this.userList.findIndex(x => x.userId == this.user.userId);
+      this.userList[index] = this.user;
+      this.rerender();
       this.user = new User();
       jQuery("#user").modal("hide");
       this.alertifyService.success(data);
@@ -233,14 +240,32 @@ export class UserComponent implements OnDestroy, OnInit {
 
     this.userService.deleteUser(id).subscribe(data => {
       this.alertifyService.success(data.toString());
-      var index=this.userList.findIndex(x=>x.userId==id);
-      this.userList[index].status=false;
+      var index = this.userList.findIndex(x => x.userId == id);
+      this.userList[index].status = false;
+      this.rerender();
     });
 
   }
 
-  checkClaim(claim:string):boolean{
+  checkClaim(claim: string): boolean {
     return this.authService.claimGuard(claim)
+  }
+
+  rerender(): void {
+    debugger;
+    if (this.dtElement.dtInstance == undefined) {
+      this.dtTrigger.next();
+    }
+    else {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      });
+    }
+
   }
 
 }

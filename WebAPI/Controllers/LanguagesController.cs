@@ -104,7 +104,6 @@ namespace WebAPI.Controllers
         ///<return>Languages Listesi</return>
         ///<response code="200"></response>  
         [HttpGet("getlookup")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetLookupList()
         {
             var result = await Mediator.Send(new GetLanguagesLookUpQuery());
@@ -114,5 +113,25 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+
+        ///<summary>
+        ///LanguageLookUp listeler
+        ///</summary>
+        ///<remarks>bla bla bla Languages</remarks>
+        ///<return>Languages Listesi</return>
+        ///<response code="200"></response>  
+        [HttpGet("getlookupwithcode")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLookupListWithCode()
+        {
+            var result = await Mediator.Send(new GetLanguagesLookUpWithCodeQuery());
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        
     }
 }

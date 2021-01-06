@@ -48,7 +48,6 @@
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
               "node_modules/bootstrap-select/dist/js/i18n/defaults-tr_TR.js",
-              "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js"
             ],
             "allowedCommonJsDependencies": [

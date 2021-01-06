@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertifyService } from 'app/core/services/Alertify.service';
 import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from '../../admin/login/Services/Auth.service';
 import { Language } from './Models/Language';
 import { LanguageService } from './Services/Language.service';
+import { Subject } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import { DataTableDirective } from 'angular-datatables';
 
 declare var jQuery: any;
 
@@ -13,30 +16,37 @@ declare var jQuery: any;
 	templateUrl: './language.component.html',
 	styleUrls: ['./language.component.scss']
 })
-export class LanguageComponent implements OnInit {
+export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
 
+	@ViewChild(DataTableDirective) dtElement: DataTableDirective;
 	
-
 	languageList:Language[];
 	language:Language=new Language();
 
 	languageAddForm: FormGroup;
 
-
 	languageId:number;
+	dtTrigger:  Subject<any>=new Subject<any>();
 
 	constructor(private languageService:LanguageService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
+	
+	ngAfterViewInit(): void {
+		this.getLanguageList();
+	}
+
+	ngOnDestroy(): void {
+		this.dtTrigger.unsubscribe();
+	}
 
 	ngOnInit() {
-
-		this.getLanguageList();
 		this.createLanguageAddForm();
 	}
 
 
 	getLanguageList() {
 		this.languageService.getLanguageList().subscribe(data => {
-			this.languageList = data
+			this.languageList = data;
+			this.rerender();
 		});
 	}
 
@@ -72,7 +82,7 @@ export class LanguageComponent implements OnInit {
 
 			var index=this.languageList.findIndex(x=>x.id==this.language.id);
 			this.languageList[index]=this.language;
-
+			this.rerender();
 			this.language = new Language();
 			jQuery('#language').modal('hide');
 			this.alertifyService.success(data);
@@ -94,6 +104,7 @@ export class LanguageComponent implements OnInit {
 		this.languageService.deleteLanguage(languageId).subscribe(data=>{
 			this.alertifyService.success(data.toString());
 			this.languageList=this.languageList.filter(x=> x.id!=languageId);
+			this.rerender();
 		})
 	}
 
@@ -121,5 +132,21 @@ export class LanguageComponent implements OnInit {
 	checkClaim(claim:string):boolean{
 		return this.authService.claimGuard(claim)
 	}
+
+	rerender(): void {
+		debugger;
+		if (this.dtElement.dtInstance == undefined) {
+		  this.dtTrigger.next();
+		}
+		else {
+		  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+	
+			// Destroy the table first
+			dtInstance.destroy();
+			// Call the dtTrigger to rerender again
+			this.dtTrigger.next();
+		  });
+		}
+	  }
 
 }
