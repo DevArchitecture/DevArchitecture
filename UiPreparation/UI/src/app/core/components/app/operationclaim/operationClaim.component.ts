@@ -72,7 +72,6 @@ export class OperationClaimComponent implements OnDestroy,AfterViewInit, OnInit 
 			jQuery('#operationclaim').modal('hide');
 			this.alertifyService.success(data);
 			this.clearFormGroup(this.operationClaimAddForm);
-
 		})
 
 	}
