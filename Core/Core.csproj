@@ -8,6 +8,7 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
     <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="HaemmerElectronics.SeppPenner.SerilogSinkForPostgreSQL" Version="3.2.2" />
     <PackageReference Include="MailKit" Version="2.10.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.0.0" />
@@ -34,7 +35,6 @@
     <PackageReference Include="Serilog.Sinks.MicrosoftTeams" Version="0.2.1" />
     <PackageReference Include="Serilog.Sinks.MongoDB" Version="4.1.0-dev-00069" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
-    <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.1.0" />
     <PackageReference Include="ServiceStack.Redis.Core" Version="5.10.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />  

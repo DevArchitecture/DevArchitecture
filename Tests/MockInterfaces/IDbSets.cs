@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tests.MockInterfaces
 {
-	public interface IDbSets
+    public interface IDbSets
 	{
 
 		DbSet<OperationClaim> OperationClaims { get; set; }

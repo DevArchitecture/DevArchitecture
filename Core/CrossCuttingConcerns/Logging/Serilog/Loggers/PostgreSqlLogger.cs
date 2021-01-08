@@ -2,8 +2,11 @@
 using Core.Utilities.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NpgsqlTypes;
 using Serilog;
+using Serilog.Sinks.PostgreSQL;
 using System;
+using System.Collections.Generic;
 
 namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
@@ -16,8 +19,20 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
             var logConfig = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration")
                 .Get<PostgreConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
 
+            IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
+                        {
+                            {"Message", new RenderedMessageColumnWriter(NpgsqlDbType.Text) },
+                            {"MessageTemplate", new MessageTemplateColumnWriter(NpgsqlDbType.Text) },
+                            {"Level", new LevelColumnWriter(true, NpgsqlDbType.Varchar) },
+                            {"TimeStamp", new TimestampColumnWriter(NpgsqlDbType.Timestamp) },
+                            {"Exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
+                            {"Properties", new LogEventSerializedColumnWriter(NpgsqlDbType.Jsonb) },
+                            {"PropsTest", new PropertiesColumnWriter(NpgsqlDbType.Jsonb) }
+                        };
+
+
             var seriLogConfig = new LoggerConfiguration()
-                    .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logsx", needAutoCreateTable: true)
+                    .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: false)
                     .CreateLogger();
             _logger = seriLogConfig;
         }
