@@ -21,13 +21,11 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 
             IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
                         {
-                            {"Message", new RenderedMessageColumnWriter(NpgsqlDbType.Text) },
-                            {"MessageTemplate", new MessageTemplateColumnWriter(NpgsqlDbType.Text) },
+                            {"Message", new RenderedMessageColumnWriter(NpgsqlDbType.Text) },                            
                             {"Level", new LevelColumnWriter(true, NpgsqlDbType.Varchar) },
                             {"TimeStamp", new TimestampColumnWriter(NpgsqlDbType.Timestamp) },
                             {"Exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
-                            {"Properties", new LogEventSerializedColumnWriter(NpgsqlDbType.Jsonb) },
-                            {"PropsTest", new PropertiesColumnWriter(NpgsqlDbType.Jsonb) }
+                    
                         };
 
 
