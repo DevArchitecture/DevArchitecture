@@ -32,11 +32,6 @@
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
  <ItemGroup>
-    <Compile Update="BusinessAspects\InstrumentationBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
- <ItemGroup>
    <WCFMetadata Include="Connected Services" />
  </ItemGroup> 
 </Project>

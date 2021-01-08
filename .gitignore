@@ -368,3 +368,4 @@ WebAPI/appsettings.json
 .sonar/
 .scannerwork/
 .sonarqube/
+/DataAccess/Migrations/Ms

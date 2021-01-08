@@ -62,7 +62,7 @@ namespace WebAPI
 			services.AddCors(options =>
 			{
 				options.AddPolicy("AllowOrigin",
-																																	builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+				builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 			});
 
 			var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -90,6 +90,7 @@ namespace WebAPI
 
 			services.AddTransient<FileLogger>();
 			services.AddTransient<PostgreSqlLogger>();
+			services.AddTransient<MsSqlLogger>();
 
 			base.ConfigureServices(services);
 		}

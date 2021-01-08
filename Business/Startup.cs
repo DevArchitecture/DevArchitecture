@@ -69,12 +69,7 @@ namespace Business
 
 							sp.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal(new ClaimsIdentity("Unknown"));
 
-			services.AddScoped<IPrincipal>(getPrincipal);
-
-			services.AddSingleton<IActivityMonitor, ActivityMonitor>();
-
-
-			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(InstrumentationBehavior<,>));
+			services.AddScoped<IPrincipal>(getPrincipal);		
 
 
 			services.AddDependencyResolvers(Configuration, new ICoreModule[]

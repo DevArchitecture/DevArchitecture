@@ -17,7 +17,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                 .Get<PostgreConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
 
             var seriLogConfig = new LoggerConfiguration()
-                    .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", needAutoCreateTable: true)
+                    .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logsx", needAutoCreateTable: true)
                     .CreateLogger();
             _logger = seriLogConfig;
         }
