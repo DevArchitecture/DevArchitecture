@@ -85,6 +85,30 @@ namespace DataAccess.Migrations.Pg
                         });
                 });
 
+            modelBuilder.Entity("Core.Entities.Concrete.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("Exception")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("TimeStamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -118,17 +142,205 @@ namespace DataAccess.Migrations.Pg
                         .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Code")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("LangId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Translates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "LOGIN",
+                            LangId = 1,
+                            Value = "Giriş TR"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "email",
+                            LangId = 1,
+                            Value = "E posta"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "password",
+                            LangId = 1,
+                            Value = "Şifre"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "update",
+                            LangId = 1,
+                            Value = "Güncelle"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "delete",
+                            LangId = 1,
+                            Value = "Sil"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "users_Groups",
+                            LangId = 1,
+                            Value = "Kullanıcının Grupları"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "users_claims",
+                            LangId = 1,
+                            Value = "Kullanıcının Yetkileri"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "create",
+                            LangId = 1,
+                            Value = "Yeni"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "Users",
+                            LangId = 1,
+                            Value = "Kullanıcılar"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "Groups",
+                            LangId = 1,
+                            Value = "Gruplar"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Code = "LOGIN",
+                            LangId = 2,
+                            Value = "Login EN"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Code = "email",
+                            LangId = 2,
+                            Value = "Email"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Code = "password",
+                            LangId = 2,
+                            Value = "Password"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Code = "update",
+                            LangId = 2,
+                            Value = "Update"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Code = "delete",
+                            LangId = 2,
+                            Value = "Delete"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Code = "users_Groups",
+                            LangId = 2,
+                            Value = "User's Groups"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Code = "users_claims",
+                            LangId = 2,
+                            Value = "User's Claims"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Code = "create",
+                            LangId = 2,
+                            Value = "Create"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Code = "Users",
+                            LangId = 2,
+                            Value = "Users"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Code = "Groups",
+                            LangId = 2,
+                            Value = "Groups"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Code = "Operation Claim",
+                            LangId = 1,
+                            Value = "Operasyon Yetkileri"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Code = "Operation Claim",
+                            LangId = 2,
+                            Value = "Operation Claim"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Code = "Languages",
+                            LangId = 1,
+                            Value = "Diller"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Code = "Languages",
+                            LangId = 2,
+                            Value = "Languages"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Code = "Translate Words",
+                            LangId = 1,
+                            Value = "Dil Çevirileri"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Code = "Translate Words",
+                            LangId = 2,
+                            Value = "Translate Words"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
@@ -216,27 +428,6 @@ namespace DataAccess.Migrations.Pg
                     b.HasKey("UserId", "GroupId");
 
                     b.ToTable("UserGroups");
-                });
-
-            modelBuilder.Entity("Core.Entities.Log", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Audit")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("LogDetail")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Core.Entities.MobileLogin", b =>
