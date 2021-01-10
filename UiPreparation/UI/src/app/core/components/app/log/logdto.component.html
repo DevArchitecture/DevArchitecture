@@ -1,0 +1,45 @@
+﻿<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Logs</h4>           
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table datatable [dtTrigger]="dtTrigger" class="stripe">
+								<thead class="text-primary">
+									<tr>
+										<th>Id</th>
+										<th>Level</th>
+										<th>ExceptionMessage</th>
+										<th>TimeStamp</th>
+										<th>User</th>
+										<th>Value</th>
+										<th>Type</th>										
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let logdto of logDtoList">
+										<td>{{logdto.id}}</td>
+										<td>{{logdto.level}}</td>
+										<td>{{logdto.exceptionmessage}}</td>
+										<td>{{logdto.timestamp}}</td>
+										<td>{{logdto.user}}</td>
+										<td>{{logdto.value}}</td>
+										<td>{{logdto.type}}</td>										
+									</tr>
+								</tbody>
+							</table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
