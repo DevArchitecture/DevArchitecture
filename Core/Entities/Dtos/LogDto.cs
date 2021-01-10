@@ -1,10 +1,9 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 namespace Core.Entities.Dtos
 {
-	public class LogDto : IDto
+	public class LogDto : IEntity
 	{
 		public int Id { get; set; }		
 		public string Level { get; set; }

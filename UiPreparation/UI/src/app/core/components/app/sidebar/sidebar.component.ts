@@ -15,8 +15,9 @@ export const ROUTES: RouteInfo[] = [
   { path: '/user', title: 'Users', icon: 'how_to_reg', class: '', claim:"GetUsersQuery" },
   { path: '/group', title: 'Groups', icon:'groups', class: '',claim:"GetGroupsQuery" },
   { path: '/operationclaim', title: 'Operation Claim', icon:'local_police', class: '', claim:"GetOperationClaimsQuery"},
-    { path: '/language', title: 'Languages', icon:'language', class: '', claim:"GetLanguagesQuery" },
-    { path: '/translate', title: 'Translate Words',  icon:'translate', class: '', claim:"GetTranslatesQuery"  }
+  { path: '/language', title: 'Languages', icon:'language', class: '', claim:"GetLanguagesQuery" },
+  { path: '/translate', title: 'Translate Words', icon: 'translate', class: '', claim: "GetTranslatesQuery" },
+  { path: '/log', title: 'Logs', icon: 'update', class: '', claim: "GetLogDtoQuery" }
 ];
 
 @Component({

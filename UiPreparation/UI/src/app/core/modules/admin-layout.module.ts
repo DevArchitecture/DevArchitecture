@@ -23,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from 'app/core/services/Translation.service';
 import { DataTablesModule } from 'angular-datatables';
+import { LogDtoComponent } from '../components/app/log/logDto.component';
 
 
 // export function layoutHttpLoaderFactory(http: HttpClient) {
@@ -62,7 +63,8 @@ import { DataTablesModule } from 'angular-datatables';
     GroupComponent,
     LanguageComponent,
     TranslateComponent,
-    OperationClaimComponent
+    OperationClaimComponent,
+    LogDtoComponent
     
   ]
 })
