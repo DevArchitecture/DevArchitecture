@@ -2,7 +2,7 @@
 	id?: number;
 	level?: string;
 	exceptionMessage?: string;
-	timestamp?: Date
+	timeStamp?: Date
 	user?: string;
 	value?: string;
 	type?: string;
