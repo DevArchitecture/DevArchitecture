@@ -119,7 +119,10 @@ namespace WebAPI
 				case ApplicationMode.Production:
 					break;
 			}
-
+			if (configurationManager.Mode==ApplicationMode.Development)
+			{
+				app.UseDbFakeDataCreator();
+			}
 			app.UseDeveloperExceptionPage();
 
 			app.ConfigureCustomExceptionMiddleware();
