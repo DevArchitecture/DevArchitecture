@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
 		///<return>Logs Listesi</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
-		public async Task<IActionResult> GetListx()
+		public async Task<IActionResult> GetList()
 		{
 			var result = await Mediator.Send(new GetLogDtoQuery());
 			if (result.Success)
