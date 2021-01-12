@@ -47,7 +47,7 @@ namespace Business.Handlers.Logs.Queries
 					dynamic msg = JsonConvert.DeserializeObject(item.MessageTemplate);
 					dynamic valueList = msg.Parameters[0];
 					dynamic exceptionMessage = msg.ExceptionMessage;
-					valueList=valueList.Value.ToString();
+					valueList = valueList.Value.ToString();
 
 					var list = new LogDto
 					{
@@ -57,7 +57,7 @@ namespace Business.Handlers.Logs.Queries
 						Type = msg.Parameters[0].Type,
 						User = jsonMesssage.User,
 						Value = valueList,
-						ExceptionMessage= exceptionMessage
+						ExceptionMessage = exceptionMessage
 					};
 
 					data.Add(list);
