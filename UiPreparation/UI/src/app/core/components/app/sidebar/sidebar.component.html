@@ -1,22 +1,37 @@
 
 <div class="logo" style="padding:5px">
-    <a class="simple-text" href="#">
-       <!-- <div class="logo-img">
-            <img src="/assets/img/angular2-logo-red.png">
-        </div>  -->
-        <!-- Dev Architecture -->
-      <img src="/assets/img/logo/logo.png" style="width: 248px;margin-top: -104px;margin-bottom: -105px;margin-left: 0px;margin-right: 0px; ">
-    </a>
-   
+	<a class="simple-text" href="#">
+		<!-- <div class="logo-img">
+				 <img src="/assets/img/angular2-logo-red.png">
+		 </div>  -->
+		<!-- Dev Architecture -->
+		<img src="/assets/img/logo/logo.png" style="width: 248px;margin-top: -104px;margin-bottom: -105px;margin-left: 0px;margin-right: 0px; ">
+	</a>
+
 </div>
 <div class="sidebar-wrapper">
-
-    <ul class="nav collapse out" >
-        <li  *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a *ngIf="checkClaim(menuItem.claim)" class="nav-link" [routerLink]="[menuItem.path]">
-                <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{ menuItem.title |translate}}</p>
-            </a>
-        </li>
-    </ul>
+	<div class="nav-container">
+		<ul class="nav">
+			<li routerLinkActive="active">
+				<a data-toggle="collapse" class="nav-link" href="#Management">
+					<i class="material-icons">widgets</i>
+        <p>Management
+            <b class="caret"></b>
+        </p>
+				</a>
+				<div class="collapse" id="Management">
+					<ul class="nav">
+						<li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+							<a *ngIf="checkClaim(menuItem.claim)" class="nav-link" [routerLink]="[menuItem.path]">
+								<i class="material-icons">{{menuItem.icon}}</i>
+								<p>{{ menuItem.title |translate}}</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>
 </div>
+
+
