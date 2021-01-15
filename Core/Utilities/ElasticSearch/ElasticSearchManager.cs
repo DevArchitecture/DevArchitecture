@@ -16,7 +16,7 @@ namespace Core.Utilities.ElasticSearch
         public ElasticSearchManager(IConfiguration Configuration)
         {
 
-            var settings = Configuration.GetSection("ElasticSearchCong").Get<ElasticSearchCong>();
+            var settings = Configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>();
             Uri uri = new Uri(settings.ConnectionString);
             _connectionSettings = new ConnectionSettings(uri);
 
