@@ -3,7 +3,6 @@ using Business.BusinessAspects;
 using Core.Utilities.Results;
 using Core.Aspects.Autofac.Performance;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,10 +12,6 @@ using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Caching;
 using Core.Entities.Dtos;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Dynamic;
-using Newtonsoft.Json.Converters;
-using System.Linq;
 
 namespace Business.Handlers.Logs.Queries
 {
