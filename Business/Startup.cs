@@ -5,6 +5,7 @@ using Business.DependencyResolvers;
 using Business.Services.Authentication;
 using Core.DependencyResolvers;
 using Core.Extensions;
+using Core.Utilities.ElasticSearch;
 using Core.Utilities.IoC;
 using Core.Utilities.MessageBrokers.RabbitMq;
 using Core.Utilities.Security.Jwt;
@@ -83,6 +84,7 @@ namespace Business
 
 
 			services.AddTransient<ITokenHelper, JwtHelper>();
+			services.AddTransient<IElasticSearch, ElasticSearchManager>();
 
 			services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
 			services.AddTransient<IMessageConsumer, MqConsumerHelper>();

@@ -1,9 +1,11 @@
 ﻿using Core.Utilities.ElasticSearch.Models;
+using Core.Utilities.Results;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Utilities.ElasticSearch
 {
@@ -20,17 +22,14 @@ namespace Core.Utilities.ElasticSearch
 
         }
 
-        public Results.Result CheckIndex(string indexName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Results.Result CreateNewIndex(IndexModel indexModel)
+        public async Task<IResult> CreateNewIndexAsync(IndexModel indexModel)
         {
             var elasticClient = GetElasticClient(indexModel.IndexName);
+            if (elasticClient.Indices.Exists(indexModel.IndexName).Exists)
+                return new Results.Result(success: false,message:"Index already exists");
 
 
-            var response = elasticClient.Indices.Create(indexModel.IndexName, se =>
+            var response = await elasticClient.Indices.CreateAsync(indexModel.IndexName, se =>
                   se.Settings(a => a.NumberOfReplicas(indexModel.NumberOfReplicas)
                               .NumberOfShards(indexModel.NumberOfShards))
                   .Aliases(x => x.Alias(indexModel.AliasName))
@@ -41,16 +40,32 @@ namespace Core.Utilities.ElasticSearch
 
         }
 
-        public List<T> GetAllSearch<T>(string indexName, int from = 0, int size = 10) where T : class
+        public async Task<IResult> DeleteByElasticIdAsync(ElasticSearchModel model)
         {
-            var elasticClient = GetElasticClient(indexName);
-            var searchResponse = elasticClient.Search<T>(s => s
-                            .Index(indexName)
-                            .From(from)
-                            .Size(size));
+            var elasticClient = GetElasticClient(model.IndexName);
+            var response = await elasticClient.DeleteAsync<object>(model.ElasticId, x => x.Index(model.IndexName));
+            return new Results.Result(success: response.IsValid,
+                                     message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
+        }
+
+        public async Task<List<ElasticSearchGetModel<T>>> GetAllSearch<T>(SearchParameters parameters) where T : class
+        {
+            var type = typeof(T);
+
+            var elasticClient = GetElasticClient(parameters.IndexName);
+            var searchResponse = await elasticClient.SearchAsync<T>(s => s
+                            .Index(Indices.Index(parameters.IndexName))
+                            .From(parameters.From)
+                            .Size(parameters.Size));
 
 
-            return searchResponse.Documents.ToList();
+            var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
+            {
+                ElasticId = x.Id,
+                Item = x.Source
+            }).ToList();
+
+            return list;
         }
 
         public IReadOnlyDictionary<IndexName, IndexState> GetIndexList()
@@ -59,37 +74,43 @@ namespace Core.Utilities.ElasticSearch
             return elasticClient.Indices.Get(new GetIndexRequest(Indices.All)).Indices;
         }
 
-        public List<T> GetSearchByField<T>(string indexName, string field, string value, int from = 0, int size = 10) where T : class
+        public async Task<List<ElasticSearchGetModel<T>>> GetSearchByField<T>(SearchByFieldParameters fieldParameters) where T : class
         {
-            var elasticClient = GetElasticClient(indexName);
-            var searchResponse = elasticClient.Search<T>(s => s
+            var elasticClient = GetElasticClient(fieldParameters.IndexName);
+            var searchResponse = await elasticClient.SearchAsync<T>(s => s
                         .AllIndices()
-                        .From(from)
-                        .Size(size)
+                        .From(fieldParameters.From)
+                        .Size(fieldParameters.Size)
                         .Query(q => q.Match(
-                            m => m.Field(field)
-                            .Query(value)
+                            m => m.Field(fieldParameters.FieldName)
+                            .Query(fieldParameters.Value)
                             .Operator(Operator.And)
                             )
                          )
                        );
 
-            return searchResponse.Documents.ToList();
+            var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
+            {
+                ElasticId = x.Id,
+                Item = x.Source
+            }).ToList();
+
+            return list;
         }
 
-        public List<T> GetSearchBySimpleQueryString<T>(string indexName, string queryName, string query, string[] fields, int from = 0, int size = 10) where T : class
+        public async Task<List<ElasticSearchGetModel<T>>> GetSearchBySimpleQueryString<T>(SearchByQueryParameters queryParameters) where T : class
         {
-            var elasticClient = GetElasticClient(indexName);
-            var searchResponse = elasticClient.Search<T>(s => s
-                            .Index(indexName)
-                            .From(from)
-                            .Size(size)
+            var elasticClient = GetElasticClient(queryParameters.IndexName);
+            var searchResponse = await elasticClient.SearchAsync<T>(s => s
+                            .Index(queryParameters.IndexName)
+                            .From(queryParameters.From)
+                            .Size(queryParameters.Size)
                             .MatchAll()
                             .Query(a => a.SimpleQueryString(c => c
-                                      .Name(queryName)
+                                      .Name(queryParameters.QueryName)
                                       .Boost(1.1)
-                                      .Fields(fields)
-                                      .Query(query)
+                                      .Fields(queryParameters.Fields)
+                                      .Query(queryParameters.Query)
                                       .Analyzer("standard")
                                       .DefaultOperator(Operator.Or)
                                       .Flags(SimpleQueryStringFlags.And | SimpleQueryStringFlags.Near)
@@ -102,23 +123,31 @@ namespace Core.Utilities.ElasticSearch
                                       .AutoGenerateSynonymsPhraseQuery(false)))
 
          );
-            return searchResponse.Documents.ToList();
+            var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
+            {
+                ElasticId = x.Id,
+                Item = x.Source
+            }).ToList();
+
+            return list;
         }
 
-        public Results.Result Insert(string indexName, object item)
+        public async Task<IResult> InsertAsync(ElasticSearchInsertUpdateModel model)
         {
-            var elasticClient = GetElasticClient(indexName);
+            var elasticClient = GetElasticClient(model.IndexName);
 
-            var response = elasticClient.Index(item, i => i.Index(indexName));
+            var response = await elasticClient.IndexAsync(model.Item, i => i.Index(model.IndexName)
+                                                           .Id(model.ElasticId)
+                                                           .Refresh(Elasticsearch.Net.Refresh.True));
 
             return new Results.Result(success: response.IsValid,
                                      message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
         }
 
-        public Results.Result InsertMany(string indexName, object[] items)
+        public async Task<IResult> InsertManyAsync(string indexName, object[] items)
         {
             var elasticClient = GetElasticClient(indexName);
-            var response = elasticClient.Bulk(a =>
+            var response = await elasticClient.BulkAsync(a =>
                                  a.Index(indexName)
                                  .IndexMany(items));
 
@@ -126,19 +155,19 @@ namespace Core.Utilities.ElasticSearch
                                      message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
         }
 
-
-        private void ControlIndexNameNullOrEmpty(string indexName)
+        public async Task<IResult> UpdateByElasticIdAsync(ElasticSearchInsertUpdateModel model)
         {
-            if (string.IsNullOrEmpty(indexName))
-            {
-                throw new ArgumentNullException(indexName, "Index name cannot be null or empty ");
-            }
+            var elasticClient = GetElasticClient(model.IndexName);
+            var response = await elasticClient.UpdateAsync<object>(model.ElasticId, u => u.Index(model.IndexName).Doc(model.Item));
+            return new Results.Result(success: response.IsValid,
+                                     message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
         }
-
 
         private ElasticClient GetElasticClient(string indexName)
         {
-            ControlIndexNameNullOrEmpty(indexName);
+            if (string.IsNullOrEmpty(indexName))
+                throw new ArgumentNullException(indexName, "Index name cannot be null or empty ");
+
             return new ElasticClient(_connectionSettings);
         }
     }
