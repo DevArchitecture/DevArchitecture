@@ -4,30 +4,37 @@ import { AuthService } from '../../admin/login/Services/Auth.service';
 
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+	selector: 'app-navbar',
+	templateUrl: './navbar.component.html',
+	styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
 
-    userName:string;
-    constructor(private authService:AuthService, private router:Router) {
+	userName: string;
+	constructor(private authService: AuthService, private router: Router) {
 
-    }
+	}
 
-    isLoggedIn(): boolean {
+	isLoggedIn(): boolean {
 
-        return this.authService.loggedIn();
-    }
+		return this.authService.loggedIn();
+	}
 
-    logOut(){
-        this.authService.logOut();
-        this.router.navigateByUrl("/login");
+	logOut() {
+		this.authService.logOut();
+		this.router.navigateByUrl("/login");
 
-    }
+	}
 
-    ngOnInit(){      
-        console.log(this.userName);
-        this.userName=this.authService.getUserName();        
-    }
+	help(): void{
+
+		window.open(
+			'https://calm-moss-01a78bc03.azurestaticapps.net',
+			'_blank' 
+		);
+	}
+	ngOnInit() {
+		console.log(this.userName);
+		this.userName = this.authService.getUserName();
+	}
 }

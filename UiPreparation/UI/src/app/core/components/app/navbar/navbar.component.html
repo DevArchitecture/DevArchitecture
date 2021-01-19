@@ -4,8 +4,14 @@
             
             <ul class="navbar-nav" *ngIf="isLoggedIn()">
                 <li class="nav-item">
-                    {{userName}}
-                </li>             
+                  <span>{{userName}}</span>
+                </li>   
+                <li class="nav-item" (click)="help()" >                
+                    <span class="material-icons" title="Help">
+                      help_outline
+                    </span>
+                  
+                </li>
                 <li class="nav-item"   (click)="logOut()">
                       <span class="material-icons" title="Logout">login</span>
                 </li>

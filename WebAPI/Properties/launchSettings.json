@@ -31,7 +31,7 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
     "IIS_Staging": {
-      "commandName": "IISExpress",
+      "commandName": "IIS",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
