@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertifyService } from 'app/core/services/Alertify.service';
 import { LookUpService } from 'app/core/services/LookUp.service';
@@ -7,6 +7,8 @@ import { AuthService } from 'app/core/components/admin/login/Services/Auth.servi
 import { environment } from 'environments/environment';
 import { LogDto } from './models/LogDto';
 import { LogDtoService } from './services/LogDto.service';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs/Rx';
 
 
 declare var jQuery: any;
@@ -16,31 +18,44 @@ declare var jQuery: any;
 	templateUrl: './logDto.component.html',
 	styleUrls: ['./logDto.component.scss']
 })
-export class LogDtoComponent implements OnInit {
+export class LogDtoComponent implements OnDestroy, AfterViewInit, OnInit {
 
-	
 
-	logDtoList:LogDto[];
-	logDto:LogDto=new LogDto();
+	@ViewChild(DataTableDirective) dtElement: DataTableDirective;
+
+	logDtoList: LogDto[];
+	logDto: LogDto = new LogDto();
 
 	logDtoAddForm: FormGroup;
 
 
-	logDtoId:number;
+	logDtoId: number;
+	dtTrigger: Subject<any> = new Subject<any>();
 
-	constructor(private logDtoService:LogDtoService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
+	constructor(private logDtoService: LogDtoService, private lookupService: LookUpService, private alertifyService: AlertifyService, private formBuilder: FormBuilder, private authService: AuthService) { }
 
 	ngOnInit() {
 
-		this.getLogDtoList();		
+		this.getLogDtoList();
 	}
 
 	getLogDtoList() {
 		this.logDtoService.getLogDtoList().subscribe(data => {
-			this.logDtoList = data
+			this.logDtoList = data;
+			this.rerender();
 		});
 	}
-	
+
+	ngOnDestroy(): void {
+		this.dtTrigger.unsubscribe();
+	}
+
+	ngAfterViewInit(): void {
+
+		this.getLogDtoList();
+
+	}
+
 	clearFormGroup(group: FormGroup) {
 
 		group.markAsUntouched();
@@ -53,8 +68,25 @@ export class LogDtoComponent implements OnInit {
 		});
 	}
 
-	checkClaim(claim:string):boolean{
+	checkClaim(claim: string): boolean {
 		return this.authService.claimGuard(claim)
 	}
+
+	rerender(): void {
+		debugger;
+		if (this.dtElement.dtInstance == undefined) {
+		  this.dtTrigger.next();
+		}
+		else {
+		  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+	
+			// Destroy the table first
+			dtInstance.destroy();
+			// Call the dtTrigger to rerender again
+			this.dtTrigger.next();
+		  });
+		}
+	
+	  }
 
 }
