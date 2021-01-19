@@ -1,6 +1,5 @@
 using Autofac;
 using AutoMapper;
-using Business.BusinessAspects;
 using Business.DependencyResolvers;
 using Business.Services.Authentication;
 using Core.DependencyResolvers;
@@ -12,8 +11,6 @@ using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Concrete.MongoDb;
-using DataAccess.Concrete.MongoDb.Collections;
 using DataAccess.Concrete.MongoDb.Context;
 using FluentValidation;
 using MediatR;
@@ -70,12 +67,12 @@ namespace Business
 
 							sp.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal(new ClaimsIdentity("Unknown"));
 
-			services.AddScoped<IPrincipal>(getPrincipal);		
+			services.AddScoped<IPrincipal>(getPrincipal);
 
 
 			services.AddDependencyResolvers(Configuration, new ICoreModule[]
 			{
-															new CoreModule()
+					new CoreModule()
 			});
 
 			services.AddTransient<IAuthenticationCoordinator, AuthenticationCoordinator>();
@@ -108,34 +105,9 @@ namespace Business
 		{
 
 			ConfigureServices(services);
-   services.AddTransient<ILogRepository, LogRepository>();
-   services.AddTransient<ITranslateRepository, TranslateRepository>();
-   services.AddTransient<ILanguageRepository, LanguageRepository>();
-
-			services.AddTransient<IUserRepository, UserRepository>();
-			services.AddTransient<IUserClaimRepository, UserClaimRepository>();
-			services.AddTransient<IOperationClaimRepository, OperationClaimRepository>();
-			services.AddTransient<IGroupRepository, GroupRepository>();
-			services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
-
-			services.AddDbContext<ProjectDbContext, Fakes.SFw.SFwInMemory>(ServiceLifetime.Transient);
-			services.AddSingleton<MongoDbContextBase, MongoDbContext>();
-
-
-
-		}
-
-		/// <summary>
-		/// Geliştirmede çağırılan konfigürasyondur.
-		/// </summary>
-		/// <param name="services"></param> 
-		public void ConfigureProfilingServices(IServiceCollection services)
-		{
-
-			ConfigureServices(services);
-   services.AddTransient<ILogRepository, LogRepository>();
-   services.AddTransient<ITranslateRepository, TranslateRepository>();
-   services.AddTransient<ILanguageRepository, LanguageRepository>();
+			services.AddTransient<ILogRepository, LogRepository>();
+			services.AddTransient<ITranslateRepository, TranslateRepository>();
+			services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 
 			services.AddTransient<IUserRepository, UserRepository>();
@@ -144,9 +116,11 @@ namespace Business
 			services.AddTransient<IGroupRepository, GroupRepository>();
 			services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
 			services.AddTransient<IUserGroupRepository, UserGroupRepository>();
-			services.AddDbContext<ProjectDbContext>();
 
+			services.AddDbContext<ProjectDbContext, Fakes.SFw.SFwInMemory>(ServiceLifetime.Transient);
 			services.AddSingleton<MongoDbContextBase, MongoDbContext>();
+
+
 
 		}
 		/// <summary>
@@ -156,9 +130,9 @@ namespace Business
 		public void ConfigureStagingServices(IServiceCollection services)
 		{
 			ConfigureServices(services);
-   services.AddTransient<ILogRepository, LogRepository>();
-   services.AddTransient<ITranslateRepository, TranslateRepository>();
-   services.AddTransient<ILanguageRepository, LanguageRepository>();
+			services.AddTransient<ILogRepository, LogRepository>();
+			services.AddTransient<ITranslateRepository, TranslateRepository>();
+			services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IUserClaimRepository, UserClaimRepository>();
@@ -180,9 +154,9 @@ namespace Business
 		public void ConfigureProductionServices(IServiceCollection services)
 		{
 			ConfigureServices(services);
-   services.AddTransient<ILogRepository, LogRepository>();
-   services.AddTransient<ITranslateRepository, TranslateRepository>();
-   services.AddTransient<ILanguageRepository, LanguageRepository>();
+			services.AddTransient<ILogRepository, LogRepository>();
+			services.AddTransient<ITranslateRepository, TranslateRepository>();
+			services.AddTransient<ILanguageRepository, LanguageRepository>();
 
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IUserClaimRepository, UserClaimRepository>();

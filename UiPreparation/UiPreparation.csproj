@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="UI\e2e\app.e2e-spec.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="UI\src\assets\i18n\" />
   </ItemGroup>
 	
