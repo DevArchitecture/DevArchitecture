@@ -29,11 +29,11 @@
 
                     <td *ngIf="checkClaim('UpdateLanguageCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#language" (click)="getLanguageById(language.id)">
-                        <i style="color:sandybrown;" class="far fa-edit"></i>
+                        <i style="color:#ff5722;" class="far fa-edit"></i>
                       </a>
                     </td>
                     <td *ngIf="checkClaim('DeleteLanguageCommand')" style="width: 25px;">
-                      <a (click)="deleteLanguage(language.id)"><i style="color:red;" class="fas fa-trash-alt"></i></a>
+                      <a (click)="deleteLanguage(language.id)"><i style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                     </td>
                   </tr>
                 </tbody>

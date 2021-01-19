@@ -68,10 +68,10 @@
                       <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'users_Groups' | translate}}" style="color:royalblue;"  class="fas fa-user-lock" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'update' | translate}}" style="color:sandybrown;" class="far fa-edit"></i></a>
+                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
                     </td>
                     <td *ngIf="checkClaim('DeleteUserCommand')" style="width: 25px;">
-                      <a (click)="deleteUser(user.userId)"><i title="{{'delete' | translate}}" style="color:red;" class="fas fa-trash-alt"></i></a>
+                      <a (click)="deleteUser(user.userId)"><i title="{{'delete' | translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                     </td>
                   </tr>
 

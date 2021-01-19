@@ -38,10 +38,10 @@
 
                     <td *ngIf="checkClaim('UpdateProductCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#product" (click)="getProductById(product.productId)">
-                        <i style="color:sandybrown;" class="far fa-edit"></i></a>
+                        <i style="color:#ff5722;" class="far fa-edit"></i></a>
                     </td>
                     <td *ngIf="checkClaim('DeleteProductCommand')" style="width: 25px;">
-                      <a (click)="deleteProduct(product.productId)"><i style="color:red;" class="fas fa-trash-alt"></i></a>
+                      <a (click)="deleteProduct(product.productId)"><i style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                     </td>
                   </tr>
                 </tbody>
