@@ -37,13 +37,13 @@
                       <a data-toggle="modal" data-target="#groupClaims" (click)="getGroupClaims(group.id)"><i title="Grup Yetkileri" style="color:blue;" class="fas fa-shield-alt" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserGroupByGroupIdCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(group.id)"><i title="Kullanıcı Grupları" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(group.id)"><i title="Kullanıcı Grupları" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateGroupCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#group" (click)="getGroupById(group.id)"><i title="Güncelle" style="color:blue;" class="far fa-edit"></i></a>
+                      <a data-toggle="modal" data-target="#group" (click)="getGroupById(group.id)"><i title="Güncelle" style="color:sandybrown;" class="far fa-edit"></i></a>
                     </td>
                     <td *ngIf="checkClaim('DeleteGroupCommand')" style="width: 25px;">
-                      <a (click)="deleteGroup(group.id)"><i title="Sil" class="fas fa-trash"></i></a>
+                      <a (click)="deleteGroup(group.id)"><i title="Sil" style="color:red;" class="fas fa-trash-alt"></i></a>
                     </td>
                   </tr>
 

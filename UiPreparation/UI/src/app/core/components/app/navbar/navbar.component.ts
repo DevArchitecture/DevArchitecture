@@ -10,7 +10,7 @@ import { AuthService } from '../../admin/login/Services/Auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-    userName:string="deneme";
+    userName:string;
     constructor(private authService:AuthService, private router:Router) {
 
     }
@@ -26,12 +26,8 @@ export class NavbarComponent implements OnInit {
 
     }
 
-    ngOnInit(){
-      
+    ngOnInit(){      
         console.log(this.userName);
-        this.userName=this.authService.getUserName();
-        
+        this.userName=this.authService.getUserName();        
     }
-
-
 }

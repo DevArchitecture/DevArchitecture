@@ -1,37 +1,79 @@
-
-<div class="logo" style="padding:5px">
-	<a class="simple-text" href="#">
-		<!-- <div class="logo-img">
+<div class="logo" style="padding: 5px">
+  <a class="simple-text" href="#">
+    <!-- <div class="logo-img">
 				 <img src="/assets/img/angular2-logo-red.png">
 		 </div>  -->
-		<!-- Dev Architecture -->
-		<img src="/assets/img/logo/logo.png" style="width: 248px;margin-top: -104px;margin-bottom: -105px;margin-left: 0px;margin-right: 0px; ">
-	</a>
-
+    <!-- Dev Architecture -->
+    <img
+      src="/assets/img/logo/logo.png"
+      style="
+        width: 248px;
+        margin-top: -104px;
+        margin-bottom: -105px;
+        margin-left: 0px;
+        margin-right: 0px;
+      "
+    />
+  </a>
 </div>
 <div class="sidebar-wrapper">
-	<div class="nav-container">
-		<ul class="nav">
-			<li routerLinkActive="active">
-				<a data-toggle="collapse" class="nav-link" href="#Management">
-					<i class="material-icons">widgets</i>
-        <p>Management
+  <div class="nav-container">
+    <ul class="nav">
+      <li routerLinkActive="active">
+        <a data-toggle="collapse" class="nav-link" href="#Management">
+          <i class="material-icons">widgets</i>
+          <p>
+            {{ "Management" | translate }}
             <b class="caret"></b>
-        </p>
+          </p>
+        </a>
+        <div class="collapse" id="Management">
+          <ul class="nav">
+            <li
+              *ngFor="let menuItem of adminMenuItems"
+              class="{{ menuItem.class }} nav-item"
+            >
+              <a
+                *ngIf="checkClaim(menuItem.claim)"
+                class="nav-link"
+                [routerLink]="[menuItem.path]"
+              >
+                <i class="material-icons">{{ menuItem.icon }}</i>
+                <p>{{ menuItem.title | translate }}</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+	</ul>
+	
+	<ul class="nav">
+		<li routerLinkActive="active">
+		  <a data-toggle="collapse" class="nav-link" href="#AppMenu">
+			<i class="material-icons">extension</i>
+			<p>
+			  {{ "AppMenu" | translate }}
+			  <b class="caret"></b>
+			</p>
+		  </a>
+		  <div class="collapse" id="AppMenu">
+			<ul class="nav">
+			  <li
+				*ngFor="let menuItem of userMenuItems"
+				class="{{ menuItem.class }} nav-item"
+			  >
+				<a
+				  *ngIf="checkClaim(menuItem.claim)"
+				  class="nav-link"
+				  [routerLink]="[menuItem.path]"
+				>
+				  <i class="material-icons">{{ menuItem.icon }}</i>
+				  <p>{{ menuItem.title | translate }}</p>
 				</a>
-				<div class="collapse" id="Management">
-					<ul class="nav">
-						<li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-							<a *ngIf="checkClaim(menuItem.claim)" class="nav-link" [routerLink]="[menuItem.path]">
-								<i class="material-icons">{{menuItem.icon}}</i>
-								<p>{{ menuItem.title |translate}}</p>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</li>
-		</ul>
-	</div>
+			  </li>
+			</ul>
+		  </div>
+		</li>
+	  </ul>
+  </div>
 </div>
-
-

@@ -59,19 +59,19 @@
                       {{user.notes}}
                     </td>
                     <td *ngIf="checkClaim('UserChangePasswordCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{'users_passwordchange' | translate}}" style="color:blue;" class="fas fa-key" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{('users_passwordchange' | translate)}}" style="color:slateblue;" class="fas fa-key" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{'users_claims' | translate}}" style="color:blue;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{('users_claims' | translate)}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'users_Groups' | translate}}" class="fas fa-user-lock" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'users_Groups' | translate}}" style="color:royalblue;"  class="fas fa-user-lock" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'update' | translate}}" style="color:blue;" class="far fa-edit"></i></a>
+                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'update' | translate}}" style="color:sandybrown;" class="far fa-edit"></i></a>
                     </td>
                     <td *ngIf="checkClaim('DeleteUserCommand')" style="width: 25px;">
-                      <a (click)="deleteUser(user.userId)"><i title="{{'delete' | translate}}" class="fas fa-trash"></i></a>
+                      <a (click)="deleteUser(user.userId)"><i title="{{'delete' | translate}}" style="color:red;" class="fas fa-trash-alt"></i></a>
                     </td>
                   </tr>
 
@@ -159,10 +159,10 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder=" password" type="text" id="password" name="password"
+                <input matInput placeholder="Password" type="password" id="password" name="password"
                   formControlName="password">
                 <div class="alert alert-danger"
-                  *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">Paralo zorunludur</div>
+                  *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">Parola alanı zorunludur!</div>
               </mat-form-field>
               
             </div>
@@ -170,12 +170,12 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Confirm Password" type="text" id="confirmPassword" name="confirmPassword"
+                <input matInput placeholder="Confirm Password" type="password" id="confirmPassword" name="confirmPassword"
                   formControlName="confirmPassword">
                 <div class="alert alert-danger"
-                *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">Confirm Password is required</div>
+                *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">Parola onay alanı zorunludur!</div>
                 <div class="alert alert-danger"
-                *ngIf="passwordForm.get('confirmPassword')!.hasError('mustMatch')">Parolaların Eşleşmesi lazım</div>
+                *ngIf="passwordForm.get('confirmPassword')!.hasError('mustMatch')">Girdiğiniz Parolalar Eşleşmiyor!</div>
               </mat-form-field>
               
             </div>

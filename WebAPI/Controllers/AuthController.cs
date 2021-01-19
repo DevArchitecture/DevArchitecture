@@ -82,13 +82,13 @@ namespace WebAPI.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPut("changeuserpassword")]
-        public async Task<IActionResult> ChangeUserPassword([FromForm] UserChangePasswordCommand command)
+        public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command)
         {
             var result = await Mediator.Send(command);
             if (result.Success)
-                return Ok(result);
+                return Ok(result.Message);
 
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
 
 

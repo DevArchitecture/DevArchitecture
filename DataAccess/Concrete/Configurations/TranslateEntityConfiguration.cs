@@ -39,7 +39,11 @@ namespace DataAccess.Concrete.Configurations
 				new Translate {Id=23, LangId = 1, Code = "Languages", Value = "Diller" },
 				new Translate {Id=24, LangId = 2, Code = "Languages", Value = "Languages" },
 				new Translate {Id=25, LangId = 1, Code = "Translate Words", Value = "Dil Çevirileri" },
-				new Translate {Id=26, LangId = 2, Code = "Translate Words", Value = "Translate Words" });
+				new Translate {Id=26, LangId = 2, Code = "Translate Words", Value = "Translate Words" },
+				new Translate { Id = 27, LangId = 1, Code = "Management", Value = "Yönetim" },
+				new Translate { Id = 28, LangId = 2, Code = "Management", Value = "Management" },
+			new Translate { Id = 29, LangId = 1, Code = "AppMenu", Value = "Uygulama" },
+				new Translate { Id = 30, LangId = 2, Code = "AppMenu", Value = "Application" });
 		}
 	}
 }

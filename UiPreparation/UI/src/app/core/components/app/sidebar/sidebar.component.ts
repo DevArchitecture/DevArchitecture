@@ -11,7 +11,7 @@ declare interface RouteInfo {
     class: string;
     claim:string;
 }
-export const ROUTES: RouteInfo[] = [
+export const ADMINROUTES: RouteInfo[] = [
   { path: '/user', title: 'Users', icon: 'how_to_reg', class: '', claim:"GetUsersQuery" },
   { path: '/group', title: 'Groups', icon:'groups', class: '',claim:"GetGroupsQuery" },
   { path: '/operationclaim', title: 'Operation Claim', icon:'local_police', class: '', claim:"GetOperationClaimsQuery"},
@@ -20,21 +20,27 @@ export const ROUTES: RouteInfo[] = [
   { path: '/log', title: 'Logs', icon: 'update', class: '', claim: "GetLogDtoQuery" }
 ];
 
+export const USERROUTES: RouteInfo[] = [ 
+  //{ path: '/log', title: 'Logs', icon: 'update', class: '', claim: "GetLogDtoQuery" }
+];
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+  adminMenuItems: any[];
+  userMenuItems: any[];
 
   constructor(private authService:AuthService,public translateService:TranslateService) { 
   }
 
   ngOnInit() {
   
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
-    
+    this.adminMenuItems = ADMINROUTES.filter(menuItem => menuItem);
+    this.userMenuItems = USERROUTES.filter(menuItem => menuItem);
+
     var lang=localStorage.getItem('lang') || 'tr-TR'
     this.translateService.use(lang);
   }
