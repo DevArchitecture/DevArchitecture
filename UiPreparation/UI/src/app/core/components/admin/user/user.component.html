@@ -34,6 +34,7 @@
                     <th class="no-sort"></th>
                     <th class="no-sort"></th>
                     <th class="no-sort"></th>
+                    <th class="no-sort"></th>
 
                   </tr>
                 </thead>
@@ -56,6 +57,9 @@
                     </td>
                     <td>
                       {{user.notes}}
+                    </td>
+                    <td *ngIf="checkClaim('UserChangePasswordCommand')" style="width: 25px;">
+                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{'users_passwordchange' | translate}}" style="color:blue;" class="fas fa-key" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{'users_claims' | translate}}" style="color:blue;" class="fas fa-user-shield" aria-hidden="true"></i></a>
@@ -112,17 +116,7 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="row" >
-            <div class="col-md-12">
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Password" id="password" name="password" formControlName="password"
-                  type="password">
-                <div class="alert alert-danger"
-                  *ngIf="userAddForm.get('password')!.hasError('required') && userAddForm.get('password')!.dirty"></div>
-              </mat-form-field>
-            </div>
 
-          </div>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
@@ -143,6 +137,50 @@
               </mat-form-field>
             </div>
           </div>
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal modal-angular fade" id="passwordChange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" #closeButton class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(passwordForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          {{'Change Password' | translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="passwordForm" [formGroup]="passwordForm" (ngSubmit)="savePassword()">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder=" password" type="text" id="password" name="password"
+                  formControlName="password">
+                <div class="alert alert-danger"
+                  *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">Paralo zorunludur</div>
+              </mat-form-field>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Confirm Password" type="text" id="confirmPassword" name="confirmPassword"
+                  formControlName="confirmPassword">
+                <div class="alert alert-danger"
+                *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">Confirm Password is required</div>
+                <div class="alert alert-danger"
+                *ngIf="passwordForm.get('confirmPassword')!.hasError('mustMatch')">Parolaların Eşleşmesi lazım</div>
+              </mat-form-field>
+              
+            </div>
+          </div>
+
           <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
           <div class="clearfix"></div>
         </form>

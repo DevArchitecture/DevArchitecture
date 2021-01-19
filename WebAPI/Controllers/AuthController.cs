@@ -1,5 +1,6 @@
 ﻿using Business.Handlers.Authorizations.Commands;
 using Business.Handlers.Authorizations.Queries;
+using Business.Handlers.Users.Commands;
 using Business.Services.Authentication.Model;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authorization;
@@ -69,6 +70,21 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
         {
             var result = await Mediator.Send(forgotPassword);
+            if (result.Success)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut("changeuserpassword")]
+        public async Task<IActionResult> ChangeUserPassword([FromForm] UserChangePasswordCommand command)
+        {
+            var result = await Mediator.Send(command);
             if (result.Success)
                 return Ok(result);
 

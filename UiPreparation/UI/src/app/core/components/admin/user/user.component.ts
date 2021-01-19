@@ -7,10 +7,12 @@ import { LookUp } from 'app/core/models/LookUp';
 import { AlertifyService } from 'app/core/services/Alertify.service';
 import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from '../login/Services/Auth.service';
-import { environment } from '../../../../../environments/environment'
 import { Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { DataTableDirective } from 'angular-datatables';
+import { MustMatch } from 'app/core/directives/MustMatch';
+import { PasswordDto } from './models/passwordDto';
+import { environment } from 'environments/environment';
 
 declare var jQuery: any;
 
@@ -57,10 +59,12 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   userAddForm: FormGroup;
+  passwordForm: FormGroup;
 
   ngOnInit() {
 
     this.createUserAddForm();
+    this.createPasswordForm();
 
     this.dropdownSettings = environment.getDropDownSetting;
 
@@ -154,13 +158,22 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
   createUserAddForm() {
     this.userAddForm = this.formBuilder.group({
       userId: [0],
-      password: ["", Validators.required],
       fullName: ["", Validators.required],
       email: ["", Validators.required],
       address: ["", Validators.required],
       notes: ["", Validators.required],
       status: [true]
     })
+  }
+
+  createPasswordForm() {
+    this.passwordForm = this.formBuilder.group({
+      password: ["", Validators.required],
+      confirmPassword: ["", Validators.required]
+    },
+      {
+        validator: MustMatch('password', 'confirmPassword')
+      });
   }
 
 
@@ -185,6 +198,9 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
     });
   }
 
+  setUserId(id: number) {
+    this.userId = id;
+  }
 
 
   save() {
@@ -197,6 +213,26 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
         this.updateUser();
 
     }
+  }
+
+  savePassword() {
+
+    if (this.passwordForm.valid) {
+      debugger;
+      var passwordDto: PasswordDto=new PasswordDto();
+      passwordDto.userId = this.userId;
+      passwordDto.password = this.passwordForm.value.password;
+
+      this.userService.saveUserPassword(passwordDto).subscribe(data => {
+        this.userId=0;
+        jQuery("#passwordChange").modal("hide");
+        this.alertifyService.success(data);
+        this.clearFormGroup(this.passwordForm);
+  
+      })
+
+    }
+
   }
 
 

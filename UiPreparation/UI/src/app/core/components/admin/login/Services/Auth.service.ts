@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AlertifyService } from 'app/core/services/Alertify.service';
 import { LocalStorageService } from 'app/core/services/LocalStorage.service';
+import { environment } from 'environments/environment';
 import { LoginUser } from '../Model/LoginUser';
 import { TokenModel } from '../Model/TokenModel';
-import { environment } from '../../../../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'

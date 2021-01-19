@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/User';
 import { environment } from '../../../../../../environments/environment'
 import { LookUp } from 'app/core/models/LookUp';
+import { PasswordDto } from '../models/passwordDto';
 
 
 @Injectable({
@@ -60,6 +61,11 @@ export class UserService {
     var result = this.httpClient.put(environment.getApiUrl + "/UserGroups/", {UserId:userId, GroupId:groups }, { responseType: 'text' });
     return result;
 
+  }
+
+  saveUserPassword(command:PasswordDto):Observable<any>{
+    var result = this.httpClient.put(environment.getApiUrl + "/Auth/changeuserpassword", command, { responseType: 'text' });
+    return result;
   }
 
 }
