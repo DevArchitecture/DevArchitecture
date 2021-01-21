@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LookUp } from 'app/core/models/LookUp';
-import { AlertifyService } from 'app/core/services/Alertify.service';
-import { LookUpService } from 'app/core/services/LookUp.service';
-import { AuthService } from '../../admin/login/Services/Auth.service';
+import { LookUp } from 'app/core/models/lookUp';
+import { AlertifyService } from 'app/core/services/alertify.service';
+import { LookUpService } from 'app/core/services/lookUp.service';
+import { AuthService } from '../../admin/login/services/auth.service';
 import { Translate } from './Models/Translate';
 import { TranslateService } from './Services/Translate.service';
 import { Subject } from 'rxjs/Rx';

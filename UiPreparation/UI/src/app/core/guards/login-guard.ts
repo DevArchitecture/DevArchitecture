@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
-import { AuthService } from "../components/admin/login/Services/Auth.service";
-import { LocalStorageService } from "../services/LocalStorage.service";
+import { AuthService } from "../components/admin/login/services/auth.service";
+import { LocalStorageService } from "../services/local-storage.service";
 
 
 @Injectable()

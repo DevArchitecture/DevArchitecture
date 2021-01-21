@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 declare let alertify: any;
@@ -9,24 +10,32 @@ declare let alertify: any;
 })
 export class AlertifyService {
 
-  constructor(private httpClient: HttpClient) {
+  
+
+  constructor(private httpClient: HttpClient,public translateService:TranslateService) {
+    
     alertify.set('notifier', 'position', 'top-right');
   }
 
   success(message: string) {
-    alertify.success(message);
+    alertify.success(this.convertMessage(message));
   }
 
   error(message: string) {
-    alertify.error(message);
+    alertify.error(this.convertMessage(message));
   }
 
   info(message: string) {
-    alertify.info(message);
+    alertify.info(this.convertMessage(message));
   }
 
   warning(message: string) {
-    alertify.warning(message);
+    alertify.warning(this.convertMessage(message));
+  }
+
+  convertMessage(messagekey:string)
+  {
+    this.translateService.get(messagekey);
   }
 
   confirmDelete(url: string, values: any) {

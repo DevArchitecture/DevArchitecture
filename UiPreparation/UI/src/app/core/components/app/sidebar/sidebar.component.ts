@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from '../../admin/login/Services/Auth.service';
+import { AuthService } from '../../admin/login/services/auth.service';
 
 
 declare const $: any;

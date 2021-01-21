@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Group } from '../Models/Group';
+import { Group } from '../models/group';
 import { environment } from '../../../../../../environments/environment';
-import { LookUp } from 'app/core/models/LookUp';
+import { LookUp } from 'app/core/models/lookUp';
 
 @Injectable({
   providedIn: 'root'

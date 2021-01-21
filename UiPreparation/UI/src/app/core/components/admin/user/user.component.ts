@@ -1,16 +1,16 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from "./models/User";
-import { UserService } from './Services/User.service';
+import { User } from "./models/user";
+import { UserService } from './services/User.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { LookUp } from 'app/core/models/LookUp';
-import { AlertifyService } from 'app/core/services/Alertify.service';
-import { LookUpService } from 'app/core/services/LookUp.service';
-import { AuthService } from '../login/Services/Auth.service';
+import { LookUp } from 'app/core/models/lookUp';
+import { AlertifyService } from 'app/core/services/alertify.service';
+import { LookUpService } from 'app/core/services/lookUp.service';
+import { AuthService } from '../login/services/auth.service';
 import { Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { DataTableDirective } from 'angular-datatables';
-import { MustMatch } from 'app/core/directives/MustMatch';
+import { MustMatch } from 'app/core/directives/must-match';
 import { PasswordDto } from './models/passwordDto';
 import { environment } from 'environments/environment';
 

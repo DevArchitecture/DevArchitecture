@@ -1,8 +1,8 @@
 import { Component, OnDestroy,AfterViewInit , OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertifyService } from 'app/core/services/Alertify.service';
-import { LookUpService } from 'app/core/services/LookUp.service';
-import { AuthService } from '../../admin/login/Services/Auth.service';
+import { AlertifyService } from 'app/core/services/alertify.service';
+import { LookUpService } from 'app/core/services/lookUp.service';
+import { AuthService } from '../../admin/login/services/auth.service';
 import { OperationClaim } from './Models/OperationClaim';
 import { OperationClaimService } from './Services/OperationClaim.service';
 import { Subject } from 'rxjs/Rx';

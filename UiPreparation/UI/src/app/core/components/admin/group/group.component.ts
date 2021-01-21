@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LookUp } from 'app/core/models/LookUp';
-import { AlertifyService } from 'app/core/services/Alertify.service';
-import { LookUpService } from 'app/core/services/LookUp.service';
+import { LookUp } from 'app/core/models/lookUp';
+import { AlertifyService } from 'app/core/services/alertify.service';
+import { LookUpService } from 'app/core/services/lookUp.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { AuthService } from '../login/Services/Auth.service';
-import { Group } from './Models/Group';
-import { GroupService } from './Services/Group.service';
+import { AuthService } from '../login/services/auth.service';
+import { Group } from './models/group';
+import { GroupService } from './services/group.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';

@@ -21,7 +21,7 @@ import { TranslateComponent } from '../../translate/translate.component';
 import { OperationClaimComponent } from '../../operationclaim/operationClaim.component';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { TranslationService } from 'app/core/services/Translation.service';
+import { TranslationService } from 'app/core/services/translation.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {

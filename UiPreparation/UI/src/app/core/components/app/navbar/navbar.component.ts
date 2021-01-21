@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../admin/login/Services/Auth.service';
+import { AuthService } from '../../admin/login/services/auth.service';
 
 
 @Component({

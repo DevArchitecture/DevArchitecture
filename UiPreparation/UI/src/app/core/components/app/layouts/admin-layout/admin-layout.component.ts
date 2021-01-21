@@ -5,7 +5,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
-import { AuthService } from 'app/core/components/admin/login/Services/Auth.service';
+import { AuthService } from 'app/core/components/admin/login/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 
 

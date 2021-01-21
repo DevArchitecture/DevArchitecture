@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
-import { AlertifyService } from '../services/Alertify.service';
+import { AlertifyService } from '../services/alertify.service';
 
 
 @Injectable({
@@ -33,10 +33,10 @@ export class AuthInterceptorService implements HttpInterceptor {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {
           // client-side error
-          errorMessage = `Hata: ${error.error.message}`;
+          errorMessage = `Error: ${error.error.message}`;
         } else {
           // server-side error
-          errorMessage = `Hata Kodu: ${error.status}\n Mesaj: ${error.error}`;
+          errorMessage = `Error Code: ${error.status}\n Message: ${error.error}`;
         }
         this.alertifyService.error(errorMessage);
         return throwError(errorMessage);
