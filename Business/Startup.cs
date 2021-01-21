@@ -1,6 +1,8 @@
 using Autofac;
 using AutoMapper;
+using Business.Constants;
 using Business.DependencyResolvers;
+using Business.Fakes.DArch;
 using Business.Services.Authentication;
 using Core.DependencyResolvers;
 using Core.Extensions;
@@ -26,27 +28,17 @@ using System.Security.Principal;
 
 namespace Business
 {
-	/// <summary>
-	/// 
-	/// </summary>
 	public partial class BusinessStartup
 	{
 		protected readonly IHostEnvironment HostEnvironment;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="configuration"></param>
-		/// <param name="hostEnvironment"></param>
+		
 		public BusinessStartup(IConfiguration configuration, IHostEnvironment hostEnvironment)
 		{
 			Configuration = configuration;
 			HostEnvironment = hostEnvironment;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
 		public IConfiguration Configuration { get; }
 
 
@@ -54,8 +46,7 @@ namespace Business
 		/// This method gets called by the runtime. Use this method to add services to the container. 
 		/// </summary>
 		/// <remarks>
-		/// Tüm konfigürasyonlar için ortaktır ve çağırılması gerekir. Aspnet core diğer
-		/// metotlar olduğu için bu metodu çağırmaz.
+		/// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
 		/// </remarks>
 		/// <param name="services"></param>
 
@@ -65,7 +56,7 @@ namespace Business
 
 			Func<IServiceProvider, ClaimsPrincipal> getPrincipal = (sp) =>
 
-							sp.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal(new ClaimsIdentity("Unknown"));
+							sp.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
 
 			services.AddScoped<IPrincipal>(getPrincipal);
 
@@ -98,7 +89,7 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Geliştirmede çağırılan konfigürasyondur.
+		/// This method gets called by the Development
 		/// </summary>
 		/// <param name="services"></param> 
 		public void ConfigureDevelopmentServices(IServiceCollection services)
@@ -117,14 +108,14 @@ namespace Business
 			services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
 			services.AddTransient<IUserGroupRepository, UserGroupRepository>();
 
-			services.AddDbContext<ProjectDbContext, Fakes.SFw.SFwInMemory>(ServiceLifetime.Transient);
+			services.AddDbContext<ProjectDbContext, DArchInMemory>(ServiceLifetime.Transient);
 			services.AddSingleton<MongoDbContextBase, MongoDbContext>();
 
 
 
 		}
-		/// <summary>
-		/// Sahnelemede çağırılan konfigürasyondur.
+		/// <summary>		
+		/// This method gets called by the Staging
 		/// </summary>
 		/// <param name="services"></param>
 		public void ConfigureStagingServices(IServiceCollection services)
@@ -148,7 +139,7 @@ namespace Business
 		}
 
 		/// <summary>
-		/// Canlıda çağırılan konfigürasyondur.
+		/// This method gets called by the Production
 		/// </summary>
 		/// <param name="services"></param>
 		public void ConfigureProductionServices(IServiceCollection services)

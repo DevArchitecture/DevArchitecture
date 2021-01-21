@@ -14,9 +14,4 @@ namespace Core.Entities.Dtos
 		public string Type { get; set; }
 		
 	}
-	
-   
-
-   
-
 }

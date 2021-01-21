@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
     /// <summary>
-    /// Authorization işlemlerini yapar
+    /// Make it Authorization operations
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -19,17 +19,17 @@ namespace WebAPI.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        /// <summary>
-        /// Dependency injection constructor injection ile sağlanır.
-        /// </summary>
-        /// <param name="configuration"></param>
-        public AuthController(IConfiguration configuration)
+    /// <summary>
+    /// Dependency injection is provided by constructor injection.
+    /// </summary>
+    /// <param name="configuration"></param>
+    public AuthController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         /// <summary>
-        /// Kullanıcı Giriş Metodu İşlemlerini Yapar.
+        /// Make it User Login operations
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>  
@@ -44,12 +44,12 @@ namespace WebAPI.Controllers
             return Unauthorized(result.Message);
         }
 
-        /// <summary>
-        ///  Kullanıcı Kayıt Metodu İşlemlerini yapar.
-        /// </summary>
-        /// <param name="createUser"></param>
-        /// <returns></returns>        
-        [AllowAnonymous]
+    /// <summary>
+    ///  Make it User Register operations
+    /// </summary>
+    /// <param name="createUser"></param>
+    /// <returns></returns>        
+    [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
@@ -59,13 +59,13 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
-        ///<summary>
-        ///Parolamı Unuttum.
-        ///</summary>
-        ///<remarks>tckimlikno</remarks>
-        ///<return></return>
-        ///<response code="200"></response>   
-        [HttpPut("forgotpassword")]
+    ///<summary>
+    ///Make it Forgot Password operations
+    ///</summary>
+    ///<remarks>tckimlikno</remarks>
+    ///<return></return>
+    ///<response code="200"></response>   
+    [HttpPut("forgotpassword")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
         {
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Make it Change Password operation
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -93,11 +93,10 @@ namespace WebAPI.Controllers
 
 
         /// <summary>
-        /// Mobil Giriş.
+        /// Mobile Login
         /// </summary>
         /// <param name="verifyCid"></param>
-        /// <returns></returns>
-        //[ProducesResponseType(typeof(SFwToken), 200)]
+        /// <returns></returns>        
         [AllowAnonymous]
         [HttpPost("verify")]
         public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid)
@@ -111,7 +110,7 @@ namespace WebAPI.Controllers
 
 
         /// <summary>
-        /// Sisteme giriş yapıldıktan sonra erişilebilen ve token gerektiren kaynak.
+        /// Token decode test
         /// </summary>
         /// <returns></returns>
         [HttpPost("test")]

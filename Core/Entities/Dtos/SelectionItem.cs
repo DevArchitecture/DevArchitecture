@@ -1,8 +1,7 @@
 ﻿namespace Core.Entities.Dtos
 {
 	/// <summary>
-	/// Basit seçilebilir listeleri, API üzerinden tek bir şemayla dönebilmek için
-	/// yaratılmıştır.
+	/// Simple selectable lists have been created to return with a single schema through the API.
 	/// </summary>
 	public class SelectionItem : IDto
 	{

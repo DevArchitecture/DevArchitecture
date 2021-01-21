@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    ///  
-    [Route("api/[controller]")]
+  /// <summary>
+  /// If controller methods will not be Authorize, [AllowAnonymous] is used.
+  /// </summary>
+  ///  
+  [Route("api/[controller]")]
     [ApiController]
     public class OperationClaimsController : BaseApiController
     {
         ///<summary>
-        ///OperationClaims listeler
+        ///List OperationClaims 
         ///</summary>
         ///<remarks>bla bla bla OperationClaims</remarks>
         ///<return>OperationClaims Listesi</return>
@@ -31,13 +31,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///OperationClaim getirir
-        ///</summary>
-        ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims Listesi</return>
-        ///<response code="200"></response>  
-        [HttpGet("getbyid")]
+    ///<summary>
+    ///It brings the details according to its id.
+    ///</summary>
+    ///<remarks>bla bla bla OperationClaims</remarks>
+    ///<return>OperationClaims Listesi</return>
+    ///<response code="200"></response>  
+    [HttpGet("getbyid")]
         public async Task<IActionResult> GetByid(int id)
         {
             var result = await Mediator.Send(new GetOperationClaimQuery() { Id=id });
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
         }
 
         ///<summary>
-        ///OperationClaims listeler
+        ///List OperationClaims
         ///</summary>
         ///<remarks>bla bla bla OperationClaims</remarks>
         ///<return>OperationClaims Listesi</return>
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// OperationClaim Günceller.
+        /// Update OperationClaim .
         /// </summary>
         /// <param name="updateOperationClaim"></param>
         /// <returns></returns>

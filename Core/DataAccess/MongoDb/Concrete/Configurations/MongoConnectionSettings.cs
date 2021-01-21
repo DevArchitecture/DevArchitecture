@@ -1,11 +1,11 @@
 ﻿using MongoDB.Driver;
 
-namespace Core.DataAccess.MongoDb.Concrete.Models
+namespace Core.DataAccess.MongoDb.Concrete.Configurations
 {
 	public class MongoConnectionSettings
 	{
 		/// <summary>
-		/// Eğer MongoClientSettingSınıfı kullanılacaksa set edilecek
+		/// To be set if the MongoClientSetting class is to be used.
 		/// </summary>
 		private MongoClientSettings _mongoClientSettings { get; set; }
 

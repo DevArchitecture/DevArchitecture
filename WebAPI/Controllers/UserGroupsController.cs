@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
 	/// <summary>
-	/// 
+	/// If controller methods will not be Authorize, [AllowAnonymous] is used.
 	/// </summary>
 	///  
 	[Route("api/[controller]")]
@@ -15,13 +15,13 @@ namespace WebAPI.Controllers
 	public class UserGroupsController : BaseApiController
 	{
 		///<summary>
-		///Kullanıcı Grupları listeler
+		///List UserGroup
 		///</summary>
 		///<remarks>bla bla bla UserGroups</remarks>
 		///<return>Kullanıcı Grup Listesi</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
-		//[AllowAnonymous]
+	
 		public async Task<IActionResult> GetList()
 		{
 			var result = await Mediator.Send(new GetUserGroupsQuery());
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// 
+		/// It brings the details according to its id.
 		/// </summary>
 		/// <param name="userId"></param>
 		/// <returns></returns>
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 
 
 		///<summary>
-		///Id sine göre detaylarını getirir.
+		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
 		///<return>UserGroups Listesi</return>
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
 		}
 
 		///<summary>
-		///Id sine göre detaylarını getirir.
+		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
 		///<return>UserGroups Listesi</return>
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// UserGroup Ekler.
+		/// Add UserGroup.
 		/// </summary>
 		/// <param name="createUserGroup"></param>
 		/// <returns></returns>
@@ -102,7 +102,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// UserGroup Günceller.
+		/// Update UserGroup.
 		/// </summary>
 		/// <param name="updateUserGroup"></param>
 		/// <returns></returns>
@@ -119,7 +119,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// UserGroup Günceller.
+		/// Update UserGroup by Id.
 		/// </summary>
 		/// <param name="updateUserGroup"></param>
 		/// <returns></returns>
@@ -136,7 +136,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// UserGroup Siler.
+		/// Delete UserGroup.
 		/// </summary>
 		/// <param name="deleteUserGroup"></param>
 		/// <returns></returns>

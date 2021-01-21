@@ -26,11 +26,11 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
             using (IConnection connection = factory.CreateConnection())
             using (IModel channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "SFwQueue",
-                                                                                                    durable: false,
-                                                                                                    exclusive: false,
-                                                                                                    autoDelete: false,
-                                                                                                    arguments: null);
+                channel.QueueDeclare(queue: "DArchQueue",
+                                                         durable: false,
+                                                         exclusive: false,
+                                                         autoDelete: false,
+                                                         arguments: null);
 
                 var consumer = new EventingBasicConsumer(channel);
 
@@ -42,9 +42,9 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                     Console.WriteLine($"Message: {message}");
                 };
 
-                channel.BasicConsume(queue: "SFwQueue",
-                                                                                                    autoAck: true,//true ise mesaj otomatik olarak kuyruktan silinir
-                                                                                                    consumer: consumer);
+                channel.BasicConsume(queue: "DArchQueue",
+                                                      autoAck: true,
+                                                      consumer: consumer);
                 Console.ReadKey();
 
             }

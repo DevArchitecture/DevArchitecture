@@ -16,7 +16,6 @@ namespace Core.DataAccess
         Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> expression = null);
         T Get(Expression<Func<T, bool>> expression);
         Task<T> GetAsync(Expression<Func<T, bool>> expression);
-        // g:
         int SaveChanges();
         Task<int> SaveChangesAsync();
         IQueryable<T> Query();

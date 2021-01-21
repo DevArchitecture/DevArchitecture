@@ -1,4 +1,5 @@
-﻿using Business.Services.Authentication.Model;
+﻿using Business.Constants;
+using Business.Services.Authentication.Model;
 using Core.Entities;
 using FluentValidation;
 
@@ -24,7 +25,7 @@ namespace Business.Handlers.Authorizations
                 }
                 return false;
             })
-            .WithMessage("Kod hatalı.");
+            .WithMessage(Messages.InvalidCode);
         }
     }
 

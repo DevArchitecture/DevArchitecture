@@ -30,14 +30,7 @@ namespace Business.Handlers.Authorizations.Commands
                 _userRepository = userRepository;
             }
 
-            /// <summary>
-            /// Handler bir kategorinin var olup olmadığını doğrular
-            /// eğer yoksa yeni bir kategorinin güncellenmesine izin verir.
-            /// Aspectler her zaman hadler üzerinde kullanılmalıdır.
-            /// Aşağıda validation, cacheremove ve log aspect örnekleri kullanılmıştır.
-            /// eğer kategori başarıyla eklenmişse sadece mesaj döner.
-            ///  /*user.PasswordHash = passwordHash,
-            ///    user.PasswordSalt = passwordSalt,*/
+            /// <summary>           
             /// </summary>
             /// <param name="request"></param>
             /// <param name="cancellationToken"></param>

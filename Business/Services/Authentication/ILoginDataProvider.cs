@@ -2,74 +2,70 @@
 
 namespace Business.Services.Authentication
 {
-    /// <summary>
-    /// Giriş veri sağlayıcıları sisteme giriş yaparken bizi kodlanmış bir parametreyle çağırırlar.
-    /// Bu interface o kodu belli bir url'ye sorarak bilgileri çözdürdüğümüz sağlayıcıların
-    /// uyması gereken arayüzü tanımlar.
-    /// </summary>
-    public interface ILoginDataProvider
-    {
-        Task<LoginDataProviderResult> Verify(string accessToken);
-    }
+	/// <summary>
+	/// Input data providers call us with a coded parameter when logging into the system.
+	/// This interface defines the interface that the providers whose information is decoded by asking that code to a certain url.
+	/// </summary>
+	public interface ILoginDataProvider
+	{
+		Task<LoginDataProviderResult> Verify(string accessToken);
+	}
 
-    public class LoginDataProviderResult
-    {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-        public ExternalUser ExternalUser { get; set; }
-    }
+	public class LoginDataProviderResult
+	{
+		public bool IsSuccess { get; set; }
+		public string Message { get; set; }
+		public ExternalUser ExternalUser { get; set; }
+	}
 
 
-    /// <summary>
-    /// Sisteme agent olarak belli bir bağışçının işlemlerini yürütmek üzere
-    /// login olacak kullanıcı ve ilgili bağışçının temel veri paketi.
-    /// </summary>
-    /// <remarks>
-    /// Verilen GUID REST servisinden çekildiğinde alınması beklenen alanları içerir.
-    /// </remarks>
-    public class ExternalUser
-    {
-        /// <summary>
-        /// Muhattapla o an için işlem yapan Dış kullanıcının kendi sisteminde tanımlı anahtarıdır.
-        /// </summary>
-        public string AgentUserId { get; set; }
+	/// <summary>
+	/// Outsource personnel information
+	/// </summary>
+	/// <remarks>
+	/// Contains the fields expected to be received when the given GUID is withdrawn from the REST service.
+	/// </remarks>
+	public class ExternalUser
+	{
+		/// <summary>
+		/// Outsource personnel Id
+		/// </summary>
+		public string AgentUserId { get; set; }
 
-        /// <summary>
-        /// Başvuran Vatandaşlık No
-        /// </summary>
-        public long CitizenId { get; set; }
+		/// <summary>
+		/// Applicant Citizenship Number
+		/// </summary>
+		public long CitizenId { get; set; }
 
-        /// <summary>
-        /// Kişinin Eposta adresi.
-        /// </summary>
-        public string Email { get; set; }
+		/// <summary>
+		/// Applicant Email
+		/// </summary>
+		public string Email { get; set; }
 
-        /// <summary>
-        /// Cep telefonu
-        /// </summary>
-        public string MobilePhone { get; set; }
+		/// <summary>
+		/// Applicant Mobile Phone
+		/// </summary>
+		public string MobilePhone { get; set; }
 
-        /// <summary>
-        /// Adres
-        /// </summary>
-        public string Address { get; set; }
+		/// <summary>
+		/// Applicant Address
+		/// </summary>
+		public string Address { get; set; }
 
-        /// <summary>
-        /// Notlar
-        /// </summary>		
-        public string Notes { get; set; }
+		/// <summary>
+		/// Notes
+		/// </summary>		
+		public string Notes { get; set; }
 
-        public void CleanRecord()
-        {
-
-            // Tel no 3 adet filan gelebiliyor. 1. yi al gerisini salla.
-            if (!string.IsNullOrWhiteSpace(MobilePhone))
-            {
-                // 0 ile baslamiyorsa ekle
-                if (!MobilePhone.StartsWith("0"))
-                    MobilePhone = "0" + MobilePhone;
-                MobilePhone = MobilePhone.Split('-')[0].Trim();
-            }
-        }
-    }
+		public void CleanRecord()
+		{
+		
+			if (!string.IsNullOrWhiteSpace(MobilePhone))
+			{
+				if (!MobilePhone.StartsWith("0"))
+					MobilePhone = "0" + MobilePhone;
+				MobilePhone = MobilePhone.Split('-')[0].Trim();
+			}
+		}
+	}
 }

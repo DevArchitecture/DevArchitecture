@@ -26,25 +26,13 @@ namespace Business.Handlers.Users.Commands
             {
                 _userRepository = userRepository;
             }
-
-            /// <summary>
-            /// Handler bir kategorinin var olup olmadığını doğrular
-            /// eğer yoksa yeni bir kategorinin güncellenmesine izin verir.
-            /// Aspectler her zaman hadler üzerinde kullanılmalıdır.
-            /// Aşağıda validation, cacheremove ve log aspect örnekleri kullanılmıştır.
-            /// eğer kategori başarıyla eklenmişse sadece mesaj döner.
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
-            //[ValidationAspect(typeof(CreateAnimalValidator), Priority = 1)]
+                  
             [CacheRemoveAspect("Get")]
 
             public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
                 var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
-
-                //Tüm alanlar aşağıdaki örnekteki gibi yazılacak
+                
                 isUserExits.FullName = request.FullName;
                 isUserExits.Email = request.Email;
 

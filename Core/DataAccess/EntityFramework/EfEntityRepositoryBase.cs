@@ -83,12 +83,21 @@ namespace Core.DataAccess.EntityFramework
             return context.Database.ExecuteSqlInterpolatedAsync(interpolatedQueryString);
         }
 
-        public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
-        {
+    /// <summary>
+    /// Transactional operations is prohibited when working with InMemoryDb!
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="action"></param>
+    /// <param name="successAction"></param>
+    /// <param name="exceptionAction"></param>
+    /// <returns></returns>
+    public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
+        {      
             TResult result = default(TResult);
             try
             {
-                // Inmem db ile calisirken transactionlar yasak!
+        
+                
                 if (context.Database.ProviderName.EndsWith("InMemory"))
                 {
                     result = action();

@@ -3,7 +3,7 @@ using Core.Entities;
 
 namespace Business.Services.Authentication
 {
-    public class SFwToken : AccessToken
+    public class DArchToken : AccessToken
     {
         public string ExternalUserId { get; set; }
         /// <summary>

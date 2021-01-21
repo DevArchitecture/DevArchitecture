@@ -102,8 +102,8 @@ namespace WebAPI
 		/// <param name="env"></param>
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			// ÇOK ÖNEMLİ. AddDependencyResolvers'dan build'i kaldırdığımız için Service provider'ı elle set edelim.
-			// Bu arada aspectlerde statik metot çağırmamak için type alıp DI ile construct edebiliriz.
+			// VERY IMPORTANT. Since we removed the build from AddDependencyResolvers, let's set the Service provider manually.
+			// By the way, we can construct with DI by taking type to avoid calling static methods in aspects.
 			ServiceTool.ServiceProvider = app.ApplicationServices;
 
 			
@@ -163,8 +163,6 @@ namespace WebAPI
 			{
 				endpoints.MapControllers();
 			});
-
-
 		}
 	}
 }

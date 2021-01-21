@@ -42,7 +42,7 @@ namespace Business.Handlers.Authorizations.Commands
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
 
                 var claims = _userRepository.GetClaims(user.UserId);
-                var accessToken = _tokenHelper.CreateToken<SFwToken>(user, claims);
+                var accessToken = _tokenHelper.CreateToken<DArchToken>(user, claims);
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }

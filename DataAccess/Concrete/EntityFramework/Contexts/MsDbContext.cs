@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                base.OnConfiguring(optionsBuilder.UseSqlServer(configuration.GetConnectionString("SFwMsContext")));
+                base.OnConfiguring(optionsBuilder.UseSqlServer(configuration.GetConnectionString("DArchMsContext")));
             }
         }
     }

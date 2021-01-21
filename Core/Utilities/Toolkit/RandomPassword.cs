@@ -2,16 +2,17 @@
 
 namespace Core.Utilities.Toolkit
 {
+  /// <summary>
+  /// One time password generator for mobile login etc.
+  /// </summary>
     public static class RandomPassword
     {
         public static string CreateRandomPassword(int length = 14)
         {
-            // Create a string of characters, numbers, special characters that allowed in the password  
+          
             string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
             var random = new Random();
-
-            // Select one random character at a time from the string  
-            // and create an array of chars  
+            
             char[] chars = new char[length];
             for (int i = 0; i < length; i++)
             {

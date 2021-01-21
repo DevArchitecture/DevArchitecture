@@ -22,8 +22,7 @@ namespace Business.Handlers.Languages.Commands
     /// </summary>
     [SecuredOperation]
     public class CreateLanguageCommand : IRequest<IResult>
-    {
-        ///Request'ten gelecek degerler buraya yazılır.Örneğin:
+    {     
 
         public string Name { get; set; }
         public string Code { get; set; }
@@ -38,13 +37,7 @@ namespace Business.Handlers.Languages.Commands
                 _languageRepository = languageRepository;
                 _mediator = mediator;
             }
-            /// <summary>
-            /// Eğer farklı bir sınıf veya metod çağırılması gerekiyorsa MediatR kütüphanesi yardımıyla çağırılır
-            /// Örneğin:  var result = await _mediator.Send(new GetAnimalsCountQuery());
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
+            
             [ValidationAspect(typeof(CreateLanguageValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]

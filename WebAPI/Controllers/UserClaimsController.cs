@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
 	/// <summary>
-	/// 
+	/// If controller methods will not be Authorize, [AllowAnonymous] is used.
 	/// </summary>
 	///  
 	[Route("api/[controller]")]
@@ -15,13 +15,12 @@ namespace WebAPI.Controllers
 	{
 
 		///<summary>
-		///UserClaims listeler
+		///List UserClaims
 		///</summary>
 		///<remarks>bla bla bla UserClaims</remarks>
 		///<return>UserClaims Listesi</return>
 		///<response code="200"></response>  
-		[HttpGet("getall")]
-		//[AllowAnonymous]
+		[HttpGet("getall")]	
 		public async Task<IActionResult> GetList()
 		{
 			var result = await Mediator.Send(new GetUserClaimsQuery());
@@ -50,7 +49,7 @@ namespace WebAPI.Controllers
 		}
 
 		///<summary>
-		///Id sine göre detaylarını getirir.
+		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
 		///<return>UserClaims Listesi</return>
@@ -66,7 +65,7 @@ namespace WebAPI.Controllers
 			return BadRequest(result.Message);
 		}
 		/// <summary>
-		/// GroupClaim Ekler.
+		/// Add GroupClaim.
 		/// </summary>
 		/// <param name="createUserClaim"></param>
 		/// <returns></returns>
@@ -82,7 +81,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// GroupClaim Günceller.
+		/// Update GroupClaim.
 		/// </summary>
 		/// <param name="updateUserClaim"></param>
 		/// <returns></returns>
@@ -98,7 +97,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// GroupClaim Siler.
+		/// Delete GroupClaim.
 		/// </summary>
 		/// <param name="deleteUserClaim"></param>
 		/// <returns></returns>

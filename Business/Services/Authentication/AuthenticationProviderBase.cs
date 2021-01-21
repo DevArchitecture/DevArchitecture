@@ -24,7 +24,7 @@ namespace Business.Services.Authentication
 		}
 
 		public abstract Task<LoginUserResult> Login(LoginUserCommand command);
-		public abstract Task<SFwToken> CreateToken(VerifyOtpCommand command);
+		public abstract Task<DArchToken> CreateToken(VerifyOtpCommand command);
 		protected virtual async Task<LoginUserResult> PrepareOneTimePassword(AuthenticationProviderType providerType, string cellPhone, string externalUserId)
 		{
 			var oneTimePassword = await _logins.Query()
@@ -62,30 +62,30 @@ namespace Business.Services.Authentication
 			return new LoginUserResult { Message = Messages.SendMobileCode + mobileCode, Status = LoginUserResult.LoginStatus.Ok };
 		}
 
-		public virtual async Task<IDataResult<SFwToken>> Verify(VerifyOtpCommand command)
+		public virtual async Task<IDataResult<DArchToken>> Verify(VerifyOtpCommand command)
 		{
 			var externalUserId = command.ExternalUserId;
 			var date = DateTime.Now;
 			var login = await _logins.GetAsync(m => m.Provider == command.Provider && m.Code == command.Code &&
-							// Son 24 saat icinde gonderilmisse
+							
 							m.ExternalUserId == externalUserId && m.SendDate.AddSeconds(100) > date);
 
 			if (login == null)
 			{
-				return new ErrorDataResult<SFwToken>(Messages.InvalidCode);
+				return new ErrorDataResult<DArchToken>(Messages.InvalidCode);
 			}
 			var accessToken = await CreateToken(command);
 
-			// Token creators must fill provider type!!!
+			
 			if (accessToken.Provider == AuthenticationProviderType.Unknown)
-				throw new ArgumentException("Token Provider boş olamaz!");
+				throw new ArgumentException(Messages.TokenProviderException);
 
 			login.IsUsed = true;
 			_logins.Update(login);
 			await _logins.SaveChangesAsync();
 
 
-			return new SuccessDataResult<SFwToken>(accessToken, Messages.SuccessfulLogin);
+			return new SuccessDataResult<DArchToken>(accessToken, Messages.SuccessfulLogin);
 		}
 	}
 }

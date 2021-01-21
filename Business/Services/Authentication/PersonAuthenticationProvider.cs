@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Adapters.SmsService;
+using Business.Constants;
 
 namespace Business.Services.Authentication
 {
-    /// <summary>
-    /// SFw veritabanını kullanarak login olan provider dır.
-    /// </summary>
-    public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
+  /// <summary>
+  /// Provider that logs in using the DevArchitecture database.
+  /// </summary>
+  public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
     {
         private readonly IUserRepository _users;
 
@@ -41,20 +42,21 @@ namespace Business.Services.Authentication
             else
                 return new LoginUserResult
                 {
-                    Message = "Bilgiler doğru. Cep telefonu gerekiyor.",
+                    Message = Messages.TrueButCellPhone,
+                  
                     Status = LoginUserResult.LoginStatus.PhoneNumberRequired,
                     MobilePhones = new string[] { user.MobilePhones }
                 };
         }
 
-        public override async Task<SFwToken> CreateToken(VerifyOtpCommand command)
+        public override async Task<DArchToken> CreateToken(VerifyOtpCommand command)
         {
             var citizenId = long.Parse(command.ExternalUserId);
             var user = await _users.GetAsync(u => u.CitizenId == citizenId);
             user.AuthenticationProviderType = ProviderType.ToString();
 
             var claims = _users.GetClaims(user.UserId);
-            var accessToken = _tokenHelper.CreateToken<SFwToken>(user, claims);
+            var accessToken = _tokenHelper.CreateToken<DArchToken>(user, claims);
             accessToken.Provider = ProviderType;
             return accessToken;
         }

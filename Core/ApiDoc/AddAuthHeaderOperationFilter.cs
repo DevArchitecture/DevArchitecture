@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace Core.ApiDoc
 {
-    /// <summary>
-    /// Gereken API metotlarına Authorization bearer ekleyen filter.
-    /// </summary>
-    internal class AddAuthHeaderOperationFilter : IOperationFilter
+  /// <summary>
+  /// Filter that adds Authorization bearer to required API methods.
+  /// </summary>
+  internal class AddAuthHeaderOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

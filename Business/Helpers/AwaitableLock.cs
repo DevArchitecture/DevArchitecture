@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 
 namespace Business.Helpers
 {
-    /// <summary>
-    /// async await ikilisini klasik C# lock() tümcesi ile kilitleyemediğimiz
-    /// için bu çözüme başvuruyoruz.
-    /// </summary>
-    public class AwaitableLock
+  /// <summary>
+  /// Since we cannot lock the async await binary with the classic C # lock () clause, we are referring to this solution.
+  /// </summary>
+  public class AwaitableLock
     {
         private readonly SemaphoreSlim _toLock;
 

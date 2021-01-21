@@ -20,8 +20,7 @@ namespace Business.Handlers.Authorizations.Queries
         }
 
         /// <summary>
-        /// User Login Handler sınıfıdır. Aspectler bu metodun üzerinde kullanılır.
-        /// Bir kullanıcının sisteme login olmasını sağlar geriye browser local storageda saklanan bir token döner 
+        /// Allows a user to login to the system, back to the browser returns a token stored in local storage.
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
