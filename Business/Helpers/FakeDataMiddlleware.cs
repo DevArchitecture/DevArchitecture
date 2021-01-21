@@ -50,6 +50,8 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Management", Value = "Management" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "AppMenu", Value = "Uygulama" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "AppMenu", Value = "App Menu" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Added", Value = "Başarıyla Eklendi." });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Added", Value = "Record Created." });
 		}
 	}
 }

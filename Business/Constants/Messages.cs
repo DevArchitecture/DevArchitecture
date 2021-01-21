@@ -1,9 +1,9 @@
 ﻿namespace Business.Constants
 {
-    /// <summary>
-    /// Bu sınıf magic stringlerden kurtulmak ve daha okunur bir kod yazmak için oluşturulmuştur.
-    /// </summary>
-    public static class Messages
+  /// <summary>
+  /// This class was created to get rid of magic strings and write more readable code.
+  /// </summary>
+  public static class Messages
     {
         public static string UnknownLookupName => "Geçerli Bir Lookup Tipi Bulunamadı";
 
