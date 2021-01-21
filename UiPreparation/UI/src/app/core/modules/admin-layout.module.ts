@@ -21,7 +21,7 @@ import { OperationClaimComponent } from '../components/app/operationclaim/operat
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslationService } from 'app/core/services/Translation.service';
+import { TranslationService } from 'app/core/services/translation.service';
 import { DataTablesModule } from 'angular-datatables';
 import { LogDtoComponent } from '../components/app/log/logDto.component';
 

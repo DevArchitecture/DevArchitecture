@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertifyService } from 'app/core/services/Alertify.service';
-import { LookUpService } from 'app/core/services/LookUp.service';
-import { LookUp } from 'app/core/models/LookUp';
-import { AuthService } from 'app/core/components/admin/login/Services/Auth.service';
+import { AlertifyService } from 'app/core/services/alertify.service';
+import { LookUpService } from 'app/core/services/lookUp.service';
+import { LookUp } from 'app/core/models/lookUp';
+import { AuthService } from 'app/core/components/admin/login/services/auth.service';
 import { environment } from 'environments/environment';
 import { LogDto } from './models/LogDto';
 import { LogDtoService } from './services/LogDto.service';

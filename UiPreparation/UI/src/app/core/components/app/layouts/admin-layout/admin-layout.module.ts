@@ -15,13 +15,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { LoginComponent } from 'app/core/components/admin/login/login.component';
 import { GroupComponent } from 'app/core/components/admin/group/group.component';
 import { UserComponent } from 'app/core/components/admin/user/user.component';
-import { ProductComponent } from 'app/modules/product/product.component';
 import { LanguageComponent } from '../../language/language.component';
 import { TranslateComponent } from '../../translate/translate.component';
 import { OperationClaimComponent } from '../../operationclaim/operationClaim.component';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { TranslationService } from 'app/core/services/Translation.service';
+import { TranslationService } from 'app/core/services/translation.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -60,7 +59,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserComponent,
     LoginComponent,
     GroupComponent,
-    ProductComponent,
     LanguageComponent,
     TranslateComponent,
     OperationClaimComponent
