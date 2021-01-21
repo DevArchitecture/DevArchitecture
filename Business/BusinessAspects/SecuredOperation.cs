@@ -10,10 +10,9 @@ using System.Security;
 namespace Business.BusinessAspects
 {
 	/// <summary>
-	/// Bu Aspect IHttpContextAccessor inject edilerek HttpContext'te bulunan kullanıcının rollerini kontrol eder 
-	/// Handler üzerinde [SecuredOperation] şeklinde yazılarak kontrol edilir.
-	/// Eğer aspecte geçerli bir yetki bulunamazsa exception fırlatır.
-	/// 
+	///This Aspect control the user's roles in HttpContext by inject the IHttpContextAccessor.
+	///It is checked by writing as [SecuredOperation] on the handler.
+	///If a valid authorization cannot be found in aspec, it throws an exception.
 	/// </summary>
 
 	public class SecuredOperation : MethodInterception

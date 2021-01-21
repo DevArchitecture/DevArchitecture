@@ -40,8 +40,7 @@ namespace WebAPI
 		/// This method gets called by the runtime. Use this method to add services to the container. 
 		/// </summary>
 		/// <remarks>
-		/// Tüm konfigürasyonlar için ortaktır ve çağırılması gerekir. Aspnet core diğer
-		/// metotlar olduğu için bu metodu çağırmaz.
+		/// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
 		/// </remarks>
 		/// <param name="services"></param>
 		public override void ConfigureServices(IServiceCollection services)
@@ -95,9 +94,9 @@ namespace WebAPI
 			base.ConfigureServices(services);
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
 		/// <summary>
-		/// 
+		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		/// </summary>
 		/// <param name="app"></param>
 		/// <param name="env"></param>
@@ -107,7 +106,7 @@ namespace WebAPI
 			// Bu arada aspectlerde statik metot çağırmamak için type alıp DI ile construct edebiliriz.
 			ServiceTool.ServiceProvider = app.ApplicationServices;
 
-			// Test ise fake store'u canlandir ve context'i hazirla
+			
 			var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
 			switch (configurationManager.Mode)
 			{
@@ -145,7 +144,7 @@ namespace WebAPI
 
 			app.UseAuthorization();
 
-			// Türkçeyi varsayılan dil yap. Sunucuya göre değişmesin.
+			// Make Turkish your default language. It shouldn't change according to the server.
 			app.UseRequestLocalization(new RequestLocalizationOptions
 			{
 				DefaultRequestCulture = new RequestCulture("tr-TR"),

@@ -12,7 +12,7 @@ namespace Business.DependencyResolvers
         private readonly ConfigurationManager configuration;
 
         /// <summary>
-        /// Autofac icin.
+        /// for Autofac.
         /// </summary>
         public AutofacBusinessModule()
         {
