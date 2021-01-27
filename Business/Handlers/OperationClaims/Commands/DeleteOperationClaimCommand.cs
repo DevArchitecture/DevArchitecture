@@ -27,7 +27,7 @@ namespace Business.Handlers.OperationClaims.Commands
                 _operationClaimRepository.Delete(claimToDelete);
                 await _operationClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.OperationClaimDeleted);
+                return new SuccessResult(Messages.Deleted);
             }
         }
     }

@@ -2,6 +2,6 @@
 {
     public static class ExceptionMessage
     {
-        public static string InternalServerError => "Bir hata oluştu. Lütfen tekrar deneyiniz.";
+        public static string InternalServerError => "Something went wrong. Please try again.";
     }
 }

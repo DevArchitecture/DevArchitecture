@@ -33,7 +33,7 @@ namespace Business.Handlers.UserGroups.Commands
 
                 await _userGroupRepository.BulkInsert(request.UserId, userGroupList);
                 await _userGroupRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.UserGroupUpdated);
+                return new SuccessResult(Messages.Updated);
 
             }
         }

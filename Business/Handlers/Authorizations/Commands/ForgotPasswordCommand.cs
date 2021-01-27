@@ -49,7 +49,7 @@ namespace Business.Handlers.Authorizations.Commands
 
                 _userRepository.Update(user);
 
-                return new SuccessResult(Messages.SendPassword + " Yeni Parola:" + generatedPassword);
+                return new SuccessResult(Messages.SendPassword + Messages.NewPassword + generatedPassword);
             }
         }
     }

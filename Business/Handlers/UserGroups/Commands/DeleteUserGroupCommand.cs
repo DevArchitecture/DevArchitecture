@@ -29,7 +29,7 @@ namespace Business.Handlers.UserGroups.Commands
                 _userGroupRepository.Delete(entityToDelete);
                 await _userGroupRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.UserGroupDeleted);
+                return new SuccessResult(Messages.Deleted);
             }
         }
     }

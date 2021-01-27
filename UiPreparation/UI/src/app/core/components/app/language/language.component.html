@@ -13,9 +13,9 @@
               <table datatable [dtTrigger]="dtTrigger" class="stripe">
                 <thead class="text-primary">
                   <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Code</th>
+                    <th>{{'Id'|translate}}</th>
+                    <th>{{'Name'|translate}}</th>
+                    <th>{{'Code'|translate}}</th>
 
                     <th class="no-sort"></th>
                     <th class="no-sort"></th>
@@ -63,7 +63,7 @@
           <div class="row">
             <div class="col col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder=" Full Name" type="text" id="name" name="name"
+                <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="name" name="name"
                   formControlName="name">
                 <div class="alert alert-danger"
                   *ngIf="languageAddForm.get('name')!.hasError('required') && languageAddForm.get('name')!.touched">İsim
@@ -74,7 +74,7 @@
           <div class="row">
             <div class="col col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Code" type="text" id="code" name="code" formControlName="code" />
+                <input matInput placeholder="{{'Code'|translate}}" type="text" id="code" name="code" formControlName="code" />
                 <div class="alert alert-danger"
                   *ngIf="languageAddForm.get('code')!.hasError('code') && languageAddForm.get('code')!.dirty">
                 </div>
@@ -82,7 +82,7 @@
             </div>
           </div>
 
-          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save' |translate}}</button>
           <div class="clearfix"></div>
         </form>
       </div>

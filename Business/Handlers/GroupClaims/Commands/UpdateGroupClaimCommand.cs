@@ -32,7 +32,7 @@ namespace Business.Handlers.GroupClaims.Commands
                 await _groupClaimRepository.BulkInsert(request.GroupId, list);
                 await _groupClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.GroupClaimUpdated);
+                return new SuccessResult(Messages.Updated);
             }
         }
     }

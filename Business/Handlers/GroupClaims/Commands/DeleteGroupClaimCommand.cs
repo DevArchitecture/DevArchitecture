@@ -29,7 +29,7 @@ namespace Business.Handlers.GroupClaims.Commands
                 _groupClaimRepository.Delete(groupClaimToDelete);
                 await _groupClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.GroupClaimDeleted);
+                return new SuccessResult(Messages.Deleted);
             }
         }
     }

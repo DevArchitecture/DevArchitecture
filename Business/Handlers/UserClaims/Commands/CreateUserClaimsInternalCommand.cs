@@ -43,7 +43,7 @@ namespace Business.Handlers.UserClaims.Commands
                     });
                 }
                 await _userClaimsRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.UserClaimCreated);
+                return new SuccessResult(Messages.Added);
             }
             private async Task<bool> DoesClaimExistsForUser(UserClaim userClaim)
             {

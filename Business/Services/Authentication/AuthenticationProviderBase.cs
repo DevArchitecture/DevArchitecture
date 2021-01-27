@@ -37,8 +37,7 @@ namespace Business.Services.Authentication
 				mobileCode = RandomPassword.RandomNumberGenerator();
 				try
 				{
-					var sendSms = await _smsService.SendAsist($"SAAT {DateTime.Now.ToShortTimeString()} TALEP ETTIGINIZ" +
-																					$"24 SAAT GECERLI PAROLANIZ : {mobileCode}", cellPhone);
+					var sendSms = await _smsService.SendAsist($"SAAT {DateTime.Now.ToShortTimeString()} TALEP ETTIGINIZ 24 SAAT GECERLI PAROLANIZ : {mobileCode}", cellPhone);
 					_logins.Add(new MobileLogin
 					{
 						Code = mobileCode,

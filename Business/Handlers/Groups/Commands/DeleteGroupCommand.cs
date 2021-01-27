@@ -28,7 +28,7 @@ namespace Business.Handlers.Groups.Commands
                 _groupRepository.Delete(groupToDelete);
                 await _groupRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.GroupDeleted);
+                return new SuccessResult(Messages.Deleted);
             }
         }
     }

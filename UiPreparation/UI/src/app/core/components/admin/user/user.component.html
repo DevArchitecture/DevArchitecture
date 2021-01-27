@@ -13,22 +13,22 @@
                 <thead class=" text-primary">
                   <tr>
                     <th>
-                      ID
+                      {{'ID' |translate}}
                     </th>
                     <th>
-                      Email
+                      {{'Email' |translate}}
                     </th>
                     <th>
-                      Full Name
+                      {{'FullName' |translate}}
                     </th>
                     <th>
-                      Address
+                      {{'Address' |translate}}
                     </th>
                     <th>
-                      Status
+                      {{'Status' |translate}}
                     </th>
                     <th>
-                      Notes
+                      {{'Notes' |translate}}
                     </th>
                     <th class="no-sort"></th>
                     <th class="no-sort"></th>
@@ -59,19 +59,19 @@
                       {{user.notes}}
                     </td>
                     <td *ngIf="checkClaim('UserChangePasswordCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{('users_passwordchange' | translate)}}" style="color:slateblue;" class="fas fa-key" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{('UserChangePassword' | translate)}}" style="color:slateblue;" class="fas fa-key" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{('users_claims' | translate)}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{('UsersClaims' | translate)}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'users_Groups' | translate}}" style="color:royalblue;"  class="fas fa-user-lock" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'UsersGroups' | translate}}" style="color:royalblue;"  class="fas fa-user-lock" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
+                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
                     </td>
                     <td *ngIf="checkClaim('DeleteUserCommand')" style="width: 25px;">
-                      <a (click)="deleteUser(user.userId)"><i title="{{'delete' | translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
+                      <a (click)="deleteUser(user.userId)"><i title="{{'Delete' | translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                     </td>
                   </tr>
 
@@ -99,7 +99,7 @@
           <div class="row">
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder=" Full Name" type="text" id="fullName" name="fullName"
+                <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="fullName" name="fullName"
                   formControlName="fullName">
                 <div class="alert alert-danger"
                   *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">İsim
@@ -109,7 +109,7 @@
 
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email address" type="email" id="email" name="email"
+                <input matInput placeholder="{{'Email'|translate}}" type="email" id="email" name="email"
                   formControlName="email">
                 <div class="alert alert-danger"
                   *ngIf="userAddForm.get('email')!.hasError('required') && userAddForm.get('email')!.dirty"></div>
@@ -120,7 +120,7 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Adress" type="text" id="address" name="address" formControlName="address">
+                <input matInput placeholder="{{'Adress'|translate}}" type="text" id="address" name="address" formControlName="address">
                 <div class="alert alert-danger"
                   *ngIf="userAddForm.get('address')!.hasError('address') && userAddForm.get('address')!.dirty">
                 </div>
@@ -130,14 +130,14 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Notes" type="text" id="notes" name="notes" formControlName="notes">
+                <input matInput placeholder="{{'Notes'|translate}}" type="text" id="notes" name="notes" formControlName="notes">
                 <div class="alert alert-danger"
                   *ngIf="userAddForm.get('notes')!.hasError('notes') && userAddForm.get('notes')!.dirty">
                 </div>
               </mat-form-field>
             </div>
           </div>
-          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save' |translate}}</button>
           <div class="clearfix"></div>
         </form>
       </div>
@@ -159,7 +159,7 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Password" type="password" id="password" name="password"
+                <input matInput placeholder="{{'Password'|translate}}" type="password" id="password" name="password"
                   formControlName="password">
                 <div class="alert alert-danger"
                   *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">Parola alanı zorunludur!</div>
@@ -170,7 +170,7 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Confirm Password" type="password" id="confirmPassword" name="confirmPassword"
+                <input matInput placeholder="{{'ConfirmPassword'|translate}}" type="password" id="confirmPassword" name="confirmPassword"
                   formControlName="confirmPassword">
                 <div class="alert alert-danger"
                 *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">Parola onay alanı zorunludur!</div>
@@ -181,7 +181,7 @@
             </div>
           </div>
 
-          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save' |translate}}</button>
           <div class="clearfix"></div>
         </form>
       </div>
@@ -208,7 +208,7 @@
 
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary pull-right" (click)="saveUserGroupsPermissions()"> Save</a>
+        <a class="btn btn-primary pull-right" (click)="saveUserGroupsPermissions()"> {{'Save' |translate}}</a>
       </div>
     </div>
   </div>
@@ -232,7 +232,7 @@
 
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary pull-right" (click)="saveUserClaimsPermission()"> Save</a>
+        <a class="btn btn-primary pull-right" (click)="saveUserClaimsPermission()"> {{'Save' |translate}}</a>
       </div>
     </div>
   </div>

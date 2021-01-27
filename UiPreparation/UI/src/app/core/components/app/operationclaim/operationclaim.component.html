@@ -11,10 +11,10 @@
               <table datatable [dtTrigger]="dtTrigger" class="stripe">
                 <thead class="text-primary">
                   <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Alias</th>
-                    <th>Description</th>
+                    <th>{{'Id'|translate}}</th>
+                    <th>{{'Name'|translate}}</th>
+                    <th>{{'Alias'|translate}}</th>
+                    <th>{{'Description'|translate}}</th>
 
                     <th class="no-sort"></th>
                   </tr>
@@ -60,7 +60,7 @@
           <div class="row">
             <div class="col col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="alias" type="text" id="alias" name="alias" formControlName="alias" />
+                <input matInput placeholder="{{'Alias'|translate}}" type="text" id="alias" name="alias" formControlName="alias" />
                 <div class="alert alert-danger"
                   *ngIf="operationClaimAddForm.get('alias')!.hasError('alias') && operationClaimAddForm.get('alias')!.dirty">
                 </div>
@@ -70,7 +70,7 @@
           <div class="row">
             <div class="col col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="description" type="text" id="description" name="description"
+                <input matInput placeholder="{{'Description'|translate}}" type="text" id="description" name="description"
                   formControlName="description" />
                 <div class="alert alert-danger"
                   *ngIf="operationClaimAddForm.get('description')!.hasError('description') && operationClaimAddForm.get('description')!.dirty">
@@ -79,7 +79,7 @@
             </div>
           </div>
 
-          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save' |translate}}</button>
           <div class="clearfix"></div>
         </form>
       </div>

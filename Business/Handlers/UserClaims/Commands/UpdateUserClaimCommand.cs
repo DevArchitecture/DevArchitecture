@@ -38,7 +38,7 @@ namespace Business.Handlers.UserClaims.Commands
                 await _userClaimRepository.BulkInsert(request.UserId, userList);
                 await _userClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.UserClaimUpdated);
+                return new SuccessResult(Messages.Updated);
             }
         }
     }

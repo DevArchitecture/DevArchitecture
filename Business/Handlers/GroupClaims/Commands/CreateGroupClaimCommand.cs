@@ -36,7 +36,7 @@ namespace Business.Handlers.GroupClaims.Commands
                 _operationClaimRepository.Add(operationClaim);
                 await _operationClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.OperationClaimAdded);
+                return new SuccessResult(Messages.Added);
             }
             private bool IsClaimExists(string claimName)
             {

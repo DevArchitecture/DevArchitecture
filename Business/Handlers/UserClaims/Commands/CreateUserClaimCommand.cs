@@ -33,7 +33,7 @@ namespace Business.Handlers.UserClaims.Commands
                 _userClaimRepository.Add(userClaim);
                 await _userClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.UserClaimCreated);
+                return new SuccessResult(Messages.Added);
             }
         }
     }

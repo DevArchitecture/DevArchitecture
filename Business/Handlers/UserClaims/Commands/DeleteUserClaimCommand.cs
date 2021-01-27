@@ -28,7 +28,7 @@ namespace Business.Handlers.UserClaims.Commands
                 _userClaimRepository.Delete(entityToDelete);
                 await _userClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.UserClaimDeleted);
+                return new SuccessResult(Messages.Deleted);
             }
         }
     }

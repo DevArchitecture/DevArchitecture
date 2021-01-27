@@ -32,7 +32,7 @@ namespace Business.Handlers.OperationClaims.Commands
                 _operationClaimRepository.Update(isOperationClaimsExits);
                 await _operationClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.OperationClaimUpdated);
+                return new SuccessResult(Messages.Updated);
             }
         }
     }

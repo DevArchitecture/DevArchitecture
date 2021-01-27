@@ -36,7 +36,7 @@ namespace Business.Handlers.UserClaims.Commands
                 }
                 await _userGroupRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.UserGroupsAdded);
+                return new SuccessResult(Messages.Added);
             }
 
         }
