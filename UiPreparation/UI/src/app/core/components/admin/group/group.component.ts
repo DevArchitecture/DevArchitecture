@@ -95,7 +95,7 @@ export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
       this.getGroupList();
       this.group = new Group();
       jQuery("#group").modal("hide");
-      this.alertifyService.success("Başarılı");
+      this.alertifyService.success(data);
       this.clearFormGroup(this.groupAddForm);
 
     })

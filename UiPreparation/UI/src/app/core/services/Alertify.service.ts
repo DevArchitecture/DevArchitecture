@@ -10,32 +10,44 @@ declare let alertify: any;
 })
 export class AlertifyService {
 
-  
 
-  constructor(private httpClient: HttpClient,public translateService:TranslateService) {
-    
+
+  constructor(private httpClient: HttpClient, public translateService: TranslateService) {
+
     alertify.set('notifier', 'position', 'top-right');
   }
 
   success(message: string) {
-    alertify.success(this.convertMessage(message));
+
+    this.translateService.get(message).subscribe((mes: string) => {
+      alertify.success(mes);
+    });
+    
   }
 
   error(message: string) {
-    alertify.error(this.convertMessage(message));
+
+    this.translateService.get(message).subscribe((mes: string) => {
+      alertify.error(mes);
+    });
+
+    
   }
 
   info(message: string) {
-    alertify.info(this.convertMessage(message));
+
+    this.translateService.get(message).subscribe((mes: string) => {
+      alertify.info(mes);
+    });
+
   }
 
   warning(message: string) {
-    alertify.warning(this.convertMessage(message));
-  }
 
-  convertMessage(messagekey:string)
-  {
-    this.translateService.get(messagekey);
+    this.translateService.get(message).subscribe((mes: string) => {
+      alertify.warning(message);
+    });
+ 
   }
 
   confirmDelete(url: string, values: any) {
@@ -56,14 +68,13 @@ export class AlertifyService {
       .setting({
         'label': 'Agree',
         'message': 'This dialog is ',
-        'onok': this.delete(url,values)
+        'onok': this.delete(url, values)
       }).show();
 
 
   }
 
-  delete(url: string, values: any)
-  {
+  delete(url: string, values: any) {
     debugger;
     this.httpClient.request("delete", url, values)
   }
