@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
 	/// <summary>
-	/// 
+	/// If controller methods will not be Authorize, [AllowAnonymous] is used.
 	/// </summary>
 	///  
 	[Route("api/[controller]")]
@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
 	{
 
 		///<summary>
-		///Grupları listeler
+		///List Groups
 		///</summary>
 		///<remarks>bla bla bla Groups</remarks>
 		///<return>Grup Listesi</return>
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
 
 
 		///<summary>
-		///Id sine göre detaylarını getirir.
+		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
 		///<return>Grup Listesi</return>
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// Group Ekler.
+		///Add Group .
 		/// </summary>
 		/// <param name="createGroup"></param>
 		/// <returns></returns>
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// Group Günceller.
+		/// Update Group.
 		/// </summary>
 		/// <param name="updateGroup"></param>
 		/// <returns></returns>
@@ -102,7 +102,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// Group Siler.
+		/// Delete Group.
 		/// </summary>
 		/// <param name="deleteGroup"></param>
 		/// <returns></returns>

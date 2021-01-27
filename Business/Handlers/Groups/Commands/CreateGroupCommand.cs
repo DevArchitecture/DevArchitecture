@@ -33,7 +33,7 @@ namespace Business.Handlers.Groups.Commands
                     };
                     _groupRepository.Add(group);
                     await _groupRepository.SaveChangesAsync();
-                    return new SuccessResult("Added");
+                    return new SuccessResult(Messages.GroupAdded);
                 }
                 catch(Exception ex)
                 {

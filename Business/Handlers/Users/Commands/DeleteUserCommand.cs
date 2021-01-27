@@ -22,17 +22,8 @@ namespace Business.Handlers.Users.Commands
             {
                 _userRepository = userRepository;
             }
-            /// <summary>
-            /// Aspectler her zaman hadler üzerinde kullanılmalıdır.
-            /// Kullanıcı arayüzünden bir Id alır ve silinmek istenen kategori doğrulanır.
-            /// Kategori silinebilirse sadece mesaj döner.
-            /// iş kuralları burada yazılır.
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
+            
             [CacheRemoveAspect("Get")]
-
             public async Task<IResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
             {
                 var userToDelete = _userRepository.Get(p => p.UserId == request.UserId);

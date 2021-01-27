@@ -3,19 +3,19 @@
 	public enum AuthenticationProviderType
 	{
 		/// <summary>
-		/// Olmaması gereken durumdur. 0 koduna karşılık gelir. Hataları tespit etmek için eklenmiştir.
+		/// It should not be. Corresponds to the 0 code. It has been added to detect errors.
 		/// </summary>
 		Unknown,
 		/// <summary>
-		/// Kişiler için giriş.
+		/// Login for Person
 		/// </summary>
 		Person,
 		/// <summary>
-		/// Kurum personeli için giriş.
+		/// Login for Institution staff
 		/// </summary>
 		Staff,
 		/// <summary>
-		/// Anlaşmalı hizmet personeli için giriş.
+		/// Login for contract service or outsource personnel.
 		/// </summary>
 		Agent
 	}

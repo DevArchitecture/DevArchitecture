@@ -17,9 +17,7 @@ using Business.Handlers.Translates.ValidationRules;
 
 namespace Business.Handlers.Translates.Commands
 {
-    /// <summary>
-    /// CQRS yaklaşımında oluşturulmuş bir Command sınıfıdır. Bir kategorinin güncellenmesini sağlar
-    /// </summary>
+    
     [SecuredOperation]
     public class UpdateTranslateCommand : IRequest<IResult>
     {

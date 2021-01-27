@@ -2,8 +2,6 @@
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 
-
-
 namespace Business.Helpers
 {
     public class AutoMapperHelper : Profile
@@ -11,8 +9,6 @@ namespace Business.Helpers
         public AutoMapperHelper()
         {
             CreateMap<User, UserDto>().ReverseMap();
-
-
         }
     }
 }

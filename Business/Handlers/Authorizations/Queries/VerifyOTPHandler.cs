@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Business.Handlers.Authorizations.Queries
 {
 
-    public class VerifyOtpHandler : IRequestHandler<VerifyOtpCommand, IDataResult<SFwToken>>
+    public class VerifyOtpHandler : IRequestHandler<VerifyOtpCommand, IDataResult<DArchToken>>
     {
         private readonly IAuthenticationCoordinator _coordinator;
 
@@ -19,15 +19,14 @@ namespace Business.Handlers.Authorizations.Queries
             _coordinator = coordinator;
         }
 
-        /// <summary>
-        /// User Login Handler sınıfıdır. Aspectler bu metodun üzerinde kullanılır.
-        /// Bir kullanıcının sisteme login olmasını sağlar geriye browser local storageda saklanan bir token döner 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [LogAspect(typeof(FileLogger))]
-        public async Task<IDataResult<SFwToken>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
+    /// <summary>
+    /// Allows a user to login to the system, back to the browser returns a token stored in local storage.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [LogAspect(typeof(FileLogger))]
+        public async Task<IDataResult<DArchToken>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
             var provider = _coordinator.SelectProvider(request.Provider);
             return await provider.Verify(request);

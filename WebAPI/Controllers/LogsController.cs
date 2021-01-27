@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
 	/// <summary>
-	/// Logs Controller Authorize olmayacaksa [AllowAnonymous] Kullanılır.
+	/// If controller methods will not be Authorize, [AllowAnonymous] is used.
 	/// </summary>
 	[Route("api/[controller]")]
 	[ApiController]
 	public class LogsController : BaseApiController
 	{
 		///<summary>
-		///Logs listeler
+		///List Logs
 		///</summary>
 		///<remarks>bla bla bla Logs</remarks>
 		///<return>Logs Listesi</return>

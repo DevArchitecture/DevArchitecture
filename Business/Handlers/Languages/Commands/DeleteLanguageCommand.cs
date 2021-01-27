@@ -12,10 +12,7 @@ using System.Threading.Tasks;
 
 
 namespace Business.Handlers.Languages.Commands
-{
-    /// <summary>
-    /// CQRS yaklaşımında oluşturulmuş bir Command sınıftır. Bir kategorinin silinmesini sağlar
-    /// </summary>
+{  
     [SecuredOperation]
     public class DeleteLanguageCommand : IRequest<IResult>
     {
@@ -30,16 +27,7 @@ namespace Business.Handlers.Languages.Commands
             {
                 _languageRepository = languageRepository;
                 _mediator = mediator;
-            }
-            /// <summary>
-            /// Aspectler her zaman hadler üzerinde kullanılmalıdır.
-            /// Kullanıcı arayüzünden bir Id alır ve silinmek istenen kategori doğrulanır.
-            /// Kategori silinebilirse sadece mesaj döner.
-            /// iş kuralları burada yazılır.
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
+            }            
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)

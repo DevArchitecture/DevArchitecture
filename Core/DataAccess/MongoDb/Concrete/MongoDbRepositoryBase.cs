@@ -1,4 +1,5 @@
-﻿using Core.DataAccess.MongoDb.Concrete.Models;
+﻿using Core.DataAccess.MongoDb.Concrete.Configurations;
+using Core.Utilities.Messages;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -130,13 +131,13 @@ namespace Core.DataAccess.Concrete
 		{
 			if (settings.GetMongoClientSettings() != null &&
 						(string.IsNullOrEmpty(collectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
-				throw new Exception("Value cannot be null or empty");
+				throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
 
 			if (string.IsNullOrEmpty(collectionName) ||
 						string.IsNullOrEmpty(settings.ConnectionString) ||
 						string.IsNullOrEmpty(settings.DatabaseName))
-				throw new Exception("Value cannot be null or empty");
+				throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
 		}
 

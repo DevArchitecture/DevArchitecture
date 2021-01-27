@@ -49,8 +49,8 @@ namespace Tests.Services.Authentication
 							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
 
 			_tokenHelper.
-							Setup(x => x.CreateToken<SFwToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
-							Returns(() => new SFwToken()
+							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
+							Returns(() => new DArchToken()
 							{
 								Expiration = DateTime.Now.AddMinutes(10),
 								ExternalUserId = "1111111",
@@ -91,8 +91,8 @@ namespace Tests.Services.Authentication
 							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
 
 			_tokenHelper.
-							Setup(x => x.CreateToken<SFwToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
-							Returns(() => new SFwToken()
+							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
+							Returns(() => new DArchToken()
 							{
 								Expiration = DateTime.Now.AddMinutes(10),
 								ExternalUserId = "1111111",

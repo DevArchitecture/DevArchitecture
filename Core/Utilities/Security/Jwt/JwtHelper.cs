@@ -71,7 +71,7 @@ namespace Core.Utilities.Security.Jwt
             if (!string.IsNullOrEmpty(user.FullName))
                 claims.AddName($"{user.FullName}");
             claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
-            // Provider turunu role olarak ekle.
+            
             claims.Add(new Claim(ClaimTypes.Role, user.AuthenticationProviderType));
 
 

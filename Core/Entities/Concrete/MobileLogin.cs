@@ -4,16 +4,8 @@ namespace Core.Entities
 {
 	public class MobileLogin : IEntity
 	{
-		public int Id { get; set; }
-		/// <summary>
-		/// Farklı sistemlerden login olunabildiği için
-		/// provider type ve ExternalUserId alanları bir anahtar oluşturuyor.
-		/// </summary>
-		public AuthenticationProviderType Provider { get; set; }
-		/// <summary>
-		/// Bu alan orjinalde TCKimlikNo adındaydı. Fakat diğer providerlar TCKimlik veremeyebileceği
-		/// için bu istem dönüştürülüp string türüne çevirildi.
-		/// </summary>
+		public int Id { get; set; }	
+		public AuthenticationProviderType Provider { get; set; }	
 		public string ExternalUserId { get; set; }
 		public int Code { get; set; }
 		public DateTime SendDate { get; set; }

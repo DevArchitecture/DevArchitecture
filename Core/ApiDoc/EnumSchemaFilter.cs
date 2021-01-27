@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace Core.ApiDoc
 {
-    /// <summary>
-    /// API'lerde Enum değerlerini ve isimlerini doğru gödermek için yapılan eklenti.
-    /// </summary>
-    internal class EnumSchemaFilter : ISchemaFilter
+  /// <summary>
+  /// Plugin made to send Enum values and names correctly in APIs.
+  /// </summary>
+  internal class EnumSchemaFilter : ISchemaFilter
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {

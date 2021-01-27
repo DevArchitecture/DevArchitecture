@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Business.Fakes.SFw
+namespace Business.Fakes.DArch
 {
-	public sealed class SFwInMemory : ProjectDbContext
+	public sealed class DArchInMemory : ProjectDbContext
 	{
-		public SFwInMemory(DbContextOptions<SFwInMemory> options, IConfiguration configuration) : base(options, configuration)
+		public DArchInMemory(DbContextOptions<DArchInMemory> options, IConfiguration configuration) : base(options, configuration)
 		{
 		}
 
@@ -15,7 +15,7 @@ namespace Business.Fakes.SFw
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				base.OnConfiguring(optionsBuilder.UseInMemoryDatabase(configuration.GetConnectionString("SFwInmemory")));
+				base.OnConfiguring(optionsBuilder.UseInMemoryDatabase(configuration.GetConnectionString("DArchInMemory")));
 								
 			}
 		}

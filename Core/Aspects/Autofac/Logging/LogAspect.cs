@@ -27,7 +27,6 @@ namespace Core.Aspects.Autofac.Logging
 				throw new ArgumentException(AspectMessages.WrongLoggerType);
 			}
 
-			//_loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
 			_loggerServiceBase = (LoggerServiceBase)ServiceTool.ServiceProvider.GetService(loggerService);
 			_httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
 		}

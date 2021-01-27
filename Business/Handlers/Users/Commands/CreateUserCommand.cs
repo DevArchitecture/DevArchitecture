@@ -41,12 +41,7 @@ namespace Business.Handlers.Users.Commands
             {
                 _userRepository = userRepository;
             }
-            /// <summary>
-            ///            
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
+           
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)

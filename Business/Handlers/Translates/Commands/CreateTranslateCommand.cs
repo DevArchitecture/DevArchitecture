@@ -39,13 +39,7 @@ namespace Business.Handlers.Translates.Commands
                 _translateRepository = translateRepository;
                 _mediator = mediator;
             }
-            /// <summary>
-            /// Eğer farklı bir sınıf veya metod çağırılması gerekiyorsa MediatR kütüphanesi yardımıyla çağırılır
-            /// Örneğin:  var result = await _mediator.Send(new GetAnimalsCountQuery());
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
+           
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]

@@ -8,20 +8,20 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
-    /// <summary>
-    /// Languages Controller Authorize olmayacaksa [AllowAnonymous] Kullanılır.
-    /// </summary>
-    [Route("api/[controller]")]
+  /// <summary>
+  /// If controller methods will not be Authorize, [AllowAnonymous] is used.
+  /// </summary>
+  [Route("api/[controller]")]
     [ApiController]
     public class LanguagesController : BaseApiController
     {
-        ///<summary>
-        ///Language listeler
-        ///</summary>
-        ///<remarks>bla bla bla Languages</remarks>
-        ///<return>Languages Listesi</return>
-        ///<response code="200"></response>  
-        [HttpGet("getall")]
+    ///<summary>
+    ///List languages
+    ///</summary>
+    ///<remarks>bla bla bla Languages</remarks>
+    ///<return>Languages Listesi</return>
+    ///<response code="200"></response>  
+    [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
             var result = await Mediator.Send(new GetLanguagesQuery());
@@ -32,13 +32,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///Id sine göre detaylarını getirir.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Language Listesi</return>
-        ///<response code="200"></response>  
-        [HttpGet("getbyid")]
+    ///<summary>
+    ///It brings the details according to its id.
+    ///</summary>
+    ///<remarks>bla bla bla </remarks>
+    ///<return>Language Listesi</return>
+    ///<response code="200"></response>  
+    [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int languageId)
         {
             var result = await Mediator.Send(new GetLanguageQuery { Id = languageId });
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// Language Ekler.
+        /// Add Language.
         /// </summary>
         /// <param name="createLanguage"></param>
         /// <returns></returns>
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// Language Günceller.
+        /// Update Language.
         /// </summary>
         /// <param name="updateLanguage"></param>
         /// <returns></returns>
@@ -82,7 +82,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// Language Siler.
+        /// Delete Language.
         /// </summary>
         /// <param name="deleteLanguage"></param>
         /// <returns></returns>
@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
         }
 
         ///<summary>
-        ///LanguageLookUp listeler
+        ///LanguageLookUp
         ///</summary>
         ///<remarks>bla bla bla Languages</remarks>
         ///<return>Languages Listesi</return>
@@ -115,7 +115,7 @@ namespace WebAPI.Controllers
         }
 
         ///<summary>
-        ///LanguageLookUp listeler
+        ///LanguageLookUp with Code
         ///</summary>
         ///<remarks>bla bla bla Languages</remarks>
         ///<return>Languages Listesi</return>

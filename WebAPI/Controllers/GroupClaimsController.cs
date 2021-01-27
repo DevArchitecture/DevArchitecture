@@ -14,9 +14,9 @@ namespace WebAPI.Controllers
 	public class GroupClaimsController : BaseApiController
 	{
 		///<summary>
-		///GroupClaims listeler
+		///GroupClaims list
 		///</summary>
-		///<remarks>bla bla bla GroupClaims</remarks>
+		///<remarks>GroupClaims</remarks>
 		///<return>GroupClaims Listesi</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
 		}
 
 		///<summary>
-		///Id sine göre detaylarını getirir.
+		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
 		///<return>GroupClaims Listesi</return>
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
 		}
 
 		///<summary>
-		///Grup Id sine göre Claimsleri getirir.
+		///Brings up Claims by Group Id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
 		///<return>GroupClaims Listesi</return>
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
 
 
 		/// <summary>
-		/// GroupClaim Ekler.
+		/// Addded GroupClaim .
 		/// </summary>
 		/// <param name="createGroupClaim"></param>
 		/// <returns></returns>
@@ -83,7 +83,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// GroupClaim Günceller.
+		/// Update GroupClaim.
 		/// </summary>
 		/// <param name="updateGroupClaim"></param>
 		/// <returns></returns>
@@ -99,7 +99,7 @@ namespace WebAPI.Controllers
 		}
 
 		/// <summary>
-		/// GroupClaim Siler.
+		/// Delete GroupClaim.
 		/// </summary>
 		/// <param name="deleteGroupClaim"></param>
 		/// <returns></returns>
