@@ -86,8 +86,8 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "PasswordLength", Value = "Must be at least 8 characters long! " });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordUppercaseLetter", Value = "En Az 1 Büyük Harf İçermelidir!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "PasswordUppercaseLetter", Value = "Must Contain At Least 1 Capital Letter!" });
-			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordUppercaseLetter", Value = "En Az 1 Küçük Harf İçermelidir!" });
-			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "PasswordUppercaseLetter", Value = "Must Contain At Least 1 Lowercase Letter!" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordLowercaseLetter", Value = "En Az 1 Küçük Harf İçermelidir!" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "PasswordLowercaseLetter", Value = "Must Contain At Least 1 Lowercase Letter!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordDigit", Value = "En Az 1 Rakam İçermelidir!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "PasswordDigit", Value = "It Must Contain At Least 1 Digit!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordSpecialCharacter", Value = "En Az 1 Simge İçermelidir!" });

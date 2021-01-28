@@ -106,8 +106,7 @@ namespace WebAPI.Controllers
 		/// </summary>
 		/// <param name="updateUserGroup"></param>
 		/// <returns></returns>
-		[HttpPut]
-		[AllowAnonymous]
+		[HttpPut]		
 		public async Task<IActionResult> Update([FromBody] UpdateUserGroupCommand updateUserGroup)
 		{
 			var result = await Mediator.Send(updateUserGroup);
@@ -124,7 +123,6 @@ namespace WebAPI.Controllers
 		/// <param name="updateUserGroup"></param>
 		/// <returns></returns>
 		[HttpPut("updatebygroupid")]
-		[AllowAnonymous]
 		public async Task<IActionResult> UpdateByGroupId([FromBody] UpdateUserGroupByGroupIdCommand updateUserGroup)
 		{
 			var result = await Mediator.Send(updateUserGroup);
