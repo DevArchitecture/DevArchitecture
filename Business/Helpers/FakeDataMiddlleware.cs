@@ -130,6 +130,8 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "LangCode", Value = "Lang Code" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Name", Value = "Adı" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Name", Value = "Name" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "MobilePhones", Value = "Cep Telefonu" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "MobilePhones", Value = "Mobile Phone" });
 
 
 		}

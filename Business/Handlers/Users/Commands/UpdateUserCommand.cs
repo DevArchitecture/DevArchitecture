@@ -9,38 +9,43 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Commands
 {
-    [SecuredOperation]
-    public class UpdateUserCommand : IRequest<IResult>
-    {
+	[SecuredOperation]
+	public class UpdateUserCommand : IRequest<IResult>
+	{
 
-        public int UserId { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string FullName { get; set; }
+		public int UserId { get; set; }
+		public string Email { get; set; }
+		public string FullName { get; set; }
+		public string MobilePhones { get; set; }
+		public string Address { get; set; }
+		public string Notes { get; set; }
 
-        public class UpdateAnimalCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
-        {
-            private readonly IUserRepository _userRepository;
+		public class UpdateAnimalCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
+		{
+			private readonly IUserRepository _userRepository;
 
-            public UpdateAnimalCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
-                  
-            [CacheRemoveAspect("Get")]
+			public UpdateAnimalCommandHandler(IUserRepository userRepository)
+			{
+				_userRepository = userRepository;
+			}
 
-            public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
-            {
-                var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
-                
-                isUserExits.FullName = request.FullName;
-                isUserExits.Email = request.Email;
+			[CacheRemoveAspect("Get")]
 
-                _userRepository.Update(isUserExits);
-                await _userRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Updated);
-            }
-        }
-    }
+			public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+			{
+				var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
+
+				isUserExits.FullName = request.FullName;
+				isUserExits.Email = request.Email;
+				isUserExits.MobilePhones = request.MobilePhones;
+				isUserExits.Address = request.Address;
+				isUserExits.Notes = request.Notes;
+
+				_userRepository.Update(isUserExits);
+				await _userRepository.SaveChangesAsync();
+				return new SuccessResult(Messages.Updated);
+			}
+		}
+	}
 
 }

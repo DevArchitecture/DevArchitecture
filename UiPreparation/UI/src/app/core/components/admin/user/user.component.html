@@ -22,6 +22,9 @@
                       {{'FullName' |translate}}
                     </th>
                     <th>
+                      {{'MobilePhones' |translate}}
+                    </th>
+                    <th>
                       {{'Address' |translate}}
                     </th>
                     <th>
@@ -50,6 +53,9 @@
                       {{user.fullName}}
                     </td>
                     <td>
+                      {{user.mobilePhones}}
+                    </td>
+                    <td>
                       {{user.address}}
                     </td>
                     <td>
@@ -59,13 +65,13 @@
                       {{user.notes}}
                     </td>
                     <td *ngIf="checkClaim('UserChangePasswordCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{('UserChangePassword' | translate)}}" style="color:slateblue;" class="fas fa-key" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{('ChangePassword' | translate)}}" style="color:slateblue;" class="fas fa-key" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{('UsersClaims' | translate)}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'UsersGroups' | translate}}" style="color:royalblue;"  class="fas fa-user-lock" aria-hidden="true"></i></a>
+                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'UsersGroups' | translate}}" style="color:royalblue;" class="fas fa-user-lock" aria-hidden="true"></i></a>
                     </td>
                     <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
                       <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
@@ -100,30 +106,35 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="fullName" name="fullName"
-                  formControlName="fullName">
+                       formControlName="fullName">
                 <div class="alert alert-danger"
-                  *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">İsim
-                  zorunlu</div>
+                     *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">
+                  İsim
+                  zorunlu
+                </div>
               </mat-form-field>
             </div>
 
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{'Email'|translate}}" type="email" id="email" name="email"
-                  formControlName="email">
+                       formControlName="email">
                 <div class="alert alert-danger"
-                  *ngIf="userAddForm.get('email')!.hasError('required') && userAddForm.get('email')!.dirty"></div>
+                     *ngIf="userAddForm.get('email')!.hasError('required') && userAddForm.get('email')!.dirty"></div>
               </mat-form-field>
             </div>
           </div>
-
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'MobilePhones'|translate}}" type="text" id="mobilePhones" name="mobilePhones" formControlName="mobilePhones">
+              </mat-form-field>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{'Adress'|translate}}" type="text" id="address" name="address" formControlName="address">
-                <div class="alert alert-danger"
-                  *ngIf="userAddForm.get('address')!.hasError('address') && userAddForm.get('address')!.dirty">
-                </div>
               </mat-form-field>
             </div>
           </div>
@@ -131,9 +142,6 @@
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{'Notes'|translate}}" type="text" id="notes" name="notes" formControlName="notes">
-                <div class="alert alert-danger"
-                  *ngIf="userAddForm.get('notes')!.hasError('notes') && userAddForm.get('notes')!.dirty">
-                </div>
               </mat-form-field>
             </div>
           </div>

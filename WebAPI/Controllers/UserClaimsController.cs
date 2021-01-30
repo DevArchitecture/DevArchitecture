@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 		///List UserClaims
 		///</summary>
 		///<remarks>bla bla bla UserClaims</remarks>
-		///<return>UserClaims Listesi</return>
+		///<return>UserClaims List</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]	
 		public async Task<IActionResult> GetList()
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
 		///Id sine göre detaylarını getirir.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>UserClaims Listesi</return>
+		///<return>UserClaims List</return>
 		///<response code="200"></response>  
 		[HttpGet("getbyuserid")]
 		public async Task<IActionResult> GetByUserId(int userid)
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>UserClaims Listesi</return>
+		///<return>UserClaims List</return>
 		///<response code="200"></response>  
 		[HttpGet("getoperationclaimbyuserid")]
 		public async Task<IActionResult> GetOperationClaimByUserId(int id)

@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 		///List Translate
 		///</summary>
 		///<remarks>bla bla bla Translates</remarks>
-		///<return>Translates Listesi</return>
+		///<return>Translates List</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
 		public async Task<IActionResult> GetList()
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
 		///List Dto Translate
 		///</summary>
 		///<remarks>bla bla bla Translates</remarks>
-		///<return>Translates Listesi</return>
+		///<return>Translates List</return>
 		///<response code="200"></response>  
 		[HttpGet("gettranslatelistdto")]
 		public async Task<IActionResult> GetTranslateListDto()
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>Translate Listesi</return>
+		///<return>Translate List</return>
 		///<response code="200"></response>  
 		[HttpGet("getbyid")]
 		public async Task<IActionResult> GetById(int translateId)
