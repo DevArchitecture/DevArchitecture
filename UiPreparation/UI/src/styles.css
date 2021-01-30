@@ -28,4 +28,10 @@ table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTa
 	background-position: center left !important;
 }
 
+a:hover {
+	cursor: pointer !important;
+}
 
+span:hover {
+	cursor: pointer !important;
+}

@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 		///List UserGroup
 		///</summary>
 		///<remarks>bla bla bla UserGroups</remarks>
-		///<return>Kullanıcı Grup Listesi</return>
+		///<return>Kullanıcı Grup List</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
 	
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
 		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>UserGroups Listesi</return>
+		///<return>UserGroups List</return>
 		///<response code="200"></response>  
 		[HttpGet("getusergroupbyuserid")]
 		public async Task<IActionResult> GetGroupClaimsByUserId(int id)
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
 		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>UserGroups Listesi</return>
+		///<return>UserGroups List</return>
 		///<response code="200"></response>  
 		[HttpGet("getusersingroupbygroupid")]
 		public async Task<IActionResult> GetUsersInGroupByGroupid(int id)

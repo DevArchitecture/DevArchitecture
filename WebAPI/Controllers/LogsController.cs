@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
 		///List Logs
 		///</summary>
 		///<remarks>bla bla bla Logs</remarks>
-		///<return>Logs Listesi</return>
+		///<return>Logs List</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
 		public async Task<IActionResult> GetList()

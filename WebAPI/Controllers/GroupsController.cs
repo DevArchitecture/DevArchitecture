@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
 		///List Groups
 		///</summary>
 		///<remarks>bla bla bla Groups</remarks>
-		///<return>Grup Listesi</return>
+		///<return>Grup List</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
 		//[AllowAnonymous]
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
 		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>Grup Listesi</return>
+		///<return>Grup List</return>
 		///<response code="200"></response>  
 		[HttpGet("getbyid")]
 		public async Task<IActionResult> GetById(int groupId)

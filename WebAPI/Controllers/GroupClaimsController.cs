@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
 		///GroupClaims list
 		///</summary>
 		///<remarks>GroupClaims</remarks>
-		///<return>GroupClaims Listesi</return>
+		///<return>GroupClaims List</return>
 		///<response code="200"></response>  
 		[HttpGet("getall")]
 		//[AllowAnonymous]
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
 		///It brings the details according to its id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>GroupClaims Listesi</return>
+		///<return>GroupClaims List</return>
 		///<response code="200"></response>  
 		[HttpGet("getbyid")]
 		public async Task<IActionResult> GetById(int id)
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 		///Brings up Claims by Group Id.
 		///</summary>
 		///<remarks>bla bla bla </remarks>
-		///<return>GroupClaims Listesi</return>
+		///<return>GroupClaims List</return>
 		///<response code="200"></response>  
 		[HttpGet("getgroupclaimsbygroupid")]
 		public async Task<IActionResult> GetGroupClaimsByGroupId(int id)

@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
     ///List languages
     ///</summary>
     ///<remarks>bla bla bla Languages</remarks>
-    ///<return>Languages Listesi</return>
+    ///<return>Languages List</return>
     ///<response code="200"></response>  
     [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
     ///It brings the details according to its id.
     ///</summary>
     ///<remarks>bla bla bla </remarks>
-    ///<return>Language Listesi</return>
+    ///<return>Language List</return>
     ///<response code="200"></response>  
     [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int languageId)
@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
         ///LanguageLookUp
         ///</summary>
         ///<remarks>bla bla bla Languages</remarks>
-        ///<return>Languages Listesi</return>
+        ///<return>Languages List</return>
         ///<response code="200"></response>  
         [HttpGet("getlookup")]
         public async Task<IActionResult> GetLookupList()
@@ -118,7 +118,7 @@ namespace WebAPI.Controllers
         ///LanguageLookUp with Code
         ///</summary>
         ///<remarks>bla bla bla Languages</remarks>
-        ///<return>Languages Listesi</return>
+        ///<return>Languages List</return>
         ///<response code="200"></response>  
         [HttpGet("getlookupwithcode")]
         [AllowAnonymous]

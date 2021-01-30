@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         ///List Users 
         ///</summary>
         ///<remarks>bla bla bla Users</remarks>
-        ///<return>Users Listesi</return>
+        ///<return>Users List</return>
         ///<response code="200"></response>  
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         ///User Lookup
         ///</summary>
         ///<remarks>bla bla bla Users</remarks>
-        ///<return>Users Listesi</return>
+        ///<return>Users List</return>
         ///<response code="200"></response>  
         [HttpGet("getuserlookup")]
         public async Task<IActionResult> GetUserLookup()
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
     ///It brings the details according to its id.
     ///</summary>
     ///<remarks>bla bla bla </remarks>
-    ///<return>Users Listesi</return>
+    ///<return>Users List</return>
     ///<response code="200"></response>  
     [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int userId)

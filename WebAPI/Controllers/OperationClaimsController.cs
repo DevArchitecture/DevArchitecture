@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         ///List OperationClaims 
         ///</summary>
         ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims Listesi</return>
+        ///<return>OperationClaims List</return>
         ///<response code="200"></response>  
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
     ///It brings the details according to its id.
     ///</summary>
     ///<remarks>bla bla bla OperationClaims</remarks>
-    ///<return>OperationClaims Listesi</return>
+    ///<return>OperationClaims List</return>
     ///<response code="200"></response>  
     [HttpGet("getbyid")]
         public async Task<IActionResult> GetByid(int id)
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
         ///List OperationClaims
         ///</summary>
         ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims Listesi</return>
+        ///<return>OperationClaims List</return>
         ///<response code="200"></response>  
         [HttpGet("getoperationclaimlookup")]
         public async Task<IActionResult> GetOperationClaimLookup()

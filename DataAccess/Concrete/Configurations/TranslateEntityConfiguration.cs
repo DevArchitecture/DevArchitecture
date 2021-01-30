@@ -125,7 +125,9 @@ namespace DataAccess.Concrete.Configurations
 				new Translate { Id = 109, LangId = 1, Code = "LangCode", Value = "Dil Kodu" },
 				new Translate { Id = 110, LangId = 2, Code = "LangCode", Value = "Lang Code" }, 
 				new Translate { Id = 111, LangId = 1, Code = "Name", Value = "Adı" },
-				new Translate { Id = 112, LangId = 2, Code = "Name", Value = "Name" });
+				new Translate { Id = 112, LangId = 2, Code = "Name", Value = "Name" },
+				new Translate { Id = 113, LangId = 1, Code = "MobilePhones", Value = "Cep Telefonu" },
+				new Translate { Id = 114, LangId = 2, Code = "MobilePhones", Value = "Mobile Phone" });
 		}
 	}
 }
