@@ -89,7 +89,7 @@ export class TranslateComponent implements OnDestroy,AfterViewInit, OnInit {
 	updateTranslate(){
 
 		this.translateService.updateTranslate(this.translate).subscribe(data => {
-			debugger;
+			
 
 			var index=this.translateList.findIndex(x=>x.id==this.translate.id);
 			this.translateList[index]=this.translate;
@@ -147,7 +147,7 @@ export class TranslateComponent implements OnDestroy,AfterViewInit, OnInit {
 	}
 
 	rerender(): void {
-		debugger;
+		
 		if (this.dtElement.dtInstance == undefined) {
 		  this.dtTrigger.next();
 		}

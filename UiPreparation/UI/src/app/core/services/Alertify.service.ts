@@ -57,7 +57,7 @@ export class AlertifyService {
     // , () => { this.error("hata")});
 
     //alertify.confirm('Confirm Message', function(){ alertify.success('Ok') }, function(){ alertify.error('Cancel')});
-    // debugger;
+    // 
     // alertify.confirm('Delete Message',this.deleteRequest(url,values),this.error("Hata"));
 
     // 
@@ -75,7 +75,7 @@ export class AlertifyService {
   }
 
   delete(url: string, values: any) {
-    debugger;
+    
     this.httpClient.request("delete", url, values)
   }
 

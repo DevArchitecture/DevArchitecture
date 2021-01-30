@@ -24,7 +24,7 @@ import { DataTablesModule } from 'angular-datatables';
 // i18 kullanıclak ise aşağıdaki metod aktif edilecek
 
 //  export function HttpLoaderFactory(http: HttpClient) {
-//    debugger;
+//    
 //    var asd=new TranslateHttpLoader(http, '../../../../assets/i18n/', '.json'); 
 //    return asd;
 //  }

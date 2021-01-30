@@ -134,7 +134,7 @@ export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
 	}
 
 	rerender(): void {
-		debugger;
+		
 		if (this.dtElement.dtInstance == undefined) {
 		  this.dtTrigger.next();
 		}

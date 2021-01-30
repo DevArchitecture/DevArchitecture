@@ -219,7 +219,7 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
   savePassword() {
 
     if (this.passwordForm.valid) {
-      debugger;
+      
       var passwordDto: PasswordDto=new PasswordDto();
       passwordDto.userId = this.userId;
       passwordDto.password = this.passwordForm.value.password;
@@ -289,7 +289,7 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   rerender(): void {
-    debugger;
+    
     if (this.dtElement.dtInstance == undefined) {
       this.dtTrigger.next();
     }
