@@ -66,7 +66,8 @@ namespace Tests.Business.HandlersTest
             GetLanguagesQuery query = new GetLanguagesQuery();
 
             _languageRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Language, bool>>>()))
-                        .ReturnsAsync(new List<Language> { new Language() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "test"*/ } });
+                        .ReturnsAsync(new List<Language> { new Language() { Id = 1, Code="tr-TR", Name = "Türkçe" },
+                                                           new Language() { Id = 2, Code="en-US", Name = "English" }});
 
             GetLanguagesQueryHandler handler = new GetLanguagesQueryHandler(_languageRepository.Object, _mediator.Object);
 

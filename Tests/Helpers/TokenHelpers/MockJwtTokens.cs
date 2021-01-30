@@ -9,8 +9,8 @@ namespace Tests.Helpers.TokenHelpers
 {
 	public static class MockJwtTokens
 	{
-		public static string Issuer { get; } = "www.keremvaris.com";
-		public static string Audience { get; } = "www.keremvaris.com";
+		public static string Issuer { get; } = "www.devarchitecture.com";
+		public static string Audience { get; } = "www.devarchitecture.com";
 		public static SecurityKey SecurityKey { get; }
 		public static SigningCredentials SigningCredentials { get; }
 
@@ -25,7 +25,7 @@ namespace Tests.Helpers.TokenHelpers
 
 		}
 
-		public static string GenerateJwtToken(IEnumerable<Claim> claims, double value = 2)
+		public static string GenerateJwtToken(IEnumerable<Claim> claims, double value = 5)
 		{
 			return s_tokenHandler.WriteToken(new JwtSecurityToken(Issuer, Audience, claims, DateTime.UtcNow, DateTime.UtcNow.AddSeconds(value), SigningCredentials));
 		}

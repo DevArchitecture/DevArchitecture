@@ -15,8 +15,8 @@ namespace Tests.Helpers.TokenHelpers
 
 		protected WebApplicationFactory<Startup> Factory => new WebApplicationFactory<Startup>();
 
-		public string Issuer { get; } = "www.keremvaris.com";
-		public string Audience { get; } = "www.keremvaris.com";
+		public string Issuer { get; } = "www.devarchitecture.com";
+		public string Audience { get; } = "www.devarchitecture.com";
 
 		public SigningCredentials SigningCredentials { get; }
 
