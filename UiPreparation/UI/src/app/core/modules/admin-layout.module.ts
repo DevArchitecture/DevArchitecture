@@ -4,26 +4,28 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from '../components/app/layouts/admin-layout/admin-layout.routing';
 import { DashboardComponent } from '../components/app/dashboard/dashboard.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSelectModule} from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatRippleModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { LoginComponent } from 'app/core/components/admin/login/login.component';
 import { GroupComponent } from 'app/core/components/admin/group/group.component';
 import { UserComponent } from 'app/core/components/admin/user/user.component';
-import { LanguageComponent } from '../components/app/language/language.component';
-import { TranslateComponent } from '../components/app/translate/translate.component';
-import { OperationClaimComponent } from '../components/app/operationclaim/operationClaim.component';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from 'app/core/services/translation.service';
-import { DataTablesModule } from 'angular-datatables';
-import { LogDtoComponent } from '../components/app/log/logDto.component';
+import { LanguageComponent } from '../components/admin/language/language.component';
+import { TranslateComponent } from '../components/admin/translate/translate.component';
+import { OperationClaimComponent } from '../components/admin/operationclaim/operationClaim.component';
+import { LogDtoComponent } from '../components/admin/log/logDto.component';
 
 
 // export function layoutHttpLoaderFactory(http: HttpClient) {
@@ -43,18 +45,19 @@ import { LogDtoComponent } from '../components/app/log/logDto.component';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
     NgbModule,
     NgMultiSelectDropDownModule,
     TranslateModule.forChild({
-      loader:{
-        provide:TranslateLoader,
+      loader: {
+        provide: TranslateLoader,
         //useFactory:layoutHttpLoaderFactory,
-        useClass:TranslationService,
-        deps:[HttpClient]
-      },
-      isolate:true
-    }),
-    DataTablesModule 
+        useClass: TranslationService,
+        deps: [HttpClient]
+      }
+    })
   ],
   declarations: [
     DashboardComponent,
@@ -65,8 +68,8 @@ import { LogDtoComponent } from '../components/app/log/logDto.component';
     TranslateComponent,
     OperationClaimComponent,
     LogDtoComponent
-    
+
   ]
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

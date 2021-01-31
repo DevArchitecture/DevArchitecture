@@ -30,8 +30,7 @@
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -47,8 +46,7 @@
               "node_modules/bootstrap/js/dist/tab.js",
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
-              "node_modules/bootstrap-select/dist/js/i18n/defaults-tr_TR.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
+              "node_modules/bootstrap-select/dist/js/i18n/defaults-tr_TR.js"
             ],
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",

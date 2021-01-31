@@ -5,84 +5,110 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title ">User List</h4>
-            <a *ngIf="checkClaim('CreateUserCommand')" class="pull-right" data-toggle="modal" data-target="#user"> <i style="color:white" title="{{'create' | translate}}" class="far fa-plus-square fa-2x"></i></a>
+            <a *ngIf="checkClaim('CreateUserCommand')" class="pull-right" data-toggle="modal" data-target="#user"> <i
+                style="color:white" title="{{'create' | translate}}" class="far fa-plus-square fa-2x"></i></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table datatable [dtTrigger]="dtTrigger"  class="stripe">
-                <thead class=" text-primary">
-                  <tr>
-                    <th>
-                      {{'ID' |translate}}
-                    </th>
-                    <th>
-                      {{'Email' |translate}}
-                    </th>
-                    <th>
-                      {{'FullName' |translate}}
-                    </th>
-                    <th>
-                      {{'MobilePhones' |translate}}
-                    </th>
-                    <th>
-                      {{'Address' |translate}}
-                    </th>
-                    <th>
-                      {{'Status' |translate}}
-                    </th>
-                    <th>
-                      {{'Notes' |translate}}
-                    </th>
-                    <th class="no-sort"></th>
-                    <th class="no-sort"></th>
-                    <th class="no-sort"></th>
-                    <th class="no-sort"></th>
-                    <th class="no-sort"></th>
 
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let user of userList">
-                    <td>
-                      {{user.userId}}
-                    </td>
-                    <td>
-                      {{user.email}}
-                    </td>
-                    <td>
-                      {{user.fullName}}
-                    </td>
-                    <td>
-                      {{user.mobilePhones}}
-                    </td>
-                    <td>
-                      {{user.address}}
-                    </td>
-                    <td>
-                      <input type="checkbox" [(ngModel)]="user.status" disabled>
-                    </td>
-                    <td>
-                      {{user.notes}}
-                    </td>
-                    <td *ngIf="checkClaim('UserChangePasswordCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(user.userId)"><i title="{{('ChangePassword' | translate)}}" style="color:slateblue;" class="fas fa-key" aria-hidden="true"></i></a>
-                    </td>
-                    <td *ngIf="checkClaim('UpdateUserClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#claimsPermissions" (click)="getUserClaimsPermissions(user.userId)"><i title="{{('UsersClaims' | translate)}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
-                    </td>
-                    <td *ngIf="checkClaim('UpdateGroupClaimCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#groupPermissions" (click)="getUserGroupPermissions(user.userId)"><i title="{{'UsersGroups' | translate}}" style="color:royalblue;" class="fas fa-user-lock" aria-hidden="true"></i></a>
-                    </td>
-                    <td *ngIf="checkClaim('UpdateUserCommand')" style="width: 25px;">
-                      <a data-toggle="modal" data-target="#user" (click)="getUserById(user.userId)"><i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
-                    </td>
-                    <td *ngIf="checkClaim('DeleteUserCommand')" style="width: 25px;">
-                      <a (click)="deleteUser(user.userId)"><i title="{{'Delete' | translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
-                    </td>
-                  </tr>
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
 
-                </tbody>
+              <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="userId">
+                  <th mat-header-cell *matHeaderCellDef> {{'ID' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef> {{'Email' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fullName">
+                  <th mat-header-cell *matHeaderCellDef> {{'FullName' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef> {{'Status' |translate}} </th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-checkbox [checked]="element.status" [disabled]="true">
+                    </mat-checkbox>
+                  </td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="mobilePhones">
+                  <th mat-header-cell *matHeaderCellDef> {{'MobilePhones' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.mobilePhones}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="address">
+                  <th mat-header-cell *matHeaderCellDef> {{'Address' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="notes">
+                  <th mat-header-cell *matHeaderCellDef> {{'Notes' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="passwordChange" *ngIf="checkClaim('UserChangePasswordCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a data-toggle="modal" data-target="#passwordChange" (click)="setUserId(element.userId)"><i
+                        title="{{('ChangePassword' | translate)}}" style="color:slateblue;" class="fas fa-key"
+                        aria-hidden="true"></i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="updateClaim" *ngIf="checkClaim('UpdateUserClaimCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a data-toggle="modal" data-target="#claimsPermissions"
+                      (click)="getUserClaimsPermissions(element.userId)"><i title="{{('UsersClaims' | translate)}}"
+                        style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="updateGroupClaim" *ngIf="checkClaim('UpdateGroupClaimCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a data-toggle="modal" data-target="#groupPermissions"
+                      (click)="getUserGroupPermissions(element.userId)"><i title="{{'UsersGroups' | translate}}"
+                        style="color:royalblue;" class="fas fa-user-lock" aria-hidden="true"></i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="update" *ngIf="checkClaim('UpdateUserCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a data-toggle="modal" data-target="#user" (click)="getUserById(element.userId)"><i
+                        title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete" *ngIf="checkClaim('DeleteUserCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a (click)="deleteUser(element.userId)"><i title="{{'Delete' | translate}}" style="color:#D9534E;"
+                        class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
               </table>
+              <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
             </div>
           </div>
         </div>
@@ -106,9 +132,9 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="fullName" name="fullName"
-                       formControlName="fullName">
+                  formControlName="fullName">
                 <div class="alert alert-danger"
-                     *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">
+                  *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">
                   İsim
                   zorunlu
                 </div>
@@ -118,30 +144,33 @@
             <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{'Email'|translate}}" type="email" id="email" name="email"
-                       formControlName="email">
+                  formControlName="email">
                 <div class="alert alert-danger"
-                     *ngIf="userAddForm.get('email')!.hasError('required') && userAddForm.get('email')!.dirty"></div>
+                  *ngIf="userAddForm.get('email')!.hasError('required') && userAddForm.get('email')!.dirty"></div>
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="{{'MobilePhones'|translate}}" type="text" id="mobilePhones" name="mobilePhones" formControlName="mobilePhones">
+                <input matInput placeholder="{{'MobilePhones'|translate}}" type="text" id="mobilePhones"
+                  name="mobilePhones" formControlName="mobilePhones">
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="{{'Adress'|translate}}" type="text" id="address" name="address" formControlName="address">
+                <input matInput placeholder="{{'Adress'|translate}}" type="text" id="address" name="address"
+                  formControlName="address">
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="{{'Notes'|translate}}" type="text" id="notes" name="notes" formControlName="notes">
+                <input matInput placeholder="{{'Notes'|translate}}" type="text" id="notes" name="notes"
+                  formControlName="notes">
               </mat-form-field>
             </div>
           </div>
@@ -170,22 +199,24 @@
                 <input matInput placeholder="{{'Password'|translate}}" type="password" id="password" name="password"
                   formControlName="password">
                 <div class="alert alert-danger"
-                  *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">Parola alanı zorunludur!</div>
+                  *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">
+                  Parola alanı zorunludur!</div>
               </mat-form-field>
-              
+
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="{{'ConfirmPassword'|translate}}" type="password" id="confirmPassword" name="confirmPassword"
-                  formControlName="confirmPassword">
+                <input matInput placeholder="{{'ConfirmPassword'|translate}}" type="password" id="confirmPassword"
+                  name="confirmPassword" formControlName="confirmPassword">
                 <div class="alert alert-danger"
-                *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">Parola onay alanı zorunludur!</div>
-                <div class="alert alert-danger"
-                *ngIf="passwordForm.get('confirmPassword')!.hasError('mustMatch')">Girdiğiniz Parolalar Eşleşmiyor!</div>
+                  *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">
+                  Parola onay alanı zorunludur!</div>
+                <div class="alert alert-danger" *ngIf="passwordForm.get('confirmPassword')!.hasError('mustMatch')">
+                  Girdiğiniz Parolalar Eşleşmiyor!</div>
               </mat-form-field>
-              
+
             </div>
           </div>
 
@@ -245,10 +276,3 @@
     </div>
   </div>
 </div>
-<script>
-	$(document).ready(function () {
-		$('#foo').DataTable({
-      "ordering": false
-		});
-  });
-</script>

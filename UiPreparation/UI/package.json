@@ -37,7 +37,6 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "ajv": "6.12.5",
     "alertifyjs": "^1.13.1",
-    "angular-datatables": "^11.0.2",
     "arrive": "2.4.1",
     "bootstrap": "4.5.2",
     "bootstrap-material-design": "4.1.3",

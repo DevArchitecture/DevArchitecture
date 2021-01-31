@@ -35,3 +35,7 @@ a:hover {
 span:hover {
 	cursor: pointer !important;
 }
+
+table {
+    width: 100%;
+  }

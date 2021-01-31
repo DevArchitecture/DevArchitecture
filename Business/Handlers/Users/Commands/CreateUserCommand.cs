@@ -52,13 +52,10 @@ namespace Business.Handlers.Users.Commands
                     return new ErrorResult(Messages.NameAlreadyExist);
 
 
-                HashingHelper.CreatePasswordHash(request.Password, out byte[] passwordSalt, out byte[] passwordHash);
                 var user = new User
                 {
                     Email = request.Email,
                     FullName = request.FullName,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
                     Status = true,
                     Address = request.Address,
                     BirthDate = request.BirthDate,

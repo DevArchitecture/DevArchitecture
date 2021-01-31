@@ -1,0 +1,125 @@
+﻿<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Translate List</h4>
+            <a *ngIf="checkClaim('CreateTranslateCommand')" class="pull-right" data-toggle="modal"
+              data-target="#translate"> <i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
+
+              <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> {{'Id'|translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="language">
+                  <th mat-header-cell *matHeaderCellDef> {{'LangCode' |translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.language}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="code">
+                  <th mat-header-cell *matHeaderCellDef> {{'Code'|translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="value">
+                  <th mat-header-cell *matHeaderCellDef> {{'Value'|translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="update" *ngIf="checkClaim('UpdateTranslateCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a data-toggle="modal" data-target="#translate" (click)="getTranslateById(element.id)">
+                      <i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete" *ngIf="checkClaim('DeleteTranslateCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a (click)="deleteTranslate(element.id)"><i title="{{'Delete' | translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal modal-angular fade" id="translate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(translateAddForm)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="margin-top">
+          Add Translate
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="translateAddForm" [formGroup]="translateAddForm" (ngSubmit)="save()">
+
+          <div class="row">
+            <div class="col-md-12">
+              <select class="browser-default custom-select" name="langid" formControlName="langid">
+                <option *ngFor="let item of langugelookUp" [ngValue]="item.id"> {{item.label}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'Code'|translate}}" type="text" id="code" name="code"
+                  formControlName="code" />
+                <div class="alert alert-danger"
+                  *ngIf="translateAddForm.get('code')!.hasError('code') && translateAddForm.get('code')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'Value'|translate}}" type="text" id="value" name="value"
+                  formControlName="value" />
+                <div class="alert alert-danger"
+                  *ngIf="translateAddForm.get('value')!.hasError('value') && translateAddForm.get('value')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save' |translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

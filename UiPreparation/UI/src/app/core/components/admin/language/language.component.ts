@@ -1,13 +1,13 @@
-import { Component, OnInit,OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
 import { AuthService } from '../../admin/login/services/auth.service';
 import { Language } from './Models/Language';
 import { LanguageService } from './Services/Language.service';
-import { Subject } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import { DataTableDirective } from 'angular-datatables';
 
 declare var jQuery: any;
 
@@ -16,9 +16,12 @@ declare var jQuery: any;
 	templateUrl: './language.component.html',
 	styleUrls: ['./language.component.scss']
 })
-export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
+export class LanguageComponent implements AfterViewInit, OnInit {
 
-	@ViewChild(DataTableDirective) dtElement: DataTableDirective;
+	dataSource: MatTableDataSource<any>;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+	displayedColumns: string[] = ['id', 'name', 'code','update','delete'];
 	
 	languageList:Language[];
 	language:Language=new Language();
@@ -26,27 +29,25 @@ export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
 	languageAddForm: FormGroup;
 
 	languageId:number;
-	dtTrigger:  Subject<any>=new Subject<any>();
+
 
 	constructor(private languageService:LanguageService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
 	
 	ngAfterViewInit(): void {
+
 		this.getLanguageList();
 	}
 
-	ngOnDestroy(): void {
-		this.dtTrigger.unsubscribe();
-	}
-
 	ngOnInit() {
+
 		this.createLanguageAddForm();
 	}
-
 
 	getLanguageList() {
 		this.languageService.getLanguageList().subscribe(data => {
 			this.languageList = data;
-			this.rerender();
+			this.dataSource = new MatTableDataSource(data);
+			this.configDataTable();
 		});
 	}
 
@@ -82,7 +83,8 @@ export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
 
 			var index=this.languageList.findIndex(x=>x.id==this.language.id);
 			this.languageList[index]=this.language;
-			this.rerender();
+			this.dataSource = new MatTableDataSource(this.languageList);
+			this.configDataTable();
 			this.language = new Language();
 			jQuery('#language').modal('hide');
 			this.alertifyService.success(data);
@@ -104,7 +106,8 @@ export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
 		this.languageService.deleteLanguage(languageId).subscribe(data=>{
 			this.alertifyService.success(data.toString());
 			this.languageList=this.languageList.filter(x=> x.id!=languageId);
-			this.rerender();
+			this.dataSource = new MatTableDataSource(this.languageList);
+			this.configDataTable();
 		})
 	}
 
@@ -133,20 +136,18 @@ export class LanguageComponent implements OnDestroy,AfterViewInit, OnInit {
 		return this.authService.claimGuard(claim)
 	}
 
-	rerender(): void {
-		debugger;
-		if (this.dtElement.dtInstance == undefined) {
-		  this.dtTrigger.next();
-		}
-		else {
-		  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-	
-			// Destroy the table first
-			dtInstance.destroy();
-			// Call the dtTrigger to rerender again
-			this.dtTrigger.next();
-		  });
-		}
+	configDataTable(): void {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
 	  }
+
+	  applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = filterValue.trim().toLowerCase();
+
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
+	}
 
 }

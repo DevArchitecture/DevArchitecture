@@ -1,18 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from "./models/user";
-import { UserService } from './services/User.service';
+import { UserService } from './services/user.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { LookUp } from 'app/core/models/lookUp';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
 import { AuthService } from '../login/services/auth.service';
-import { Subject } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import { DataTableDirective } from 'angular-datatables';
 import { MustMatch } from 'app/core/directives/must-match';
 import { PasswordDto } from './models/passwordDto';
 import { environment } from 'environments/environment';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 declare var jQuery: any;
 
@@ -21,10 +21,12 @@ declare var jQuery: any;
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
+export class UserComponent implements AfterViewInit, OnInit {
 
-  @ViewChild('closebutton') closebutton: ElementRef
-  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
+  dataSource: MatTableDataSource<any>;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+	displayedColumns: string[] = ["userId","email","fullName","status","mobilePhones","address","notes","passwordChange","updateClaim","updateGroupClaim","update","delete"];
 
   user: User;
   userList: User[];
@@ -39,7 +41,6 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
   isClaimChange: boolean = false;
 
   userId: number;
-  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private userService: UserService,
@@ -49,9 +50,6 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
     private authService: AuthService) { }
 
 
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
   ngAfterViewInit(): void {
 
     this.getUserList();
@@ -181,7 +179,8 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
   getUserList() {
     this.userService.getUserList().subscribe(data => {
       this.userList = data;
-      this.rerender();
+      this.dataSource = new MatTableDataSource(data);
+			this.configDataTable();
     });
   }
 
@@ -264,7 +263,8 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
 
       var index = this.userList.findIndex(x => x.userId == this.user.userId);
       this.userList[index] = this.user;
-      this.rerender();
+      this.dataSource = new MatTableDataSource(this.userList);
+			this.configDataTable();
       this.user = new User();
       jQuery("#user").modal("hide");
       this.alertifyService.success(data);
@@ -279,7 +279,8 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
       this.alertifyService.success(data.toString());
       var index = this.userList.findIndex(x => x.userId == id);
       this.userList[index].status = false;
-      this.rerender();
+      this.dataSource = new MatTableDataSource(this.userList);
+			this.configDataTable();
     });
 
   }
@@ -288,21 +289,18 @@ export class UserComponent implements OnDestroy, AfterViewInit, OnInit {
     return this.authService.claimGuard(claim)
   }
 
-  rerender(): void {
-    debugger;
-    if (this.dtElement.dtInstance == undefined) {
-      this.dtTrigger.next();
-    }
-    else {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  configDataTable(): void {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
+	}
 
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
-      });
-    }
+	applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  }
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
+	}
 
 }

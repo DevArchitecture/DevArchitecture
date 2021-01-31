@@ -1,16 +1,17 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { LookUp } from 'app/core/models/lookUp';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
+import { environment } from 'environments/environment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { AuthService } from '../login/services/auth.service';
 import { Group } from './models/group';
 import { GroupService } from './services/group.service';
-import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import { DataTableDirective } from 'angular-datatables';
+
 
 declare var jQuery: any;
 
@@ -19,9 +20,12 @@ declare var jQuery: any;
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.scss']
 })
-export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
-  
-  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
+export class GroupComponent implements AfterViewInit, OnInit {
+
+  dataSource: MatTableDataSource<any>;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+	displayedColumns: string[] = ["id","groupName","updateGroupClaim","updateUserGroupClaims","update","delete"];
   
   userDropdownList:LookUp[];
   userSelectedItems:LookUp[];
@@ -40,13 +44,10 @@ export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
   isClaimChange: boolean = false;
 
   groupId:number;
-  dtTrigger:  Subject<any>=new Subject<any>();
 
   constructor(private groupService:GroupService, private lookupService:LookUpService,private alertifyService:AlertifyService,private formBuilder: FormBuilder, private authService:AuthService) { }
 
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
+  
   ngAfterViewInit(): void {
 
     this.getGroupList();
@@ -71,7 +72,8 @@ export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
   getGroupList() {
     this.groupService.getGroupList().subscribe(data => {
       this.groupList = data,
-      this.rerender();
+      this.dataSource = new MatTableDataSource(data);
+      this.configDataTable();
     });
   }
 
@@ -108,7 +110,8 @@ export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
 
       var index=this.groupList.findIndex(x=>x.id==this.group.id);
       this.groupList[index]=this.group;
-      this.rerender();
+      this.dataSource = new MatTableDataSource(this.groupList);
+      this.configDataTable();
       this.group = new Group();
       jQuery("#group").modal("hide");
       this.alertifyService.success(data);
@@ -129,7 +132,8 @@ export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
     this.groupService.deleteGroup(groupId).subscribe(data=>{
       this.alertifyService.success(data.toString());
       this.groupList=this.groupList.filter(x=> x.id!=groupId);
-      this.rerender();
+      this.dataSource = new MatTableDataSource(this.groupList);
+      this.configDataTable();
     })
   }
 
@@ -225,21 +229,18 @@ export class GroupComponent implements OnDestroy,AfterViewInit, OnInit {
     return this.authService.claimGuard(claim)
   }
 
-  rerender(): void {
-    debugger;
-    if (this.dtElement.dtInstance == undefined) {
-      this.dtTrigger.next();
-    }
-    else {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  configDataTable(): void {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
+	}
 
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
-      });
-    }
+	applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  }
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
+	}
 
 }

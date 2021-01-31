@@ -18,7 +18,6 @@ import { AuthInterceptorService } from './core/interceptors/auth-interceptor.ser
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from './core/services/translation.service';
-import { DataTablesModule } from 'angular-datatables';
 
 
 // i18 kullanıclak ise aşağıdaki metod aktif edilecek
@@ -59,8 +58,7 @@ export function tokenGetter() {
          deps:[HttpClient]
        }
        
-    }),
-    DataTablesModule
+    })
       
   ],
   declarations: [

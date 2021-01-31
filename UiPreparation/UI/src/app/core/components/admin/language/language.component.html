@@ -1,0 +1,112 @@
+﻿<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Language List</h4>
+            <a *ngIf="checkClaim('CreateLanguageCommand')" class="pull-right" data-toggle="modal"
+              data-target="#language"> <i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
+
+              <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> {{'Id'|translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> {{'Name'|translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="code">
+                  <th mat-header-cell *matHeaderCellDef> {{'Code'|translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="update" *ngIf="checkClaim('UpdateLanguageCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a data-toggle="modal" data-target="#language" (click)="getLanguageById(element.id)">
+                      <i style="color:#ff5722;" class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete" *ngIf="checkClaim('DeleteLanguageCommand')">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell *matCellDef="let element">
+                    <a (click)="deleteLanguage(element.id)"><i style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal modal-angular fade" id="language" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(languageAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+          Add Language
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="languageAddForm" [formGroup]="languageAddForm" (ngSubmit)="save()">
+
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="name" name="name"
+                  formControlName="name">
+                <div class="alert alert-danger"
+                  *ngIf="languageAddForm.get('name')!.hasError('required') && languageAddForm.get('name')!.touched">İsim
+                  zorunlu</div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="{{'Code'|translate}}" type="text" id="code" name="code"
+                  formControlName="code" />
+                <div class="alert alert-danger"
+                  *ngIf="languageAddForm.get('code')!.hasError('code') && languageAddForm.get('code')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save' |translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

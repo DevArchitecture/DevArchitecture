@@ -1,13 +1,15 @@
 import { Routes } from '@angular/router';
 import { GroupComponent } from 'app/core/components/admin/group/group.component';
+import { LanguageComponent } from 'app/core/components/admin/language/language.component';
+import { LogDtoComponent } from 'app/core/components/admin/log/logDto.component';
 import { LoginComponent } from 'app/core/components/admin/login/login.component';
+import { OperationClaimComponent } from 'app/core/components/admin/operationclaim/operationClaim.component';
+import { TranslateComponent } from 'app/core/components/admin/translate/translate.component';
 import { UserComponent } from 'app/core/components/admin/user/user.component';
 import { LoginGuard } from 'app/core/guards/login-guard';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { LanguageComponent } from '../../language/language.component';
-import { LogDtoComponent } from '../../log/logDto.component';
-import { OperationClaimComponent } from '../../operationclaim/operationClaim.component';
-import { TranslateComponent } from '../../translate/translate.component';
+
+
 
 
 

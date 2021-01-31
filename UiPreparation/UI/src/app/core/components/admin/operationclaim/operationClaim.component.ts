@@ -1,13 +1,13 @@
-import { Component, OnDestroy,AfterViewInit , OnInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
 import { AuthService } from '../../admin/login/services/auth.service';
 import { OperationClaim } from './Models/OperationClaim';
 import { OperationClaimService } from './Services/OperationClaim.service';
-import { Subject } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-import { DataTableDirective } from 'angular-datatables';
 
 
 declare var jQuery: any;
@@ -17,37 +17,34 @@ declare var jQuery: any;
 	templateUrl: './operationClaim.component.html',
 	styleUrls: ['./operationClaim.component.scss']
 })
-export class OperationClaimComponent implements OnDestroy,AfterViewInit, OnInit {
-	@ViewChild(DataTableDirective) dtElement: DataTableDirective;
+export class OperationClaimComponent implements AfterViewInit, OnInit {
+
+	dataSource: MatTableDataSource<any>;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
+	displayedColumns: string[] = ['id', 'name', 'alias', 'description', 'update'];
 
 	operationClaimList: OperationClaim[];
 	operationClaim: OperationClaim = new OperationClaim();
 
 	operationClaimAddForm: FormGroup;
 
-
 	operationClaimId: number;
-	dtTrigger: Subject<any> = new Subject<any>();
 
 	constructor(private operationClaimService: OperationClaimService, private lookupService: LookUpService, private alertifyService: AlertifyService, private formBuilder: FormBuilder, private authService: AuthService) { }
 	ngAfterViewInit(): void {
 		this.getOperationClaimList();
 	}
 
-	ngOnDestroy(): void {
-		this.dtTrigger.unsubscribe();
-	}
-
 	ngOnInit() {
-
 		this.createOperationClaimAddForm();
 	}
-
 
 	getOperationClaimList() {
 		this.operationClaimService.getOperationClaimList().subscribe(data => {
 			this.operationClaimList = data;
-			this.rerender();
+			this.dataSource = new MatTableDataSource(data);
+			this.configDataTable();
 		});
 	}
 
@@ -57,17 +54,15 @@ export class OperationClaimComponent implements OnDestroy,AfterViewInit, OnInit 
 			this.operationClaim = Object.assign({}, this.operationClaimAddForm.value)
 			this.updateOperationClaim();
 		}
-
 	}
 
-
 	updateOperationClaim() {
-
 		this.operationClaimService.updateOperationClaim(this.operationClaim).subscribe(data => {
 
 			var index = this.operationClaimList.findIndex(x => x.id == this.operationClaim.id);
 			this.operationClaimList[index] = this.operationClaim;
-			this.rerender();
+			this.dataSource = new MatTableDataSource(this.operationClaimList);
+			this.configDataTable();
 			this.operationClaim = new OperationClaim();
 			jQuery('#operationclaim').modal('hide');
 			this.alertifyService.success(data);
@@ -85,7 +80,6 @@ export class OperationClaimComponent implements OnDestroy,AfterViewInit, OnInit 
 		})
 	}
 
-
 	getOperationClaimById(operationClaimId: number) {
 		this.clearFormGroup(this.operationClaimAddForm);
 		this.operationClaimService.getOperationClaim(operationClaimId).subscribe(data => {
@@ -93,7 +87,6 @@ export class OperationClaimComponent implements OnDestroy,AfterViewInit, OnInit 
 			this.operationClaim = data;
 		})
 	}
-
 
 	clearFormGroup(group: FormGroup) {
 
@@ -111,20 +104,18 @@ export class OperationClaimComponent implements OnDestroy,AfterViewInit, OnInit 
 		return this.authService.claimGuard(claim)
 	}
 
-	rerender(): void {
-		debugger;
-		if (this.dtElement.dtInstance == undefined) {
-		  this.dtTrigger.next();
+	configDataTable(): void {
+		this.dataSource.paginator = this.paginator;
+		this.dataSource.sort = this.sort;
+	}
+
+	applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		this.dataSource.filter = filterValue.trim().toLowerCase();
+
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
 		}
-		else {
-		  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-	
-			// Destroy the table first
-			dtInstance.destroy();
-			// Call the dtTrigger to rerender again
-			this.dtTrigger.next();
-		  });
-		}
-	  }
+	}
 
 }
