@@ -1,0 +1,69 @@
+﻿<div class="main-content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header card-header-danger">
+						<h4 class="card-title ">Logs</h4>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+
+							<div class="col-md-4 pull-right">
+								<mat-form-field>
+									<mat-label>{{Filter |translate}}</mat-label>
+									<input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+								</mat-form-field>
+							</div>
+
+							<table mat-table [dataSource]="dataSource">
+								<ng-container matColumnDef="id">
+									<th mat-header-cell *matHeaderCellDef> {{'Id'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.id}} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="level">
+									<th mat-header-cell *matHeaderCellDef> {{'Level'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.level}} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="exceptionMessage">
+									<th mat-header-cell *matHeaderCellDef> {{'ExceptionMessage'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.exceptionMessage}} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="timeStamp">
+									<th mat-header-cell *matHeaderCellDef> {{'TimeStamp'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.timeStamp}} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="user">
+									<th mat-header-cell *matHeaderCellDef> {{'User'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.user}} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="value">
+									<th mat-header-cell *matHeaderCellDef> {{'Value'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.value}} </td>
+								</ng-container>
+
+								<ng-container matColumnDef="type">
+									<th mat-header-cell *matHeaderCellDef> {{'Type'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.type}} </td>
+								</ng-container>
+
+								<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+								<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+								<tr class="mat-row" *matNoDataRow>
+									<td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+								</tr>
+							</table>
+							<mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
