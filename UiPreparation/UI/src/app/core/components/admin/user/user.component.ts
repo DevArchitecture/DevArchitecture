@@ -218,7 +218,7 @@ export class UserComponent implements AfterViewInit, OnInit {
   savePassword() {
 
     if (this.passwordForm.valid) {
-      debugger;
+      
       var passwordDto: PasswordDto=new PasswordDto();
       passwordDto.userId = this.userId;
       passwordDto.password = this.passwordForm.value.password;

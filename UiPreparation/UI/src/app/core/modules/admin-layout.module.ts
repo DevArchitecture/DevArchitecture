@@ -29,7 +29,7 @@ import { LogDtoComponent } from '../components/admin/log/logDto.component';
 
 
 // export function layoutHttpLoaderFactory(http: HttpClient) {
-// debugger;
+// 
 //   return new TranslateHttpLoader(http,'../../../../../../assets/i18n/','.json');
 // }
 
