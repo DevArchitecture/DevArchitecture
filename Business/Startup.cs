@@ -13,6 +13,8 @@ using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Contexts;
+using DataAccess.Concrete.MongoDb;
+using DataAccess.Concrete.MongoDb.Collections;
 using DataAccess.Concrete.MongoDb.Context;
 using FluentValidation;
 using MediatR;
