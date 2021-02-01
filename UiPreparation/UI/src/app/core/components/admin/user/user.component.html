@@ -18,20 +18,20 @@
                   </mat-form-field>
               </div>
 
-              <table mat-table [dataSource]="dataSource">
+              <table mat-table [dataSource]="dataSource" matSort>
 
                 <ng-container matColumnDef="userId">
-                  <th mat-header-cell *matHeaderCellDef> {{'ID' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'ID' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="email">
-                  <th mat-header-cell *matHeaderCellDef> {{'Email' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Email' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.email}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="fullName">
-                  <th mat-header-cell *matHeaderCellDef> {{'FullName' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'FullName' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
                 </ng-container>
 
@@ -44,18 +44,18 @@
 
                 </ng-container>
 
-                <ng-container matColumnDef="mobilePhones">
+                <ng-container matColumnDef="mobilePhones" mat-sort-header>
                   <th mat-header-cell *matHeaderCellDef> {{'MobilePhones' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.mobilePhones}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="address">
-                  <th mat-header-cell *matHeaderCellDef> {{'Address' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Address' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.address}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="notes">
-                  <th mat-header-cell *matHeaderCellDef> {{'Notes' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Notes' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
                 </ng-container>
 

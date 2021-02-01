@@ -26,6 +26,7 @@ import { LanguageComponent } from '../components/admin/language/language.compone
 import { TranslateComponent } from '../components/admin/translate/translate.component';
 import { OperationClaimComponent } from '../components/admin/operationclaim/operationClaim.component';
 import { LogDtoComponent } from '../components/admin/log/logDto.component';
+import { MatSortModule } from '@angular/material/sort';
 
 
 // export function layoutHttpLoaderFactory(http: HttpClient) {
@@ -34,42 +35,43 @@ import { LogDtoComponent } from '../components/admin/log/logDto.component';
 // }
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    NgbModule,
-    NgMultiSelectDropDownModule,
-    TranslateModule.forChild({
-      loader: {
-        provide: TranslateLoader,
-        //useFactory:layoutHttpLoaderFactory,
-        useClass: TranslationService,
-        deps: [HttpClient]
-      }
-    })
-  ],
-  declarations: [
-    DashboardComponent,
-    UserComponent,
-    LoginComponent,
-    GroupComponent,
-    LanguageComponent,
-    TranslateComponent,
-    OperationClaimComponent,
-    LogDtoComponent
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatCheckboxModule,
+        NgbModule,
+        NgMultiSelectDropDownModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                //useFactory:layoutHttpLoaderFactory,
+                useClass: TranslationService,
+                deps: [HttpClient]
+            }
+        })
+    ],
+    declarations: [
+        DashboardComponent,
+        UserComponent,
+        LoginComponent,
+        GroupComponent,
+        LanguageComponent,
+        TranslateComponent,
+        OperationClaimComponent,
+        LogDtoComponent
 
-  ]
+    ]
 })
 
 export class AdminLayoutModule { }

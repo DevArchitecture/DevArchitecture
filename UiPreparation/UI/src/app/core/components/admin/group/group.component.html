@@ -17,15 +17,15 @@
                 </mat-form-field>
               </div>
 
-              <table mat-table [dataSource]="dataSource">
+              <table mat-table [dataSource]="dataSource" matSort>
 
                 <ng-container matColumnDef="id">
-                  <th mat-header-cell *matHeaderCellDef> {{'Id'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Id'|translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="groupName">
-                  <th mat-header-cell *matHeaderCellDef> {{'GroupName'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'GroupName'|translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
                 </ng-container>
 

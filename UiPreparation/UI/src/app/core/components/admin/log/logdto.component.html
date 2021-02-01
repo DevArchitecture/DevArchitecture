@@ -16,39 +16,39 @@
 								</mat-form-field>
 							</div>
 
-							<table mat-table [dataSource]="dataSource">
+							<table mat-table [dataSource]="dataSource" matSort>
 								<ng-container matColumnDef="id">
-									<th mat-header-cell *matHeaderCellDef> {{'Id'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Id'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.id}} </td>
 								</ng-container>
 
 								<ng-container matColumnDef="level">
-									<th mat-header-cell *matHeaderCellDef> {{'Level'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Level'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.level}} </td>
 								</ng-container>
 
 								<ng-container matColumnDef="exceptionMessage">
-									<th mat-header-cell *matHeaderCellDef> {{'ExceptionMessage'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'ExceptionMessage'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.exceptionMessage}} </td>
 								</ng-container>
 
 								<ng-container matColumnDef="timeStamp">
-									<th mat-header-cell *matHeaderCellDef> {{'TimeStamp'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'TimeStamp'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.timeStamp}} </td>
 								</ng-container>
 
 								<ng-container matColumnDef="user">
-									<th mat-header-cell *matHeaderCellDef> {{'User'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'User'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.user}} </td>
 								</ng-container>
 
 								<ng-container matColumnDef="value">
-									<th mat-header-cell *matHeaderCellDef> {{'Value'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Value'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.value}} </td>
 								</ng-container>
 
 								<ng-container matColumnDef="type">
-									<th mat-header-cell *matHeaderCellDef> {{'Type'|translate}} </th>
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Type'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.type}} </td>
 								</ng-container>
 

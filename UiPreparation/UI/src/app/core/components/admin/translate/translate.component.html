@@ -18,24 +18,24 @@
                 </mat-form-field>
               </div>
 
-              <table mat-table [dataSource]="dataSource">
+              <table mat-table [dataSource]="dataSource" matSort>
                 <ng-container matColumnDef="id">
-                  <th mat-header-cell *matHeaderCellDef> {{'Id'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Id'|translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="language">
-                  <th mat-header-cell *matHeaderCellDef> {{'LangCode' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'LangCode' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.language}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="code">
-                  <th mat-header-cell *matHeaderCellDef> {{'Code'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Code'|translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.code}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="value">
-                  <th mat-header-cell *matHeaderCellDef> {{'Value'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Value'|translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                 </ng-container>
 
