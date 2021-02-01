@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.Configurations
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.LangId).IsRequired();
 			builder.Property(x => x.Code).HasMaxLength(50).IsRequired();
-			builder.Property(x => x.Value).HasMaxLength(50).IsRequired();
+			builder.Property(x => x.Value).HasMaxLength(500).IsRequired();
 			builder.HasData(
 				new Translate { Id = 1, LangId = 1, Code = "LOGIN", Value = "Giriş TR" },
 				new Translate { Id = 2, LangId = 1, Code = "email", Value = "E posta" },
