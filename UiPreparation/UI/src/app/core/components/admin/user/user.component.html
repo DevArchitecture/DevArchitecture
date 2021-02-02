@@ -4,9 +4,9 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title ">User List</h4>
+            <h4 class="card-title ">{{'UserList'|translate}}</h4>
             <a *ngIf="checkClaim('CreateUserCommand')" class="pull-right" data-toggle="modal" data-target="#user"> <i
-                style="color:white" title="{{'create' | translate}}" class="far fa-plus-square fa-2x"></i></a>
+                style="color:white" title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -36,7 +36,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef> {{'Status' |translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Status' |translate}} </th>
                   <td mat-cell *matCellDef="let element">
                     <mat-checkbox [checked]="element.status" [disabled]="true">
                     </mat-checkbox>
@@ -44,8 +44,8 @@
 
                 </ng-container>
 
-                <ng-container matColumnDef="mobilePhones" mat-sort-header>
-                  <th mat-header-cell *matHeaderCellDef> {{'MobilePhones' |translate}} </th>
+                <ng-container matColumnDef="mobilePhones" >
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'MobilePhones' |translate}} </th>
                   <td mat-cell *matCellDef="let element"> {{element.mobilePhones}} </td>
                 </ng-container>
 
@@ -105,7 +105,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
                 </tr>
               </table>
               <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
@@ -124,7 +124,7 @@
         <button type="button" #closeButton class="close" data-dismiss="modal" aria-label="Close"
           (click)="clearFormGroup(userAddForm)"><span aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Add User
+          {{'UserForm'| translate}}
         </h4>
         <div class="separator"></div>
         <form *ngIf="userAddForm" [formGroup]="userAddForm" (ngSubmit)="save()">
@@ -134,9 +134,7 @@
                 <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="fullName" name="fullName"
                   formControlName="fullName">
                 <div class="alert alert-danger"
-                  *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">
-                  İsim
-                  zorunlu
+                     *ngIf="userAddForm.get('fullName')!.hasError('required') && userAddForm.get('fullName')!.touched">{{'Required'| translate}}
                 </div>
               </mat-form-field>
             </div>
@@ -199,8 +197,9 @@
                 <input matInput placeholder="{{'Password'|translate}}" type="password" id="password" name="password"
                   formControlName="password">
                 <div class="alert alert-danger"
-                  *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">
-                  Parola alanı zorunludur!</div>
+                     *ngIf="passwordForm.get('password')!.hasError('required') && passwordForm.get('password')!.touched">
+                  {{'Required'| translate}}
+                </div>
               </mat-form-field>
 
             </div>
@@ -214,7 +213,8 @@
                   *ngIf="passwordForm.get('confirmPassword')!.hasError('required') && passwordForm.get('confirmPassword')!.touched">
                   Parola onay alanı zorunludur!</div>
                 <div class="alert alert-danger" *ngIf="passwordForm.get('confirmPassword')!.hasError('mustMatch')">
-                  Girdiğiniz Parolalar Eşleşmiyor!</div>
+                  {{'ConfirmPassword'| translate}}
+                </div>
               </mat-form-field>
 
             </div>
@@ -236,7 +236,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Permissions
+          {{'Permissions'| translate}}
         </h4>
         <div class="separator"></div>
 
@@ -260,7 +260,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Permissions
+          {{'Permissions'| translate}}
         </h4>
         <div class="separator"></div>
 

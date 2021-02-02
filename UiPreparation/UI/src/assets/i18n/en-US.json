@@ -1,11 +1,11 @@
 {
-    "LOGIN":"login EN",
+    "Login":"login EN",
     "email":"Email EN",
     "password":"Password EN",
     "update:":"Update",
     "delete":"Delete",
-    "users_Groups":"User's Groups",
-    "users_claims":"User's Claims",
+    "UsersGroups":"User's Groups",
+    "UsersClaims":"User's Claims",
     "create":"Create",
     "Users":"Users",
     "Groups":"Groups"

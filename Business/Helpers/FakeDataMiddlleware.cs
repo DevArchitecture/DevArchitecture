@@ -22,7 +22,7 @@ namespace Business.Helpers
 
 			await mediator.Send(new CreateTranslateCommand{ LangId = 1, Code = "Login", Value = "Giriş" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Email", Value = "E-posta" });
-			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Password", Value = "Şifre" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Password", Value = "Parola" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Update", Value = "Güncelle" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Delete", Value = "Sil" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "UsersGroups", Value = "Kullanıcının Grupları" });
@@ -132,7 +132,28 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Name", Value = "Name" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "MobilePhones", Value = "Cep Telefonu" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "MobilePhones", Value = "Mobile Phone" });
-
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "NoRecordsFound", Value = "Kayıt Bulunamadı" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "NoRecordsFound", Value = "No Records Found" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Required", Value = "Bu alan zorunludur!" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Required", Value = "This field is required!" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Permissions", Value = "Permissions" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Permissions", Value = "İzinler" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "GroupList", Value = "Grup Listesi" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "GroupList", Value = "Group List" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "GrupPermissions", Value = "Grup Yetkileri" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "GrupPermissions", Value = "Grup Permissions" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "Add", Value = "Ekle" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "Add", Value = "Add" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "UserList", Value = "Kullanıcı Listesi" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "UserList", Value = "User List" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "OperationClaimList", Value = "Yetki Listesi" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "OperationClaimList", Value = "OperationClaim List" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "LanguageList", Value = "Dil Listesi" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "LanguageList", Value = "Language List" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "TranslateList", Value = "Dil Çeviri Listesi" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "TranslateList", Value = "Translate List" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "LogList", Value = "İşlem Kütüğü" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "LogList", Value = "LogList" });
 
 		}
 	}

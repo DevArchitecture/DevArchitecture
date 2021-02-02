@@ -4,9 +4,9 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title ">Translate List</h4>
+            <h4 class="card-title ">{{'TranslateList'|translate}}</h4>
             <a *ngIf="checkClaim('CreateTranslateCommand')" class="pull-right" data-toggle="modal"
-              data-target="#translate"> <i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i></a>
+              data-target="#translate"> <i style="color:white"  title="{{'Add'| translate}}"  class="far fa-plus-square fa-2x"></i></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -58,7 +58,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
                 </tr>
               </table>
               <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
@@ -81,7 +81,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="margin-top">
-          Add Translate
+          {{'TranslateForm'|translate}}
         </h4>
         <div class="separator"></div>
         <form *ngIf="translateAddForm" [formGroup]="translateAddForm" (ngSubmit)="save()">

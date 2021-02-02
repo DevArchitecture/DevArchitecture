@@ -1,11 +1,11 @@
 {
-    "LOGIN":"Giriş TR",
+    "Login":"Giriş TR",
     "email":"E posta",
-    "password":"Şifre",
+    "password":"Parola",
     "update:":"Güncelle",
     "delete":"Sil",
-    "users_Groups":"Kullanıcın Grupları",
-    "users_claims":"Kullanıcın Yetkileri",
+    "UsersGroups":"Kullanıcın Grupları",
+    "UsersClaims":"Kullanıcın Yetkileri",
     "create":"Yeni",
     "Users":"Kullanıcılar",
     "Groups":"Gruplar"

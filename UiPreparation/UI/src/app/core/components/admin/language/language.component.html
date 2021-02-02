@@ -4,9 +4,9 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title ">Language List</h4>
+            <h4 class="card-title ">{{'LanguageList'|translate}}</h4>
             <a *ngIf="checkClaim('CreateLanguageCommand')" class="pull-right" data-toggle="modal"
-              data-target="#language"> <i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i></a>
+              data-target="#language"> <i style="color:white" title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -38,7 +38,7 @@
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
                     <a data-toggle="modal" data-target="#language" (click)="getLanguageById(element.id)">
-                      <i style="color:#ff5722;" class="far fa-edit"></i>
+                      <i title="{{'Update'| translate}}" style="color:#ff5722;" class="far fa-edit"></i>
                     </a>
                   </td>
                 </ng-container>
@@ -46,7 +46,7 @@
                 <ng-container matColumnDef="delete" *ngIf="checkClaim('DeleteLanguageCommand')">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a (click)="deleteLanguage(element.id)"><i style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
+                    <a (click)="deleteLanguage(element.id)"><i title="{{'Delete'| translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                   </td>
                 </ng-container>
 
@@ -54,7 +54,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
                 </tr>
               </table>
               <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
@@ -75,7 +75,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
           (click)="clearFormGroup(languageAddForm)"><span aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Add Language
+          {{'LanguageForm'|translate}}
         </h4>
         <div class="separator"></div>
         <form *ngIf="languageAddForm" [formGroup]="languageAddForm" (ngSubmit)="save()">
@@ -86,8 +86,7 @@
                 <input matInput placeholder=" {{'FullName'|translate}}" type="text" id="name" name="name"
                   formControlName="name">
                 <div class="alert alert-danger"
-                  *ngIf="languageAddForm.get('name')!.hasError('required') && languageAddForm.get('name')!.touched">İsim
-                  zorunlu</div>
+                     *ngIf="languageAddForm.get('name')!.hasError('required') && languageAddForm.get('name')!.touched"> {{'Required'| translate}}</div>
               </mat-form-field>
             </div>
           </div>

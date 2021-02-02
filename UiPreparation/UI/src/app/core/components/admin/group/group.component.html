@@ -4,8 +4,8 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title ">Group List</h4>
-            <a *ngIf="checkClaim('CreateGroupCommand')" class="pull-right" data-toggle="modal" data-target="#group"><i style="color:white" title="ekle" class="far fa-plus-square fa-2x"></i> </a>
+            <h4 class="card-title ">{{'GroupList'|translate}}</h4>
+            <a *ngIf="checkClaim('CreateGroupCommand')" class="pull-right" data-toggle="modal" data-target="#group"><i style="color:white" title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i> </a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -32,28 +32,28 @@
                 <ng-container matColumnDef="updateGroupClaim" *ngIf="checkClaim('UpdateGroupClaimCommand')">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a data-toggle="modal" data-target="#groupClaims" (click)="getGroupClaims(element.id)"><i title="{{'Grup Yetkileri' | translate }}" style="color:blue;" class="fas fa-shield-alt" aria-hidden="true"></i></a>
+                    <a data-toggle="modal" data-target="#groupClaims" (click)="getGroupClaims(element.id)"><i title="{{'GrupPermissions' | translate }}" style="color:blue;" class="fas fa-shield-alt" aria-hidden="true"></i></a>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="updateUserGroupClaims" *ngIf="checkClaim('UpdateUserGroupByGroupIdCommand')">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(element.id)"><i title="{{'Kullanıcı Grupları' | translate}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                    <a data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(element.id)"><i title="{{'UsersGroups' | translate}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="update" *ngIf="checkClaim('UpdateGroupCommand')">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a data-toggle="modal" data-target="#group" (click)="getGroupById(element.id)"><i title="{{'Güncelle' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
+                    <a data-toggle="modal" data-target="#group" (click)="getGroupById(element.id)"><i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="delete" *ngIf="checkClaim('DeleteGroupCommand')">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a (click)="deleteGroup(element.id)"><i title="{{'Sil'| translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
+                    <a (click)="deleteGroup(element.id)"><i title="{{'Delete'| translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                   </td>
                 </ng-container>
 
@@ -61,7 +61,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
                 </tr>
               </table>
               <mat-paginator [pageSizeOptions]="[10, 25,50,100]"></mat-paginator>
@@ -80,7 +80,7 @@
         <button type="button" #closeButton class="close" data-dismiss="modal" aria-label="Close"
           (click)="clearFormGroup(groupAddForm)"><span aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Group
+          {{'GroupForm'| translate}}
         </h4>
         <div class="separator"></div>
         <form *ngIf="groupAddForm" [formGroup]="groupAddForm" (ngSubmit)="save()">
@@ -90,8 +90,9 @@
                 <input matInput placeholder=" {{'GroupName'|translate}}" type="text" id="groupName" name="groupName"
                   formControlName="groupName">
                 <div class="alert alert-danger"
-                  *ngIf="groupAddForm.get('groupName')!.hasError('required') && groupAddForm.get('groupName')!.touched">Grup İsmi
-                  zorunlu</div>
+                     *ngIf="groupAddForm.get('groupName')!.hasError('required') && groupAddForm.get('groupName')!.touched">
+                  {{'Required'| translate}}
+                </div>
               </mat-form-field>
             </div>
           </div>
@@ -112,7 +113,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Group Users
+          {{'GroupUsers'| translate}}
         </h4>
         <div class="separator"></div>
 
@@ -136,7 +137,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
         <h4 class="margin-top">
-          Group Claims
+          {{'GroupClaims'| translate}}
         </h4>
         <div class="separator"></div>
 
