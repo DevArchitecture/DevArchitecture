@@ -18,6 +18,7 @@ import { AuthInterceptorService } from './core/interceptors/auth-interceptor.ser
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from './core/services/translation.service';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 // i18 kullanıclak ise aşağıdaki metod aktif edilecek
@@ -44,6 +45,7 @@ export function tokenGetter() {
     RouterModule,
     AppRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
+    SweetAlert2Module.forRoot(),
     NgbModule,
     JwtModule.forRoot({
       config: {

@@ -29,38 +29,38 @@
                   <td mat-cell *matCellDef="let element"> {{element.groupName}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="updateGroupClaim" *ngIf="checkClaim('UpdateGroupClaimCommand')">
+                <ng-container matColumnDef="updateGroupClaim" >
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a data-toggle="modal" data-target="#groupClaims" (click)="getGroupClaims(element.id)"><i title="{{'GrupPermissions' | translate }}" style="color:blue;" class="fas fa-shield-alt" aria-hidden="true"></i></a>
+                    <a *ngIf="checkClaim('UpdateGroupClaimCommand')" data-toggle="modal" data-target="#groupClaims" (click)="getGroupClaims(element.id)"><i title="{{'GrupPermissions' | translate }}" style="color:blue;" class="fas fa-shield-alt" aria-hidden="true"></i></a>
                   </td>
                 </ng-container>
 
-                <ng-container matColumnDef="updateUserGroupClaims" *ngIf="checkClaim('UpdateUserGroupByGroupIdCommand')">
+                <ng-container matColumnDef="updateUserGroupClaims" >
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(element.id)"><i title="{{'UsersGroups' | translate}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
+                    <a *ngIf="checkClaim('UpdateUserGroupByGroupIdCommand')" data-toggle="modal" data-target="#groupUsers" (click)="getGroupUsers(element.id)"><i title="{{'UsersGroups' | translate}}" style="color:green;" class="fas fa-user-shield" aria-hidden="true"></i></a>
                   </td>
                 </ng-container>
 
-                <ng-container matColumnDef="update" *ngIf="checkClaim('UpdateGroupCommand')">
+                <ng-container matColumnDef="update" >
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a data-toggle="modal" data-target="#group" (click)="getGroupById(element.id)"><i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
+                    <a *ngIf="checkClaim('UpdateGroupCommand')" data-toggle="modal" data-target="#group" (click)="getGroupById(element.id)"><i title="{{'Update' | translate}}" style="color:#ff5722;" class="far fa-edit"></i></a>
                   </td>
                 </ng-container>
 
-                <ng-container matColumnDef="delete" *ngIf="checkClaim('DeleteGroupCommand')">
+                <ng-container matColumnDef="delete" >
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td style="width: 25px;" mat-cell *matCellDef="let element">
-                    <a (click)="deleteGroup(element.id)"><i title="{{'Delete'| translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
+                    <a *ngIf="checkClaim('DeleteGroupCommand')" (confirm)="deleteGroup(element.id)" [swal]="deleteSwal"><i title="{{'Delete'| translate}}" style="color:#D9534E;" class="fas fa-trash-alt"></i></a>
                   </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-                <tr class="mat-row" *matNoDataRow>
+                <tr class="mat-row" *matNoDataRow style="text-align: center;">
                   <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
                 </tr>
               </table>
@@ -153,3 +153,7 @@
     </div>
   </div>
 </div>
+
+<swal #deleteSwal title="{{'DeleteConfirm' | translate}}" icon="error" [showCancelButton]="true"
+  [confirmButtonText]="'OK'" [cancelButtonText]="'Cancel'">
+</swal>

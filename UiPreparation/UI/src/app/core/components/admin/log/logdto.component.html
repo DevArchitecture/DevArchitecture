@@ -55,7 +55,7 @@
 								<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 								<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-								<tr class="mat-row" *matNoDataRow>
+								<tr class="mat-row" *matNoDataRow style="text-align: center;">
 									<td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
 								</tr>
 							</table>
