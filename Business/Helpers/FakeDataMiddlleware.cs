@@ -154,6 +154,9 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "TranslateList", Value = "Translate List" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "LogList", Value = "İşlem Kütüğü" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "LogList", Value = "LogList" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "DeleteConfirm", Value = "Emin misiniz?" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" });
+			
 
 		}
 	}
