@@ -10,7 +10,7 @@ namespace Tests.Business.Adapters
 
 		public PersonServiceHelper(IPersonService personService)
 		{
-			this._personService = personService;
+			_personService = personService;
 		}
 
 		public bool VerifyId(Citizen citizen)

@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Security.Jwt;
-using Core.Entities;
+using Core.Entities.Concrete;
 
 namespace Business.Services.Authentication
 {

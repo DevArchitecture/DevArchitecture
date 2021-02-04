@@ -16,7 +16,7 @@ namespace Business.Helpers
 {
 	public static class OperationClaimCreatorMiddleware
 	{
-		public async static Task UseDbOperationClaimCreator(this IApplicationBuilder app)
+		public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
 		{
 			var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 			foreach (var operationName in GetOperationNames())
@@ -27,7 +27,7 @@ namespace Business.Helpers
 				});
 			}
 			var operationClaims = (await mediator.Send(new GetOperationClaimsQuery())).Data;
-			var user = await mediator.Send(new RegisterUserCommand
+			await mediator.Send(new RegisterUserCommand
 			{
 				FullName = "System Admin",
 				Password = "Q1w212*_*",

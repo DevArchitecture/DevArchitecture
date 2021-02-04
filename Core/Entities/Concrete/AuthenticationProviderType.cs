@@ -1,4 +1,4 @@
-﻿namespace Core.Entities
+﻿namespace Core.Entities.Concrete
 {
 	public enum AuthenticationProviderType
 	{

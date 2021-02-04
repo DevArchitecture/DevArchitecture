@@ -36,7 +36,7 @@ namespace Core.Aspects.Autofac.Exception
 
 		protected override void OnException(IInvocation invocation, System.Exception e)
 		{
-			LogDetailWithException logDetailWithException = GetLogDetail(invocation);
+			var logDetailWithException = GetLogDetail(invocation);
 
 			if (e is AggregateException)
 				logDetailWithException.ExceptionMessage =
@@ -49,7 +49,7 @@ namespace Core.Aspects.Autofac.Exception
 		private LogDetailWithException GetLogDetail(IInvocation invocation)
 		{
 			var logParameters = new List<LogParameter>();
-			for (int i = 0; i < invocation.Arguments.Length; i++)
+			for (var i = 0; i < invocation.Arguments.Length; i++)
 			{
 				logParameters.Add(new LogParameter
 				{

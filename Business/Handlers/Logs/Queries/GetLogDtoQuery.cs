@@ -35,13 +35,13 @@ namespace Business.Handlers.Logs.Queries
 			public async Task<IDataResult<IEnumerable<LogDto>>> Handle(GetLogDtoQuery request, CancellationToken cancellationToken)
 			{
 				var result = await _logRepository.GetListAsync();
-				List<LogDto> data = new List<LogDto>();
+				var data = new List<LogDto>();
 				foreach (var item in result)
 				{
 					var jsonMesssage = JsonConvert.DeserializeObject<LogDto>(item.MessageTemplate);
 					dynamic msg = JsonConvert.DeserializeObject(item.MessageTemplate);
-					dynamic valueList = msg.Parameters[0];
-					dynamic exceptionMessage = msg.ExceptionMessage;
+					var valueList = msg.Parameters[0];
+					var exceptionMessage = msg.ExceptionMessage;
 					valueList = valueList.Value.ToString();
 
 					var list = new LogDto

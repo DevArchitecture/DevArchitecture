@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Business.Constants
+﻿namespace Business.Constants
 {
 	/// <summary>
 	/// This class was created to get rid of magic strings and write more readable code.
@@ -20,8 +18,8 @@ namespace Business.Constants
 		public static string SuccessfulLogin => "SuccessfulLogin";
 		public static string SendMobileCode => "SendMobileCode";
 		public static string NameAlreadyExist => "NameAlreadyExist";
-		public static string WrongCID => "WrongCID";
-		public static string CID => "CID";
+		public static string WrongCid => "WrongCID";
+		public static string Cid => "CID";
 		public static string PasswordEmpty => "PasswordEmpty";
 		public static string PasswordLength => "PasswordLength";
 		public static string PasswordUppercaseLetter => "PasswordUppercaseLetter";

@@ -7,7 +7,6 @@ using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,7 +44,7 @@ namespace Business.Handlers.Languages.Commands
             {
                 var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);
 
-                if (isThereLanguageRecord == true)
+                if (isThereLanguageRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
                 var addedLanguage = new Language

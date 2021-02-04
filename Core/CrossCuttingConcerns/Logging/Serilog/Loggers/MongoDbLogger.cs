@@ -10,11 +10,11 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
     {
         public MongoDbLogger()
         {
-            IConfiguration configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+            var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
             var logConfig = configuration.GetSection("SeriLogConfigurations:MongoDbConfiguration")
                .Get<MongoDbConfiguration>();
 
-            _logger = new LoggerConfiguration()
+            Logger = new LoggerConfiguration()
                  .WriteTo.MongoDB(logConfig.ConnectionString, collectionName: logConfig.Collection)
                  .CreateLogger();
         }

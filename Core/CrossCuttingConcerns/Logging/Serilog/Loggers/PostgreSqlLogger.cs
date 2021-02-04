@@ -14,17 +14,17 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
     {
         public PostgreSqlLogger()
         {
-            IConfiguration configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+            var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration")
                 .Get<PostgreConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
 
             IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
                         {                            
-                            {"MessageTemplate", new MessageTemplateColumnWriter(NpgsqlDbType.Text) },
+                            {"MessageTemplate", new MessageTemplateColumnWriter() },
                             {"Level", new LevelColumnWriter(true, NpgsqlDbType.Varchar) },
                             {"TimeStamp", new TimestampColumnWriter(NpgsqlDbType.Timestamp) },
-                            {"Exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
+                            {"Exception", new ExceptionColumnWriter() },
                     
                         };
 
@@ -32,7 +32,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
             var seriLogConfig = new LoggerConfiguration()
                     .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: false)
                     .CreateLogger();
-            _logger = seriLogConfig;
+            Logger = seriLogConfig;
         }
     }
 }

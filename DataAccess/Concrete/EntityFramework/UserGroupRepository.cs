@@ -18,25 +18,25 @@ namespace DataAccess.Concrete.EntityFramework
 
 		public async Task BulkInsert(int userId, IEnumerable<UserGroup> userGroups)
 		{
-			var dbUserGroupList = context.UserGroups.Where(x => x.UserId == userId);
+			var dbUserGroupList = Context.UserGroups.Where(x => x.UserId == userId);
 
-			context.UserGroups.RemoveRange(dbUserGroupList);
-			await context.UserGroups.AddRangeAsync(userGroups);
+			Context.UserGroups.RemoveRange(dbUserGroupList);
+			await Context.UserGroups.AddRangeAsync(userGroups);
 
 		}
 
 		public async Task BulkInsertByGroupId(int groupId, IEnumerable<UserGroup> userGroups)
 		{
-			var dbUserGroupList = context.UserGroups.Where(x => x.GroupId == groupId);
+			var dbUserGroupList = Context.UserGroups.Where(x => x.GroupId == groupId);
 
-			context.UserGroups.RemoveRange(dbUserGroupList);
-			await context.UserGroups.AddRangeAsync(userGroups);
+			Context.UserGroups.RemoveRange(dbUserGroupList);
+			await Context.UserGroups.AddRangeAsync(userGroups);
 		}
 
 		public async Task<IEnumerable<SelectionItem>> GetUserGroupSelectedList(int userId)
 		{
-			var list = await (from grp in context.Groups
-																					join userGroup in context.UserGroups on grp.Id equals userGroup.GroupId
+			var list = await (from grp in Context.Groups
+																					join userGroup in Context.UserGroups on grp.Id equals userGroup.GroupId
 																					where userGroup.UserId == userId
 																					select new SelectionItem()
 																					{
@@ -49,8 +49,8 @@ namespace DataAccess.Concrete.EntityFramework
 
 		public async Task<IEnumerable<SelectionItem>> GetUsersInGroupSelectedListByGroupId(int groupId)
 		{
-			var list = await (from usr in context.Users
-																					join grpUser in context.UserGroups on usr.UserId equals grpUser.UserId
+			var list = await (from usr in Context.Users
+																					join grpUser in Context.UserGroups on usr.UserId equals grpUser.UserId
 																					where grpUser.GroupId == groupId
 																					select new SelectionItem()
 																					{

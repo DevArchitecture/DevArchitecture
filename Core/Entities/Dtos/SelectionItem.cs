@@ -16,8 +16,8 @@
 
 		public SelectionItem(string id, string label)
 		{
-			this.Id = id;
-			this.Label = label;
+			Id = id;
+			Label = label;
 		}
 
 		public string Id { get; set; }

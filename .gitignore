@@ -370,3 +370,11 @@ WebAPI/appsettings.json
 .sonarqube/
 /DataAccess/Migrations/Ms
 /DataAccess/Migrations/Pg
+
+#Everything .idea
+**/.idea/**/*.iml
+**/.idea/**/*.xml
+
+/.idea/.idea.*/.idea/*
+!**/.idea/indexLayout.xml
+!**/.idea/vcs.xml

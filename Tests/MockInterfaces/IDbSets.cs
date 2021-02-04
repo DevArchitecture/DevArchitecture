@@ -1,6 +1,4 @@
 ﻿using Core.Entities.Concrete;
-using Core.Entities;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Tests.MockInterfaces

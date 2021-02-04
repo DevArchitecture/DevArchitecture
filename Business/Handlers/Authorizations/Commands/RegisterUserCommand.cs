@@ -45,7 +45,7 @@ namespace Business.Handlers.Authorizations.Commands
                     return new ErrorResult(Messages.NameAlreadyExist);
 
 
-                HashingHelper.CreatePasswordHash(request.Password, out byte[] passwordSalt, out byte[] passwordHash);
+                HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
                 var user = new User
                 {
                     Email = request.Email,

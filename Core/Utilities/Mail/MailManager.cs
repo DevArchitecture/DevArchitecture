@@ -24,20 +24,17 @@ namespace Core.Utilities.Mail
             message.Subject = emailMessage.Subject;
 
 
-            string messageBody = string.Format(emailMessage.Subject, emailMessage.Content);
+            var messageBody = string.Format(emailMessage.Subject, emailMessage.Content);
 
             message.Body = new TextPart(TextFormat.Html)
             {
                 Text = messageBody
             };
-            using (var emailClient = new SmtpClient())
-            {
-                emailClient.Connect(_configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
-                    Convert.ToInt32(_configuration.GetSection("EmailConfiguration").GetSection("SmtpPort").Value),
-                    MailKit.Security.SecureSocketOptions.Auto);
-                emailClient.Send(message);
-                emailClient.Disconnect(true);
-            }
+            using var emailClient = new SmtpClient();
+            emailClient.Connect(_configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
+                Convert.ToInt32(_configuration.GetSection("EmailConfiguration").GetSection("SmtpPort").Value));
+            emailClient.Send(message);
+            emailClient.Disconnect(true);
         }
     }
 }

@@ -4,19 +4,19 @@ namespace Tests.Business.Adapters
 {
 	public class SmsServiceHelper
 	{
-		private readonly ISmsService smsService;
+		private readonly ISmsService _smsService;
 		public SmsServiceHelper(ISmsService smsService)
 		{
-			this.smsService = smsService;
+			_smsService = smsService;
 		}
 
 		public bool Send(string password, string text, string cellPhone)
 		{
-			return smsService.Send(password, text, cellPhone).Result;
+			return _smsService.Send(password, text, cellPhone).Result;
 		}
-		public bool SendAsist(string text, string cellPhone)
+		public bool SendAssist(string text, string cellPhone)
 		{
-			return smsService.SendAsist(text, cellPhone).Result;
+			return _smsService.SendAsist(text, cellPhone).Result;
 		}
 	}
 }

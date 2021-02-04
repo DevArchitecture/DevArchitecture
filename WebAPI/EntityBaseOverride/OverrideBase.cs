@@ -30,9 +30,9 @@ namespace WebAPI.EntityBaseOverride
         /// <returns></returns>
         public override string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations)
         {
-            string str = base.WriteCode(entityType, @namespace, useDataAnnotations).Replace("public partial class " + entityType.Name, "public class " + entityType.Name + " : IEntity");
-            string oldValue = "using System;";
-            string newValue = oldValue + Environment.NewLine + "using Core.Entities;";
+            var str = base.WriteCode(entityType, @namespace, useDataAnnotations).Replace("public partial class " + entityType.Name, "public class " + entityType.Name + " : IEntity");
+            var oldValue = "using System;";
+            var newValue = oldValue + Environment.NewLine + "using Core.Entities;";
             return str.Replace(oldValue, newValue);
         }
 

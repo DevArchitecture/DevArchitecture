@@ -3,7 +3,6 @@ using Business.BusinessAspects;
 using Core.Utilities.Results;
 using Core.Aspects.Autofac.Performance;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

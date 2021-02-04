@@ -1,6 +1,4 @@
-using Core.Entities;
 using Core.Entities.Concrete;
-using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -14,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 	/// </summary>
 	public class ProjectDbContext : DbContext
 	{
-		protected readonly IConfiguration configuration;
+		protected readonly IConfiguration Configuration;
 
 
 		/// <summary>
@@ -26,7 +24,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 		public ProjectDbContext(DbContextOptions<ProjectDbContext> options, IConfiguration configuration)
 																				: base(options)
 		{
-			this.configuration = configuration;
+			Configuration = configuration;
 		}
 
 		/// <summary>
@@ -37,7 +35,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 		protected ProjectDbContext(DbContextOptions options, IConfiguration configuration)
 																		: base(options)
 		{
-			this.configuration = configuration;
+			Configuration = configuration;
 		}
 
 
@@ -49,7 +47,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				base.OnConfiguring(optionsBuilder.UseNpgsql(configuration.GetConnectionString("DArchPgContext")).EnableSensitiveDataLogging());
+				base.OnConfiguring(optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DArchPgContext")).EnableSensitiveDataLogging());
 
 			}
 		}

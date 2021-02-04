@@ -1,7 +1,6 @@
 ﻿using DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.Fakes.DArch
 {
@@ -15,7 +14,7 @@ namespace Business.Fakes.DArch
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				base.OnConfiguring(optionsBuilder.UseInMemoryDatabase(configuration.GetConnectionString("DArchInMemory")));
+				base.OnConfiguring(optionsBuilder.UseInMemoryDatabase(Configuration.GetConnectionString("DArchInMemory")));
 								
 			}
 		}

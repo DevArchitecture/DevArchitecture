@@ -10,7 +10,6 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Business.Handlers.Languages.Commands
 {  
     [SecuredOperation]

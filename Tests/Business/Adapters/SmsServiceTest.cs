@@ -1,4 +1,5 @@
 ﻿using Business.Adapters.SmsService;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -8,14 +9,14 @@ namespace Tests.Business.Adapters
 	[TestFixture]
 	public class SmsServiceTest
 	{
-		Mock<ISmsService> smsService;
-		SmsServiceHelper smsServiceHelper;
+		private Mock<ISmsService> _smsService;
+		private SmsServiceHelper _smsServiceHelper;
 
 		[SetUp]
 		public void Setup()
 		{
-			smsService = new Mock<ISmsService>();
-			smsServiceHelper = new SmsServiceHelper(smsService.Object);
+			_smsService = new Mock<ISmsService>();
+			_smsServiceHelper = new SmsServiceHelper(_smsService.Object);
 
 		}
 
@@ -23,20 +24,20 @@ namespace Tests.Business.Adapters
 		[TestCase("11111", "test", "123456")]
 		public void Send(string password, string text, string cellPhone)
 		{
-			smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
-			var result = smsServiceHelper.Send(password, text, cellPhone);
-			smsService.Verify(x => x.Send(password, text, cellPhone));
-			Assert.IsTrue(result);
+			_smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
+			var result = _smsServiceHelper.Send(password, text, cellPhone);
+			_smsService.Verify(x => x.Send(password, text, cellPhone));
+			result.Should().BeTrue();
 		}
 
 		[Test]
 		[TestCase("test", "123456")]
-		public void SendAsist(string text, string cellPhone)
+		public void SendAssist(string text, string cellPhone)
 		{
-			smsService.Setup(x => x.SendAsist(text, cellPhone)).ReturnsAsync(true);
-			var result = smsServiceHelper.SendAsist(text, cellPhone);
-			smsService.Verify(x => x.SendAsist(text, cellPhone));
-			Assert.IsTrue(result);
+			_smsService.Setup(x => x.SendAsist(text, cellPhone)).ReturnsAsync(true);
+			var result = _smsServiceHelper.SendAssist(text, cellPhone);
+			_smsService.Verify(x => x.SendAsist(text, cellPhone));
+			result.Should().BeTrue();
 		}
 
 	}

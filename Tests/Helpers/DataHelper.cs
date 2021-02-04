@@ -9,7 +9,7 @@ namespace Tests.Helpers
 	{
 		public static User GetUser(string name)
 		{
-			HashingHelper.CreatePasswordHash("123456", out byte[] passwordSalt, out byte[] passwordHash);
+			HashingHelper.CreatePasswordHash("123456", out var passwordSalt, out var passwordHash);
 
 			return new User()
 			{
@@ -36,10 +36,10 @@ namespace Tests.Helpers
 		public static List<User> GetUserList()
 		{
 
-			HashingHelper.CreatePasswordHash("123456", out byte[] passwordSalt, out byte[] passwordHash);
+			HashingHelper.CreatePasswordHash("123456", out var passwordSalt, out var passwordHash);
 			var list = new List<User>();
 
-			for (int i = 1; i <= 5; i++)
+			for (var i = 1; i <= 5; i++)
 			{
 				var user = new User()
 				{

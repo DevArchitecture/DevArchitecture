@@ -14,7 +14,7 @@ namespace Business.Handlers.UserGroups.Queries
 
 		public class GetUsersInGroupLookupByGroupIdHandler : IRequestHandler<GetUsersInGroupLookupByGroupId, IDataResult<IEnumerable<SelectionItem>>>
 		{
-			IUserGroupRepository _userGroupRepository;
+			private IUserGroupRepository _userGroupRepository;
 
 			public GetUsersInGroupLookupByGroupIdHandler(IUserGroupRepository userGroupRepository)
 			{

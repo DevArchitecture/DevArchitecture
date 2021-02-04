@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Core.DataAccess.Concrete
+namespace Core.Entities
 {
 	public abstract class DocumentDbEntity
 	{

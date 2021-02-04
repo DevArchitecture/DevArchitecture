@@ -20,26 +20,26 @@ namespace Business.Helpers
 
         public static bool IsCidValid(this long citizenId)
         {
-            long TcNo = citizenId;
-            var ATCNO = TcNo / 100;
+            var tcNo = citizenId;
+            var atcno = tcNo / 100;
             var checksum = ComputeCidChecksum(citizenId);
-            var returnValue = (ATCNO * 100 + checksum) == TcNo;
+            var returnValue = (atcno * 100 + checksum) == tcNo;
 
             return returnValue;
         }
 
         public static long ComputeCidChecksum(this long citizenId)
         {
-            long TcNo = citizenId;
-            long ATCNO, BTCNO;
-            long C1, C2, C3, C4, C5, C6, C7, C8, C9, Q1, Q2;
-            ATCNO = TcNo / 100; BTCNO = TcNo / 100; C1 = ATCNO % 10; ATCNO = ATCNO / 10; C2 = ATCNO % 10; ATCNO = ATCNO / 10;
-            C3 = ATCNO % 10; ATCNO = ATCNO / 10; C4 = ATCNO % 10; ATCNO = ATCNO / 10; C5 = ATCNO % 10; ATCNO = ATCNO / 10;
-            C6 = ATCNO % 10; ATCNO = ATCNO / 10; C7 = ATCNO % 10; ATCNO = ATCNO / 10; C8 = ATCNO % 10; ATCNO = ATCNO / 10;
-            C9 = ATCNO % 10; ATCNO = ATCNO / 10;
-            Q1 = ((10 - ((((C1 + C3 + C5 + C7 + C9) * 3) + (C2 + C4 + C6 + C8)) % 10)) % 10);
-            Q2 = ((10 - (((((C2 + C4 + C6 + C8) + Q1) * 3) + (C1 + C3 + C5 + C7 + C9)) % 10)) % 10);
-            var returnValue = Q1 * 10 + Q2;
+            var tcNo = citizenId;
+            long atcno, btcno;
+            long c1, c2, c3, c4, c5, c6, c7, c8, c9, q1, q2;
+            atcno = tcNo / 100; btcno = tcNo / 100; c1 = atcno % 10; atcno = atcno / 10; c2 = atcno % 10; atcno = atcno / 10;
+            c3 = atcno % 10; atcno = atcno / 10; c4 = atcno % 10; atcno = atcno / 10; c5 = atcno % 10; atcno = atcno / 10;
+            c6 = atcno % 10; atcno = atcno / 10; c7 = atcno % 10; atcno = atcno / 10; c8 = atcno % 10; atcno = atcno / 10;
+            c9 = atcno % 10; atcno = atcno / 10;
+            q1 = ((10 - ((((c1 + c3 + c5 + c7 + c9) * 3) + (c2 + c4 + c6 + c8)) % 10)) % 10);
+            q2 = ((10 - (((((c2 + c4 + c6 + c8) + q1) * 3) + (c1 + c3 + c5 + c7 + c9)) % 10)) % 10);
+            var returnValue = q1 * 10 + q2;
 
             return returnValue;
         }

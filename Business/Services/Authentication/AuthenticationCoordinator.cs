@@ -1,5 +1,5 @@
-﻿using Core.Entities;
-using System;
+﻿using System;
+using Core.Entities.Concrete;
 
 namespace Business.Services.Authentication
 {

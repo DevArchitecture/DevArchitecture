@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Entities
+namespace Core.Entities.Concrete
 {
 	public class MobileLogin : IEntity
 	{

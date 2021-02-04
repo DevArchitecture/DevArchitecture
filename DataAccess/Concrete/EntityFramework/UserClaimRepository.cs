@@ -10,33 +10,31 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-	public class UserClaimRepository : EfEntityRepositoryBase<UserClaim, ProjectDbContext>, IUserClaimRepository
-	{
-		public UserClaimRepository(ProjectDbContext context) : base(context)
-		{
-		}
+    public class UserClaimRepository : EfEntityRepositoryBase<UserClaim, ProjectDbContext>, IUserClaimRepository
+    {
+        public UserClaimRepository(ProjectDbContext context) : base(context)
+        {
+        }
 
-		public async Task<IEnumerable<UserClaim>> BulkInsert(int userId, IEnumerable<UserClaim> userClaims)
-		{
-			var dbClaimList = context.UserClaims.Where(x => x.UserId == userId);
+        public async Task<IEnumerable<UserClaim>> BulkInsert(
+            int userId,
+            IEnumerable<UserClaim> userClaims)
+        {
+            var dbClaimList = Context.UserClaims.Where(x => x.UserId == userId);
 
-			context.UserClaims.RemoveRange(dbClaimList);
-			await context.UserClaims.AddRangeAsync(userClaims);
-			return userClaims;
-		}
+            Context.UserClaims.RemoveRange(dbClaimList);
+            await Context.UserClaims.AddRangeAsync(userClaims);
+            return userClaims;
+        }
 
-		public async Task<IEnumerable<SelectionItem>> GetUserClaimSelectedList(int userId)
-		{
-			var list = await (from oc in context.OperationClaims
-																					join userClaims in context.UserClaims on oc.Id equals userClaims.ClaimId
-																					where userClaims.UserId == userId
-																					select new SelectionItem()
-																					{
-																						Id = oc.Id.ToString(),
-																						Label = oc.Name
-																					}).ToListAsync();
+        public async Task<IEnumerable<SelectionItem>> GetUserClaimSelectedList(int userId)
+        {
+            var list = await (from oc in Context.OperationClaims
+                join userClaims in Context.UserClaims on oc.Id equals userClaims.ClaimId
+                where userClaims.UserId == userId
+                select new SelectionItem() {Id = oc.Id.ToString(), Label = oc.Name}).ToListAsync();
 
-			return list;
-		}
-	}
+            return list;
+        }
+    }
 }

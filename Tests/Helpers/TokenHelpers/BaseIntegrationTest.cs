@@ -11,23 +11,21 @@ namespace Tests.Helpers.TokenHelpers
 	public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
 	{
 
-		protected HttpClient _client;
+		protected HttpClient Client;
 
-		protected WebApplicationFactory<Startup> Factory => new WebApplicationFactory<Startup>();
+		protected WebApplicationFactory<Startup> Factory => new();
 
 		public string Issuer { get; } = "www.devarchitecture.com";
 		public string Audience { get; } = "www.devarchitecture.com";
 
 		public SigningCredentials SigningCredentials { get; }
 
-		private static readonly JwtSecurityTokenHandler s_tokenHandler = new JwtSecurityTokenHandler();
-
-
-
+		private static readonly JwtSecurityTokenHandler STokenHandler = new();
+		
 		[SetUp]
 		public void Setup()
 		{
-			_client = this.CreateClient();
+			Client = CreateClient();
 		}
 	}
 }

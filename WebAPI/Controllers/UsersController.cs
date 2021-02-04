@@ -1,6 +1,5 @@
 ﻿using Business.Handlers.Users.Commands;
 using Business.Handlers.Users.Queries;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

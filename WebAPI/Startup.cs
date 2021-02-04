@@ -23,7 +23,7 @@ namespace WebAPI
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class Startup : Business.BusinessStartup
+	public partial class Startup : BusinessStartup
 	{
 		/// <summary>
 		/// 

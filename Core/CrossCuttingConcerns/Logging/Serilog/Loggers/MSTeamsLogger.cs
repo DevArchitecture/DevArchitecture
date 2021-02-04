@@ -7,16 +7,16 @@ using System;
 
 namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
-    public class MSTeamsLogger : LoggerServiceBase
+    public class MsTeamsLogger : LoggerServiceBase
     {
-        public MSTeamsLogger()
+        public MsTeamsLogger()
         {
-            IConfiguration configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+            var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:MSTeamsConfiguration")
-                .Get<MSTeamsConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
+                .Get<MsTeamsConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
 
-            _logger = new LoggerConfiguration()
+            Logger = new LoggerConfiguration()
                     .WriteTo.MicrosoftTeams(logConfig.ChannelHookAdress)
                     .CreateLogger();
         }

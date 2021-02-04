@@ -23,21 +23,19 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                 UserName = _brokerOptions.UserName,
                 Password = _brokerOptions.Password
             };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(
-                        queue: "DArchQueue",
-                        durable: false,
-                        exclusive: false,
-                        autoDelete: false,
-                        arguments: null);
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+            channel.QueueDeclare(
+                queue: "DArchQueue",
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
 
-                var message = JsonConvert.SerializeObject(messageText);
-                var body = Encoding.UTF8.GetBytes(message);
+            var message = JsonConvert.SerializeObject(messageText);
+            var body = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish(exchange: "", routingKey: "DArchQueue", basicProperties: null, body: body);
-            }
+            channel.BasicPublish(exchange: "", routingKey: "DArchQueue", basicProperties: null, body: body);
         }
     }
 }

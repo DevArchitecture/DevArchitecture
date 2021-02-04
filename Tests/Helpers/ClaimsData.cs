@@ -7,7 +7,7 @@ namespace Tests.Helpers
 	{
 		public static List<Claim> GetClaims()
 		{
-			return new List<Claim>()
+			return new()
 												{
 																new Claim("username", "deneme"),
 																new Claim("email", "test@test.com")

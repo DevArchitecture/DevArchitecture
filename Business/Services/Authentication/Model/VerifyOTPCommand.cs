@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Results;
-using Core.Entities;
+using Core.Entities.Concrete;
 using MediatR;
 
 namespace Business.Services.Authentication.Model

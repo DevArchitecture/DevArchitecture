@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess;
-using Core.Entities;
+using Core.Entities.Concrete;
+
 namespace DataAccess.Abstract
 {
 	public interface IMobileLoginRepository : IEntityRepository<MobileLogin>

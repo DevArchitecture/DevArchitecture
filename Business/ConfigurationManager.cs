@@ -10,7 +10,6 @@ namespace Business
 
         public ConfigurationManager(IConfiguration configuration, IHostEnvironment env)
         {
-
             Mode = (ApplicationMode)Enum.Parse(typeof(ApplicationMode), env.EnvironmentName);
         }
     }
