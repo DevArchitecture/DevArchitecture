@@ -5,7 +5,6 @@ using Core.DataAccess;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
-using Core.Entities;
 using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
@@ -13,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Core.Entities;
+using FluentAssertions;
 
 namespace Tests.Services.Authentication
 {
@@ -46,7 +47,7 @@ namespace Tests.Services.Authentication
 							Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
+							.Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
 
 			_tokenHelper.
 							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
@@ -78,7 +79,7 @@ namespace Tests.Services.Authentication
 
 			var result = await service.CreateToken(command);
 
-			Assert.That(result.Token, Is.EqualTo("User Token"));
+			result.Token.Should().Be("User Token");
 		}
 		//[Test]
 		public async Task Person_Authentication_Login()
@@ -88,7 +89,7 @@ namespace Tests.Services.Authentication
 																		Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
+							.Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
 
 			_tokenHelper.
 							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
@@ -116,7 +117,8 @@ namespace Tests.Services.Authentication
 				Password = "123456"
 			};
 			var result = await service.Login(command);
-			Assert.That(result.Status, Is.EqualTo(LoginUserResult.LoginStatus.PhoneNumberRequired));
+
+			result.Status.Should().Be(LoginUserResult.LoginStatus.PhoneNumberRequired);
 		}
 	}
 }

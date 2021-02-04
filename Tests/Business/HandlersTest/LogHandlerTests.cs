@@ -19,10 +19,9 @@ namespace Tests.Business.HandlersTest
 		}
 
 		[Test]
-		public async Task Log_GetQuery_Success()
+		public Task Log_GetQuery_Success()
 		{
-
-
+			return Task.CompletedTask;
 		}
 
 	}

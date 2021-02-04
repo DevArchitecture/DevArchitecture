@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using FluentAssertions;
 using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
 using static Business.Handlers.Authorizations.Commands.LoginUserQuery;
 using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
@@ -26,12 +27,12 @@ namespace Tests.Business.HandlersTest
 		Mock<ITokenHelper> _tokenHelper;
 		Mock<IMediator> _mediator;
 
-		LoginUserQueryHandler loginUserQueryHandler;
-		LoginUserQuery loginUserQuery;
-		RegisterUserCommandHandler registerUserCommandHandler;
-		RegisterUserCommand command;
-		ForgotPasswordCommandHandler forgotPasswordCommandHandler;
-		ForgotPasswordCommand forgotPasswordCommand;
+		LoginUserQueryHandler _loginUserQueryHandler;
+		LoginUserQuery _loginUserQuery;
+		RegisterUserCommandHandler _registerUserCommandHandler;
+		RegisterUserCommand _command;
+		ForgotPasswordCommandHandler _forgotPasswordCommandHandler;
+		ForgotPasswordCommand _forgotPasswordCommand;
 
 		[SetUp]
 		public void Setup()
@@ -40,15 +41,15 @@ namespace Tests.Business.HandlersTest
 			_tokenHelper = new Mock<ITokenHelper>();
 			_mediator = new Mock<IMediator>();
 
-			loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,_mediator.Object);
-			registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
-			forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
+			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,_mediator.Object);
+			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
+			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}
 		[Test]
 		public async Task Handler_Login()
 		{
 			var user = DataHelper.GetUser("test");
-			HashingHelper.CreatePasswordHash("123456", out byte[] passwordSalt, out byte[] passwordHash);
+			HashingHelper.CreatePasswordHash("123456", out var passwordSalt, out var passwordHash);
 			user.PasswordSalt = passwordSalt;
 			user.PasswordHash = passwordHash;
 			_userRepository.
@@ -56,34 +57,31 @@ namespace Tests.Business.HandlersTest
 
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
-			loginUserQuery = new LoginUserQuery
+							.Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
+			_loginUserQuery = new LoginUserQuery
 			{
 				Email = user.Email,
 				Password = "123456"
 			};
 
-			var result = await loginUserQueryHandler.Handle(loginUserQuery, new System.Threading.CancellationToken());
+			var result = await _loginUserQueryHandler.Handle(_loginUserQuery, new System.Threading.CancellationToken());
 
-			Assert.That(result.Success, Is.True);
-
+			result.Success.Should().BeTrue();
 		}
 
 		[Test]
 		public async Task Handler_Register()
 		{
-			var registerUser = new User();
-			registerUser.Email = "test@test.com";
-			registerUser.FullName = "test test";
-			command = new RegisterUserCommand
+			var registerUser = new User {Email = "test@test.com", FullName = "test test"};
+			_command = new RegisterUserCommand
 			{
 				Email = registerUser.Email,
 				FullName = registerUser.FullName,
 				Password = "123456"
 			};
-			var result = await registerUserCommandHandler.Handle(command, new System.Threading.CancellationToken());
+			var result = await _registerUserCommandHandler.Handle(_command, new System.Threading.CancellationToken());
 
-			Assert.That(result.Message, Is.EqualTo(Messages.Added));
+			result.Message.Should().Be(Messages.Added);
 		}
 		[Test]
 		public async Task Handler_ForgotPassword()
@@ -91,13 +89,14 @@ namespace Tests.Business.HandlersTest
 			var user = DataHelper.GetUser("test");
 			_userRepository.
 									Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
-			forgotPasswordCommand = new ForgotPasswordCommand
+			_forgotPasswordCommand = new ForgotPasswordCommand
 			{
 				Email = user.Email,
 				TCKimlikNo = Convert.ToString(user.CitizenId)
 			};
-			var result = await forgotPasswordCommandHandler.Handle(forgotPasswordCommand, new System.Threading.CancellationToken());
-			Assert.That(result.Success, Is.True);
+			var result = await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand, new System.Threading.CancellationToken());
+
+			result.Success.Should().BeTrue();
 		}
 	}
 }

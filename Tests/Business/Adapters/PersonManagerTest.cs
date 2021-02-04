@@ -3,20 +3,21 @@ using Entities.Dtos;
 using Moq;
 using NUnit.Framework;
 using System.Net;
+using FluentAssertions;
 
 namespace Tests.Business.Adapters
 {
 	[TestFixture]
 	public class PersonManagerTest
 	{
-		Mock<IPersonService> personService;
+		Mock<IPersonService> _personService;
 		PersonServiceHelper _personServiceHelper;
 
 		[SetUp]
 		public void Setup()
 		{
-			personService = new Mock<IPersonService>();
-			_personServiceHelper = new PersonServiceHelper(personService.Object);
+			_personService = new Mock<IPersonService>();
+			_personServiceHelper = new PersonServiceHelper(_personService.Object);
 		}
 
 		[Test]
@@ -30,14 +31,13 @@ namespace Tests.Business.Adapters
 				CitizenId = 11111111111
 
 			};
-			personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
+			_personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
 			var result = _personServiceHelper.VerifyId(citizen);
 
-			Assert.IsFalse(result);
+			result.Should().BeFalse();
 		}
-
-
+		
 		[Test]
 		public void VerifyCid_Success()
 		{
@@ -50,12 +50,12 @@ namespace Tests.Business.Adapters
 
 			};
 
-			personService.
+			_personService.
 							Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
 
 			var result = _personServiceHelper.VerifyId(citizen);
 
-			Assert.IsTrue(result);
+			result.Should().BeTrue();
 		}
 
 	}

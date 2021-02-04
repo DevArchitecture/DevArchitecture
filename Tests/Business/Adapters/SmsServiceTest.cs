@@ -1,7 +1,7 @@
 ﻿using Business.Adapters.SmsService;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-
 
 namespace Tests.Business.Adapters
 {
@@ -26,17 +26,19 @@ namespace Tests.Business.Adapters
 			smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
 			var result = smsServiceHelper.Send(password, text, cellPhone);
 			smsService.Verify(x => x.Send(password, text, cellPhone));
-			Assert.IsTrue(result);
+
+			result.Should().BeTrue();
 		}
 
 		[Test]
 		[TestCase("test", "123456")]
-		public void SendAsist(string text, string cellPhone)
+		public void SendAssist(string text, string cellPhone)
 		{
 			smsService.Setup(x => x.SendAsist(text, cellPhone)).ReturnsAsync(true);
 			var result = smsServiceHelper.SendAsist(text, cellPhone);
 			smsService.Verify(x => x.SendAsist(text, cellPhone));
-			Assert.IsTrue(result);
+
+			result.Should().BeTrue();
 		}
 
 	}
