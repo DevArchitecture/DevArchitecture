@@ -1,4 +1,5 @@
 ﻿using Business.Adapters.PersonService;
+using Entities.Dtos;
 using System.Net;
 
 namespace Tests.Business.Adapters
@@ -12,11 +13,11 @@ namespace Tests.Business.Adapters
 			this._personService = personService;
 		}
 
-		public bool VerifyId(long TCKimlikNo, string Ad, string Soyad, int DogumYili)
+		public bool VerifyId(Citizen citizen)
 		{
 			try
 			{
-				return _personService.VerifyCid(TCKimlikNo, Ad, Soyad, DogumYili).Result;
+				return _personService.VerifyCid(citizen).Result;
 			}
 			catch (WebException)
 			{

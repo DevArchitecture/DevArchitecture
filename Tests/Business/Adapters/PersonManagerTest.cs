@@ -1,4 +1,5 @@
 ﻿using Business.Adapters.PersonService;
+using Entities.Dtos;
 using Moq;
 using NUnit.Framework;
 using System.Net;
@@ -19,32 +20,40 @@ namespace Tests.Business.Adapters
 		}
 
 		[Test]
-		[TestCase(11111111111, "Test1", "Test1", 1987)]
-		public void VerifyCid_Fail(long TCKimlikNo, string Ad, string Soyad, int DogumYili)
+		public void VerifyCid_Fail()
 		{
-			personService.Setup(x => x.VerifyCid(
-							It.IsAny<long>(),
-							It.IsAny<string>(),
-							It.IsAny<string>(),
-							It.IsAny<int>()
-			)).Throws<WebException>();
+			var citizen = new Citizen
+			{
+				BirthYear = 1987,
+				Surname = "Test1",
+				Name = "Test1",
+				CitizenId = 11111111111
 
-			var result = _personServiceHelper.VerifyId(TCKimlikNo, Ad, Soyad, DogumYili);
+			};
+			personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
+
+			var result = _personServiceHelper.VerifyId(citizen);
 
 			Assert.IsFalse(result);
-
 		}
 
 
 		[Test]
-		[TestCase(11111111111, "Test1", "Test1", 1987)]
-		public void VerifyCid_Success(long TCKimlikNo, string Ad, string Soyad, int DogumYili)
+		public void VerifyCid_Success()
 		{
+			var citizen = new Citizen
+			{
+				BirthYear = 1987,
+				Surname = "Test1",
+				Name = "Test1",
+				CitizenId = 11111111111
+
+			};
 
 			personService.
-							Setup(x => x.VerifyCid(TCKimlikNo, Ad, Soyad, DogumYili)).ReturnsAsync(true);
+							Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
 
-			var result = _personServiceHelper.VerifyId(TCKimlikNo, Ad, Soyad, DogumYili);
+			var result = _personServiceHelper.VerifyId(citizen);
 
 			Assert.IsTrue(result);
 		}
