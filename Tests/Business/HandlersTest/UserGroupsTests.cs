@@ -12,6 +12,7 @@ using static Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
 using static Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
 using static Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
 using static Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
+using FluentAssertions;
 
 namespace Tests.Business.HandlersTest
 {
@@ -44,7 +45,7 @@ namespace Tests.Business.HandlersTest
 							ReturnsAsync(new List<UserGroup>() { userGroup }.AsQueryable());
 
 			var result = _getUserGroupsQueryHandler.Handle(new GetUserGroupsQuery(), new System.Threading.CancellationToken()).Result;
-			Assert.That(result.Data.Count(), Is.EqualTo(1));
+			result.Data.Should().HaveCount(1);
 		}
 
 		[Test]
@@ -55,7 +56,7 @@ namespace Tests.Business.HandlersTest
 			createUserCommand.GroupId = 1;
 
 			var result = _createUserGroupCommandHandler.Handle(createUserCommand, new System.Threading.CancellationToken()).Result;
-			Assert.That(result.Success, Is.True);
+			result.Success.Should().BeTrue();
 
 		}
 
@@ -69,7 +70,7 @@ namespace Tests.Business.HandlersTest
 			var result = _updateUserGroupCommandHandler.
 							Handle(updateUserCommand, new System.Threading.CancellationToken()).Result;
 
-			Assert.That(result.Success, Is.True);
+			result.Success.Should().BeTrue();
 
 		}
 
@@ -80,7 +81,7 @@ namespace Tests.Business.HandlersTest
 			var result = _deleteUserGroupCommandHandler.
 							Handle(deleteUserCommand, new System.Threading.CancellationToken()).Result;
 
-			Assert.That(result.Success, Is.True);
+			result.Success.Should().BeTrue();
 		}
 
 		[Test]

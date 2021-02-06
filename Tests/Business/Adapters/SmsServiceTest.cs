@@ -1,4 +1,5 @@
 ﻿using Business.Adapters.SmsService;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace Tests.Business.Adapters
 			_smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
 			var result = _smsServiceHelper.Send(password, text, cellPhone);
 			_smsService.Verify(x => x.Send(password, text, cellPhone));
-			Assert.IsTrue(result);
+			result.Should().BeTrue();
 		}
 
 		[Test]
@@ -36,7 +37,7 @@ namespace Tests.Business.Adapters
 			_smsService.Setup(x => x.SendAssist(text, cellPhone)).ReturnsAsync(true);
 			var result = _smsServiceHelper.SendAssist(text, cellPhone);
 			_smsService.Verify(x => x.SendAssist(text, cellPhone));
-			Assert.IsTrue(result);
+			result.Should().BeTrue();
 		}
 
 	}

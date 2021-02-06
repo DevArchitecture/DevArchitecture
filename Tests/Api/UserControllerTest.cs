@@ -4,6 +4,7 @@ using Tests.Helpers.TokenHelpers;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Net;
+using FluentAssertions;
 
 namespace Tests.Api
 {
@@ -18,7 +19,7 @@ namespace Tests.Api
 
 			var response = await Client.GetAsync("api/users/getall");
 
-			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 		}
 	}

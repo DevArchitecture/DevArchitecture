@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace Tests.Services.Authentication
 {
@@ -19,7 +20,7 @@ namespace Tests.Services.Authentication
 
 			var response = await Client.GetAsync("api/users/getall");
 
-			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 		}
 
@@ -32,7 +33,7 @@ namespace Tests.Services.Authentication
 			Thread.Sleep(10000);
 
 			var response = await Client.GetAsync("api/users/getall");
-			Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+			response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
 		}
 

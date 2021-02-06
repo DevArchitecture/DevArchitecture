@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using FluentAssertions;
 
 namespace Tests.Core.Extensions
 {
@@ -25,7 +26,7 @@ namespace Tests.Core.Extensions
 		public void AddEmail(string email)
 		{
 			_claimList.AddEmail(email);
-			Assert.That(_claimList.Count(x => x.Type == JwtRegisteredClaimNames.Email && x.Value == email), Is.EqualTo(1));
+			_claimList.Where(x => x.Type == JwtRegisteredClaimNames.Email && x.Value == email).Should().HaveCount(1);
 		}
 
 		[Test]
@@ -33,7 +34,7 @@ namespace Tests.Core.Extensions
 		public void AddName(string name)
 		{
 			_claimList.AddName(name);
-			Assert.That(_claimList.Count(x => x.Type == ClaimTypes.Name && x.Value == name), Is.EqualTo(1));
+			_claimList.Where(x => x.Type == ClaimTypes.Name && x.Value == name).Should().HaveCount(1);
 		}
 
 		[Test]
@@ -41,7 +42,7 @@ namespace Tests.Core.Extensions
 		public void AddNameIdentifier(string identifier)
 		{
 			_claimList.AddNameIdentifier(identifier);
-			Assert.That(_claimList.Count(x => x.Type == ClaimTypes.NameIdentifier && x.Value == identifier), Is.EqualTo(1));
+			_claimList.Where(x => x.Type == ClaimTypes.NameIdentifier && x.Value == identifier).Should().HaveCount(1);
 		}
 
 		[Test]
@@ -49,7 +50,7 @@ namespace Tests.Core.Extensions
 		public void NameUniqueIdentifier(string name)
 		{
 			_claimList.AddNameUniqueIdentifier(name);
-			Assert.That(_claimList.Count(x => x.Type == ClaimTypes.SerialNumber && x.Value == name), Is.EqualTo(1));
+			_claimList.Where(x => x.Type == ClaimTypes.SerialNumber && x.Value == name).Should().HaveCount(1);
 
 		}
 
@@ -57,7 +58,7 @@ namespace Tests.Core.Extensions
 		public void AddRoles()
 		{
 			_claimList.AddRoles(_roles);
-			Assert.That(_claimList.Count(x => x.Type == ClaimTypes.Role), Is.EqualTo(3));
+			_claimList.Where(x => x.Type == ClaimTypes.Role).Should().HaveCount(3);
 		}
 
 	}

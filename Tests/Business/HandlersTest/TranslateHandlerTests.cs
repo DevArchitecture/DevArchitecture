@@ -17,6 +17,7 @@ using static Business.Handlers.Translates.Commands.DeleteTranslateCommand;
 using MediatR;
 using System.Linq;
 using Core.Entities.Concrete;
+using FluentAssertions;
 
 namespace Tests.Business.HandlersTest
 {
@@ -53,8 +54,8 @@ namespace Tests.Business.HandlersTest
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
             //Asset
-            Assert.That(x.Success, Is.True);
-            //Assert.That(x.Data.TranslateId, Is.EqualTo(1));
+            x.Success.Should().BeTrue();
+            //x.Data.TranslateId.Should().Be(1);
 
         }
 
@@ -74,8 +75,8 @@ namespace Tests.Business.HandlersTest
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
             //Asset
-            Assert.That(x.Success, Is.True);
-            Assert.That(((List<Translate>)x.Data).Count, Is.GreaterThan(1));
+            x.Success.Should().BeTrue();
+            ((List<Translate>)x.Data).Count.Should().BeGreaterThan(1);
 
         }
 
@@ -97,8 +98,8 @@ namespace Tests.Business.HandlersTest
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _translateRepository.Verify(x => x.SaveChangesAsync());
-            Assert.That(x.Success, Is.True);
-            Assert.That(x.Message, Is.EqualTo(Messages.Added));
+            x.Success.Should().BeTrue();
+            x.Message.Should().Be(Messages.Added);
         }
 
         [Test]
@@ -119,8 +120,8 @@ namespace Tests.Business.HandlersTest
             var handler = new CreateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
-            Assert.That(x.Success, Is.False);
-            Assert.That(x.Message, Is.EqualTo(Messages.NameAlreadyExist));
+            x.Success.Should().BeFalse();
+            x.Message.Should().Be(Messages.NameAlreadyExist);
         }
 
         [Test]
@@ -139,8 +140,8 @@ namespace Tests.Business.HandlersTest
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _translateRepository.Verify(x => x.SaveChangesAsync());
-            Assert.That(x.Success, Is.True);
-            Assert.That(x.Message, Is.EqualTo(Messages.Updated));
+            x.Success.Should().BeTrue();
+            x.Message.Should().Be(Messages.Updated);
         }
 
         [Test]
@@ -158,8 +159,8 @@ namespace Tests.Business.HandlersTest
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _translateRepository.Verify(x => x.SaveChangesAsync());
-            Assert.That(x.Success, Is.True);
-            Assert.That(x.Message, Is.EqualTo(Messages.Deleted));
+            x.Success.Should().BeTrue();
+            x.Message.Should().Be(Messages.Deleted);
         }
     }
 }

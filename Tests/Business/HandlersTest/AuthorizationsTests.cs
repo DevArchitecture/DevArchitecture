@@ -16,6 +16,7 @@ using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
 using static Business.Handlers.Authorizations.Commands.LoginUserQuery;
 using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
 using MediatR;
+using FluentAssertions;
 
 namespace Tests.Business.HandlersTest
 {
@@ -65,7 +66,7 @@ namespace Tests.Business.HandlersTest
 
 			var result = await _loginUserQueryHandler.Handle(_loginUserQuery, new System.Threading.CancellationToken());
 
-			Assert.That(result.Success, Is.True);
+			result.Success.Should().BeTrue();
 
 		}
 
@@ -83,7 +84,7 @@ namespace Tests.Business.HandlersTest
 			};
 			var result = await _registerUserCommandHandler.Handle(_command, new System.Threading.CancellationToken());
 
-			Assert.That(result.Message, Is.EqualTo(Messages.Added));
+			result.Message.Should().Be(Messages.Added);
 		}
 		[Test]
 		public async Task Handler_ForgotPassword()
@@ -97,7 +98,7 @@ namespace Tests.Business.HandlersTest
 				TcKimlikNo = Convert.ToString(user.CitizenId)
 			};
 			var result = await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand, new System.Threading.CancellationToken());
-			Assert.That(result.Success, Is.True);
+            result.Success.Should().BeTrue();
 		}
 	}
 }

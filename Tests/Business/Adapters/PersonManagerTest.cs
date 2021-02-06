@@ -1,5 +1,6 @@
 ﻿using Business.Adapters.PersonService;
 using Entities.Dtos;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using System.Net;
@@ -34,7 +35,7 @@ namespace Tests.Business.Adapters
 
 			var result = _personServiceHelper.VerifyId(citizen);
 
-			Assert.IsFalse(result);
+			result.Should().BeFalse();
 		}
 
 
@@ -55,7 +56,7 @@ namespace Tests.Business.Adapters
 
 			var result = _personServiceHelper.VerifyId(citizen);
 
-			Assert.IsTrue(result);
+			result.Should().BeTrue();
 		}
 
 	}

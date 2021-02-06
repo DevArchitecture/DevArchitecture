@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 using Tests.Helpers;
 
@@ -16,8 +17,8 @@ namespace Tests.Core.Extensions
 
 			var cloneUser = user.Clone();
 
-			Assert.That(cloneUser, Is.TypeOf(typeof(User)));
-			Assert.That(cloneUser.FullName, Is.EqualTo(user.FullName));
+			cloneUser.Should().BeOfType<User>();
+			cloneUser.FullName.Should().Be(user.FullName);
 
 		}
 

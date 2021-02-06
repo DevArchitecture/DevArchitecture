@@ -1,4 +1,5 @@
 ﻿using Core.Extensions;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Tests.Core.Extensions
@@ -11,7 +12,7 @@ namespace Tests.Core.Extensions
 		{
 			var description = UserType.Admin.GetDescription();
 
-			Assert.That(description, Is.EqualTo("Admin"));
+			description.Should().Be("Admin");
 		}
 	}
 

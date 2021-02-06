@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace Tests.Services.Authentication
 {
@@ -77,7 +78,7 @@ namespace Tests.Services.Authentication
 
 			var result = await service.CreateToken(command);
 
-			Assert.That(result.Token, Is.EqualTo("User Token"));
+			result.Token.Should().Be("User Token");
 		}
 		//[Test]
 		public async Task Person_Authentication_Login()
@@ -115,7 +116,7 @@ namespace Tests.Services.Authentication
 				Password = "123456"
 			};
 			var result = await service.Login(command);
-			Assert.That(result.Status, Is.EqualTo(LoginUserResult.LoginStatus.PhoneNumberRequired));
+			result.Status.Should().Be(LoginUserResult.LoginStatus.PhoneNumberRequired);
 		}
 	}
 }
