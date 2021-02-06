@@ -55,7 +55,7 @@ namespace Tests.Business.HandlersTest
 
             //Asset
             x.Success.Should().BeTrue();
-            //Assert.That(x.Data.LanguageId, Is.EqualTo(1));
+            //x.Data.Id.Should().Be(1);
 
         }
 
@@ -100,7 +100,7 @@ namespace Tests.Business.HandlersTest
 
             _languageRepository.Verify(x => x.SaveChangesAsync());
             x.Success.Should().BeTrue();
-            Assert.That(x.Message, Is.EqualTo(Messages.Added));
+            x.Message.Should().Be(Messages.Added);
         }
 
         [Test]
@@ -112,9 +112,7 @@ namespace Tests.Business.HandlersTest
             //command.LanguageName = "test";
 
             _languageRepository.Setup(x => x.Query())
-                                                                                                        .Returns(new List<Language> { new() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "test"*/ } }.AsQueryable());
-
-
+                                    .Returns(new List<Language> { new() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "test"*/ } }.AsQueryable());
 
             _languageRepository.Setup(x => x.Add(It.IsAny<Language>())).Returns(new Language());
 
