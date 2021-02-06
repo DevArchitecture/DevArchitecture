@@ -2,12 +2,12 @@ using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
-
+using Entities.Concrete;
 namespace DataAccess.Concrete.EntityFramework.Contexts
 {
 	/// <summary>
 	/// Because this context is followed by migration for more than one provider
-	/// works on Postg db by default. If you want to pass sql
+	/// works on PostGreSql db by default. If you want to pass sql
 	/// When adding AddDbContext, use MsDbContext derived from it.
 	/// </summary>
 	public class ProjectDbContext : DbContext
