@@ -7,14 +7,12 @@ using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.Translates.ValidationRules;
 using Core.Entities.Concrete;
-using System;
 
 namespace Business.Handlers.Translates.Commands
 {

@@ -24,7 +24,7 @@ namespace Core.Utilities.Mail
             message.Subject = emailMessage.Subject;
 
 
-            string messageBody = string.Format(emailMessage.Subject, emailMessage.Content);
+            var messageBody = string.Format(emailMessage.Subject, emailMessage.Content);
 
             message.Body = new TextPart(TextFormat.Html)
             {

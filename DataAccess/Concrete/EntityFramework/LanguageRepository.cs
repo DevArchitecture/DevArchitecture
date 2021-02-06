@@ -1,10 +1,6 @@
-﻿
-using System;
-using System.Linq;
+﻿using System.Linq;
 using Core.DataAccess.EntityFramework;
-using Entities.Concrete;
 using DataAccess.Concrete.EntityFramework.Contexts;
-using Core.DataAccess.Concrete;
 using DataAccess.Abstract;
 using Core.Entities.Concrete;
 using System.Collections.Generic;
@@ -22,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         public async Task<List<SelectionItem>> GetLanguagesLookUp()
         {
-            var lookUp = await (from entity in context.Languages
+            var lookUp = await (from entity in Context.Languages
                          select new SelectionItem()
                          {
                              Id = entity.Id.ToString(),
@@ -33,7 +29,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         public async Task<List<SelectionItem>> GetLanguagesLookUpWithCode()
         {
-            var lookUp = await (from entity in context.Languages
+            var lookUp = await (from entity in Context.Languages
                                 select new SelectionItem()
                                 {
                                     Id = entity.Code.ToString(),

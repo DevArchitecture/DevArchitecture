@@ -6,11 +6,9 @@ using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 using Core.Aspects.Autofac.Validation;
 using Business.Handlers.Translates.ValidationRules;
 
@@ -37,18 +35,6 @@ namespace Business.Handlers.Translates.Commands
                 _mediator = mediator;
             }
 
-            /// <summary>
-            /// Handler bir kategorinin var olup olmadığını doğrular
-            /// eğer yoksa yeni bir kategorinin güncellenmesine izin verir.
-            /// Aspectler her zaman hadler üzerinde kullanılmalıdır.
-            /// Aşağıda validation, cacheremove ve log aspect Örnekleri kullanılmıştır.
-            /// eğer kategori başarıyla eklenmişse sadece mesaj dÖner.
-            /// Eğer farklı bir sınıf veya metod çağırılması gerekiyorsa MediatR kütüphanesi yardımıyla çağırılır
-            /// Örneğin:  var result = await _mediator.Send(new GetAnimalsCountQuery());
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]

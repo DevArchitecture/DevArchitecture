@@ -1,10 +1,10 @@
-﻿using Business.Helpers;
+﻿using Business.Constants;
+using Business.Helpers;
 using Business.Services.Authentication.Model;
-using Core.Entities;
+using Core.Entities.Concrete;
 using FluentValidation;
-using Business.Constants;
 
-namespace Business.Handlers.Authorizations
+namespace Business.Handlers.Authorizations.ValidationRules
 {
   
     public class LoginUserValidator : AbstractValidator<LoginUserCommand>
@@ -23,13 +23,15 @@ namespace Business.Handlers.Authorizations
                         return true;
                     case AuthenticationProviderType.Agent:
                         break;
+                    case AuthenticationProviderType.Unknown:
+                        break;
                     default:
                         break;
                 }
                 return false;
             })
             .WithMessage(Messages.InvalidCode)
-            .OverridePropertyName(Messages.CID);
+            .OverridePropertyName(Messages.CitizenNumber);
         }
     }
 

@@ -4,10 +4,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +19,7 @@ namespace Business.Handlers.UserGroups.Commands
 
         public class UpdateUserGroupByGroupIdCommandHandler : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
         {
-            private IUserGroupRepository _userGroupRepository;
+            private readonly IUserGroupRepository _userGroupRepository;
             public UpdateUserGroupByGroupIdCommandHandler(IUserGroupRepository userGroupRepository)
             {
                 _userGroupRepository = userGroupRepository;

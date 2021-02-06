@@ -12,7 +12,7 @@ namespace Business.BusinessAspects
 	/// <summary>
 	///This Aspect control the user's roles in HttpContext by inject the IHttpContextAccessor.
 	///It is checked by writing as [SecuredOperation] on the handler.
-	///If a valid authorization cannot be found in aspec, it throws an exception.
+	///If a valid authorization cannot be found in aspect, it throws an exception.
 	/// </summary>
 
 	public class SecuredOperation : MethodInterception

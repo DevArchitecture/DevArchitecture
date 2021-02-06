@@ -12,12 +12,12 @@ namespace Tests.Core.Extensions
 		[Test]
 		public void CloneServiceExtensionTest()
 		{
-			var _user = DataHelper.GetUser("murat");
+			var user = DataHelper.GetUser("murat");
 
-			var cloneUser = _user.Clone();
+			var cloneUser = user.Clone();
 
 			Assert.That(cloneUser, Is.TypeOf(typeof(User)));
-			Assert.That(cloneUser.FullName, Is.EqualTo(_user.FullName));
+			Assert.That(cloneUser.FullName, Is.EqualTo(user.FullName));
 
 		}
 

@@ -7,12 +7,12 @@ namespace Tests.Helpers
 	{
 		public static List<Claim> GetClaims()
 		{
-			return new List<Claim>()
-												{
-																new Claim("username", "deneme"),
-																new Claim("email", "test@test.com")
+			return new()
+			{
+				new Claim("username", "deneme"),
+				new Claim("email", "test@test.com")
 
-												};
+			};
 		}
 	}
 }

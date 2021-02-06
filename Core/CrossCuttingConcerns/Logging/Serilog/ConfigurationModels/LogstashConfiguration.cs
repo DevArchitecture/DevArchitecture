@@ -2,6 +2,6 @@
 {
     public class LogstashConfiguration
     {
-        public string URL { get; set; }
+        public string Url { get; set; }
     }
 }

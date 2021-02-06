@@ -7,13 +7,13 @@ namespace Core.DataAccess.MongoDb.Concrete.Configurations
 		/// <summary>
 		/// To be set if the MongoClientSetting class is to be used.
 		/// </summary>
-		private MongoClientSettings _mongoClientSettings { get; set; }
+		private MongoClientSettings MongoClientSettings { get; set; }
 
 		public string ConnectionString { get; set; }
 		public string DatabaseName { get; set; }
 		public MongoConnectionSettings(MongoClientSettings mongoClientSettings)
 		{
-			_mongoClientSettings = mongoClientSettings;
+			MongoClientSettings = mongoClientSettings;
 		}
 		public MongoConnectionSettings()
 		{
@@ -22,7 +22,7 @@ namespace Core.DataAccess.MongoDb.Concrete.Configurations
 
 		public MongoClientSettings GetMongoClientSettings()
 		{
-			return _mongoClientSettings;
+			return MongoClientSettings;
 		}
 	}
 }

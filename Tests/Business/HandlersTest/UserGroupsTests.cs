@@ -18,22 +18,22 @@ namespace Tests.Business.HandlersTest
 	[TestFixture]
 	public class UserGroupsTests
 	{
-		Mock<IUserGroupRepository> _userGroupRepository;
+        private Mock<IUserGroupRepository> _userGroupRepository;
 
-		GetUserGroupsQueryHandler getUserGroupsQueryHandler;
-		CreateUserGroupCommandHandler createUserGroupCommandHandler;
-		UpdateUserGroupCommandHandler updateUserGroupCommandHandler;
-		DeleteUserGroupCommandHandler deleteUserGroupCommandHandler;
+        private GetUserGroupsQueryHandler _getUserGroupsQueryHandler;
+        private CreateUserGroupCommandHandler _createUserGroupCommandHandler;
+        private UpdateUserGroupCommandHandler _updateUserGroupCommandHandler;
+        private DeleteUserGroupCommandHandler _deleteUserGroupCommandHandler;
 
 
 		[SetUp]
 		public void Setup()
 		{
 			_userGroupRepository = new Mock<IUserGroupRepository>();
-			getUserGroupsQueryHandler = new GetUserGroupsQueryHandler(_userGroupRepository.Object);
-			createUserGroupCommandHandler = new CreateUserGroupCommandHandler(_userGroupRepository.Object);
-			updateUserGroupCommandHandler = new UpdateUserGroupCommandHandler(_userGroupRepository.Object);
-			deleteUserGroupCommandHandler = new DeleteUserGroupCommandHandler(_userGroupRepository.Object);
+			_getUserGroupsQueryHandler = new GetUserGroupsQueryHandler(_userGroupRepository.Object);
+			_createUserGroupCommandHandler = new CreateUserGroupCommandHandler(_userGroupRepository.Object);
+			_updateUserGroupCommandHandler = new UpdateUserGroupCommandHandler(_userGroupRepository.Object);
+			_deleteUserGroupCommandHandler = new DeleteUserGroupCommandHandler(_userGroupRepository.Object);
 		}
 
 		[Test]
@@ -43,18 +43,18 @@ namespace Tests.Business.HandlersTest
 			_userGroupRepository.Setup(x => x.GetListAsync(null)).
 							ReturnsAsync(new List<UserGroup>() { userGroup }.AsQueryable());
 
-			var result = getUserGroupsQueryHandler.Handle(new GetUserGroupsQuery(), new System.Threading.CancellationToken()).Result;
+			var result = _getUserGroupsQueryHandler.Handle(new GetUserGroupsQuery(), new System.Threading.CancellationToken()).Result;
 			Assert.That(result.Data.Count(), Is.EqualTo(1));
 		}
 
 		[Test]
 		public void Handler_CreateUserGroup()
 		{
-			var createuserCommand = new CreateUserGroupCommand();
-			createuserCommand.UserId = 1;
-			createuserCommand.GroupId = 1;
+			var createUserCommand = new CreateUserGroupCommand();
+			createUserCommand.UserId = 1;
+			createUserCommand.GroupId = 1;
 
-			var result = createUserGroupCommandHandler.Handle(createuserCommand, new System.Threading.CancellationToken()).Result;
+			var result = _createUserGroupCommandHandler.Handle(createUserCommand, new System.Threading.CancellationToken()).Result;
 			Assert.That(result.Success, Is.True);
 
 		}
@@ -66,7 +66,7 @@ namespace Tests.Business.HandlersTest
 			updateUserCommand.GroupId = new int[] { 1 };
 			updateUserCommand.UserId = 1;
 
-			var result = updateUserGroupCommandHandler.
+			var result = _updateUserGroupCommandHandler.
 							Handle(updateUserCommand, new System.Threading.CancellationToken()).Result;
 
 			Assert.That(result.Success, Is.True);
@@ -77,7 +77,7 @@ namespace Tests.Business.HandlersTest
 		public void Handler_DeleteUser()
 		{
 			var deleteUserCommand = new DeleteUserGroupCommand();
-			var result = deleteUserGroupCommandHandler.
+			var result = _deleteUserGroupCommandHandler.
 							Handle(deleteUserCommand, new System.Threading.CancellationToken()).Result;
 
 			Assert.That(result.Success, Is.True);

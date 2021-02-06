@@ -9,14 +9,14 @@ namespace Tests.Business.Adapters
 	[TestFixture]
 	public class PersonManagerTest
 	{
-		Mock<IPersonService> personService;
-		PersonServiceHelper _personServiceHelper;
+        private Mock<IPersonService> _personService;
+        private PersonServiceHelper _personServiceHelper;
 
 		[SetUp]
 		public void Setup()
 		{
-			personService = new Mock<IPersonService>();
-			_personServiceHelper = new PersonServiceHelper(personService.Object);
+			_personService = new Mock<IPersonService>();
+			_personServiceHelper = new PersonServiceHelper(_personService.Object);
 		}
 
 		[Test]
@@ -30,7 +30,7 @@ namespace Tests.Business.Adapters
 				CitizenId = 11111111111
 
 			};
-			personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
+			_personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
 			var result = _personServiceHelper.VerifyId(citizen);
 
@@ -50,7 +50,7 @@ namespace Tests.Business.Adapters
 
 			};
 
-			personService.
+			_personService.
 							Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
 
 			var result = _personServiceHelper.VerifyId(citizen);

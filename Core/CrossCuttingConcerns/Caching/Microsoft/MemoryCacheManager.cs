@@ -53,7 +53,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
                BindingFlags.NonPublic | BindingFlags.Instance);
             var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
 
-            List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
+            var cacheCollectionValues = new List<ICacheEntry>();
 
             foreach (var cacheItem in cacheEntriesCollection)
             {

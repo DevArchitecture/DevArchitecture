@@ -1,11 +1,11 @@
-﻿using Business.BusinessAspects;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Business.Handlers.GroupClaims.Commands
 {

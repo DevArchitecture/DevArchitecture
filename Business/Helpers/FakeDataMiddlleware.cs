@@ -1,8 +1,5 @@
 ﻿using Core.Utilities.IoC;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +10,7 @@ namespace Business.Helpers
 {
 	public static class FakeDataMiddlleware
 	{
-		public async static Task UseDbFakeDataCreator(this IApplicationBuilder app)
+		public static async Task UseDbFakeDataCreator(this IApplicationBuilder app)
 		{
 			var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 
@@ -76,10 +73,10 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "SendMobileCode", Value = "Please Enter The Code Sent To You By SMS!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "NameAlreadyExist", Value = "Oluşturmaya Çalıştığınız Nesne Zaten Var." });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "NameAlreadyExist", Value = "The Object You Are Trying To Create Already Exists." });
-			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "WrongCID", Value = "Vatandaşlık No Sistemimizde Bulunamadı. Lütfen Yeni Kayıt Oluşturun!" });
-			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "WrongCID", Value = "Citizenship Number Not Found In Our System. Please Create New Registration!" });
-			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "CID", Value = "Vatandaşlık No" });
-			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "CID", Value = "Citizenship Number" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "WrongCitizenId", Value = "Vatandaşlık No Sistemimizde Bulunamadı. Lütfen Yeni Kayıt Oluşturun!" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "WrongCitizenId", Value = "Citizenship Number Not Found In Our System. Please Create New Registration!" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "CitizenNumber", Value = "Vatandaşlık No" });
+			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "CitizenNumber", Value = "Citizenship Number" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordEmpty", Value = "Parola boş olamaz!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 2, Code = "PasswordEmpty", Value = "Password can not be empty!" });
 			await mediator.Send(new CreateTranslateCommand { LangId = 1, Code = "PasswordLength", Value = "Minimum 8 Karakter Uzunluğunda Olmalıdır!" });

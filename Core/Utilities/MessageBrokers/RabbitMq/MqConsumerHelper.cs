@@ -23,8 +23,8 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                 UserName = _brokerOptions.UserName,
                 Password = _brokerOptions.Password
             };
-            using (IConnection connection = factory.CreateConnection())
-            using (IModel channel = connection.CreateModel())
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(queue: "DArchQueue",
                                                          durable: false,

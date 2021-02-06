@@ -1,17 +1,11 @@
 ﻿
 using Business.BusinessAspects;
 using Core.Utilities.Results;
-using Core.Aspects.Autofac.Performance;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Logging;
-using Core.Entities.Concrete;
-using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Translates.Queries
 {

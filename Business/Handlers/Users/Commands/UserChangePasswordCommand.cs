@@ -38,7 +38,7 @@ namespace Business.Handlers.Users.Commands
                 if (userExits == null)
                     return new ErrorResult(Messages.UserNotFound);
 
-                HashingHelper.CreatePasswordHash(request.Password, out byte[] passwordSalt, out byte[] passwordHash);
+                HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
 
                 userExits.PasswordHash = passwordHash;
                 userExits.PasswordSalt = passwordSalt;

@@ -14,7 +14,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
     {
         public PostgreSqlLogger()
         {
-            IConfiguration configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+            var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration")
                 .Get<PostgreConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
@@ -32,7 +32,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
             var seriLogConfig = new LoggerConfiguration()
                     .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: false)
                     .CreateLogger();
-            _logger = seriLogConfig;
+            Logger = seriLogConfig;
         }
     }
 }

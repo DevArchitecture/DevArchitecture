@@ -1,28 +1,28 @@
-﻿using Core.DataAccess.MongoDb.Concrete.Configurations;
-using Core.Utilities.Messages;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Core.DataAccess.MongoDb.Concrete.Configurations;
+using Core.Entities;
+using Core.Utilities.Messages;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
-
-namespace Core.DataAccess.Concrete
+namespace Core.DataAccess.MongoDb.Concrete
 {
 	public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T> where T : DocumentDbEntity
 	{
 		private readonly IMongoCollection<T> _collection;
-		protected string collectionName;
+		protected string CollectionName;
 		protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
 		{
-			this.collectionName = collectionName;
+			CollectionName = collectionName;
 
 			ConnectionSettingControl(mongoConnectionSetting);
 
 
-			MongoClient client = mongoConnectionSetting.GetMongoClientSettings() == null ?
+			var client = mongoConnectionSetting.GetMongoClientSettings() == null ?
 								new MongoClient(mongoConnectionSetting.ConnectionString) :
 								new MongoClient(mongoConnectionSetting.GetMongoClientSettings());
 
@@ -130,11 +130,11 @@ namespace Core.DataAccess.Concrete
 		private void ConnectionSettingControl(MongoConnectionSettings settings)
 		{
 			if (settings.GetMongoClientSettings() != null &&
-						(string.IsNullOrEmpty(collectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
+						(string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
 				throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
 
-			if (string.IsNullOrEmpty(collectionName) ||
+			if (string.IsNullOrEmpty(CollectionName) ||
 						string.IsNullOrEmpty(settings.ConnectionString) ||
 						string.IsNullOrEmpty(settings.DatabaseName))
 				throw new Exception(DocumentDbMessages.NullOremptyMessage);

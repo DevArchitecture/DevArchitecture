@@ -9,7 +9,7 @@ namespace Business.DependencyResolvers
 {
     public class AutofacBusinessModule : Module
     {
-        private readonly ConfigurationManager configuration;
+        private readonly ConfigurationManager _configuration;
 
         /// <summary>
         /// for Autofac.
@@ -20,7 +20,7 @@ namespace Business.DependencyResolvers
 
         public AutofacBusinessModule(ConfigurationManager configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Business.DependencyResolvers
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .AsClosedTypesOf(typeof(IValidator<>));
 
-            switch (configuration.Mode)
+            switch (_configuration.Mode)
             {
                 case ApplicationMode.Development:
                     builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

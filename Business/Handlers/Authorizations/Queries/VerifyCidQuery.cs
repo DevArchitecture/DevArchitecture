@@ -32,7 +32,7 @@ namespace Business.Handlers.Authorizations.Queries
                     Name = request.Name,
                     Surname = request.Surname
                 });
-                if (result != true)
+                if (!result)
                 {
                     return new ErrorDataResult<bool>(result, Messages.CouldNotBeVerifyCid);
                 }

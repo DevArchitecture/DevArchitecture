@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using static Business.Handlers.Translates.Queries.GetTranslateQuery;
-using Entities.Concrete;
 using static Business.Handlers.Translates.Queries.GetTranslatesQuery;
 using static Business.Handlers.Translates.Commands.CreateTranslateCommand;
 using Business.Handlers.Translates.Commands;
@@ -24,8 +23,8 @@ namespace Tests.Business.HandlersTest
     [TestFixture]
     public class TranslateHandlerTests
     {
-        Mock<ITranslateRepository> _translateRepository;
-        Mock<IMediator> _mediator;
+        private Mock<ITranslateRepository> _translateRepository;
+        private Mock<IMediator> _mediator;
         [SetUp]
         public void Setup()
         {
@@ -37,7 +36,7 @@ namespace Tests.Business.HandlersTest
         public async Task Translate_GetQuery_Success()
         {
             //Arrange
-            GetTranslateQuery query = new GetTranslateQuery();
+            var query = new GetTranslateQuery();
 
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
                         .ReturnsAsync(new Translate()
@@ -48,7 +47,7 @@ namespace Tests.Business.HandlersTest
 //}
 );
 
-            GetTranslateQueryHandler handler = new GetTranslateQueryHandler(_translateRepository.Object, _mediator.Object);
+            var handler = new GetTranslateQueryHandler(_translateRepository.Object, _mediator.Object);
 
             //Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
@@ -63,13 +62,13 @@ namespace Tests.Business.HandlersTest
         public async Task Translate_GetQueries_Success()
         {
             //Arrange
-            GetTranslatesQuery query = new GetTranslatesQuery();
+            var query = new GetTranslatesQuery();
 
             _translateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
-                        .ReturnsAsync(new List<Translate> { new Translate() {  Id = 1,  Code = "test", LangId=1, Value="Deneme" },
-                                                            new Translate() {  Id = 2,  Code = "test", LangId=2, Value="Test" }});
+                        .ReturnsAsync(new List<Translate> { new() {  Id = 1,  Code = "test", LangId=1, Value="Deneme" },
+                                                            new() {  Id = 2,  Code = "test", LangId=2, Value="Test" }});
 
-            GetTranslatesQueryHandler handler = new GetTranslatesQueryHandler(_translateRepository.Object, _mediator.Object);
+            var handler = new GetTranslatesQueryHandler(_translateRepository.Object, _mediator.Object);
 
             //Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
@@ -85,7 +84,7 @@ namespace Tests.Business.HandlersTest
         {
             Translate rt = null;
             //Arrange
-            CreateTranslateCommand command = new CreateTranslateCommand();
+            var command = new CreateTranslateCommand();
             //propertyler buraya yazılacak
             //command.TranslateName = "deneme";
 
@@ -94,7 +93,7 @@ namespace Tests.Business.HandlersTest
 
             _translateRepository.Setup(x => x.Add(It.IsAny<Translate>())).Returns(new Translate());
 
-            CreateTranslateCommandHandler handler = new CreateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
+            var handler = new CreateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _translateRepository.Verify(x => x.SaveChangesAsync());
@@ -106,18 +105,18 @@ namespace Tests.Business.HandlersTest
         public async Task Translate_CreateCommand_NameAlreadyExist()
         {
             //Arrange
-            CreateTranslateCommand command = new CreateTranslateCommand();
+            var command = new CreateTranslateCommand();
             //propertyler buraya yazılacak 
             //command.TranslateName = "test";
 
             _translateRepository.Setup(x => x.Query())
-                                                                                                        .Returns(new List<Translate> { new Translate() { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "test"*/ } }.AsQueryable());
+                                                                                                        .Returns(new List<Translate> { new() { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "test"*/ } }.AsQueryable());
 
 
 
             _translateRepository.Setup(x => x.Add(It.IsAny<Translate>())).Returns(new Translate());
 
-            CreateTranslateCommandHandler handler = new CreateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
+            var handler = new CreateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             Assert.That(x.Success, Is.False);
@@ -128,7 +127,7 @@ namespace Tests.Business.HandlersTest
         public async Task Translate_UpdateCommand_Success()
         {
             //Arrange
-            UpdateTranslateCommand command = new UpdateTranslateCommand();
+            var command = new UpdateTranslateCommand();
             //command.TranslateName = "test";
 
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
@@ -136,7 +135,7 @@ namespace Tests.Business.HandlersTest
 
             _translateRepository.Setup(x => x.Update(It.IsAny<Translate>())).Returns(new Translate());
 
-            UpdateTranslateCommandHandler handler = new UpdateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
+            var handler = new UpdateTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _translateRepository.Verify(x => x.SaveChangesAsync());
@@ -148,14 +147,14 @@ namespace Tests.Business.HandlersTest
         public async Task Translate_DeleteCommand_Success()
         {
             //Arrange
-            DeleteTranslateCommand command = new DeleteTranslateCommand();
+            var command = new DeleteTranslateCommand();
 
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
                         .ReturnsAsync(new Translate() { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "deneme"*/});
 
             _translateRepository.Setup(x => x.Delete(It.IsAny<Translate>()));
 
-            DeleteTranslateCommandHandler handler = new DeleteTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
+            var handler = new DeleteTranslateCommandHandler(_translateRepository.Object, _mediator.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _translateRepository.Verify(x => x.SaveChangesAsync());

@@ -2,13 +2,11 @@
 using Business.BusinessAspects;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using MongoDB.Bson;
 using Core.Entities.Concrete;
 
 namespace Business.Handlers.Translates.Queries

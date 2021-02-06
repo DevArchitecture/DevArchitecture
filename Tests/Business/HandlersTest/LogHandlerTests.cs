@@ -9,8 +9,8 @@ namespace Tests.Business.HandlersTest
 	[TestFixture]
 	public class LogHandlerTests
 	{
-		Mock<ILogRepository> _logRepository;
-		Mock<IMediator> _mediator;
+        private Mock<ILogRepository> _logRepository;
+        private Mock<IMediator> _mediator;
 		[SetUp]
 		public void Setup()
 		{
@@ -19,11 +19,10 @@ namespace Tests.Business.HandlersTest
 		}
 
 		[Test]
-		public async Task Log_GetQuery_Success()
+		public  Task Log_GetQuery_Success()
 		{
-
-
-		}
+            return Task.CompletedTask;
+        }
 
 	}
 }

@@ -16,7 +16,7 @@ namespace Business.Helpers
 {
 	public static class OperationClaimCreatorMiddleware
 	{
-		public async static Task UseDbOperationClaimCreator(this IApplicationBuilder app)
+		public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
 		{
 			var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 			foreach (var operationName in GetOperationNames())

@@ -17,7 +17,7 @@ namespace Business.Handlers.Authorizations.Commands
     [SecuredOperation]
     public class ForgotPasswordCommand : IRequest<IResult>
     {
-        public string TCKimlikNo { get; set; }
+        public string TcKimlikNo { get; set; }
         public string Email { get; set; }
 
         public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, IResult>
@@ -40,12 +40,12 @@ namespace Business.Handlers.Authorizations.Commands
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TCKimlikNo));
+                var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TcKimlikNo));
 
                 if (user == null)
-                    return new ErrorResult(Messages.WrongCID);
+                    return new ErrorResult(Messages.WrongCitizenId);
                 var generatedPassword = RandomPassword.CreateRandomPassword(14);
-                HashingHelper.CreatePasswordHash(generatedPassword, out byte[] passwordSalt, out byte[] passwordHash);
+                HashingHelper.CreatePasswordHash(generatedPassword, out var passwordSalt, out var passwordHash);
 
                 _userRepository.Update(user);
 

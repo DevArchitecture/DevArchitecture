@@ -13,11 +13,11 @@ namespace Core.Utilities.ElasticSearch
     {
         private readonly ConnectionSettings _connectionSettings;
 
-        public ElasticSearchManager(IConfiguration Configuration)
+        public ElasticSearchManager(IConfiguration configuration)
         {
 
-            var settings = Configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>();
-            Uri uri = new Uri(settings.ConnectionString);
+            var settings = configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>();
+            var uri = new Uri(settings.ConnectionString);
             _connectionSettings = new ConnectionSettings(uri);
 
         }

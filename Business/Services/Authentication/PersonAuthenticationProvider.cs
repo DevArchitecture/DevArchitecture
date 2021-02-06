@@ -2,12 +2,12 @@
 using Business.Services.Authentication.Model;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
-using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Adapters.SmsService;
 using Business.Constants;
+using Core.Entities.Concrete;
 
 namespace Business.Services.Authentication
 {

@@ -4,11 +4,11 @@ using Business.Services.Authentication.Model;
 using Core.Utilities.Results;
 using Core.Utilities.Toolkit;
 using DataAccess.Abstract;
-using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Entities.Concrete;
 
 namespace Business.Services.Authentication
 {
@@ -37,7 +37,7 @@ namespace Business.Services.Authentication
 				mobileCode = RandomPassword.RandomNumberGenerator();
 				try
 				{
-					var sendSms = await _smsService.SendAsist($"SAAT {DateTime.Now.ToShortTimeString()} TALEP ETTIGINIZ 24 SAAT GECERLI PAROLANIZ : {mobileCode}", cellPhone);
+					var sendSms = await _smsService.SendAssist($"SAAT {DateTime.Now.ToShortTimeString()} TALEP ETTIGINIZ 24 SAAT GECERLI PAROLANIZ : {mobileCode}", cellPhone);
 					_logins.Add(new MobileLogin
 					{
 						Code = mobileCode,

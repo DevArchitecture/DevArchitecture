@@ -1,9 +1,9 @@
 ﻿using Business.Constants;
 using Business.Services.Authentication.Model;
-using Core.Entities;
+using Core.Entities.Concrete;
 using FluentValidation;
 
-namespace Business.Handlers.Authorizations
+namespace Business.Handlers.Authorizations.ValidationRules
 {
     public class MobileLoginValidator : AbstractValidator<VerifyOtpCommand>
     {
@@ -20,6 +20,8 @@ namespace Business.Handlers.Authorizations
                         return value > 0;
                     case AuthenticationProviderType.Agent:
                         return value == 0;
+                    case AuthenticationProviderType.Unknown:
+                        break;
                     default:
                         break;
                 }

@@ -5,7 +5,6 @@ using Core.DataAccess;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
-using Core.Entities;
 using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
@@ -19,12 +18,12 @@ namespace Tests.Services.Authentication
 	[TestFixture]
 	public class AuthenticationProviderTest
 	{
-		Mock<IUserRepository> _userRepository;
-		Mock<IMobileLoginRepository> _mobileLoginRepository;
-		Mock<ITokenHelper> _tokenHelper;
-		Mock<ISmsService> _smsService;
-		Mock<IEntityRepository<User>> _entityRepository;
-		Mock<IAuthenticationProvider> _provider;
+        private Mock<IUserRepository> _userRepository;
+        private Mock<IMobileLoginRepository> _mobileLoginRepository;
+        private Mock<ITokenHelper> _tokenHelper;
+        private Mock<ISmsService> _smsService;
+        private Mock<IEntityRepository<User>> _entityRepository;
+        private Mock<IAuthenticationProvider> _provider;
 
 		[SetUp]
 		public void Setup()
@@ -46,7 +45,7 @@ namespace Tests.Services.Authentication
 							Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
+							.Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
 
 			_tokenHelper.
 							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
@@ -88,7 +87,7 @@ namespace Tests.Services.Authentication
 																		Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-							.Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
+							.Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
 
 			_tokenHelper.
 							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).

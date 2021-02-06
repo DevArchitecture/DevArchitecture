@@ -12,12 +12,12 @@ namespace Tests.Services.Authentication
 	public class TokenTest : BaseIntegrationTest
 	{
 		[Test]
-		public async Task TokenAthorizeTest()
+		public async Task TokenAuthorizeTest()
 		{
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
-			_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-			var response = await _client.GetAsync("api/users/getall");
+			var response = await Client.GetAsync("api/users/getall");
 
 			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
@@ -27,11 +27,11 @@ namespace Tests.Services.Authentication
 		public async Task TokenExpiredTest()
 		{
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
-			_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 			Thread.Sleep(10000);
 
-			var response = await _client.GetAsync("api/users/getall");
+			var response = await Client.GetAsync("api/users/getall");
 			Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
 
 		}

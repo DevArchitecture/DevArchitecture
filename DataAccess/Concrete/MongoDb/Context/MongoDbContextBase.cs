@@ -5,13 +5,13 @@ namespace DataAccess.Concrete.MongoDb.Context
 {
     public abstract class MongoDbContextBase
     {
-        public readonly IConfiguration configuration;
-        public readonly MongoConnectionSettings mongoConnectionSettings;
+        public readonly IConfiguration Configuration;
+        public readonly MongoConnectionSettings MongoConnectionSettings;
 
         protected MongoDbContextBase(IConfiguration configuration)
         {
-            this.configuration = configuration;
-            mongoConnectionSettings = configuration.GetSection("MongoDbSettings").Get<MongoConnectionSettings>();
+            Configuration = configuration;
+            MongoConnectionSettings = configuration.GetSection("MongoDbSettings").Get<MongoConnectionSettings>();
         }
     }
 }

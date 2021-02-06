@@ -13,7 +13,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
     {
         public LogstashLogger()
         {
-            IConfiguration configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+            var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:LogstashConfiguration")
                 .Get<LogstashConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
@@ -21,12 +21,12 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
             var seriLogConfig = new LoggerConfiguration()
                     .WriteTo
                     .DurableHttpUsingFileSizeRolledBuffers(
-                        requestUri: logConfig.URL,
+                        requestUri: logConfig.Url,
                         batchFormatter: new ArrayBatchFormatter(),
                         textFormatter: new ElasticsearchJsonFormatter()
                      )
                     .CreateLogger();
-            _logger = seriLogConfig;
+            Logger = seriLogConfig;
         }
     }
 }

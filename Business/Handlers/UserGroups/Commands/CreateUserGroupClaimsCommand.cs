@@ -1,14 +1,14 @@
-﻿using Business.BusinessAspects;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Business.Handlers.UserClaims.Commands
+namespace Business.Handlers.UserGroups.Commands
 {
     [SecuredOperation]
     public class CreateUserGroupClaimsCommand : IRequest<IResult>

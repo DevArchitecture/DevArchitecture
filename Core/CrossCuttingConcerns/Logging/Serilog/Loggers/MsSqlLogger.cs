@@ -12,7 +12,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 	{
 		public MsSqlLogger()
 		{
-			IConfiguration configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
+			var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
 			var logConfig = configuration.GetSection("SeriLogConfigurations:MsSqlConfiguration")
 					.Get<MsSqlConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
@@ -21,7 +21,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 			var seriLogConfig = new LoggerConfiguration()
 										.WriteTo.MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOpts)
 										.CreateLogger();
-			_logger = seriLogConfig;
+			Logger = seriLogConfig;
 		}
 	}
 }
