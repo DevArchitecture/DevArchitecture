@@ -1,7 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 
-namespace Tests.MockInterfaces
+namespace Tests.Helpers.MockInterfaces
 {
     public interface IDbSets
 	{

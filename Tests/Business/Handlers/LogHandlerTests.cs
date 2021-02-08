@@ -1,10 +1,10 @@
-﻿using DataAccess.Abstract;
+﻿using System.Threading.Tasks;
+using DataAccess.Abstract;
+using MediatR;
 using Moq;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using MediatR;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
 	[TestFixture]
 	public class LogHandlerTests
@@ -19,11 +19,9 @@ namespace Tests.Business.HandlersTest
 		}
 
 		[Test]
-		public  Task Log_GetQuery_Success()
+		public Task Log_GetQuery_Success()
 		{
             return Task.CompletedTask;
         }
-
 	}
 }
-

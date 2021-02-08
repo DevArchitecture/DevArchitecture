@@ -1,31 +1,31 @@
-﻿
-using Business.Handlers.Languages.Queries;
-using DataAccess.Abstract;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Business.Constants;
+using Business.Handlers.Languages.Commands;
+using Business.Handlers.Languages.Queries;
+using Core.Entities.Concrete;
+using DataAccess.Abstract;
+using FluentAssertions;
+using MediatR;
+using Moq;
+using NUnit.Framework;
 using static Business.Handlers.Languages.Queries.GetLanguageQuery;
 using static Business.Handlers.Languages.Queries.GetLanguagesQuery;
 using static Business.Handlers.Languages.Commands.CreateLanguageCommand;
-using Business.Handlers.Languages.Commands;
-using Business.Constants;
 using static Business.Handlers.Languages.Commands.UpdateLanguageCommand;
 using static Business.Handlers.Languages.Commands.DeleteLanguageCommand;
-using MediatR;
-using System.Linq;
-using Core.Entities.Concrete;
-using FluentAssertions;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class LanguageHandlerTests
     {
         private Mock<ILanguageRepository> _languageRepository;
         private Mock<IMediator> _mediator;
+        
         [SetUp]
         public void Setup()
         {

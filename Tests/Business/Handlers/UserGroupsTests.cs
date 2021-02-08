@@ -1,20 +1,20 @@
-﻿using Business.Handlers.UserGroups.Commands;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Business.Handlers.UserGroups.Commands;
 using Business.Handlers.UserGroups.Queries;
 using Core.Aspects.Autofac.Transaction;
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using static Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
 using static Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
 using static Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
 using static Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
-using FluentAssertions;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
 	[TestFixture]
 	public class UserGroupsTests
@@ -25,8 +25,7 @@ namespace Tests.Business.HandlersTest
         private CreateUserGroupCommandHandler _createUserGroupCommandHandler;
         private UpdateUserGroupCommandHandler _updateUserGroupCommandHandler;
         private DeleteUserGroupCommandHandler _deleteUserGroupCommandHandler;
-
-
+        
 		[SetUp]
 		public void Setup()
 		{
@@ -89,12 +88,13 @@ namespace Tests.Business.HandlersTest
 		public async Task Handler_TransactionScopeAspectAsyncTest()
 		{
 			await SomeMethodInTheCallStackAsync().ConfigureAwait(false);
-
 		}
 
 		private static async Task SomeMethodInTheCallStackAsync()
 		{
-			await Task.Delay(500).ConfigureAwait(false);
+			const int delayAmount = 500;
+			
+			await Task.Delay(delayAmount).ConfigureAwait(false);
 		}
 	}
 }
