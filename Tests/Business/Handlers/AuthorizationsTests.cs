@@ -1,24 +1,23 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Business.Constants;
 using Business.Handlers.Authorizations.Commands;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
+using FluentAssertions;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
 using static Business.Handlers.Authorizations.Commands.LoginUserQuery;
 using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
-using MediatR;
-using FluentAssertions;
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
 	[TestFixture]
 	public class AuthorizationsTests
@@ -45,6 +44,7 @@ namespace Tests.Business.HandlersTest
 			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}
+		
 		[Test]
 		public async Task Handler_Login()
 		{
@@ -73,9 +73,7 @@ namespace Tests.Business.HandlersTest
 		[Test]
 		public async Task Handler_Register()
 		{
-			var registerUser = new User();
-			registerUser.Email = "test@test.com";
-			registerUser.FullName = "test test";
+			var registerUser = new User {Email = "test@test.com", FullName = "test test"};
 			_command = new RegisterUserCommand
 			{
 				Email = registerUser.Email,
@@ -86,6 +84,7 @@ namespace Tests.Business.HandlersTest
 
 			result.Message.Should().Be(Messages.Added);
 		}
+		
 		[Test]
 		public async Task Handler_ForgotPassword()
 		{

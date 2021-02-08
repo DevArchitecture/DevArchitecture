@@ -1,23 +1,23 @@
-﻿using Business.Adapters.SmsService;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Business.Adapters.SmsService;
 using Business.Services.Authentication;
 using Business.Services.Authentication.Model;
 using Core.DataAccess;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using FluentAssertions;
 
-namespace Tests.Services.Authentication
+namespace Tests.Business.Services.Authentication
 {
 	[TestFixture]
-	public class AuthenticationProviderTest
+	public class AuthenticationProviderTests
 	{
         private Mock<IUserRepository> _userRepository;
         private Mock<IMobileLoginRepository> _mobileLoginRepository;
@@ -73,9 +73,7 @@ namespace Tests.Services.Authentication
 				Provider = AuthenticationProviderType.Person,
 				ProviderSubType = "Person"
 			};
-
-
-
+			
 			var result = await service.CreateToken(command);
 
 			result.Token.Should().Be("User Token");

@@ -1,8 +1,8 @@
-﻿using Business.Adapters.PersonService;
+﻿using System.Net;
+using Business.Adapters.PersonService;
 using Entities.Dtos;
-using System.Net;
 
-namespace Tests.Business.Adapters
+namespace Tests.Helpers.Adapter
 {
 	public class PersonServiceHelper
 	{

@@ -1,6 +1,6 @@
 ﻿using Business.Adapters.SmsService;
 
-namespace Tests.Business.Adapters
+namespace Tests.Helpers.Adapter
 {
 	public class SmsServiceHelper
 	{

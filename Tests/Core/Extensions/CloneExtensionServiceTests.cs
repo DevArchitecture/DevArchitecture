@@ -8,7 +8,7 @@ using Tests.Helpers;
 namespace Tests.Core.Extensions
 {
 	[TestFixture]
-	public class CloneExtesionServiceTest
+	public class CloneExtensionServiceTests
 	{
 		[Test]
 		public void CloneServiceExtensionTest()
@@ -19,7 +19,6 @@ namespace Tests.Core.Extensions
 
 			cloneUser.Should().BeOfType<User>();
 			cloneUser.FullName.Should().Be(user.FullName);
-
 		}
 
 	}
