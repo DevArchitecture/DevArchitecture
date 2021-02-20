@@ -7,6 +7,7 @@ import { LocalStorageService } from 'app/core/services/local-storage.service';
 import { environment } from 'environments/environment';
 import { LoginUser } from '../model/login-user';
 import { TokenModel } from '../model/token-model';
+import { SharedService } from 'app/core/services/shared.service';
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class AuthService {
   jwtHelper: JwtHelperService = new JwtHelperService();
   claims: string[];
 
-  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, private router: Router, private alertifyService: AlertifyService) {
+  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, private router: Router, private alertifyService: AlertifyService,private sharedService:SharedService) {
 
     this.setClaims();
   }
@@ -50,6 +51,7 @@ export class AuthService {
 
         var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
         this.userName = decode[propUserName];
+        this.sharedService.sendChangeUserNameEvent();
 
         this.router.navigateByUrl("/dashboard");
       }

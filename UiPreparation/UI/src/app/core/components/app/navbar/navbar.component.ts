@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../admin/login/services/auth.service';
+import { SharedService } from 'app/core/services/shared.service';
 
 
 @Component({
@@ -11,7 +13,12 @@ import { AuthService } from '../../admin/login/services/auth.service';
 export class NavbarComponent implements OnInit {
 
 	userName: string;
-	constructor(private authService: AuthService, private router: Router) {
+	clickEventSubscription:Subscription;
+	constructor(private authService: AuthService, private router: Router, private sharedService:SharedService) {
+
+		this.clickEventSubscription= this.sharedService.getChangeUserNameClickEvent().subscribe(()=>{
+			this.setUserName();
+		  })
 
 	}
 
@@ -29,12 +36,17 @@ export class NavbarComponent implements OnInit {
 	help(): void{
 
 		window.open(
-			'https://calm-moss-01a78bc03.azurestaticapps.net',
+			'https://www.devarchitecture.net/',
 			'_blank' 
 		);
 	}
 	ngOnInit() {
 		console.log(this.userName);
+		this.userName = this.authService.getUserName();
+	}
+
+	setUserName(){
+
 		this.userName = this.authService.getUserName();
 	}
 }

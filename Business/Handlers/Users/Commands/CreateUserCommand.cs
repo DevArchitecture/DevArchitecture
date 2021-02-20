@@ -60,7 +60,8 @@ namespace Business.Handlers.Users.Commands
                     BirthDate = request.BirthDate,
                     CitizenId = request.CitizenId,
                     Gender = request.Gender,
-                    Notes = request.Notes
+                    Notes = request.Notes,
+                    MobilePhones = request.MobilePhones
                 };
 
                 _userRepository.Add(user);
