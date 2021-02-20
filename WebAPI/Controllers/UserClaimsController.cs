@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla UserClaims</remarks>
         ///<return>UserClaims List</return>
         ///<response code="200"></response>  
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla </remarks>
         ///<return>UserClaims List</return>
         ///<response code="200"></response>  
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyuserid")]
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla </remarks>
         ///<return>UserClaims List</return>
         ///<response code="200"></response>  
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getoperationclaimbyuserid")]
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         /// <param name="createUserClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
@@ -107,7 +107,7 @@ namespace WebAPI.Controllers
         /// <param name="updateUserClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -128,7 +128,7 @@ namespace WebAPI.Controllers
         /// <param name="deleteUserClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]

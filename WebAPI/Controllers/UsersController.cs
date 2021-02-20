@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla Users</remarks>
         ///<return>Users List</return>
         ///<response code="200"></response>  
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla Users</remarks>
         ///<return>Users List</return>
         ///<response code="200"></response>  
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getuserlookup")]
@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla </remarks>
         ///<return>Users List</return>
         ///<response code="200"></response>
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
@@ -84,7 +84,7 @@ namespace WebAPI.Controllers
         /// <param name="createUser"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         /// <param name="updateUser"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
         /// <param name="deleteUser"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json")]
+        [Produces("application/json","text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]
