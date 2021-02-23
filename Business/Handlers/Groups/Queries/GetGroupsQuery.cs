@@ -21,6 +21,8 @@ namespace Business.Handlers.Groups.Queries
             {
                 _groupRepository = groupRepository;
             }
+
+            [SecuredOperation]
             public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
             {
                 var list = await _groupRepository.GetListAsync();

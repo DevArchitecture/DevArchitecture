@@ -56,7 +56,7 @@ namespace Business.Services.Authentication
             user.AuthenticationProviderType = ProviderType.ToString();
 
             var claims = _users.GetClaims(user.UserId);
-            var accessToken = _tokenHelper.CreateToken<DArchToken>(user, claims);
+            var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
             accessToken.Provider = ProviderType;
             return accessToken;
         }

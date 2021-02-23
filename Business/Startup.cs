@@ -26,6 +26,8 @@ using System;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
+using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.Microsoft;
 
 
 namespace Business
@@ -61,6 +63,7 @@ namespace Business
 							sp.GetService<IHttpContextAccessor>().HttpContext?.User ?? new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
 
 			services.AddScoped<IPrincipal>(getPrincipal);
+            services.AddMemoryCache();
 
 
 			services.AddDependencyResolvers(Configuration, new ICoreModule[]
@@ -78,6 +81,7 @@ namespace Business
 
 			services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
 			services.AddTransient<IMessageConsumer, MqConsumerHelper>();
+            services.AddSingleton<ICacheManager, MemoryCacheManager>();
 
 			services.AddAutoMapper(typeof(ConfigurationManager));
 			services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

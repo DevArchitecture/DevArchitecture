@@ -1,4 +1,5 @@
-﻿using Business.Constants;
+﻿using System.Linq;
+using Business.Constants;
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
@@ -9,6 +10,7 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.CrossCuttingConcerns.Caching;
 
 namespace Business.Handlers.Authorizations.Commands
 {
@@ -22,12 +24,14 @@ namespace Business.Handlers.Authorizations.Commands
             private readonly IUserRepository _userRepository;
             private readonly ITokenHelper _tokenHelper;
             private readonly IMediator _mediator;
+            private readonly ICacheManager _cacheManager;
 
-            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IMediator mediator)
+            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IMediator mediator, ICacheManager cacheManager)
             {
                 _userRepository = userRepository;
                 _tokenHelper = tokenHelper;
                 _mediator = mediator;
+                _cacheManager = cacheManager;
             }
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
@@ -41,7 +45,11 @@ namespace Business.Handlers.Authorizations.Commands
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
 
                 var claims = _userRepository.GetClaims(user.UserId);
-                var accessToken = _tokenHelper.CreateToken<DArchToken>(user, claims);
+                
+                _cacheManager.Add(user.UserId.ToString(),claims);
+
+                var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
+                accessToken.Claims = claims.Select(x => x.Name).ToList();
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }

@@ -6,6 +6,7 @@ using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security;
+using Core.CrossCuttingConcerns.Caching;
 
 namespace Business.BusinessAspects
 {
@@ -18,11 +19,15 @@ namespace Business.BusinessAspects
 	public class SecuredOperation : MethodInterception
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICacheManager _cacheManager;
+
 
 		public SecuredOperation()
 		{
 			_httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-		}
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+
+        }
 
 		protected override void OnBefore(IInvocation invocation)
 		{
