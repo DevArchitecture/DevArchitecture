@@ -1,4 +1,7 @@
-﻿using Business.Constants;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Business.Constants;
 using Castle.DynamicProxy;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
@@ -30,13 +33,19 @@ namespace Business.BusinessAspects
         }
 
 		protected override void OnBefore(IInvocation invocation)
-		{
-			var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
-			var operationName = invocation.TargetType.ReflectedType.Name;
-			if (roleClaims.Contains(operationName))
-				return;
+        {
+            
+			var userId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x=>x.Type.EndsWith("nameidentifier"))?.Value;
 
-			throw new SecurityException(Messages.AuthorizationsDenied);
+            if (userId == null) throw new SecurityException(Messages.AuthorizationsDenied);
+
+            var oprClaims = _cacheManager.Get($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>;
+
+            var operationName = invocation.TargetType.ReflectedType.Name;
+            if (oprClaims.Contains(operationName))
+                return;
+
+            throw new SecurityException(Messages.AuthorizationsDenied);
 		}
 	}
 }

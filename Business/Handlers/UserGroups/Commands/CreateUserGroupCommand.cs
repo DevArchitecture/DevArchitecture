@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Commands
 {
-    [SecuredOperation]
     public class CreateUserGroupCommand : IRequest<IResult>
     {
 
@@ -25,6 +24,7 @@ namespace Business.Handlers.UserGroups.Commands
                 _userGroupRepository = userGroupRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateUserGroupCommand request, CancellationToken cancellationToken)
             {
                 var userGroup = new UserGroup

@@ -10,7 +10,6 @@ using MediatR;
 
 namespace Business.Handlers.UserGroups.Commands
 {
-    [SecuredOperation]
     public class CreateUserGroupClaimsCommand : IRequest<IResult>
     {
         public int UserId { get; set; }
@@ -24,6 +23,7 @@ namespace Business.Handlers.UserGroups.Commands
                 _userGroupRepository = userGroupRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateUserGroupClaimsCommand request, CancellationToken cancellationToken)
             {
                 foreach (var claim in request.UserGroups)

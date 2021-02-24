@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Queries
 {
-	[SecuredOperation]
+
 	public class GetUserGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int UserId { get; set; }
@@ -22,6 +22,7 @@ namespace Business.Handlers.UserGroups.Queries
 				_userGroupRepository = userGroupRepository;
 			}
 
+            [SecuredOperation(Priority = 1)]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request, CancellationToken cancellationToken)
 			{
 				var data = await _userGroupRepository.GetUserGroupSelectedList(request.UserId);

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.OperationClaims.Queries
 {
-    [SecuredOperation]
     public class GetOperationClaimQuery : IRequest<IDataResult<OperationClaim>>
     {
         public int Id { get; set; }
@@ -21,6 +20,7 @@ namespace Business.Handlers.OperationClaims.Queries
                 _operationClaimRepository = operationClaimRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<OperationClaim>> Handle(GetOperationClaimQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<OperationClaim>(await _operationClaimRepository.GetAsync(x => x.Id == request.Id));

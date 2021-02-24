@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Business.Handlers.Translates.Queries
 {
-    [SecuredOperation]
+
     public class GetTranslatesByLangQuery : IRequest<IDataResult<Dictionary<string, string>>>
     {
         public string Lang { get; set; }
@@ -24,6 +24,7 @@ namespace Business.Handlers.Translates.Queries
                 _mediator = mediator;
             }
 
+          
             public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<Dictionary<string, string>>(await _translateRepository.GetTranslatesByLang(request.Lang));

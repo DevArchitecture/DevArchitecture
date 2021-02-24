@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Business.Handlers.GroupClaims.Commands
 {
-    [SecuredOperation]
+    
     public class CreateGroupClaimCommand : IRequest<IResult>
     {
         public string ClaimName { get; set; }
@@ -23,6 +23,7 @@ namespace Business.Handlers.GroupClaims.Commands
                 _operationClaimRepository = operationClaimRepository;
             }
 
+            [SecuredOperation]
             public async Task<IResult> Handle(CreateGroupClaimCommand request, CancellationToken cancellationToken)
             {
 

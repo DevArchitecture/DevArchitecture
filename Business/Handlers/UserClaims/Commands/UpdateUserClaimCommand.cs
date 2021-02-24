@@ -9,10 +9,10 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.CrossCuttingConcerns.Caching;
 
 namespace Business.Handlers.UserClaims.Commands
 {
-    [SecuredOperation]
     public class UpdateUserClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -23,12 +23,15 @@ namespace Business.Handlers.UserClaims.Commands
         public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
         {
             private readonly IUserClaimRepository _userClaimRepository;
+            private readonly ICacheManager _cacheManager;
 
-            public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository)
+            public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
             {
                 _userClaimRepository = userClaimRepository;
+                _cacheManager = cacheManager;
             }
 
+            [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
             {
@@ -37,6 +40,8 @@ namespace Business.Handlers.UserClaims.Commands
 
                 await _userClaimRepository.BulkInsert(request.UserId, userList);
                 await _userClaimRepository.SaveChangesAsync();
+
+                _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
 
                 return new SuccessResult(Messages.Updated);
             }

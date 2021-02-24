@@ -6,10 +6,10 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.CrossCuttingConcerns.Caching;
 
 namespace Business.Handlers.UserClaims.Commands
 {
-    [SecuredOperation]
     public class CreateUserClaimCommand : IRequest<IResult>
     {
         public int UserId { get; set; }
@@ -17,12 +17,15 @@ namespace Business.Handlers.UserClaims.Commands
         public class CreateUserClaimCommandHandler : IRequestHandler<CreateUserClaimCommand, IResult>
         {
             private readonly IUserClaimRepository _userClaimRepository;
+            private readonly ICacheManager _cacheManager;
 
-            public CreateUserClaimCommandHandler(IUserClaimRepository userClaimRepository)
+            public CreateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
             {
                 _userClaimRepository = userClaimRepository;
+                _cacheManager = cacheManager;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateUserClaimCommand request, CancellationToken cancellationToken)
             {
                 var userClaim = new UserClaim
@@ -32,6 +35,8 @@ namespace Business.Handlers.UserClaims.Commands
                 };
                 _userClaimRepository.Add(userClaim);
                 await _userClaimRepository.SaveChangesAsync();
+
+                _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
 
                 return new SuccessResult(Messages.Added);
             }

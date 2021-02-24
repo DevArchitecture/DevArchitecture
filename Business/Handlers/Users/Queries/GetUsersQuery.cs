@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Queries
 {
-    [SecuredOperation]
     public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
     {
         public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IDataResult<IEnumerable<UserDto>>>
@@ -29,6 +28,7 @@ namespace Business.Handlers.Users.Queries
                 _mapper = mapper;
             }
 
+            [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]

@@ -16,7 +16,6 @@ using Business.Handlers.Translates.ValidationRules;
 namespace Business.Handlers.Translates.Commands
 {
     
-    [SecuredOperation]
     public class UpdateTranslateCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -35,7 +34,8 @@ namespace Business.Handlers.Translates.Commands
                 _mediator = mediator;
             }
 
-            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 1)]
+            [SecuredOperation(Priority = 1)]
+            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(UpdateTranslateCommand request, CancellationToken cancellationToken)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.OperationClaims.Commands
 {
-    [SecuredOperation]
+
     public class CreateOperationClaimCommand : IRequest<IResult>
     {
         public string ClaimName { get; set; }

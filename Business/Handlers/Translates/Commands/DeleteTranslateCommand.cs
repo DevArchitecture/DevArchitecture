@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace Business.Handlers.Translates.Commands
 {
     
-    [SecuredOperation]
     public class DeleteTranslateCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -29,7 +28,8 @@ namespace Business.Handlers.Translates.Commands
                 _translateRepository = translateRepository;
                 _mediator = mediator;
             }
-           
+
+            [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(DeleteTranslateCommand request, CancellationToken cancellationToken)

@@ -14,7 +14,7 @@ using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Languages.Queries
 {
-    [SecuredOperation]
+
     public class GetLanguagesQuery : IRequest<IDataResult<IEnumerable<Language>>>
     {
         public class GetLanguagesQueryHandler : IRequestHandler<GetLanguagesQuery, IDataResult<IEnumerable<Language>>>
@@ -28,6 +28,7 @@ namespace Business.Handlers.Languages.Queries
                 _mediator = mediator;
             }
 
+            [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Authorizations.Commands
 {
-    [SecuredOperation]
+    
     public class ForgotPasswordCommand : IRequest<IResult>
     {
         public string TcKimlikNo { get; set; }
@@ -35,7 +35,8 @@ namespace Business.Handlers.Authorizations.Commands
             /// <param name="request"></param>
             /// <param name="cancellationToken"></param>
             /// <returns></returns>
-         
+
+            [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)

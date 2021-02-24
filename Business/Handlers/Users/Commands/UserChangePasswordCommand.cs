@@ -12,7 +12,6 @@ using Core.Utilities.Security.Hashing;
 namespace Business.Handlers.Users.Commands
 {
 
-    [SecuredOperation]
     public class UserChangePasswordCommand : IRequest<IResult>
     {
 
@@ -30,6 +29,7 @@ namespace Business.Handlers.Users.Commands
                 _mediator = mediator;
             }
 
+            [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(UserChangePasswordCommand request, CancellationToken cancellationToken)
             {

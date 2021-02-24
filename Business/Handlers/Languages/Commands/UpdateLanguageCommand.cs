@@ -16,7 +16,6 @@ using Business.Handlers.Languages.ValidationRules;
 namespace Business.Handlers.Languages.Commands
 {
 
-    [SecuredOperation]
     public class UpdateLanguageCommand : IRequest<IResult>
     {
         
@@ -35,6 +34,7 @@ namespace Business.Handlers.Languages.Commands
                 _mediator = mediator;
             }
 
+            [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(CreateLanguageValidator), Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]

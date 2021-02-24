@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserClaims.Queries
 {
-    [SecuredOperation]
+
     public class GetUserClaimLookupQuery : IRequest<IDataResult<IEnumerable<UserClaim>>>
     {
         public int UserId { get; set; }
@@ -23,6 +23,7 @@ namespace Business.Handlers.UserClaims.Queries
                 _userClaimRepository = userClaimRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimLookupQuery request, CancellationToken cancellationToken)
             {
                 var userClaims = await _userClaimRepository.GetListAsync(x => x.UserId == request.UserId);

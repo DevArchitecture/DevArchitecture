@@ -14,7 +14,6 @@ using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Translates.Queries
 {
-    [SecuredOperation]
     public class GetTranslatesQuery : IRequest<IDataResult<IEnumerable<Translate>>>
     {
         public class GetTranslatesQueryHandler : IRequestHandler<GetTranslatesQuery, IDataResult<IEnumerable<Translate>>>
@@ -28,6 +27,7 @@ namespace Business.Handlers.Translates.Queries
                 _mediator = mediator;
             }
 
+            [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Groups.Commands
 {
-    [SecuredOperation]
+    
     public class CreateGroupCommand : IRequest<IResult>
     {
         public string GroupName { get; set; }
@@ -23,6 +23,7 @@ namespace Business.Handlers.Groups.Commands
                 _groupRepository = groupRepository;
             }
 
+            [SecuredOperation]
             public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
             {
                 try

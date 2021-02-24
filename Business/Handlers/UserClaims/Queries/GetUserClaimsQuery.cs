@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserClaims.Queries
 {
-    [SecuredOperation]
+
     public class GetUserClaimsQuery : IRequest<IDataResult<IEnumerable<UserClaim>>>
     {
 
@@ -22,6 +22,7 @@ namespace Business.Handlers.UserClaims.Queries
                 _userClaimRepository = userClaimRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimsQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<UserClaim>>(await _userClaimRepository.GetListAsync());

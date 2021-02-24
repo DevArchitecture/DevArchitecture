@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Groups.Queries
 {
-    [SecuredOperation]
+    
     public class GetGroupQuery : IRequest<IDataResult<Group>>
     {
         public int GroupId { get; set; }
@@ -22,6 +22,7 @@ namespace Business.Handlers.Groups.Queries
                 _groupRepository = groupRepository;
             }
 
+            [SecuredOperation]
             public async Task<IDataResult<Group>> Handle(GetGroupQuery request, CancellationToken cancellationToken)
             {
                 var group = await _groupRepository.GetAsync(x => x.Id == request.GroupId);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.GroupClaims.Commands
 {
-    [SecuredOperation]
+    
     public class DeleteGroupClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -22,6 +22,7 @@ namespace Business.Handlers.GroupClaims.Commands
                 _groupClaimRepository = groupClaimRepository;
             }
 
+            [SecuredOperation]
             public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)
             {
                 var groupClaimToDelete = await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id);

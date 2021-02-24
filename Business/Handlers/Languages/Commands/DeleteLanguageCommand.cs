@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Languages.Commands
 {  
-    [SecuredOperation]
+    
     public class DeleteLanguageCommand : IRequest<IResult>
     {
         public int Id { get; set; }
 
+        [SecuredOperation]
         public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, IResult>
         {
             private readonly ILanguageRepository _languageRepository;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Business.Constants;
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
@@ -46,13 +47,15 @@ namespace Business.Handlers.Authorizations.Commands
 
                 var claims = _userRepository.GetClaims(user.UserId);
                 
-                _cacheManager.Add(user.UserId.ToString(),claims);
-
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
 
+                _cacheManager.Add($"{CacheKeys.UserIdForClaim}={user.UserId}", claims.Select(x => x.Name));
+
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }
+
+
         }
     }
 }

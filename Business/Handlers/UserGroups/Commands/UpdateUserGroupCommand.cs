@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Commands
 {
-    [SecuredOperation]
     public class UpdateUserGroupCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -26,6 +25,8 @@ namespace Business.Handlers.UserGroups.Commands
                 _userGroupRepository = userGroupRepository;
             }
 
+
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateUserGroupCommand request, CancellationToken cancellationToken)
             {
 

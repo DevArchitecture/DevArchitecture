@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Commands
 {
-    [SecuredOperation]
+  
     public class DeleteUserGroupCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -22,6 +22,7 @@ namespace Business.Handlers.UserGroups.Commands
                 _userGroupRepository = userGroupRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteUserGroupCommand request, CancellationToken cancellationToken)
             {
                 var entityToDelete = await _userGroupRepository.GetAsync(x => x.UserId == request.Id);

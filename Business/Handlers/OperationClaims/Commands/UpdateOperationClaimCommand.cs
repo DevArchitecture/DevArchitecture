@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.OperationClaims.Commands
 {
-    [SecuredOperation]
     public class UpdateOperationClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -23,6 +22,7 @@ namespace Business.Handlers.OperationClaims.Commands
                 _operationClaimRepository = operationClaimRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
             {
                 var isOperationClaimsExits = await _operationClaimRepository.GetAsync(u => u.Id == request.Id);

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Groups.Queries
 {
-    [SecuredOperation]
+    
     public class SearchGroupsByNameQuery : IRequest<IDataResult<IEnumerable<Group>>>
     {
         public string GroupName { get; set; }
@@ -25,6 +25,7 @@ namespace Business.Handlers.Groups.Queries
                 _groupRepository = groupRepository;
             }
 
+            [SecuredOperation]
             public async Task<IDataResult<IEnumerable<Group>>> Handle(SearchGroupsByNameQuery request, CancellationToken cancellationToken)
             {
                 var result = BusinessRules.Run(StringLengthMustBeGreaterThanThree(request.GroupName));

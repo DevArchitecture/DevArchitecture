@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Queries
 {
-    [SecuredOperation]
+   
     public class GetUserGroupQuery : IRequest<IDataResult<UserGroup>>
     {
         public int UserId { get; set; }
@@ -23,6 +23,7 @@ namespace Business.Handlers.UserGroups.Queries
                 _userGroupRepository = userGroupRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request, CancellationToken cancellationToken)
             {
                 var userGroup = await _userGroupRepository.GetAsync(p => p.UserId == request.UserId);

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.OperationClaims.Queries
 {
-    [SecuredOperation]
     public class GetOperationClaimsQuery : IRequest<IDataResult<IEnumerable<OperationClaim>>>
     {
         public class GetOperationClaimsQueryHandler : IRequestHandler<GetOperationClaimsQuery, IDataResult<IEnumerable<OperationClaim>>>
@@ -21,6 +20,7 @@ namespace Business.Handlers.OperationClaims.Queries
                 _operationClaimRepository = operationClaimRepository;
             }
 
+           // [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<IEnumerable<OperationClaim>>> Handle(GetOperationClaimsQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<OperationClaim>>(await _operationClaimRepository.GetListAsync());

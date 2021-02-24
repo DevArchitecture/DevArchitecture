@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Groups.Queries
 {
-    [SecuredOperation]
+    
     public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
     {
+        public int Id { get; set; }
 
         public class GetGroupsQueryHandler : IRequestHandler<GetGroupsQuery, IDataResult<IEnumerable<Group>>>
         {
@@ -25,6 +26,7 @@ namespace Business.Handlers.Groups.Queries
             [SecuredOperation]
             public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
             {
+                
                 var list = await _groupRepository.GetListAsync();
                 return new SuccessDataResult<IEnumerable<Group>>(list.ToList());
             }

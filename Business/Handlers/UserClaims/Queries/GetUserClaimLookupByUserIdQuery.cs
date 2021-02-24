@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserClaims.Queries
 {
-	[SecuredOperation]
-	public class GetUserClaimLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
+    public class GetUserClaimLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int Id { get; set; }
 		public class GetUserClaimLookupByUserIdQueryHandler : IRequestHandler<GetUserClaimLookupByUserIdQuery, IDataResult<IEnumerable<SelectionItem>>>
@@ -24,6 +23,7 @@ namespace Business.Handlers.UserClaims.Queries
 				_mediator = mediator;
 			}
 
+            [SecuredOperation(Priority = 1)]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserClaimLookupByUserIdQuery request, CancellationToken cancellationToken)
 			{
 				var data = await _userClaimRepository.GetUserClaimSelectedList(request.Id);

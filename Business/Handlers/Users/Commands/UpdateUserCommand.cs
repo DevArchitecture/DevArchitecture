@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Commands
 {
-	[SecuredOperation]
+
 	public class UpdateUserCommand : IRequest<IResult>
 	{
 
@@ -29,9 +29,10 @@ namespace Business.Handlers.Users.Commands
 				_userRepository = userRepository;
 			}
 
-			[CacheRemoveAspect("Get")]
 
-			public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+            [SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+            public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
 			{
 				var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 

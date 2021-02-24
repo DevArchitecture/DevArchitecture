@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.OperationClaims.Commands
 {
-    [SecuredOperation]
     public class DeleteOperationClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -21,6 +20,7 @@ namespace Business.Handlers.OperationClaims.Commands
                 _operationClaimRepository = operationClaimRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
             {
                 var claimToDelete = await _operationClaimRepository.GetAsync(x => x.Id == request.Id);

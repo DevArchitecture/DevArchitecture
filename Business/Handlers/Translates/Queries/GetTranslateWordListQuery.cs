@@ -13,7 +13,6 @@ using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Translates.Queries
 {
-    [SecuredOperation]
     public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string,string>>>
     {
         public string Lang { get; set; }
@@ -28,6 +27,7 @@ namespace Business.Handlers.Translates.Queries
                 _mediator = mediator;
             }
 
+            [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Queries
 {
-    [SecuredOperation]
+
     public class GetUserQuery : IRequest<IDataResult<UserDto>>
     {
         public int UserId { get; set; }
@@ -27,6 +27,7 @@ namespace Business.Handlers.Users.Queries
                 _mapper = mapper;
             }
 
+            [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(LogstashLogger))]
             public async Task<IDataResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
             {

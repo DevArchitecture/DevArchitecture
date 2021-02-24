@@ -19,7 +19,6 @@ namespace Business.Handlers.Translates.Commands
     /// <summary>
     /// 
     /// </summary>
-    [SecuredOperation]
     public class CreateTranslateCommand : IRequest<IResult>
     {      
 
@@ -37,8 +36,9 @@ namespace Business.Handlers.Translates.Commands
                 _translateRepository = translateRepository;
                 _mediator = mediator;
             }
-           
-            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 1)]
+
+            [SecuredOperation(Priority = 1)]
+            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Commands
 {
-    [SecuredOperation]
+
     public class UpdateUserGroupByGroupIdCommand: IRequest<IResult>
     {
         public int Id { get; set; }
@@ -25,11 +25,13 @@ namespace Business.Handlers.UserGroups.Commands
                 _userGroupRepository = userGroupRepository;
             }
 
+            [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(UpdateUserGroupByGroupIdCommand request, CancellationToken cancellationToken)
             {
                 var list = request.UserIds.Select(x => new UserGroup() { GroupId = request.GroupId, UserId = x });
                 await _userGroupRepository.BulkInsertByGroupId(request.GroupId, list);
                 await _userGroupRepository.SaveChangesAsync();
+
                 return new SuccessResult(Messages.Updated);
             }
         }

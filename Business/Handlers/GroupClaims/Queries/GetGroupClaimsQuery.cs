@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.GroupClaims.Queries
 {
-    [SecuredOperation]
+   
     public class GetGroupClaimsQuery : IRequest<IDataResult<IEnumerable<GroupClaim>>>
     {
 
@@ -22,6 +22,7 @@ namespace Business.Handlers.GroupClaims.Queries
                 _groupClaimRepository = groupClaimRepository;
             }
 
+            [SecuredOperation]
             public async Task<IDataResult<IEnumerable<GroupClaim>>> Handle(GetGroupClaimsQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<GroupClaim>>(await _groupClaimRepository.GetListAsync());

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.GroupClaims.Commands
 {
-    [SecuredOperation]
+    
     public class UpdateGroupClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -25,6 +25,7 @@ namespace Business.Handlers.GroupClaims.Commands
                 _groupClaimRepository = groupClaimRepository;
             }
 
+            [SecuredOperation]
             public async Task<IResult> Handle(UpdateGroupClaimCommand request, CancellationToken cancellationToken)
             {
                 var list = request.ClaimIds.Select(x => new GroupClaim() { ClaimId = x, GroupId = request.GroupId });

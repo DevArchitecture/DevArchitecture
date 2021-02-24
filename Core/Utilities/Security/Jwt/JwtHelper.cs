@@ -52,6 +52,7 @@ namespace Core.Utilities.Security.Jwt
                 SigningCredentials signingCredentials)
         {
             var jwt = new JwtSecurityToken(
+                 
                     issuer: tokenOptions.Issuer,
                     audience: tokenOptions.Audience,
                     expires: _accessTokenExpiration,

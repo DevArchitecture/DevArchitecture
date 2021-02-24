@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Commands
 {
-    [SecuredOperation]
+
     public class DeleteUserCommand : IRequest<IResult>
     {
         public int UserId { get; set; }
@@ -22,7 +22,8 @@ namespace Business.Handlers.Users.Commands
             {
                 _userRepository = userRepository;
             }
-            
+
+            [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect("Get")]
             public async Task<IResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
             {

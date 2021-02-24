@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Groups.Commands
 {
-    [SecuredOperation]
+    
     public class UpdateGroupCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -24,6 +24,7 @@ namespace Business.Handlers.Groups.Commands
                 _groupRepository = groupRepository;
             }
 
+            [SecuredOperation]
             public async Task<IResult> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
             {
                 var groupToUpdate = new Group

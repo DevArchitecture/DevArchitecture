@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.UserGroups.Queries
 {
-    [SecuredOperation]
+  
     public class GetUserGroupsQuery : IRequest<IDataResult<IEnumerable<UserGroup>>>
     {
         public class GetUserGroupsQueryHandler : IRequestHandler<GetUserGroupsQuery, IDataResult<IEnumerable<UserGroup>>>
@@ -20,6 +20,8 @@ namespace Business.Handlers.UserGroups.Queries
             {
                 _userGroupRepository = userGroupRepository;
             }
+
+            [SecuredOperation(Priority = 1)]
 
             public async Task<IDataResult<IEnumerable<UserGroup>>> Handle(GetUserGroupsQuery request, CancellationToken cancellationToken)
             {

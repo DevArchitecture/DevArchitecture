@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Commands
 {
-    [SecuredOperation]
     public class CreateUserCommand : IRequest<IResult>
     {
 
@@ -40,7 +39,8 @@ namespace Business.Handlers.Users.Commands
             {
                 _userRepository = userRepository;
             }
-           
+
+            [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
