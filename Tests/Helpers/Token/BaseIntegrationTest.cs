@@ -12,14 +12,14 @@ namespace Tests.Helpers.Token
     {
         protected HttpClient Client;
 
-        protected WebApplicationFactory<Startup> Factory => new();
+        protected WebApplicationFactory<Startup> Factory => new ();
 
         public string Issuer { get; } = "www.devarchitecture.com";
         public string Audience { get; } = "www.devarchitecture.com";
 
         public SigningCredentials SigningCredentials { get; }
 
-        private static readonly JwtSecurityTokenHandler STokenHandler = new();
+        private static readonly JwtSecurityTokenHandler STokenHandler = new ();
 
 
         [SetUp]

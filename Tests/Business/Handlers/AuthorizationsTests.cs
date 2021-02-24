@@ -57,7 +57,7 @@ namespace Tests.Business.Handlers
 
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-							.Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
+							.Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });
 			_loginUserQuery = new LoginUserQuery
 			{
 				Email = user.Email,

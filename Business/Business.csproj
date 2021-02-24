@@ -5,7 +5,9 @@
 			<LangVersion>8.0</LangVersion>
 			<Version>1.0.0</Version>
 		</PropertyGroup>
-
+    <PropertyGroup>
+        <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
 		<ItemGroup>
 		  <Compile Remove="Helpers\EnumerableExtensions.cs" />
 		</ItemGroup>
@@ -22,6 +24,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Refit" Version="6.0.15" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.1" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.1" />

@@ -4,6 +4,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
 <Version>1.0.0</Version>
   </PropertyGroup>
+    <PropertyGroup>
+        <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
@@ -36,6 +39,10 @@
     <PackageReference Include="Serilog.Sinks.MongoDB" Version="4.1.0-dev-00069" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
     <PackageReference Include="ServiceStack.Redis.Core" Version="5.10.4" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />  
   </ItemGroup>
