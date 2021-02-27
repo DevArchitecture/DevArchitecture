@@ -1,4 +1,6 @@
+import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../admin/login/services/auth.service';
 
@@ -33,7 +35,8 @@ export class SidebarComponent implements OnInit {
   adminMenuItems: any[];
   userMenuItems: any[];
 
-  constructor(private authService:AuthService,public translateService:TranslateService) { 
+  constructor(private router:Router, private authService:AuthService,public translateService:TranslateService) {
+    
   }
 
   ngOnInit() {
@@ -54,4 +57,13 @@ export class SidebarComponent implements OnInit {
   checkClaim(claim:string):boolean{
     return this.authService.claimGuard(claim)
   }
-}
+  ngOnDestroy() {
+    debugger;
+    if (!this.authService.loggedIn()) {
+      this.authService.logOut();
+      localStorage.clear();
+      this.router.navigateByUrl("/login");
+    }
+  } 
+ }
+

@@ -7,34 +7,39 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.GroupClaims.Commands
 {
-    
-    public class UpdateGroupClaimCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
-        public int GroupId { get; set; }
-        public int[] ClaimIds { get; set; }
-        public class UpdateGroupClaimCommandHandler : IRequestHandler<UpdateGroupClaimCommand, IResult>
-        {
-            private readonly IGroupClaimRepository _groupClaimRepository;
 
-            public UpdateGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
-            {
-                _groupClaimRepository = groupClaimRepository;
-            }
+	public class UpdateGroupClaimCommand : IRequest<IResult>
+	{
+		public int Id { get; set; }
+		public int GroupId { get; set; }
+		public int[] ClaimIds { get; set; }
+		public class UpdateGroupClaimCommandHandler : IRequestHandler<UpdateGroupClaimCommand, IResult>
+		{
+			private readonly IGroupClaimRepository _groupClaimRepository;
 
-            [SecuredOperation]
-            public async Task<IResult> Handle(UpdateGroupClaimCommand request, CancellationToken cancellationToken)
-            {
-                var list = request.ClaimIds.Select(x => new GroupClaim() { ClaimId = x, GroupId = request.GroupId });
+			public UpdateGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
+			{
+				_groupClaimRepository = groupClaimRepository;
+			}
 
-                await _groupClaimRepository.BulkInsert(request.GroupId, list);
-                await _groupClaimRepository.SaveChangesAsync();
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(UpdateGroupClaimCommand request, CancellationToken cancellationToken)
+			{
+				var list = request.ClaimIds.Select(x => new GroupClaim() { ClaimId = x, GroupId = request.GroupId });
 
-                return new SuccessResult(Messages.Updated);
-            }
-        }
-    }
+				await _groupClaimRepository.BulkInsert(request.GroupId, list);
+				await _groupClaimRepository.SaveChangesAsync();
+
+				return new SuccessResult(Messages.Updated);
+			}
+		}
+	}
 }

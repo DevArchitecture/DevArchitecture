@@ -12,34 +12,34 @@ using System.Threading.Tasks;
 
 
 namespace Business.Handlers.Languages.Commands
-{  
-    
-    public class DeleteLanguageCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
+{
 
-        [SecuredOperation]
-        public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, IResult>
-        {
-            private readonly ILanguageRepository _languageRepository;
-            private readonly IMediator _mediator;
+	public class DeleteLanguageCommand : IRequest<IResult>
+	{
+		public int Id { get; set; }
 
-            public DeleteLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
-            {
-                _languageRepository = languageRepository;
-                _mediator = mediator;
-            }            
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
-            {
-                var languageToDelete = _languageRepository.Get(p => p.Id == request.Id);
+		public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, IResult>
+		{
+			private readonly ILanguageRepository _languageRepository;
+			private readonly IMediator _mediator;
 
-                _languageRepository.Delete(languageToDelete);
-                await _languageRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Deleted);
-            }
-        }
-    }
+			public DeleteLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
+			{
+				_languageRepository = languageRepository;
+				_mediator = mediator;
+			}
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			public async Task<IResult> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
+			{
+				var languageToDelete = _languageRepository.Get(p => p.Id == request.Id);
+
+				_languageRepository.Delete(languageToDelete);
+				await _languageRepository.SaveChangesAsync();
+				return new SuccessResult(Messages.Deleted);
+			}
+		}
+	}
 }
 

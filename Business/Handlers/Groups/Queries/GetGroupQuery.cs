@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Groups.Queries
 {
-    
-    public class GetGroupQuery : IRequest<IDataResult<Group>>
-    {
-        public int GroupId { get; set; }
 
-        public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, IDataResult<Group>>
-        {
-            private readonly IGroupRepository _groupRepository;
+	public class GetGroupQuery : IRequest<IDataResult<Group>>
+	{
+		public int GroupId { get; set; }
 
-            public GetGroupQueryHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+		public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, IDataResult<Group>>
+		{
+			private readonly IGroupRepository _groupRepository;
 
-            [SecuredOperation]
-            public async Task<IDataResult<Group>> Handle(GetGroupQuery request, CancellationToken cancellationToken)
-            {
-                var group = await _groupRepository.GetAsync(x => x.Id == request.GroupId);
+			public GetGroupQueryHandler(IGroupRepository groupRepository)
+			{
+				_groupRepository = groupRepository;
+			}
 
-                return new SuccessDataResult<Group>(group);
-            }
-        }
-    }
+			[SecuredOperation(Priority = 1)]
+			public async Task<IDataResult<Group>> Handle(GetGroupQuery request, CancellationToken cancellationToken)
+			{
+				var group = await _groupRepository.GetAsync(x => x.Id == request.GroupId);
+
+				return new SuccessDataResult<Group>(group);
+			}
+		}
+	}
 }

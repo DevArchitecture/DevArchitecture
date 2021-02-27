@@ -11,6 +11,7 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Handlers.Authorizations.ValidationRules;
 
 namespace Business.Handlers.Authorizations.Commands
 {
@@ -33,7 +34,7 @@ namespace Business.Handlers.Authorizations.Commands
             }
 
 
-          //  [SecuredOperation(Priority = 1)]
+            [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]

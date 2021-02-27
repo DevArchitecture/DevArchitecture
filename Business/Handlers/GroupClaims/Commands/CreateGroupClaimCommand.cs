@@ -2,6 +2,11 @@
 using System.Threading.Tasks;
 using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.Translates.ValidationRules;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -9,40 +14,42 @@ using MediatR;
 
 namespace Business.Handlers.GroupClaims.Commands
 {
-    
-    public class CreateGroupClaimCommand : IRequest<IResult>
-    {
-        public string ClaimName { get; set; }
 
-        public class CreateGroupClaimCommandHandler : IRequestHandler<CreateGroupClaimCommand, IResult>
-        {
-            private readonly IOperationClaimRepository _operationClaimRepository;
+	public class CreateGroupClaimCommand : IRequest<IResult>
+	{
+		public string ClaimName { get; set; }
 
-            public CreateGroupClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+		public class CreateGroupClaimCommandHandler : IRequestHandler<CreateGroupClaimCommand, IResult>
+		{
+			private readonly IOperationClaimRepository _operationClaimRepository;
 
-            [SecuredOperation]
-            public async Task<IResult> Handle(CreateGroupClaimCommand request, CancellationToken cancellationToken)
-            {
+			public CreateGroupClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
+			{
+				_operationClaimRepository = operationClaimRepository;
+			}
 
-                if (IsClaimExists(request.ClaimName))
-                    return new ErrorResult(Messages.OperationClaimExists);
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(CreateGroupClaimCommand request, CancellationToken cancellationToken)
+			{
 
-                var operationClaim = new OperationClaim
-                {
-                    Name = request.ClaimName
-                };
-                _operationClaimRepository.Add(operationClaim);
-                await _operationClaimRepository.SaveChangesAsync();
+				if (IsClaimExists(request.ClaimName))
+					return new ErrorResult(Messages.OperationClaimExists);
 
-                return new SuccessResult(Messages.Added);
-            }
-            private bool IsClaimExists(string claimName)
-            {
-                return !(_operationClaimRepository.Get(x => x.Name == claimName) is null);
-            }
-        }
-    }
+				var operationClaim = new OperationClaim
+				{
+					Name = request.ClaimName
+				};
+				_operationClaimRepository.Add(operationClaim);
+				await _operationClaimRepository.SaveChangesAsync();
+
+				return new SuccessResult(Messages.Added);
+			}
+			private bool IsClaimExists(string claimName)
+			{
+				return !(_operationClaimRepository.Get(x => x.Name == claimName) is null);
+			}
+		}
+	}
 }

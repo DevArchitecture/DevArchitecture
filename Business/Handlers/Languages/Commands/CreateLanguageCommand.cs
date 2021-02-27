@@ -38,7 +38,7 @@ namespace Business.Handlers.Languages.Commands
             }
 
             [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(CreateLanguageValidator), Priority = 1)]
+            [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)

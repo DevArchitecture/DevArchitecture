@@ -1,13 +1,13 @@
-﻿using Business.Constants;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Business.Handlers.UserClaims.Commands
+namespace Business.Fakes.Handlers.UserClaims
 {
     /// <summary>
     /// For Internal Use Only,

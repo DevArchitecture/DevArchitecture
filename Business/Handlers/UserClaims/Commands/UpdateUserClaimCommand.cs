@@ -9,42 +9,44 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
 using Core.CrossCuttingConcerns.Caching;
 
 namespace Business.Handlers.UserClaims.Commands
 {
-    public class UpdateUserClaimCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public int[] ClaimId { get; set; }
+	public class UpdateUserClaimCommand : IRequest<IResult>
+	{
+		public int Id { get; set; }
+		public int UserId { get; set; }
+		public int[] ClaimId { get; set; }
 
-        
-        public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
-        {
-            private readonly IUserClaimRepository _userClaimRepository;
-            private readonly ICacheManager _cacheManager;
 
-            public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
-            {
-                _userClaimRepository = userClaimRepository;
-                _cacheManager = cacheManager;
-            }
+		public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
+		{
+			private readonly IUserClaimRepository _userClaimRepository;
+			private readonly ICacheManager _cacheManager;
 
-            [SecuredOperation(Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
-            {
+			public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
+			{
+				_userClaimRepository = userClaimRepository;
+				_cacheManager = cacheManager;
+			}
 
-                var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
+			{
 
-                await _userClaimRepository.BulkInsert(request.UserId, userList);
-                await _userClaimRepository.SaveChangesAsync();
+				var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });
 
-                _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
+				await _userClaimRepository.BulkInsert(request.UserId, userList);
+				await _userClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.Updated);
-            }
-        }
-    }
+				_cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
+
+				return new SuccessResult(Messages.Updated);
+			}
+		}
+	}
 }

@@ -5,28 +5,31 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.GroupClaims.Queries
 {
-    
-    public class GetGroupClaimQuery : IRequest<IDataResult<GroupClaim>>
-    {
-        public int Id { get; set; }
 
-        public class GetGroupClaimQueryHandler : IRequestHandler<GetGroupClaimQuery, IDataResult<GroupClaim>>
-        {
-            private readonly IGroupClaimRepository _groupClaimRepository;
+	public class GetGroupClaimQuery : IRequest<IDataResult<GroupClaim>>
+	{
+		public int Id { get; set; }
 
-            public GetGroupClaimQueryHandler(IGroupClaimRepository groupClaimRepository)
-            {
-                _groupClaimRepository = groupClaimRepository;
-            }
+		public class GetGroupClaimQueryHandler : IRequestHandler<GetGroupClaimQuery, IDataResult<GroupClaim>>
+		{
+			private readonly IGroupClaimRepository _groupClaimRepository;
 
-            [SecuredOperation]
-            public async Task<IDataResult<GroupClaim>> Handle(GetGroupClaimQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<GroupClaim>(await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id));
-            }
-        }
-    }
+			public GetGroupClaimQueryHandler(IGroupClaimRepository groupClaimRepository)
+			{
+				_groupClaimRepository = groupClaimRepository;
+			}
+
+            [SecuredOperation(Priority = 1)]
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IDataResult<GroupClaim>> Handle(GetGroupClaimQuery request, CancellationToken cancellationToken)
+			{
+				return new SuccessDataResult<GroupClaim>(await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id));
+			}
+		}
+	}
 }

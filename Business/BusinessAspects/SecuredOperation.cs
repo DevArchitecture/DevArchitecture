@@ -34,12 +34,12 @@ namespace Business.BusinessAspects
 
 		protected override void OnBefore(IInvocation invocation)
         {
-            
-			var userId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x=>x.Type.EndsWith("nameidentifier"))?.Value;
 
-            if (userId == null) throw new SecurityException(Messages.AuthorizationsDenied);
+			var userId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type.EndsWith("nameidentifier"))?.Value;
 
-            var oprClaims = _cacheManager.Get($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>;
+			if (userId == null) throw new SecurityException(Messages.AuthorizationsDenied);
+
+			var oprClaims = _cacheManager.Get($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>;
 
             var operationName = invocation.TargetType.ReflectedType.Name;
             if (oprClaims.Contains(operationName))

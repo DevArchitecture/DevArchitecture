@@ -6,6 +6,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.UserGroups.Queries
 {
@@ -23,6 +26,8 @@ namespace Business.Handlers.UserGroups.Queries
 			}
 
             [SecuredOperation(Priority = 1)]
+            [CacheAspect(10)]
+            [LogAspect(typeof(FileLogger))]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request, CancellationToken cancellationToken)
 			{
 				var data = await _userGroupRepository.GetUserGroupSelectedList(request.UserId);

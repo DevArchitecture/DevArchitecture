@@ -6,6 +6,8 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.Users.Commands
 {
@@ -32,7 +34,8 @@ namespace Business.Handlers.Users.Commands
 
             [SecuredOperation(Priority = 1)]
 			[CacheRemoveAspect("Get")]
-            public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
 			{
 				var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 

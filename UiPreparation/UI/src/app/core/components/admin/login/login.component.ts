@@ -49,8 +49,7 @@ export class LoginComponent implements OnInit {
       this.storageService.removeItem("lang");
   }
 
-  changeLang(lang){
-    console.log(lang);
+  changeLang(lang){  
     localStorage.setItem("lang",lang);
     this.translateService.use(lang);
   }

@@ -5,6 +5,10 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.UserGroups.Queries
 {
@@ -20,7 +24,9 @@ namespace Business.Handlers.UserGroups.Queries
 			{
 				_userGroupRepository = userGroupRepository;
 			}
-
+            [SecuredOperation(Priority = 1)]
+            [CacheAspect(10)]
+            [LogAspect(typeof(FileLogger))]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUsersInGroupLookupByGroupId request, CancellationToken cancellationToken)
 			{
 				return new SuccessDataResult<IEnumerable<SelectionItem>>

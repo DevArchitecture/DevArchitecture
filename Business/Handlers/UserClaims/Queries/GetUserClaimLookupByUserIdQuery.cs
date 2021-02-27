@@ -6,6 +6,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.UserClaims.Queries
 {
@@ -24,6 +27,7 @@ namespace Business.Handlers.UserClaims.Queries
 			}
 
             [SecuredOperation(Priority = 1)]
+            [LogAspect(typeof(FileLogger))]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserClaimLookupByUserIdQuery request, CancellationToken cancellationToken)
 			{
 				var data = await _userClaimRepository.GetUserClaimSelectedList(request.Id);
