@@ -64,7 +64,6 @@ export class TranslateComponent implements  AfterViewInit, OnInit {
 
 	getTranslateList() {
 		this.translateService.getTranslateList().subscribe(data => {
-			debugger;
 			this.translateList = data;
 			this.dataSource = new MatTableDataSource(data);
 			this.configDataTable();

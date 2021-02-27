@@ -58,10 +58,8 @@ export class SidebarComponent implements OnInit {
     return this.authService.claimGuard(claim)
   }
   ngOnDestroy() {
-    debugger;
     if (!this.authService.loggedIn()) {
       this.authService.logOut();
-      localStorage.clear();
       this.router.navigateByUrl("/login");
     }
   } 
