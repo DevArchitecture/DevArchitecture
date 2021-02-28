@@ -23,7 +23,6 @@ export class AppComponent  {
     private authService: AuthService,
     private router: Router
   ) {
-    debugger;
     translate.setDefaultLang("tr-TR");
     translate.use("tr-TR");
     if (!this.authService.loggedIn()) {
