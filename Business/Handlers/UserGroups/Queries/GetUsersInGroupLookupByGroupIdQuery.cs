@@ -12,22 +12,22 @@ using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.UserGroups.Queries
 {
-	public class GetUsersInGroupLookupByGroupId : IRequest<IDataResult<IEnumerable<SelectionItem>>>
+	public class GetUsersInGroupLookupByGroupIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int GroupId { get; set; }
 
-		public class GetUsersInGroupLookupByGroupIdHandler : IRequestHandler<GetUsersInGroupLookupByGroupId, IDataResult<IEnumerable<SelectionItem>>>
+		public class GetUsersInGroupLookupByGroupIdQueryHandler : IRequestHandler<GetUsersInGroupLookupByGroupIdQuery, IDataResult<IEnumerable<SelectionItem>>>
 		{
             private readonly IUserGroupRepository _userGroupRepository;
 
-			public GetUsersInGroupLookupByGroupIdHandler(IUserGroupRepository userGroupRepository)
+			public GetUsersInGroupLookupByGroupIdQueryHandler(IUserGroupRepository userGroupRepository)
 			{
 				_userGroupRepository = userGroupRepository;
 			}
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUsersInGroupLookupByGroupId request, CancellationToken cancellationToken)
+			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUsersInGroupLookupByGroupIdQuery request, CancellationToken cancellationToken)
 			{
 				return new SuccessDataResult<IEnumerable<SelectionItem>>
 								(await _userGroupRepository.GetUsersInGroupSelectedListByGroupId(request.GroupId));

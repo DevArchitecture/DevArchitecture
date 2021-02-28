@@ -39,7 +39,7 @@ namespace Business.Handlers.OperationClaims.Queries
 			[PerformanceAspect(5)]
 			[CacheAspect(10)]
 			[LogAspect(typeof(FileLogger))]
-			[SecuredOperation(Priority = 1)]
+			//TODO:[SecuredOperation(Priority = 1)]
 			public async Task<IDataResult<IEnumerable<string>>> Handle(GetUserClaimsFromCacheQuery request, CancellationToken cancellationToken)
 			{
 				var userId = _contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type.EndsWith("nameidentifier"))?.Value;

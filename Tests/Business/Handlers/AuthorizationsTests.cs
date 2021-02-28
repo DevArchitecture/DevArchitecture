@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Business.Constants;
 using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Authorizations.Queries;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
@@ -15,7 +16,7 @@ using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
 using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
-using static Business.Handlers.Authorizations.Commands.LoginUserQuery;
+using static Business.Handlers.Authorizations.Queries.LoginUserQuery;
 using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
 
 namespace Tests.Business.Handlers

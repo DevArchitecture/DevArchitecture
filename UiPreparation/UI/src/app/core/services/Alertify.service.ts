@@ -26,8 +26,8 @@ export class AlertifyService {
   }
 
   error(message: string) {
-
-    this.translateService.get(message).subscribe((mes: string) => {
+    debugger;
+    this.translateService.get(message).subscribe((mes: string) => {      
       alertify.error(mes);
     });
 
