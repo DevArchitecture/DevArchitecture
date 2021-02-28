@@ -10,17 +10,15 @@
 
 		}
 
-		public SelectionItem(int id, string label) : this(id.ToString(), label)
-		{
-		}
 
-		public SelectionItem(string id, string label)
+
+		public SelectionItem(dynamic id, string label)
 		{
 			Id = id;
 			Label = label;
 		}
 
-		public string Id { get; set; }
+		public dynamic Id { get; set; }
 		public string ParentId { get; set; }
 		public string Label { get; set; }
 		public bool IsDisabled { get; set; }

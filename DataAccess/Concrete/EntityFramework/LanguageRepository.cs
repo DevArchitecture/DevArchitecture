@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
             var lookUp = await (from entity in Context.Languages
                          select new SelectionItem()
                          {
-                             Id = entity.Id.ToString(),
+                             Id = entity.Id,
                              Label = entity.Name
                          }).ToListAsync();
             return lookUp;
