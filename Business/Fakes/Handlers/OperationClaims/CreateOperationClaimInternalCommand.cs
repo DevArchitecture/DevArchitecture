@@ -23,7 +23,7 @@ namespace Business.Fakes.Handlers.OperationClaims
 			{
 				_operationClaimRepository = operationClaimRepository;
 			}
-            [LogAspect(typeof(FileLogger))]
+            
 			public async Task<IResult> Handle(CreateOperationClaimInternalCommand request, CancellationToken cancellationToken)
 			{
 				if (IsClaimExists(request.ClaimName))

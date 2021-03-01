@@ -35,8 +35,7 @@ namespace Business.Fakes.Handlers.Authorizations
 
 
 			[ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]
-			[CacheRemoveAspect("Get")]
-			[LogAspect(typeof(FileLogger))]
+			[CacheRemoveAspect("Get")]			
 			public async Task<IResult> Handle(RegisterUserInternalCommand request, CancellationToken cancellationToken)
 			{
 				var userExits = await _userRepository.GetAsync(u => u.Email == request.Email);
