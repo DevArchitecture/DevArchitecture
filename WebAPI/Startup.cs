@@ -121,12 +121,12 @@ namespace WebAPI
 			if (configurationManager.Mode==ApplicationMode.Development)
 			{
 				app.UseDbFakeDataCreator();
+				app.UseDbOperationClaimCreator();
 			}
 			app.UseDeveloperExceptionPage();
 
 			app.ConfigureCustomExceptionMiddleware();
 
-			app.UseDbOperationClaimCreator();
 			app.UseSwagger();
 
 			app.UseSwaggerUI(c =>
