@@ -34,16 +34,16 @@ namespace Business.Handlers.Users.Commands
             public async Task<IResult> Handle(UserChangePasswordCommand request, CancellationToken cancellationToken)
             {
 
-                var userExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
-                if (userExits == null)
+                var userExists = await _userRepository.GetAsync(u => u.UserId == request.UserId);
+                if (userExists == null)
                     return new ErrorResult(Messages.UserNotFound);
 
                 HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
 
-                userExits.PasswordHash = passwordHash;
-                userExits.PasswordSalt = passwordSalt;
+                userExists.PasswordHash = passwordHash;
+                userExists.PasswordSalt = passwordSalt;
 
-                _userRepository.Update(userExits);
+                _userRepository.Update(userExists);
                 await _userRepository.SaveChangesAsync();
                 return new SuccessResult(Messages.Updated);
             }

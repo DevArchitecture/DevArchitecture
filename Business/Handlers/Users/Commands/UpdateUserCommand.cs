@@ -37,15 +37,15 @@ namespace Business.Handlers.Users.Commands
             [LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
 			{
-				var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
+				var isUserExists = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 
-				isUserExits.FullName = request.FullName;
-				isUserExits.Email = request.Email;
-				isUserExits.MobilePhones = request.MobilePhones;
-				isUserExits.Address = request.Address;
-				isUserExits.Notes = request.Notes;
+				isUserExists.FullName = request.FullName;
+				isUserExists.Email = request.Email;
+				isUserExists.MobilePhones = request.MobilePhones;
+				isUserExists.Address = request.Address;
+				isUserExists.Notes = request.Notes;
 
-				_userRepository.Update(isUserExits);
+				_userRepository.Update(isUserExists);
 				await _userRepository.SaveChangesAsync();
 				return new SuccessResult(Messages.Updated);
 			}
