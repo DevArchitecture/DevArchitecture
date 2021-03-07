@@ -111,6 +111,9 @@ namespace WebAPI
 			switch (configurationManager.Mode)
 			{
 				case ApplicationMode.Development:
+					app.UseDbFakeDataCreator();
+					break;
+					
 				case ApplicationMode.Profiling:
 				case ApplicationMode.Staging:
 
@@ -118,10 +121,7 @@ namespace WebAPI
 				case ApplicationMode.Production:
 					break;
 			}
-			if (configurationManager.Mode==ApplicationMode.Development)
-			{
-				app.UseDbFakeDataCreator();
-			}
+			
 			app.UseDeveloperExceptionPage();
 
 			app.ConfigureCustomExceptionMiddleware();
