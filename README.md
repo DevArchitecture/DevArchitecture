@@ -8,4 +8,4 @@ For full documentation support [DevArchitecture](https://www.devarchitecture.net
 
 If you liked DevArchitecture Open Source Rapid Application Framework for .Net 5? 
 
-##Please give a star to this repository ⭐
+## Please give a star to this repository ⭐
