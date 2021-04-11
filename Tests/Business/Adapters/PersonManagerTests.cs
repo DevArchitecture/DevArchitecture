@@ -25,7 +25,7 @@ namespace Tests.Business.Adapters
             string name = Name,
             long citizenId = CitizenId)
         {
-            return new()
+            return new ()
             {
                 BirthYear = birthYear,
                 Surname = surname,

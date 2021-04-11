@@ -21,6 +21,7 @@ namespace Business.Handlers.Groups.Commands
 		{
 			private readonly IGroupRepository _groupRepository;
 
+
 			public CreateGroupCommandHandler(IGroupRepository groupRepository)
 			{
 				_groupRepository = groupRepository;
@@ -48,4 +49,5 @@ namespace Business.Handlers.Groups.Commands
 			}
 		}
 	}
+
 }

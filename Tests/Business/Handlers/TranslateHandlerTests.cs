@@ -65,8 +65,8 @@ namespace Tests.Business.Handlers
             var query = new GetTranslatesQuery();
 
             _translateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
-                        .ReturnsAsync(new List<Translate> { new() {  Id = 1,  Code = "test", LangId=1, Value="Deneme" },
-                                                            new() {  Id = 2,  Code = "test", LangId=2, Value="Test" }});
+                        .ReturnsAsync(new List<Translate> { new () {  Id = 1,  Code = "test", LangId=1, Value="Deneme" },
+                                                            new () {  Id = 2,  Code = "test", LangId=2, Value="Test" }});
 
             var handler = new GetTranslatesQueryHandler(_translateRepository.Object, _mediator.Object);
 
@@ -110,7 +110,7 @@ namespace Tests.Business.Handlers
             //command.TranslateName = "test";
 
             _translateRepository.Setup(x => x.Query())
-                                                                                                        .Returns(new List<Translate> { new() { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "test"*/ } }.AsQueryable());
+                                                                                                        .Returns(new List<Translate> { new () { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "test"*/ } }.AsQueryable());
 
 
 

@@ -14,7 +14,7 @@ namespace Tests.Helpers.Token
 		public static SecurityKey SecurityKey { get; }
 		public static SigningCredentials SigningCredentials { get; }
 
-		private static readonly JwtSecurityTokenHandler STokenHandler = new();
+		private static readonly JwtSecurityTokenHandler STokenHandler = new ();
 		private static string _keyString = "!z2x3C4v5B*_*!z2x3C4v5B*_*";
 
 		static MockJwtTokens()
