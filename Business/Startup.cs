@@ -137,7 +137,7 @@ namespace Business
 			services.AddTransient<IGroupRepository, GroupRepository>();
 			services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
 			services.AddTransient<IUserGroupRepository, UserGroupRepository>();
-			services.AddDbContext<ProjectDbContext,OracleDbContext>();
+			services.AddDbContext<ProjectDbContext>();
 
 			services.AddSingleton<MongoDbContextBase, MongoDbContext>();
 

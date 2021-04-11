@@ -30,11 +30,11 @@ namespace Business.Handlers.OperationClaims.Commands
 			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
 			{
-				var isOperationClaimsExits = await _operationClaimRepository.GetAsync(u => u.Id == request.Id);
-				isOperationClaimsExits.Alias = request.Alias;
-				isOperationClaimsExits.Description = request.Description;
+				var isOperationClaimExists= await _operationClaimRepository.GetAsync(u => u.Id == request.Id);
+				isOperationClaimExists.Alias = request.Alias;
+				isOperationClaimExists.Description = request.Description;
 
-				_operationClaimRepository.Update(isOperationClaimsExits);
+				_operationClaimRepository.Update(isOperationClaimExists);
 				await _operationClaimRepository.SaveChangesAsync();
 
 				return new SuccessResult(Messages.Updated);

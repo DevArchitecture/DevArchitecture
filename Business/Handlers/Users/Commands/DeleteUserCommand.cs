@@ -16,11 +16,11 @@ namespace Business.Handlers.Users.Commands
 	{
 		public int UserId { get; set; }
 
-		public class DeleteAnimalCommandHandler : IRequestHandler<DeleteUserCommand, IResult>
+		public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, IResult>
 		{
 			private readonly IUserRepository _userRepository;
 
-			public DeleteAnimalCommandHandler(IUserRepository userRepository)
+			public DeleteUserCommandHandler(IUserRepository userRepository)
 			{
 				_userRepository = userRepository;
 			}
