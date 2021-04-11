@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NpgsqlTypes;
 using Serilog;
 using Serilog.Sinks.PostgreSQL;
+using Serilog.Sinks.PostgreSQL.ColumnWriters;
 using System;
 using System.Collections.Generic;
 
