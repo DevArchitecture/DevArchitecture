@@ -6,10 +6,12 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.Users.Commands
 {
-	[SecuredOperation]
+
 	public class UpdateUserCommand : IRequest<IResult>
 	{
 
@@ -20,28 +22,30 @@ namespace Business.Handlers.Users.Commands
 		public string Address { get; set; }
 		public string Notes { get; set; }
 
-		public class UpdateAnimalCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
+		public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
 		{
 			private readonly IUserRepository _userRepository;
 
-			public UpdateAnimalCommandHandler(IUserRepository userRepository)
+			public UpdateUserCommandHandler(IUserRepository userRepository)
 			{
 				_userRepository = userRepository;
 			}
 
-			[CacheRemoveAspect("Get")]
 
+            [SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
 			{
-				var isUserExits = await _userRepository.GetAsync(u => u.UserId == request.UserId);
+				var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 
-				isUserExits.FullName = request.FullName;
-				isUserExits.Email = request.Email;
-				isUserExits.MobilePhones = request.MobilePhones;
-				isUserExits.Address = request.Address;
-				isUserExits.Notes = request.Notes;
+				isThereAnyUser.FullName = request.FullName;
+				isThereAnyUser.Email = request.Email;
+				isThereAnyUser.MobilePhones = request.MobilePhones;
+				isThereAnyUser.Address = request.Address;
+				isThereAnyUser.Notes = request.Notes;
 
-				_userRepository.Update(isUserExits);
+				_userRepository.Update(isThereAnyUser);
 				await _userRepository.SaveChangesAsync();
 				return new SuccessResult(Messages.Updated);
 			}

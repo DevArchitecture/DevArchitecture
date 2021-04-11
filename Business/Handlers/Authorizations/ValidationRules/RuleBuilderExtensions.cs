@@ -1,7 +1,7 @@
 ﻿using Business.Constants;
 using FluentValidation;
 
-namespace Business.Handlers.Authorizations.Commands
+namespace Business.Handlers.Authorizations.ValidationRules
 {
     public static class RuleBuilderExtensions
     {

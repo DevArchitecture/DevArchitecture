@@ -5,10 +5,12 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.UserClaims.Commands
 {
-    [SecuredOperation]
     public class DeleteUserClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
@@ -21,7 +23,10 @@ namespace Business.Handlers.UserClaims.Commands
                 _userClaimRepository = userClaimRepository;
             }
 
-            public async Task<IResult> Handle(DeleteUserClaimCommand request, CancellationToken cancellationToken)
+      [SecuredOperation(Priority = 1)]
+      [CacheRemoveAspect("Get")]
+      [LogAspect(typeof(FileLogger))]
+      public async Task<IResult> Handle(DeleteUserClaimCommand request, CancellationToken cancellationToken)
             {
                 var entityToDelete = await _userClaimRepository.GetAsync(x => x.UserId == request.Id);
 

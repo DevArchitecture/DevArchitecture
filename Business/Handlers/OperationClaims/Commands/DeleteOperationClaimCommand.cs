@@ -5,30 +5,35 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.OperationClaims.Commands
 {
-    [SecuredOperation]
-    public class DeleteOperationClaimCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
-        public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
-        {
-            private readonly IOperationClaimRepository _operationClaimRepository;
+	public class DeleteOperationClaimCommand : IRequest<IResult>
+	{
+		public int Id { get; set; }
+		public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
+		{
+			private readonly IOperationClaimRepository _operationClaimRepository;
 
-            public DeleteOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+			public DeleteOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
+			{
+				_operationClaimRepository = operationClaimRepository;
+			}
 
-            public async Task<IResult> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
-            {
-                var claimToDelete = await _operationClaimRepository.GetAsync(x => x.Id == request.Id);
-                _operationClaimRepository.Delete(claimToDelete);
-                await _operationClaimRepository.SaveChangesAsync();
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
+			{
+				var claimToDelete = await _operationClaimRepository.GetAsync(x => x.Id == request.Id);
+				_operationClaimRepository.Delete(claimToDelete);
+				await _operationClaimRepository.SaveChangesAsync();
 
-                return new SuccessResult(Messages.Deleted);
-            }
-        }
-    }
+				return new SuccessResult(Messages.Deleted);
+			}
+		}
+	}
 }

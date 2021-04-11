@@ -5,32 +5,38 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.GroupClaims.Commands
 {
-    [SecuredOperation]
-    public class DeleteGroupClaimCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
 
-        public class DeleteGroupClaimCommandHandler : IRequestHandler<DeleteGroupClaimCommand, IResult>
-        {
-            private readonly IGroupClaimRepository _groupClaimRepository;
+	public class DeleteGroupClaimCommand : IRequest<IResult>
+	{
+		public int Id { get; set; }
 
-            public DeleteGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
-            {
-                _groupClaimRepository = groupClaimRepository;
-            }
+		public class DeleteGroupClaimCommandHandler : IRequestHandler<DeleteGroupClaimCommand, IResult>
+		{
+			private readonly IGroupClaimRepository _groupClaimRepository;
 
-            public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)
-            {
-                var groupClaimToDelete = await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id);
+			public DeleteGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
+			{
+				_groupClaimRepository = groupClaimRepository;
+			}
 
-                _groupClaimRepository.Delete(groupClaimToDelete);
-                await _groupClaimRepository.SaveChangesAsync();
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)
+			{
+				var groupClaimToDelete = await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id);
 
-                return new SuccessResult(Messages.Deleted);
-            }
-        }
-    }
+				_groupClaimRepository.Delete(groupClaimToDelete);
+				await _groupClaimRepository.SaveChangesAsync();
+
+				return new SuccessResult(Messages.Deleted);
+			}
+		}
+	}
 }

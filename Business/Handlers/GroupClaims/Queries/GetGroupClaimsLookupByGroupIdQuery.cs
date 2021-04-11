@@ -6,10 +6,12 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.GroupClaims.Queries
 {
-	[SecuredOperation]
+	
 	public class GetGroupClaimsLookupByGroupIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int GroupId { get; set; }
@@ -22,6 +24,8 @@ namespace Business.Handlers.GroupClaims.Queries
 				_groupClaimRepository = groupClaimRepository;
 			}
 
+            [SecuredOperation(Priority = 1)]
+            [LogAspect(typeof(FileLogger))]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupClaimsLookupByGroupIdQuery request, CancellationToken cancellationToken)
 			{
 				var data = await _groupClaimRepository.GetGroupClaimsSelectedList(request.GroupId);

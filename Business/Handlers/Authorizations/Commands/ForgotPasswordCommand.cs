@@ -14,43 +14,44 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Authorizations.Commands
 {
-    [SecuredOperation]
-    public class ForgotPasswordCommand : IRequest<IResult>
-    {
-        public string TcKimlikNo { get; set; }
-        public string Email { get; set; }
 
-        public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, IResult>
-        {
+	public class ForgotPasswordCommand : IRequest<IResult>
+	{
+		public string TcKimlikNo { get; set; }
+		public string Email { get; set; }
 
-            private readonly IUserRepository _userRepository;
+		public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, IResult>
+		{
 
-            public ForgotPasswordCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
+			private readonly IUserRepository _userRepository;
 
-            /// <summary>           
-            /// </summary>
-            /// <param name="request"></param>
-            /// <param name="cancellationToken"></param>
-            /// <returns></returns>
-         
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
-            {
-                var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TcKimlikNo));
+			public ForgotPasswordCommandHandler(IUserRepository userRepository)
+			{
+				_userRepository = userRepository;
+			}
 
-                if (user == null)
-                    return new ErrorResult(Messages.WrongCitizenId);
-                var generatedPassword = RandomPassword.CreateRandomPassword(14);
-                HashingHelper.CreatePasswordHash(generatedPassword, out var passwordSalt, out var passwordHash);
+			/// <summary>           
+			/// </summary>
+			/// <param name="request"></param>
+			/// <param name="cancellationToken"></param>
+			/// <returns></returns>
 
-                _userRepository.Update(user);
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
+			{
+				var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TcKimlikNo));
 
-                return new SuccessResult(Messages.SendPassword + Messages.NewPassword + generatedPassword);
-            }
-        }
-    }
+				if (user == null)
+					return new ErrorResult(Messages.WrongCitizenId);
+				var generatedPassword = RandomPassword.CreateRandomPassword(14);
+				HashingHelper.CreatePasswordHash(generatedPassword, out var passwordSalt, out var passwordHash);
+
+				_userRepository.Update(user);
+
+				return new SuccessResult(Messages.SendPassword + Messages.NewPassword + generatedPassword);
+			}
+		}
+	}
 }

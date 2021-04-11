@@ -42,6 +42,11 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
             RedisInvoker(x => x.Add(key, data, TimeSpan.FromMinutes(duration)));
         }
 
+        public void Add(string key, object data)
+        {
+            RedisInvoker(x => x.Add(key, data));
+        }
+
         public bool IsAdd(string key)
         {
             var isAdded = false;

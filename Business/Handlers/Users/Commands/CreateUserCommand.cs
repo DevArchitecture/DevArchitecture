@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Users.Commands
 {
-    [SecuredOperation]
     public class CreateUserCommand : IRequest<IResult>
     {
 
@@ -40,14 +39,15 @@ namespace Business.Handlers.Users.Commands
             {
                 _userRepository = userRepository;
             }
-           
+
+            [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                var userExits = await _userRepository.GetAsync(u => u.Email == request.Email);
+                var isThereAnyUser= await _userRepository.GetAsync(u => u.Email == request.Email);
 
-                if (userExits != null)
+                if (isThereAnyUser != null)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
 

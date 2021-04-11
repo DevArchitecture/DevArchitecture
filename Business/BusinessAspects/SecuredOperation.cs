@@ -1,4 +1,7 @@
-﻿using Business.Constants;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Business.Constants;
 using Castle.DynamicProxy;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
@@ -6,6 +9,7 @@ using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security;
+using Core.CrossCuttingConcerns.Caching;
 
 namespace Business.BusinessAspects
 {
@@ -18,20 +22,30 @@ namespace Business.BusinessAspects
 	public class SecuredOperation : MethodInterception
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICacheManager _cacheManager;
+
 
 		public SecuredOperation()
 		{
 			_httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-		}
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+
+        }
 
 		protected override void OnBefore(IInvocation invocation)
-		{
-			var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
-			var operationName = invocation.TargetType.ReflectedType.Name;
-			if (roleClaims.Contains(operationName))
-				return;
+        {
 
-			throw new SecurityException(Messages.AuthorizationsDenied);
+			var userId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type.EndsWith("nameidentifier"))?.Value;
+
+			if (userId == null) throw new SecurityException(Messages.AuthorizationsDenied);
+
+			var oprClaims = _cacheManager.Get($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>;
+
+            var operationName = invocation.TargetType.ReflectedType.Name;
+            if (oprClaims.Contains(operationName))
+                return;
+
+            throw new SecurityException(Messages.AuthorizationsDenied);
 		}
 	}
 }

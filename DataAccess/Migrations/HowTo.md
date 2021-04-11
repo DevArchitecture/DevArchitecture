@@ -19,6 +19,14 @@ Update-Database -context MsDbContext
 
 dotnet ef migrations add InitialCreate --context MsDbContext --output-dir Migrations/Ms
 
+// Oracle 
+$env:ASPNETCORE_ENVIRONMENT='Staging'
+Add-Migration InitialCreate -context OracleDbContext -OutputDir Migrations/Ora
+$env:ASPNETCORE_ENVIRONMENT='Staging'
+Update-Database -context OracleDbContext
+
+dotnet ef migrations add InitialCreate --context MsDbContext --output-dir Migrations/Ms
+
 /*
 İlk şemayı yartmak için aşağıdaki drop gerekebilir.
 

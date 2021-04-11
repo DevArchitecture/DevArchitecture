@@ -39,15 +39,11 @@ export class AuthService {
       if (data.success) {
 
         this.storageService.setToken(data.data.token);
+        this.claims=data.data.claims;
 
-        var decode = this.jwtHelper.decodeToken(this.storageService.getToken());
 
-        var prop = Object.keys(decode).filter(x => x.endsWith("/role"))[0];
+         var decode = this.jwtHelper.decodeToken(this.storageService.getToken());
 
-        if (typeof decode[prop] == "string")
-          this.claims = [];
-        else
-          this.claims = decode[prop];
 
         var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
         this.userName = decode[propUserName];
@@ -69,13 +65,15 @@ export class AuthService {
 
   setClaims() {
 
-    if ((this.claims == undefined || this.claims.length == 0) && this.storageService.getToken() != null) {
+    if ((this.claims == undefined || this.claims.length == 0) && this.storageService.getToken() != null && this.loggedIn() ) {
 
+      this.httpClient.get<string[]>(environment.getApiUrl + "/OperationClaims/getuserclaimsfromcache").subscribe(data => {
+        this.claims =data;
+      })
+
+    
       var token = this.storageService.getToken();
       var decode = this.jwtHelper.decodeToken(token);
-
-      var prop = Object.keys(decode).filter(x => x.endsWith("/role"))[0];
-      this.claims = decode[prop];
 
       var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
       this.userName = decode[propUserName];
@@ -99,11 +97,12 @@ export class AuthService {
   }
 
   claimGuard(claim: string): boolean {
+
     var check = this.claims.some(function (item) {
       return item == claim;
     })
 
     return check;
   }
-
+  
 }

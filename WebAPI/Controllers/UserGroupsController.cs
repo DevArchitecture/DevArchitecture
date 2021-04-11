@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
         [HttpGet("getusersingroupbygroupid")]
         public async Task<IActionResult> GetUsersInGroupByGroupid(int id)
         {
-            var result = await Mediator.Send(new GetUsersInGroupLookupByGroupId {GroupId = id});
+            var result = await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery {GroupId = id});
             if (result.Success)
             {
                 return Ok(result.Data);

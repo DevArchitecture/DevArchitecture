@@ -36,7 +36,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           errorMessage = `Error: ${error.error.message}`;
         } else {
           // server-side error
-          errorMessage = `Error Code: ${error.status}\n Message: ${error.error}`;
+          errorMessage = error.error;
         }
         this.alertifyService.error(errorMessage);
         return throwError(errorMessage);

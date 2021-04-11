@@ -149,7 +149,9 @@ namespace DataAccess.Concrete.Configurations
 				new Translate { Id = 133, LangId = 1, Code = "TranslateList", Value = "Dil Çeviri Listesi" },
 				new Translate { Id = 134, LangId = 2, Code = "TranslateList", Value = "Translate List" },
 				new Translate { Id = 135, LangId = 1, Code = "LogList", Value = "İşlem Kütüğü" },
-				new Translate { Id = 136, LangId = 2, Code = "LogList", Value = "LogList" });
+				new Translate { Id = 136, LangId = 2, Code = "LogList", Value = "LogList" },
+				new Translate { Id = 137, LangId = 1, Code = "DeleteConfirm", Value = "Emin misiniz?" },
+				new Translate { Id = 138, LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" });
 		}
 	}
 }

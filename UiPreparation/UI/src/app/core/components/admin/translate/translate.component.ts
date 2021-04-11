@@ -64,7 +64,6 @@ export class TranslateComponent implements  AfterViewInit, OnInit {
 
 	getTranslateList() {
 		this.translateService.getTranslateList().subscribe(data => {
-			debugger;
 			this.translateList = data;
 			this.dataSource = new MatTableDataSource(data);
 			this.configDataTable();
@@ -102,7 +101,8 @@ export class TranslateComponent implements  AfterViewInit, OnInit {
 
 		this.translateService.updateTranslate(this.translate).subscribe(data => {
 			var index = this.translateList.findIndex(x => x.id == this.translate.id);
-			this.translateList[index] = this.translate;
+			this.translateList[index].code = this.translate.code;
+			this.translateList[index].value = this.translate.value;
 			this.dataSource = new MatTableDataSource(this.translateList);
 			this.configDataTable();
 			this.translate = new Translate();
@@ -117,7 +117,7 @@ export class TranslateComponent implements  AfterViewInit, OnInit {
 	createTranslateAddForm() {
 		this.translateAddForm = this.formBuilder.group({
 			id: [0],
-			langid: [0, Validators.required],
+			langId: [0, Validators.required],
 			code: ["", Validators.required],
 			value: ["", Validators.required]
 		})

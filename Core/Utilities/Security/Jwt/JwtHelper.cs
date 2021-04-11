@@ -31,13 +31,13 @@ namespace Core.Utilities.Security.Jwt
             return handler.ReadJwtToken(input).ToString();
         }
 
-        public TAccessToken CreateToken<TAccessToken>(User user, IEnumerable<OperationClaim> operationClaims)
+        public TAccessToken CreateToken<TAccessToken>(User user)
             where TAccessToken : IAccessToken, new()
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
-            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
+            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var token = jwtSecurityTokenHandler.WriteToken(jwt);
 
@@ -49,20 +49,21 @@ namespace Core.Utilities.Security.Jwt
         }
 
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
-                SigningCredentials signingCredentials, IEnumerable<OperationClaim> operationClaims)
+                SigningCredentials signingCredentials)
         {
             var jwt = new JwtSecurityToken(
+                 
                     issuer: tokenOptions.Issuer,
                     audience: tokenOptions.Audience,
                     expires: _accessTokenExpiration,
                     notBefore: DateTime.Now,
-                    claims: SetClaims(user, operationClaims),
+                    claims: SetClaims(user),
                     signingCredentials: signingCredentials
             );
             return jwt;
         }
 
-        private IEnumerable<Claim> SetClaims(User user, IEnumerable<OperationClaim> operationClaims)
+        private IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();
             claims.AddNameIdentifier(user.UserId.ToString());
@@ -70,8 +71,7 @@ namespace Core.Utilities.Security.Jwt
                 claims.AddNameUniqueIdentifier(user.CitizenId.ToString());
             if (!string.IsNullOrEmpty(user.FullName))
                 claims.AddName($"{user.FullName}");
-            claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
-            
+
             claims.Add(new Claim(ClaimTypes.Role, user.AuthenticationProviderType));
 
 

@@ -15,8 +15,7 @@ using Newtonsoft.Json;
 
 namespace Business.Handlers.Logs.Queries
 {
-	[SecuredOperation]
-	public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
+    public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
 	{
 		public class GetLogDtoQueryHandler : IRequestHandler<GetLogDtoQuery, IDataResult<IEnumerable<LogDto>>>
 		{
@@ -29,6 +28,7 @@ namespace Business.Handlers.Logs.Queries
 				_mediator = mediator;
 			}
 
+            [SecuredOperation(Priority = 1)]
 			[PerformanceAspect(5)]
 			[CacheAspect(10)]
 			[LogAspect(typeof(FileLogger))]

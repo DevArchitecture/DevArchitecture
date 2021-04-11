@@ -1,13 +1,13 @@
-﻿using Business.Constants;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Business.Handlers.UserClaims.Commands
+namespace Business.Fakes.Handlers.UserClaims
 {
     /// <summary>
     /// For Internal Use Only,
@@ -47,7 +47,7 @@ namespace Business.Handlers.UserClaims.Commands
             }
             private async Task<bool> DoesClaimExistsForUser(UserClaim userClaim)
             {
-                return (await _userClaimsRepository.GetAsync(x => x.UserId == userClaim.UserId && x.ClaimId == userClaim.ClaimId)) is null ? false : true;
+                return (await _userClaimsRepository.GetAsync(x => x.UserId == userClaim.UserId && x.ClaimId == userClaim.ClaimId)) is { };
             }
 
         }

@@ -7,39 +7,47 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.Groups.Commands
 {
-    [SecuredOperation]
-    public class CreateGroupCommand : IRequest<IResult>
-    {
-        public string GroupName { get; set; }
-        public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, IResult>
-        {
-            private readonly IGroupRepository _groupRepository;
 
-            public CreateGroupCommandHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+	public class CreateGroupCommand : IRequest<IResult>
+	{
+		public string GroupName { get; set; }
+		public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, IResult>
+		{
+			private readonly IGroupRepository _groupRepository;
 
-            public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
-            {
-                try
-                {
-                    var group = new Group
-                    {
-                        GroupName = request.GroupName
-                    };
-                    _groupRepository.Add(group);
-                    await _groupRepository.SaveChangesAsync();
-                    return new SuccessResult(Messages.Added);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-    }
+
+			public CreateGroupCommandHandler(IGroupRepository groupRepository)
+			{
+				_groupRepository = groupRepository;
+			}
+
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
+			{
+				try
+				{
+					var group = new Group
+					{
+						GroupName = request.GroupName
+					};
+					_groupRepository.Add(group);
+					await _groupRepository.SaveChangesAsync();
+					return new SuccessResult(Messages.Added);
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+			}
+		}
+	}
+
 }

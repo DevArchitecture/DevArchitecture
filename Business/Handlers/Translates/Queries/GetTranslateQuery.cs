@@ -11,7 +11,6 @@ using Core.Entities.Concrete;
 
 namespace Business.Handlers.Translates.Queries
 {
-    [SecuredOperation]
     public class GetTranslateQuery : IRequest<IDataResult<Translate>>
     {
         public int Id { get; set; }
@@ -26,6 +25,8 @@ namespace Business.Handlers.Translates.Queries
                 _translateRepository = translateRepository;
                 _mediator = mediator;
             }
+
+            [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Translate>> Handle(GetTranslateQuery request, CancellationToken cancellationToken)
             {

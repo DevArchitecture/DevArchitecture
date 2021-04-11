@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Business.Constants;
 using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Authorizations.Queries;
+using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
@@ -14,7 +16,7 @@ using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
 using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
-using static Business.Handlers.Authorizations.Commands.LoginUserQuery;
+using static Business.Handlers.Authorizations.Queries.LoginUserQuery;
 using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
 
 namespace Tests.Business.Handlers
@@ -25,6 +27,7 @@ namespace Tests.Business.Handlers
         private Mock<IUserRepository> _userRepository;
         private Mock<ITokenHelper> _tokenHelper;
         private Mock<IMediator> _mediator;
+        private Mock<ICacheManager> _cacheManager;
 
         private LoginUserQueryHandler _loginUserQueryHandler;
         private LoginUserQuery _loginUserQuery;
@@ -39,8 +42,9 @@ namespace Tests.Business.Handlers
 			_userRepository = new Mock<IUserRepository>();
 			_tokenHelper = new Mock<ITokenHelper>();
 			_mediator = new Mock<IMediator>();
+            _cacheManager = new Mock<ICacheManager>();
 
-			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,_mediator.Object);
+			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,_mediator.Object, _cacheManager.Object);
 			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}

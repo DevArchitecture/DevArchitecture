@@ -19,7 +19,7 @@ namespace Business.Handlers.Languages.Commands
     /// <summary>
     /// 
     /// </summary>
-    [SecuredOperation]
+   
     public class CreateLanguageCommand : IRequest<IResult>
     {     
 
@@ -36,8 +36,9 @@ namespace Business.Handlers.Languages.Commands
                 _languageRepository = languageRepository;
                 _mediator = mediator;
             }
-            
-            [ValidationAspect(typeof(CreateLanguageValidator), Priority = 1)]
+
+            [SecuredOperation(Priority = 1)]
+            [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)

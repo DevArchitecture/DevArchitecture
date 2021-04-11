@@ -5,31 +5,37 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.Groups.Commands
 {
-    [SecuredOperation]
-    public class DeleteGroupCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
-        public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
-        {
-            private readonly IGroupRepository _groupRepository;
 
-            public DeleteGroupCommandHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+	public class DeleteGroupCommand : IRequest<IResult>
+	{
+		public int Id { get; set; }
+		public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
+		{
+			private readonly IGroupRepository _groupRepository;
 
-            public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
-            {
-                var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);
+			public DeleteGroupCommandHandler(IGroupRepository groupRepository)
+			{
+				_groupRepository = groupRepository;
+			}
 
-                _groupRepository.Delete(groupToDelete);
-                await _groupRepository.SaveChangesAsync();
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+			public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
+			{
+				var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);
 
-                return new SuccessResult(Messages.Deleted);
-            }
-        }
-    }
+				_groupRepository.Delete(groupToDelete);
+				await _groupRepository.SaveChangesAsync();
+
+				return new SuccessResult(Messages.Deleted);
+			}
+		}
+	}
 }

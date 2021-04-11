@@ -11,10 +11,11 @@ using DataAccess.Abstract;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Handlers.Authorizations.ValidationRules;
 
 namespace Business.Handlers.Authorizations.Commands
 {
-    [SecuredOperation]
+    
     public class RegisterUserCommand : IRequest<IResult>
     {
         public string Email { get; set; }
@@ -33,15 +34,15 @@ namespace Business.Handlers.Authorizations.Commands
             }
 
 
-
-            [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
+            [SecuredOperation(Priority = 1)]
+            [ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
-                var userExits = await _userRepository.GetAsync(u => u.Email == request.Email);
+                var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
 
-                if (userExits != null)
+                if (isThereAnyUser != null)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
 

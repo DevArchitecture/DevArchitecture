@@ -24,4 +24,12 @@ export class LocalStorageService {
     return localStorage.getItem("token");
   }
 
+  setItem(key:string,data:any){
+    localStorage.setItem(key,data);
+  }
+
+  getItem(key:string){
+    return localStorage.getItem(key);
+  }
+
 }

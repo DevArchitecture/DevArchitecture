@@ -49,7 +49,7 @@ namespace Tests.Business.Services.Authentication
 							.Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });
 
 			_tokenHelper.
-							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
+							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).
 							Returns(() => new DArchToken()
 							{
 								Expiration = DateTime.Now.AddMinutes(10),
@@ -89,7 +89,7 @@ namespace Tests.Business.Services.Authentication
 							.Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });
 
 			_tokenHelper.
-							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>(), It.IsAny<List<OperationClaim>>())).
+							Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).
 							Returns(() => new DArchToken()
 							{
 								Expiration = DateTime.Now.AddMinutes(10),
