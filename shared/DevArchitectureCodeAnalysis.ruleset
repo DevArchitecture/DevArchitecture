@@ -14,7 +14,7 @@
         <Rule Id="SA1004" Action="Error"/>          <!-- Documentation lines should begin with single space -->
         <Rule Id="SA1005" Action="Error"/>          <!-- Single line comments should begin with single space -->
         <Rule Id="SA1006" Action="Error"/>          <!-- Preprocessor keywords should not be preceded by space -->
-        <Rule Id="SA1007" Action="None"/>          <!-- Operator keyword should be followed by space -->
+        <Rule Id="SA1007" Action="Error"/>          <!-- Operator keyword should be followed by space -->
         <Rule Id="SA1008" Action="None"/>          <!-- Opening parenthesis should be spaced correctly -->
         <Rule Id="SA1009" Action="None"/>          <!-- Closing parenthesis should be spaced correctly -->
         <Rule Id="SA1010" Action="None"/>          <!-- Opening square brackets should be spaced correctly -->
