@@ -28,7 +28,7 @@
         <Rule Id="SA1018" Action="Error"/>          <!-- Nullable type symbols should be spaced correctly -->
         <Rule Id="SA1019" Action="Error"/>          <!-- Member access symbols should be spaced correctly -->
         <Rule Id="SA1020" Action="Error"/>          <!-- Increment decrement symbols should be spaced correctly -->
-        <Rule Id="SA1021" Action="None"/>          <!-- Negative signs should be spaced correctly -->
+        <Rule Id="SA1021" Action="Error"/>          <!-- Negative signs should be spaced correctly -->
         <Rule Id="SA1022" Action="None"/>          <!-- Positive signs should be spaced correctly -->
         <Rule Id="SA1023" Action="None"/>          <!-- Dereference and access of symbols should be spaced correctly -->
         <Rule Id="SA1024" Action="None"/>          <!-- Colons should be spaced correctly -->
