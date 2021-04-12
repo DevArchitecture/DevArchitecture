@@ -67,7 +67,7 @@ namespace Tests.Business.Handlers
 
             _languageRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Language, bool>>>()))
                         .ReturnsAsync(new List<Language> { new () { Id = 1, Code = "tr-TR", Name = "Türkçe" },
-                                                           new () { Id = 2, Code = "en-US", Name = "English" }});
+                                                           new () { Id = 2, Code = "en-US", Name = "English" } });
 
             var handler = new GetLanguagesQueryHandler(_languageRepository.Object, _mediator.Object);
 
@@ -150,7 +150,7 @@ namespace Tests.Business.Handlers
             var command = new DeleteLanguageCommand();
 
             _languageRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Language, bool>>>()))
-                        .ReturnsAsync(new Language() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "deneme"*/});
+                        .ReturnsAsync(new Language() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "deneme"*/ });
 
             _languageRepository.Setup(x => x.Delete(It.IsAny<Language>()));
 

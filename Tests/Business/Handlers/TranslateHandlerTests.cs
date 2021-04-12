@@ -66,7 +66,7 @@ namespace Tests.Business.Handlers
 
             _translateRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
                         .ReturnsAsync(new List<Translate> { new () {  Id = 1,  Code = "test", LangId = 1, Value = "Deneme" },
-                                                            new () {  Id = 2,  Code = "test", LangId = 2, Value = "Test" }});
+                                                            new () {  Id = 2,  Code = "test", LangId = 2, Value = "Test" } });
 
             var handler = new GetTranslatesQueryHandler(_translateRepository.Object, _mediator.Object);
 
@@ -150,7 +150,7 @@ namespace Tests.Business.Handlers
             var command = new DeleteTranslateCommand();
 
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
-                        .ReturnsAsync(new Translate() { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "deneme"*/});
+                        .ReturnsAsync(new Translate() { /*TODO:propertyler buraya yazılacak TranslateId = 1, TranslateName = "deneme"*/ });
 
             _translateRepository.Setup(x => x.Delete(It.IsAny<Translate>()));
 

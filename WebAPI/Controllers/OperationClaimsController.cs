@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByid(int id)
         {
-            var result = await Mediator.Send(new GetOperationClaimQuery() { Id = id});
+            var result = await Mediator.Send(new GetOperationClaimQuery() { Id = id });
             if (result.Success)
             {
                 return Ok(result.Data);

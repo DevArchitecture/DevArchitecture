@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await Mediator.Send(new GetGroupClaimQuery { Id = id});
+            var result = await Mediator.Send(new GetGroupClaimQuery { Id = id });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
         [HttpGet("getgroupclaimsbygroupid")]
         public async Task<IActionResult> GetGroupClaimsByGroupId(int id)
         {
-            var result = await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id});
+            var result = await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id });
             if (result.Success)
             {
                 return Ok(result.Data);
