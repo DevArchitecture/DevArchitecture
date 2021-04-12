@@ -30,7 +30,7 @@
         <Rule Id="SA1020" Action="Error"/>          <!-- Increment decrement symbols should be spaced correctly -->
         <Rule Id="SA1021" Action="Error"/>          <!-- Negative signs should be spaced correctly -->
         <Rule Id="SA1022" Action="Error"/>          <!-- Positive signs should be spaced correctly -->
-        <Rule Id="SA1023" Action="None"/>          <!-- Dereference and access of symbols should be spaced correctly -->
+        <Rule Id="SA1023" Action="Error"/>          <!-- Dereference and access of symbols should be spaced correctly -->
         <Rule Id="SA1024" Action="None"/>          <!-- Colons should be spaced correctly -->
         <Rule Id="SA1025" Action="None"/>          <!-- Code should not contain multiple whitespace in a row -->
         <Rule Id="SA1026"
