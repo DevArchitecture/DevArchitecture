@@ -17,14 +17,14 @@ namespace Tests.WebAPI
 			const string authenticationScheme = "Bearer";
 			const string requestUri = "api/users/getall";
 		
-			//Arrange
+			// Arrange
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
 			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authenticationScheme, token);
 
-			//Act
+			// Act
 			var response = await Client.GetAsync(requestUri);
 			
-			//Assert
+			// Assert
 			response.StatusCode.Should()?.Be(HttpStatusCode.OK);
 		}
 	}

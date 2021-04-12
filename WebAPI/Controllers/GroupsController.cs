@@ -23,10 +23,10 @@ namespace WebAPI.Controllers
         /// <remarks>bla bla bla Groups</remarks>
         /// <return>Grup List</return>
         /// <response code="200"></response>  
-        //[AllowAnonymous]
-        //[Produces("application/json","text/plain")]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        // [AllowAnonymous]
+        // [Produces("application/json","text/plain")]
+        // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
+        // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {

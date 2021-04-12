@@ -23,14 +23,14 @@ namespace Tests.Business.Adapters
 		[TestCase("11111", "test", "123456")]
 		public void Send(string password, string text, string cellPhone)
 		{
-			//Arrange
+			// Arrange
 			_smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
 			
-			//Act
+			// Act
 			var result = _smsServiceHelper.Send(password, text, cellPhone);
 			_smsService.Verify(x => x.Send(password, text, cellPhone));
 			
-			//Assert
+			// Assert
 			result.Should().BeTrue();
 		}
 
@@ -38,14 +38,14 @@ namespace Tests.Business.Adapters
 		[TestCase("test", "123456")]
 		public void SendAssist(string text, string cellPhone)
 		{
-			//Arrange
+			// Arrange
 			_smsService.Setup(x => x.SendAssist(text, cellPhone)).ReturnsAsync(true);
 			
-			//Act
+			// Act
 			var result = _smsServiceHelper.SendAssist(text, cellPhone);
 			_smsService.Verify(x => x.SendAssist(text, cellPhone));
 			
-			//Assert
+			// Assert
 			result.Should().BeTrue();
 		}
 

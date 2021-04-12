@@ -18,14 +18,14 @@ namespace Tests.Business.Services.Authentication
 		[Test]
 		public async Task TokenAuthorizeTest()
 		{
-			//Arrange
+			// Arrange
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
 			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
 
-			//Act
+			// Act
 			var response = await Client.GetAsync(RequestUri);
 
-			//Assert
+			// Assert
 			response.StatusCode.Should().Be(HttpStatusCode.OK);
 		}
 
@@ -34,16 +34,16 @@ namespace Tests.Business.Services.Authentication
 		{
 			const int delayAmount = 10000;
 			
-			//Arrange
+			// Arrange
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
 			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
 
-			//Act
+			// Act
 			await Task.Delay(delayAmount);
 
 			var response = await Client.GetAsync(RequestUri);
 			
-			//Assert
+			// Assert
 			response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 		}
 	}

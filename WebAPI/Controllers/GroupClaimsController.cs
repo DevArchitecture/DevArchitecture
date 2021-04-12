@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         /// <remarks>GroupClaims</remarks>
         /// <return>GroupClaims List</return>
         /// <response code="200"></response>  
-        //[AllowAnonymous]
+        // [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GroupClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

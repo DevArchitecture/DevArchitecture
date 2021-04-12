@@ -44,30 +44,30 @@ namespace Tests.Business.Adapters
         [Test]
         public void VerifyCid_Fail()
         {
-            //Arrange
+            // Arrange
             var citizen = CreateCitizen();
             
             _personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
-            //Act
+            // Act
             var result = _personServiceHelper.VerifyId(citizen);
 
-            //Assert
+            // Assert
             result.Should().BeFalse();
         }
 
         [Test]
         public void VerifyCid_Success()
         {
-            //Arrange
+            // Arrange
             var citizen = CreateCitizen();
 
             _personService.Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
 
-            //Act
+            // Act
             var result = _personServiceHelper.VerifyId(citizen);
 
-            //Assert
+            // Assert
             result.Should().BeTrue();
         }
     }
