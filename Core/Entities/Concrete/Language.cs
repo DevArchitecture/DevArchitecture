@@ -1,6 +1,6 @@
 ﻿namespace Core.Entities.Concrete
 {
-    public class Language:IEntity
+    public class Language : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
