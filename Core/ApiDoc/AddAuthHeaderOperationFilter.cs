@@ -29,7 +29,7 @@ namespace Core.ApiDoc
 
             operation.Security = new List<OpenApiSecurityRequirement>
             {
-                new OpenApiSecurityRequirement { [jwtbearerScheme] = new string []{} }
+                new OpenApiSecurityRequirement { [jwtbearerScheme] = new string[]{} }
             };
         }
     }
