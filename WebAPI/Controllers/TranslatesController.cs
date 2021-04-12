@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         [HttpGet("gettranslatesbylang")]
         public async Task<IActionResult> GetTranslatesByLang(string lang)
         {
-            var result = await Mediator.Send(new GetTranslatesByLangQuery() {Lang = lang});
+            var result = await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang});
             if (result.Success)
             {
                 return Ok(result.Message);
@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int translateId)
         {
-            var result = await Mediator.Send(new GetTranslateQuery {Id = translateId});
+            var result = await Mediator.Send(new GetTranslateQuery { Id = translateId});
             if (result.Success)
             {
                 return Ok(result.Data);

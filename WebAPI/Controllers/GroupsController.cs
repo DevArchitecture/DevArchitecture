@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int groupId)
         {
-            var result = await Mediator.Send(new GetGroupQuery {GroupId = groupId});
+            var result = await Mediator.Send(new GetGroupQuery { GroupId = groupId});
             if (result.Success)
             {
                 return Ok(result.Data);

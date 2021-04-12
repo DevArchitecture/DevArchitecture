@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyuserid")]
         public async Task<IActionResult> GetByUserId(int userid)
         {
-            var result = await Mediator.Send(new GetUserClaimLookupQuery {UserId = userid});
+            var result = await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid});
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
         [HttpGet("getoperationclaimbyuserid")]
         public async Task<IActionResult> GetOperationClaimByUserId(int id)
         {
-            var result = await Mediator.Send(new GetUserClaimLookupByUserIdQuery {Id = id});
+            var result = await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id});
             if (result.Success)
             {
                 return Ok(result.Data);

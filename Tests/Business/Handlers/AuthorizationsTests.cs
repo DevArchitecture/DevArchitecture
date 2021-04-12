@@ -77,7 +77,7 @@ namespace Tests.Business.Handlers
 		[Test]
 		public async Task Handler_Register()
 		{
-			var registerUser = new User {Email = "test@test.com", FullName = "test test"};
+			var registerUser = new User { Email = "test@test.com", FullName = "test test"};
 			_command = new RegisterUserCommand
 			{
 				Email = registerUser.Email,

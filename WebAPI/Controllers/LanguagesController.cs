@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int languageId)
         {
-            var result = await Mediator.Send(new GetLanguageQuery {Id = languageId});
+            var result = await Mediator.Send(new GetLanguageQuery { Id = languageId});
             if (result.Success)
             {
                 return Ok(result.Data);

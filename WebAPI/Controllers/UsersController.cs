@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int userId)
         {
-            var result = await Mediator.Send(new GetUserQuery {UserId = userId});
+            var result = await Mediator.Send(new GetUserQuery { UserId = userId});
             if (result.Success)
             {
                 return Ok(result.Data);

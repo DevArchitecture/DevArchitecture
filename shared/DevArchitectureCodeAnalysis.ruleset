@@ -19,7 +19,7 @@
         <Rule Id="SA1009" Action="Error"/>          <!-- Closing parenthesis should be spaced correctly -->
         <Rule Id="SA1010" Action="Error"/>          <!-- Opening square brackets should be spaced correctly -->
         <Rule Id="SA1011" Action="Error"/>          <!-- Closing square brackets should be spaced correctly -->
-        <Rule Id="SA1012" Action="None"/>          <!-- Opening braces should be spaced correctly -->
+        <Rule Id="SA1012" Action="Error"/>          <!-- Opening braces should be spaced correctly -->
         <Rule Id="SA1013" Action="None"/>          <!-- Closing braces should be spaced correctly -->
         <Rule Id="SA1014" Action="None"/>          <!-- Opening generic brackets should be spaced correctly -->
         <Rule Id="SA1015" Action="None"/>          <!-- Closing generic brackets should be spaced correctly -->

@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetByUserId(int userId)
         {
-            var result = await Mediator.Send(new GetUserGroupLookupQuery {UserId = userId});
+            var result = await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId});
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
         [HttpGet("getusergroupbyuserid")]
         public async Task<IActionResult> GetGroupClaimsByUserId(int id)
         {
-            var result = await Mediator.Send(new GetUserGroupLookupByUserIdQuery {UserId = id});
+            var result = await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id});
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
         [HttpGet("getusersingroupbygroupid")]
         public async Task<IActionResult> GetUsersInGroupByGroupid(int id)
         {
-            var result = await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery {GroupId = id});
+            var result = await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery { GroupId = id});
             if (result.Success)
             {
                 return Ok(result.Data);
