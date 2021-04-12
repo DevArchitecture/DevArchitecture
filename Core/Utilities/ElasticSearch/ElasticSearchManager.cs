@@ -26,7 +26,7 @@ namespace Core.Utilities.ElasticSearch
         {
             var elasticClient = GetElasticClient(indexModel.IndexName);
             if (elasticClient.Indices.Exists(indexModel.IndexName).Exists)
-                return new Results.Result(success: false,message:"Index already exists");
+                return new Results.Result(success: false, message:"Index already exists");
 
 
             var response = await elasticClient.Indices.CreateAsync(indexModel.IndexName, se =>

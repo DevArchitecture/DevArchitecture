@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla OperationClaims</remarks>
         ///<return>OperationClaims List</return>
         ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla OperationClaims</remarks>
         ///<return>OperationClaims List</return>
         ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         ///<remarks>bla bla bla OperationClaims</remarks>
         ///<return>OperationClaims List</return>
         ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getoperationclaimlookup")]
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         /// <param name="updateOperationClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
