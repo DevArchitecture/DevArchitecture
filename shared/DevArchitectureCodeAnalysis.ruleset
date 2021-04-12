@@ -22,7 +22,7 @@
         <Rule Id="SA1012" Action="Error"/>          <!-- Opening braces should be spaced correctly -->
         <Rule Id="SA1013" Action="Error"/>          <!-- Closing braces should be spaced correctly -->
         <Rule Id="SA1014" Action="Error"/>          <!-- Opening generic brackets should be spaced correctly -->
-        <Rule Id="SA1015" Action="None"/>          <!-- Closing generic brackets should be spaced correctly -->
+        <Rule Id="SA1015" Action="Error"/>          <!-- Closing generic brackets should be spaced correctly -->
         <Rule Id="SA1016" Action="None"/>          <!-- Opening attribute brackets should be spaced correctly -->
         <Rule Id="SA1017" Action="None"/>          <!-- Closing attribute brackets should be spaced correctly -->
         <Rule Id="SA1018" Action="None"/>          <!-- Nullable type symbols should be spaced correctly -->
