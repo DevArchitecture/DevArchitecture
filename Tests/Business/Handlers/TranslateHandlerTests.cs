@@ -39,13 +39,13 @@ namespace Tests.Business.Handlers
             var query = new GetTranslateQuery();
 
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
-                        .ReturnsAsync(new Translate()
+                        .ReturnsAsync(new Translate());
 // propertyler buraya yazılacak
 // {																		
 // TranslateId = 1,
 // TranslateName = "Test"
 // }
-);
+
 
             var handler = new GetTranslateQueryHandler(_translateRepository.Object, _mediator.Object);
 

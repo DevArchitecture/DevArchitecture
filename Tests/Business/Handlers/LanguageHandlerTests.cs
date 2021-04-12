@@ -40,13 +40,13 @@ namespace Tests.Business.Handlers
             var query = new GetLanguageQuery();
 
             _languageRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Language, bool>>>()))
-                        .ReturnsAsync(new Language()
+                        .ReturnsAsync(new Language());
 // propertyler buraya yazılacak
 // {
 // LanguageId = 1,
 // LanguageName = "Test"
 // }
-);
+
 
             var handler = new GetLanguageQueryHandler(_languageRepository.Object, _mediator.Object);
 
