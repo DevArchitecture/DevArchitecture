@@ -12,17 +12,17 @@ namespace WebAPI.Controllers
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    ///  
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class UserClaimsController : BaseApiController
     {
-        ///<summary>
-        ///List UserClaims
-        ///</summary>
-        ///<remarks>bla bla bla UserClaims</remarks>
-        ///<return>UserClaims List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List UserClaims
+        /// </summary>
+        /// <remarks>bla bla bla UserClaims</remarks>
+        /// <return>UserClaims List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -38,12 +38,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///Id sine göre detaylarını getirir.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>UserClaims List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// Id sine göre detaylarını getirir.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>UserClaims List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -59,12 +59,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>UserClaims List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>UserClaims List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

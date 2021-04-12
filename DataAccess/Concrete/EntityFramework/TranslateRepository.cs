@@ -35,12 +35,12 @@ namespace DataAccess.Concrete.EntityFramework
 
         public async Task<string> GetTranslatesByLang(string langCode)
         {
-            var data= await (from trs in Context.Translates
+            var data = await (from trs in Context.Translates
                               join lng in Context.Languages on trs.LangId equals lng.Id
                               where lng.Code == langCode
                               select trs).ToDictionaryAsync(x => (string)x.Code, x => (string)x.Value);
 
-            var str=JsonConvert.SerializeObject(data);
+            var str = JsonConvert.SerializeObject(data);
             return str;
        
         }

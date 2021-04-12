@@ -76,12 +76,12 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        ///<summary>
-        ///Make it Forgot Password operations
-        ///</summary>
-        ///<remarks>tckimlikno</remarks>
-        ///<return></return>
-        ///<response code="200"></response>   
+        /// <summary>
+        /// Make it Forgot Password operations
+        /// </summary>
+        /// <remarks>tckimlikno</remarks>
+        /// <return></return>
+        /// <response code="200"></response>   
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

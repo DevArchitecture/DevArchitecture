@@ -15,12 +15,12 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UsersController : BaseApiController
     {
-        ///<summary>
-        ///List Users 
-        ///</summary>
-        ///<remarks>bla bla bla Users</remarks>
-        ///<return>Users List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List Users 
+        /// </summary>
+        /// <remarks>bla bla bla Users</remarks>
+        /// <return>Users List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,12 +36,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///User Lookup
-        ///</summary>
-        ///<remarks>bla bla bla Users</remarks>
-        ///<return>Users List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// User Lookup
+        /// </summary>
+        /// <remarks>bla bla bla Users</remarks>
+        /// <return>Users List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -57,12 +57,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Users List</return>
-        ///<response code="200"></response>
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>Users List</return>
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

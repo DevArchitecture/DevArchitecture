@@ -8,7 +8,7 @@
 		public static string StringLengthMustBeGreaterThanThree => "StringLengthMustBeGreaterThanThree";
 		public static string CouldNotBeVerifyCid => "CouldNotBeVerifyCid";
 		public static string VerifyCid => "VerifyCid";
-		public static string OperationClaimExists=> "OperationClaimExists";
+		public static string OperationClaimExists => "OperationClaimExists";
 		public static string AuthorizationsDenied => "AuthorizationsDenied";
 		public static string Added => "Added";
 		public static string Deleted => "Deleted";

@@ -13,17 +13,17 @@ namespace WebAPI.Controllers
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    ///  
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class UserGroupsController : BaseApiController
     {
-        ///<summary>
-        ///List UserGroup
-        ///</summary>
-        ///<remarks>bla bla bla UserGroups</remarks>
-        ///<return>Kullanıcı Grup List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List UserGroup
+        /// </summary>
+        /// <remarks>bla bla bla UserGroups</remarks>
+        /// <return>Kullanıcı Grup List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -60,12 +60,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>UserGroups List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>UserGroups List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -81,12 +81,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>UserGroups List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>UserGroups List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

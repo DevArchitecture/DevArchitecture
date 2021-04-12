@@ -37,12 +37,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///List Translate
-        ///</summary>
-        ///<remarks>bla bla bla Translates</remarks>
-        ///<return>Translates List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List Translate
+        /// </summary>
+        /// <remarks>bla bla bla Translates</remarks>
+        /// <return>Translates List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -59,12 +59,12 @@ namespace WebAPI.Controllers
         }
 
 
-        ///<summary>
-        ///List Dto Translate
-        ///</summary>
-        ///<remarks>bla bla bla Translates</remarks>
-        ///<return>Translates List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List Dto Translate
+        /// </summary>
+        /// <remarks>bla bla bla Translates</remarks>
+        /// <return>Translates List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -80,12 +80,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Translate List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>Translate List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Translate))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

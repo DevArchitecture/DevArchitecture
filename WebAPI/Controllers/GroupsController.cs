@@ -12,17 +12,17 @@ namespace WebAPI.Controllers
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    ///  
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class GroupsController : BaseApiController
     {
-        ///<summary>
-        ///List Groups
-        ///</summary>
-        ///<remarks>bla bla bla Groups</remarks>
-        ///<return>Grup List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List Groups
+        /// </summary>
+        /// <remarks>bla bla bla Groups</remarks>
+        /// <return>Grup List</return>
+        /// <response code="200"></response>  
         //[AllowAnonymous]
         //[Produces("application/json","text/plain")]
         //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
@@ -39,12 +39,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Grup List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>Grup List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -60,12 +60,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///Group Lookup
-        ///</summary>
-        ///<remarks>Group Lookup döner </remarks>
-        ///<return>Grup Lokup</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// Group Lookup
+        /// </summary>
+        /// <remarks>Group Lookup döner </remarks>
+        /// <return>Grup Lokup</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -82,7 +82,7 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        ///Add Group .
+        /// Add Group .
         /// </summary>
         /// <param name="createGroup"></param>
         /// <returns></returns>
