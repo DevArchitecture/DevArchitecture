@@ -1,8 +1,7 @@
 ﻿namespace Tests.Business.Adapters
 {
-    using global::Business.Adapters.SmsService;
-
     using FluentAssertions;
+    using global::Business.Adapters.SmsService;
     using Moq;
     using NUnit.Framework;
     using Tests.Helpers.Adapter;

@@ -1,8 +1,7 @@
 ﻿namespace Tests.Core.Extensions
 {
-    using global::Core.Extensions;
-
     using FluentAssertions;
+    using global::Core.Extensions;
     using NUnit.Framework;
 
     public enum UserType

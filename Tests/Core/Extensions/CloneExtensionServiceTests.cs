@@ -1,9 +1,8 @@
 ﻿namespace Tests.Core.Extensions
 {
+    using FluentAssertions;
     using global::Core.Entities.Concrete;
     using global::Core.Extensions;
-
-    using FluentAssertions;
     using NUnit.Framework;
     using Tests.Helpers;
 
