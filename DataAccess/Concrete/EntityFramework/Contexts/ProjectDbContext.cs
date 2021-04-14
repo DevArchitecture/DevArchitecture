@@ -12,9 +12,6 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 	/// </summary>
     public class ProjectDbContext : DbContext
 	{
-		protected readonly IConfiguration Configuration;
-
-
 		/// <summary>
 		/// in constructor we get IConfiguration, parallel to more than one db
 		/// we can create migration.
@@ -48,6 +45,8 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 		public DbSet<MobileLogin> MobileLogins { get; set; }
 		public DbSet<Language> Languages { get; set; }
 		public DbSet<Translate> Translates { get; set; }
+
+		protected IConfiguration Configuration { get; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

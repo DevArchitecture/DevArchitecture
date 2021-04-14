@@ -4,7 +4,8 @@
 
     public abstract class LoggerServiceBase
     {
-        public ILogger Logger;
+        protected ILogger Logger { get; set; }
+
         public void Verbose(string message) => Logger.Verbose(message);
         public void Fatal(string message) => Logger.Fatal(message);
         public void Info(string message) => Logger.Information(message);

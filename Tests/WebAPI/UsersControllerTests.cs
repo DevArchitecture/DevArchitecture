@@ -19,10 +19,10 @@
 
 			// Arrange
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
-			httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authenticationScheme, token);
+			HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authenticationScheme, token);
 
 			// Act
-			var response = await httpClient.GetAsync(requestUri);
+			var response = await HttpClient.GetAsync(requestUri);
 
 			// Assert
 			response.StatusCode.Should()?.Be(HttpStatusCode.OK);

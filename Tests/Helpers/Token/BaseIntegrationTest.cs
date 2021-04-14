@@ -10,21 +10,20 @@
     [TestFixture]
     public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
     {
-        protected HttpClient httpClient;
-
         private static readonly JwtSecurityTokenHandler STokenHandler = new ();
 
         public string Issuer { get; } = "www.devarchitecture.com";
         public string Audience { get; } = "www.devarchitecture.com";
-
         public SigningCredentials SigningCredentials { get; }
+
+        protected HttpClient HttpClient { get; set; }
 
         protected WebApplicationFactory<Startup> Factory => new ();
 
         [SetUp]
         public void Setup()
         {
-            httpClient = CreateClient();
+            HttpClient = CreateClient();
         }
     }
 }

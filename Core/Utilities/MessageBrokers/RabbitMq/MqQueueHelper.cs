@@ -7,13 +7,15 @@
 
     public class MqQueueHelper : IMessageBrokerHelper
     {
-        public IConfiguration Configuration;
         private readonly MessageBrokerOptions _brokerOptions;
+
         public MqQueueHelper(IConfiguration configuration)
         {
             Configuration = configuration;
             _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
         }
+
+        public IConfiguration Configuration { get; }
 
         public void QueueMessage(string messageText)
         {

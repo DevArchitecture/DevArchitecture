@@ -18,12 +18,12 @@
             where TEntity : class, IEntity
             where TContext : DbContext
     {
-        protected readonly TContext Context;
-
         public EfEntityRepositoryBase(TContext context)
         {
             Context = context;
         }
+
+        protected TContext Context { get; }
 
         public TEntity Add(TEntity entity)
         {
