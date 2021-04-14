@@ -12,7 +12,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class LanguageRepository : EfEntityRepositoryBase<Language, ProjectDbContext>, ILanguageRepository
     {
-        public LanguageRepository(ProjectDbContext context) : base(context)
+        public LanguageRepository(ProjectDbContext context)
+            : base(context)
         {
         }
 

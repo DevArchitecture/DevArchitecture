@@ -13,7 +13,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class TranslateRepository : EfEntityRepositoryBase<Translate, ProjectDbContext>, ITranslateRepository
     {
-        public TranslateRepository(ProjectDbContext context) : base(context)
+        public TranslateRepository(ProjectDbContext context)
+            : base(context)
         {
         }
 

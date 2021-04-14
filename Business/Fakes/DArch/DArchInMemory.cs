@@ -6,7 +6,8 @@ namespace Business.Fakes.DArch
 {
 	public sealed class DArchInMemory : ProjectDbContext
 	{
-		public DArchInMemory(DbContextOptions<DArchInMemory> options, IConfiguration configuration) : base(options, configuration)
+		public DArchInMemory(DbContextOptions<DArchInMemory> options, IConfiguration configuration)
+			: base(options, configuration)
 		{
 		}
 

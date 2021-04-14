@@ -12,7 +12,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class UserClaimRepository : EfEntityRepositoryBase<UserClaim, ProjectDbContext>, IUserClaimRepository
 	{
-		public UserClaimRepository(ProjectDbContext context) : base(context)
+		public UserClaimRepository(ProjectDbContext context)
+			: base(context)
 		{
 		}
 

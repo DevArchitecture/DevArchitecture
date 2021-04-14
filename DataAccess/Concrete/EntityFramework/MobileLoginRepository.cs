@@ -7,7 +7,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
 	public class MobileLoginRepository : EfEntityRepositoryBase<MobileLogin, ProjectDbContext>, IMobileLoginRepository
 	{
-		public MobileLoginRepository(ProjectDbContext context) : base(context)
+		public MobileLoginRepository(ProjectDbContext context)
+			: base(context)
 		{
 		}
 	}

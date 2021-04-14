@@ -5,7 +5,8 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 {
     public sealed class OracleDbContext : ProjectDbContext
     {
-        public OracleDbContext(DbContextOptions<OracleDbContext> options, IConfiguration configuration) : base(options, configuration)
+        public OracleDbContext(DbContextOptions<OracleDbContext> options, IConfiguration configuration)
+            : base(options, configuration)
         {
         }
 
