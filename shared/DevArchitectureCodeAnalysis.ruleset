@@ -50,7 +50,7 @@
               Action="Error"/>          <!-- Query clause should begin on new line when previous clause spans multiple lines -->
         <Rule Id="SA1105"
               Action="Error"/>          <!-- Query clauses spanning multiple lines should begin on own line -->
-        <Rule Id="SA1106" Action="None"/>          <!-- Code should not contain empty statements -->
+        <Rule Id="SA1106" Action="Error"/>          <!-- Code should not contain empty statements -->
         <Rule Id="SA1107" Action="None"/>          <!-- Code should not contain multiple statements on one line -->
         <Rule Id="SA1108" Action="None"/>          <!-- Block statements should not contain embedded comments -->
         <Rule Id="SA1109" Action="None"/>             <!-- Block statements should not contain embedded regions -->
