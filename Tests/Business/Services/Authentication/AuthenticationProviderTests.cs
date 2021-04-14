@@ -78,7 +78,7 @@ namespace Tests.Business.Services.Authentication
 
 			result.Token.Should().Be("User Token");
 		}
-		//[Test]
+		// [Test]
 		public async Task Person_Authentication_Login()
 		{
 			var user = DataHelper.GetUser("test");

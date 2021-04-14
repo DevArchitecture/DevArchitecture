@@ -22,13 +22,13 @@ namespace WebAPI.Controllers
         /// <param name="lang"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("gettranslatesbylang")]
         public async Task<IActionResult> GetTranslatesByLang(string lang)
         {
-            var result = await Mediator.Send(new GetTranslatesByLangQuery() {Lang = lang});
+            var result = await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang });
             if (result.Success)
             {
                 return Ok(result.Message);
@@ -37,13 +37,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///List Translate
-        ///</summary>
-        ///<remarks>bla bla bla Translates</remarks>
-        ///<return>Translates List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// List Translate
+        /// </summary>
+        /// <remarks>bla bla bla Translates</remarks>
+        /// <return>Translates List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -59,13 +59,13 @@ namespace WebAPI.Controllers
         }
 
 
-        ///<summary>
-        ///List Dto Translate
-        ///</summary>
-        ///<remarks>bla bla bla Translates</remarks>
-        ///<return>Translates List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// List Dto Translate
+        /// </summary>
+        /// <remarks>bla bla bla Translates</remarks>
+        /// <return>Translates List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("gettranslatelistdto")]
@@ -80,19 +80,19 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Translate List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>Translate List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Translate))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int translateId)
         {
-            var result = await Mediator.Send(new GetTranslateQuery {Id = translateId});
+            var result = await Mediator.Send(new GetTranslateQuery { Id = translateId });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -107,7 +107,7 @@ namespace WebAPI.Controllers
         /// <param name="createTranslate"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
@@ -128,7 +128,7 @@ namespace WebAPI.Controllers
         /// <param name="updateTranslate"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -149,7 +149,7 @@ namespace WebAPI.Controllers
         /// <param name="deleteTranslate"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]

@@ -2,7 +2,7 @@
 
 namespace Core.Entities.Concrete
 {
-    public class Translate:IEntity
+    public class Translate : IEntity
     {
         public int Id { get; set; }
         public int LangId { get; set; }

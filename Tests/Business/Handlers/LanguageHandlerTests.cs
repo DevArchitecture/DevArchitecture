@@ -36,45 +36,45 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task Language_GetQuery_Success()
         {
-            //Arrange
+            // Arrange
             var query = new GetLanguageQuery();
 
             _languageRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Language, bool>>>()))
-                        .ReturnsAsync(new Language()
-//propertyler buraya yazılacak
-//{
-//LanguageId = 1,
-//LanguageName = "Test"
-//}
-);
+                        .ReturnsAsync(new Language());
+// propertyler buraya yazılacak
+// {
+// LanguageId = 1,
+// LanguageName = "Test"
+// }
+
 
             var handler = new GetLanguageQueryHandler(_languageRepository.Object, _mediator.Object);
 
-            //Act
+            // Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
-            //Asset
+            // Asset
             x.Success.Should().BeTrue();
-            //x.Data.Id.Should().Be(1);
+            // x.Data.Id.Should().Be(1);
 
         }
 
         [Test]
         public async Task Language_GetQueries_Success()
         {
-            //Arrange
+            // Arrange
             var query = new GetLanguagesQuery();
 
             _languageRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Language, bool>>>()))
-                        .ReturnsAsync(new List<Language> { new () { Id = 1, Code="tr-TR", Name = "Türkçe" },
-                                                           new () { Id = 2, Code="en-US", Name = "English" }});
+                        .ReturnsAsync(new List<Language> { new () { Id = 1, Code = "tr-TR", Name = "Türkçe" },
+                                                           new () { Id = 2, Code = "en-US", Name = "English" } });
 
             var handler = new GetLanguagesQueryHandler(_languageRepository.Object, _mediator.Object);
 
-            //Act
+            // Act
             var x = await handler.Handle(query, new System.Threading.CancellationToken());
 
-            //Asset
+            // Asset
             x.Success.Should().BeTrue();
             ((List<Language>)x.Data).Count.Should().BeGreaterThan(1);
 
@@ -85,10 +85,10 @@ namespace Tests.Business.Handlers
         public async Task Language_CreateCommand_Success()
         {
             Language rt = null;
-            //Arrange
+            // Arrange
             var command = new CreateLanguageCommand();
-            //propertyler buraya yazılacak
-            //command.LanguageName = "deneme";
+            // propertyler buraya yazılacak
+            // command.LanguageName = "deneme";
 
             _languageRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Language, bool>>>()))
                         .ReturnsAsync(rt);
@@ -106,10 +106,10 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task Language_CreateCommand_NameAlreadyExist()
         {
-            //Arrange
+            // Arrange
             var command = new CreateLanguageCommand();
-            //propertyler buraya yazılacak 
-            //command.LanguageName = "test";
+            // propertyler buraya yazılacak 
+            // command.LanguageName = "test";
 
             _languageRepository.Setup(x => x.Query())
                                     .Returns(new List<Language> { new () { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "test"*/ } }.AsQueryable());
@@ -126,9 +126,9 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task Language_UpdateCommand_Success()
         {
-            //Arrange
+            // Arrange
             var command = new UpdateLanguageCommand();
-            //command.LanguageName = "test";
+            // command.LanguageName = "test";
 
             _languageRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Language, bool>>>()))
                         .ReturnsAsync(new Language() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "deneme"*/ });
@@ -146,11 +146,11 @@ namespace Tests.Business.Handlers
         [Test]
         public async Task Language_DeleteCommand_Success()
         {
-            //Arrange
+            // Arrange
             var command = new DeleteLanguageCommand();
 
             _languageRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Language, bool>>>()))
-                        .ReturnsAsync(new Language() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "deneme"*/});
+                        .ReturnsAsync(new Language() { /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "deneme"*/ });
 
             _languageRepository.Setup(x => x.Delete(It.IsAny<Language>()));
 

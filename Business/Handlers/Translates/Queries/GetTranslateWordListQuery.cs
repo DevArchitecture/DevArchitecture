@@ -13,7 +13,7 @@ using Core.Aspects.Autofac.Caching;
 
 namespace Business.Handlers.Translates.Queries
 {
-    public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string,string>>>
+    public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string, string>>>
     {
         public string Lang { get; set; }
         public class GetTranslateWordListQueryHandler : IRequestHandler<GetTranslateWordListQuery, IDataResult<Dictionary<string, string>>>

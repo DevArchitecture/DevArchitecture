@@ -58,8 +58,7 @@ namespace Core.Utilities.Security.Jwt
                     expires: _accessTokenExpiration,
                     notBefore: DateTime.Now,
                     claims: SetClaims(user),
-                    signingCredentials: signingCredentials
-            );
+                    signingCredentials: signingCredentials);
             return jwt;
         }
 

@@ -12,18 +12,18 @@ namespace WebAPI.Controllers
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    ///  
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class OperationClaimsController : BaseApiController
     {
-        ///<summary>
-        ///List OperationClaims 
-        ///</summary>
-        ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// List OperationClaims 
+        /// </summary>
+        /// <remarks>bla bla bla OperationClaims</remarks>
+        /// <return>OperationClaims List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -38,19 +38,19 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla OperationClaims</remarks>
+        /// <return>OperationClaims List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByid(int id)
         {
-            var result = await Mediator.Send(new GetOperationClaimQuery() {Id = id});
+            var result = await Mediator.Send(new GetOperationClaimQuery() { Id = id });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -59,13 +59,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///List OperationClaims
-        ///</summary>
-        ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// List OperationClaims
+        /// </summary>
+        /// <remarks>bla bla bla OperationClaims</remarks>
+        /// <return>OperationClaims List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getoperationclaimlookup")]
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         /// <param name="updateOperationClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -101,12 +101,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///List OperationClaims 
-        ///</summary>
-        ///<remarks>bla bla bla OperationClaims</remarks>
-        ///<return>OperationClaims List</return>
-        ///<response code="200"></response>  
+        /// <summary>
+        /// List OperationClaims 
+        /// </summary>
+        /// <remarks>bla bla bla OperationClaims</remarks>
+        /// <return>OperationClaims List</return>
+        /// <response code="200"></response>  
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

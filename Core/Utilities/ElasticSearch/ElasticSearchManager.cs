@@ -26,14 +26,13 @@ namespace Core.Utilities.ElasticSearch
         {
             var elasticClient = GetElasticClient(indexModel.IndexName);
             if (elasticClient.Indices.Exists(indexModel.IndexName).Exists)
-                return new Results.Result(success: false,message:"Index already exists");
+                return new Results.Result(success: false, message: "Index already exists");
 
 
             var response = await elasticClient.Indices.CreateAsync(indexModel.IndexName, se =>
                   se.Settings(a => a.NumberOfReplicas(indexModel.NumberOfReplicas)
                               .NumberOfShards(indexModel.NumberOfShards))
-                  .Aliases(x => x.Alias(indexModel.AliasName))
-            );
+                  .Aliases(x => x.Alias(indexModel.AliasName)));
 
             return new Results.Result(success: response.IsValid,
                                       message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
@@ -84,10 +83,7 @@ namespace Core.Utilities.ElasticSearch
                         .Query(q => q.Match(
                             m => m.Field(fieldParameters.FieldName)
                             .Query(fieldParameters.Value)
-                            .Operator(Operator.And)
-                            )
-                         )
-                       );
+                            .Operator(Operator.And))));
 
             var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
             {
@@ -120,9 +116,8 @@ namespace Core.Utilities.ElasticSearch
                                       .FuzzyPrefixLength(0)
                                       .FuzzyMaxExpansions(50)
                                       .FuzzyTranspositions()
-                                      .AutoGenerateSynonymsPhraseQuery(false)))
-
-         );
+                                      .AutoGenerateSynonymsPhraseQuery(false))));
+            
             var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
             {
                 ElasticId = x.Id,

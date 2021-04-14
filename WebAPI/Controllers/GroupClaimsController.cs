@@ -12,19 +12,19 @@ namespace WebAPI.Controllers
     /// <summary>
     /// 
     /// </summary>
-    ///  
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class GroupClaimsController : BaseApiController
     {
-        ///<summary>
-        ///GroupClaims list
-        ///</summary>
-        ///<remarks>GroupClaims</remarks>
-        ///<return>GroupClaims List</return>
-        ///<response code="200"></response>  
-        //[AllowAnonymous]
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// GroupClaims list
+        /// </summary>
+        /// <remarks>GroupClaims</remarks>
+        /// <return>GroupClaims List</return>
+        /// <response code="200"></response>  
+        // [AllowAnonymous]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GroupClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -39,19 +39,19 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>GroupClaims List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>GroupClaims List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await Mediator.Send(new GetGroupClaimQuery {Id = id});
+            var result = await Mediator.Send(new GetGroupClaimQuery { Id = id });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -60,19 +60,19 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///Brings up Claims by Group Id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>GroupClaims List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// Brings up Claims by Group Id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>GroupClaims List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getgroupclaimsbygroupid")]
         public async Task<IActionResult> GetGroupClaimsByGroupId(int id)
         {
-            var result = await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery {GroupId = id});
+            var result = await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -87,7 +87,7 @@ namespace WebAPI.Controllers
         /// <param name="createGroupClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
         /// <param name="updateGroupClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -129,7 +129,7 @@ namespace WebAPI.Controllers
         /// <param name="deleteGroupClaim"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]

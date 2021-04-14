@@ -23,8 +23,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                     .DurableHttpUsingFileSizeRolledBuffers(
                         requestUri: logConfig.Url,
                         batchFormatter: new ArrayBatchFormatter(),
-                        textFormatter: new ElasticsearchJsonFormatter()
-                     )
+                        textFormatter: new ElasticsearchJsonFormatter())
                     .CreateLogger();
             Logger = seriLogConfig;
         }

@@ -15,13 +15,13 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UsersController : BaseApiController
     {
-        ///<summary>
-        ///List Users 
-        ///</summary>
-        ///<remarks>bla bla bla Users</remarks>
-        ///<return>Users List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// List Users 
+        /// </summary>
+        /// <remarks>bla bla bla Users</remarks>
+        /// <return>Users List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
@@ -36,13 +36,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///User Lookup
-        ///</summary>
-        ///<remarks>bla bla bla Users</remarks>
-        ///<return>Users List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// User Lookup
+        /// </summary>
+        /// <remarks>bla bla bla Users</remarks>
+        /// <return>Users List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getuserlookup")]
@@ -57,19 +57,19 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Users List</return>
-        ///<response code="200"></response>
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>Users List</return>
+        /// <response code="200"></response>
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int userId)
         {
-            var result = await Mediator.Send(new GetUserQuery {UserId = userId});
+            var result = await Mediator.Send(new GetUserQuery { UserId = userId });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -84,7 +84,7 @@ namespace WebAPI.Controllers
         /// <param name="createUser"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         /// <param name="updateUser"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
         /// <param name="deleteUser"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]

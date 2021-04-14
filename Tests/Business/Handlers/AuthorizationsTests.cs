@@ -44,7 +44,7 @@ namespace Tests.Business.Handlers
 			_mediator = new Mock<IMediator>();
             _cacheManager = new Mock<ICacheManager>();
 
-			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,_mediator.Object, _cacheManager.Object);
+			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _mediator.Object, _cacheManager.Object);
 			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}
@@ -77,7 +77,7 @@ namespace Tests.Business.Handlers
 		[Test]
 		public async Task Handler_Register()
 		{
-			var registerUser = new User {Email = "test@test.com", FullName = "test test"};
+			var registerUser = new User { Email = "test@test.com", FullName = "test test" };
 			_command = new RegisterUserCommand
 			{
 				Email = registerUser.Email,

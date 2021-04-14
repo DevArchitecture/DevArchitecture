@@ -1,7 +1,7 @@
 ﻿
 namespace Core.Entities.Dtos
 {
-    public class TranslateDto:IDto
+    public class TranslateDto : IDto
     {
         public int Id { get; set; }
         public string Language { get; set; }

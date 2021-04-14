@@ -12,21 +12,21 @@ namespace WebAPI.Controllers
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    ///  
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class GroupsController : BaseApiController
     {
-        ///<summary>
-        ///List Groups
-        ///</summary>
-        ///<remarks>bla bla bla Groups</remarks>
-        ///<return>Grup List</return>
-        ///<response code="200"></response>  
-        //[AllowAnonymous]
-        //[Produces("application/json","text/plain")]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        /// <summary>
+        /// List Groups
+        /// </summary>
+        /// <remarks>bla bla bla Groups</remarks>
+        /// <return>Grup List</return>
+        /// <response code="200"></response>  
+        // [AllowAnonymous]
+        // [Produces("application/json","text/plain")]
+        // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
+        // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
@@ -39,19 +39,19 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///It brings the details according to its id.
-        ///</summary>
-        ///<remarks>bla bla bla </remarks>
-        ///<return>Grup List</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>Grup List</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int groupId)
         {
-            var result = await Mediator.Send(new GetGroupQuery {GroupId = groupId});
+            var result = await Mediator.Send(new GetGroupQuery { GroupId = groupId });
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -60,13 +60,13 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        ///<summary>
-        ///Group Lookup
-        ///</summary>
-        ///<remarks>Group Lookup döner </remarks>
-        ///<return>Grup Lokup</return>
-        ///<response code="200"></response>  
-        [Produces("application/json","text/plain")]
+        /// <summary>
+        /// Group Lookup
+        /// </summary>
+        /// <remarks>Group Lookup döner </remarks>
+        /// <return>Grup Lokup</return>
+        /// <response code="200"></response>  
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("getgrouplookup")]
@@ -82,12 +82,12 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        ///Add Group .
+        /// Add Group .
         /// </summary>
         /// <param name="createGroup"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
         /// <param name="updateGroup"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
@@ -129,7 +129,7 @@ namespace WebAPI.Controllers
         /// <param name="deleteGroup"></param>
         /// <returns></returns>
         [Consumes("application/json")]
-        [Produces("application/json","text/plain")]
+        [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]
