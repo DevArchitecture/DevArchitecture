@@ -14,8 +14,8 @@
 
 		static MockJwtTokens()
 		{
-			var sKey = Encoding.UTF8.GetBytes(_keyString);
-			SecurityKey = new SymmetricSecurityKey(sKey);
+			var SKey = Encoding.UTF8.GetBytes(_keyString);
+			SecurityKey = new SymmetricSecurityKey(SKey);
 			SigningCredentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256Signature);
 
 		}

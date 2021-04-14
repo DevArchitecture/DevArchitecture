@@ -19,18 +19,18 @@
 
 		public async Task BulkInsert(int userId, IEnumerable<UserGroup> userGroups)
 		{
-			var dbUserGroupList = Context.UserGroups.Where(x => x.UserId == userId);
+			var DbUserGroupList = Context.UserGroups.Where(x => x.UserId == userId);
 
-			Context.UserGroups.RemoveRange(dbUserGroupList);
+			Context.UserGroups.RemoveRange(DbUserGroupList);
 			await Context.UserGroups.AddRangeAsync(userGroups);
 
 		}
 
 		public async Task BulkInsertByGroupId(int groupId, IEnumerable<UserGroup> userGroups)
 		{
-			var dbUserGroupList = Context.UserGroups.Where(x => x.GroupId == groupId);
+			var DbUserGroupList = Context.UserGroups.Where(x => x.GroupId == groupId);
 
-			Context.UserGroups.RemoveRange(dbUserGroupList);
+			Context.UserGroups.RemoveRange(DbUserGroupList);
 			await Context.UserGroups.AddRangeAsync(userGroups);
 		}
 

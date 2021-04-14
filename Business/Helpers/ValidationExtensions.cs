@@ -20,21 +20,21 @@
 
         public static bool IsCidValid(this long citizenId)
         {
-            var tcNo = citizenId;
-            var atcno = tcNo / 100;
+            var identificationNumber = citizenId;
+            var atcno = identificationNumber / 100;
             var checksum = ComputeCidChecksum(citizenId);
-            var returnValue = (atcno * 100 + checksum) == tcNo;
+            var returnValue = (atcno * 100 + checksum) == identificationNumber;
 
             return returnValue;
         }
 
         public static long ComputeCidChecksum(this long citizenId)
         {
-            var tcNo = citizenId;
+            var identificationNumber = citizenId;
             long atcno, btcno;
             long c1, c2, c3, c4, c5, c6, c7, c8, c9, q1, q2;
-            atcno = tcNo / 100;
-            btcno = tcNo / 100;
+            atcno = identificationNumber / 100;
+            btcno = identificationNumber / 100;
             c1 = atcno % 10;
             atcno = atcno / 10;
             c2 = atcno % 10;

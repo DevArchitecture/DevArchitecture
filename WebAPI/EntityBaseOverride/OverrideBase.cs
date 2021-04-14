@@ -15,8 +15,8 @@
         /// </summary>
         /// <param name="annotationCodeGenerator"></param>
         /// <param name="cSharpHelper"></param>
-        public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper)
-            : base(annotationCodeGenerator, cSharpHelper)
+        public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper CSharpHelper)
+            : base(annotationCodeGenerator, CSharpHelper)
         {
 
         }

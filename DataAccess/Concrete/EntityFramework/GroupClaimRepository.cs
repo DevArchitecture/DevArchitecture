@@ -19,9 +19,9 @@
 
 		public async Task BulkInsert(int groupId, IEnumerable<GroupClaim> groupClaims)
 		{
-			var dbList = await Context.GroupClaims.Where(x => x.GroupId == groupId).ToListAsync();
+			var DbList = await Context.GroupClaims.Where(x => x.GroupId == groupId).ToListAsync();
 
-			Context.GroupClaims.RemoveRange(dbList);
+			Context.GroupClaims.RemoveRange(DbList);
 			await Context.GroupClaims.AddRangeAsync(groupClaims);
 		}
 

@@ -19,9 +19,9 @@
 
 		public async Task<IEnumerable<UserClaim>> BulkInsert(int userId, IEnumerable<UserClaim> userClaims)
 		{
-			var dbClaimList = Context.UserClaims.Where(x => x.UserId == userId);
+			var DbClaimList = Context.UserClaims.Where(x => x.UserId == userId);
 
-			Context.UserClaims.RemoveRange(dbClaimList);
+			Context.UserClaims.RemoveRange(DbClaimList);
 			await Context.UserClaims.AddRangeAsync(userClaims);
 			return userClaims;
 		}
