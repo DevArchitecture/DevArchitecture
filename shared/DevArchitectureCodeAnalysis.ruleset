@@ -139,7 +139,7 @@
         <Rule Id="SA1403" Action="None"/>          <!-- File may only contain a single namespace -->
         <Rule Id="SA1404" Action="Error"/>          <!-- Code analysis suppression should have justification -->
         <Rule Id="SA1405" Action="None"/>          <!-- Debug.Assert should provide message text -->
-        <Rule Id="SA1406" Action="None"/>          <!-- Debug.Fail should provide message text -->
+        <Rule Id="SA1406" Action="Error"/>          <!-- Debug.Fail should provide message text -->
         <Rule Id="SA1407" Action="None"/>          <!-- Arithmetic expressions should declare precedence -->
         <Rule Id="SA1408" Action="None"/>          <!-- Conditional expressions should declare precedence -->
         <Rule Id="SA1409" Action="None"/>          <!-- Remove unnecessary code -->
