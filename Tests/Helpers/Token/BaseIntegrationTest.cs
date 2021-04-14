@@ -10,7 +10,7 @@
     [TestFixture]
     public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
     {
-        protected HttpClient Client;
+        protected HttpClient httpClient;
 
         private static readonly JwtSecurityTokenHandler STokenHandler = new ();
 
@@ -24,7 +24,7 @@
         [SetUp]
         public void Setup()
         {
-            Client = CreateClient();
+            httpClient = CreateClient();
         }
     }
 }

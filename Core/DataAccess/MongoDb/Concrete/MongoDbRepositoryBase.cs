@@ -14,13 +14,13 @@
     public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T>
 		where T : DocumentDbEntity
 	{
-		protected string CollectionName;
+		protected string collectionName;
 
 		private readonly IMongoCollection<T> _collection;
 
 		protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
 		{
-			CollectionName = collectionName;
+			collectionName = collectionName;
 
 			ConnectionSettingControl(mongoConnectionSetting);
 
@@ -145,11 +145,11 @@
 		private void ConnectionSettingControl(MongoConnectionSettings settings)
 		{
 			if (settings.GetMongoClientSettings() != null &&
-						(string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
+						(string.IsNullOrEmpty(collectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
 				throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
 
-			if (string.IsNullOrEmpty(CollectionName) ||
+			if (string.IsNullOrEmpty(collectionName) ||
 						string.IsNullOrEmpty(settings.ConnectionString) ||
 						string.IsNullOrEmpty(settings.DatabaseName))
 				throw new Exception(DocumentDbMessages.NullOremptyMessage);
