@@ -35,7 +35,9 @@
 
 				var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 				if (isThereAnyUser == null)
-					return new ErrorResult(Messages.UserNotFound);
+                {
+                    return new ErrorResult(Messages.UserNotFound);
+                }
 
 				HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
 

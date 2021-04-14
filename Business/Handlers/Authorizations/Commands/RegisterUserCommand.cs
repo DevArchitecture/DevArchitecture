@@ -42,8 +42,9 @@
                 var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
 
                 if (isThereAnyUser != null)
+                {
                     return new ErrorResult(Messages.NameAlreadyExist);
-
+                }
 
                 HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
                 var user = new User

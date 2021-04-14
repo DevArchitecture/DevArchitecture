@@ -33,14 +33,18 @@ namespace Business.Handlers.Groups.Queries
                 var result = BusinessRules.Run(StringLengthMustBeGreaterThanThree(request.GroupName));
 
                 if (result != null)
+                {
                     return new ErrorDataResult<IEnumerable<Group>>(result.Message);
+                }
 
                 return new SuccessDataResult<IEnumerable<Group>>(await _groupRepository.GetListAsync(x => x.GroupName.ToLower().Contains(request.GroupName.ToLower())));
             }
             private static IResult StringLengthMustBeGreaterThanThree(string searchString)
             {
                 if (searchString.Length >= 3)
+                {
                     return new SuccessResult();
+                }
 
                 return new ErrorResult(Messages.StringLengthMustBeGreaterThanThree);
             }

@@ -34,13 +34,13 @@
 
 		public bool UpdateMobilePhone(string mobilePhone)
 		{
-			if (mobilePhone != MobilePhones)
-			{
-				MobilePhones = mobilePhone;
-				return true;
-			}
-			else
-				return false;
+			if (mobilePhone == MobilePhones)
+            {
+                return false;
+            }
+
+			MobilePhones = mobilePhone;
+			return true;
 		}
 
 	}

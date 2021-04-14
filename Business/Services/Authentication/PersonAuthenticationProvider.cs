@@ -39,15 +39,17 @@
 
 
             if (command.IsPhoneValid)
+            {
                 return await PrepareOneTimePassword(AuthenticationProviderType.Person, user.MobilePhones, user.CitizenId.ToString());
-            else
-                return new LoginUserResult
-                {
-                    Message = Messages.TrueButCellPhone,
+            }
 
-                    Status = LoginUserResult.LoginStatus.PhoneNumberRequired,
-                    MobilePhones = new string[] { user.MobilePhones }
-                };
+            return new LoginUserResult
+            {
+                Message = Messages.TrueButCellPhone,
+
+                Status = LoginUserResult.LoginStatus.PhoneNumberRequired,
+                MobilePhones = new string[] { user.MobilePhones }
+            };
         }
 
         public override async Task<DArchToken> CreateToken(VerifyOtpCommand command)

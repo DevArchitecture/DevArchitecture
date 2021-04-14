@@ -7,9 +7,13 @@
         public static bool IsCidValid(this string citizenId)
         {
             if (citizenId != null && citizenId.Length == 11)
+            {
                 return IsCidValid(long.Parse(citizenId));
+            }
             else
+            {
                 return false;
+            }
         }
 
         public static long AddChecksumToCid(long cidWithoutChecksum)
@@ -63,12 +67,12 @@
         public static bool IsPhoneValid(this string mobilePhone)
         {
             if (string.IsNullOrWhiteSpace(mobilePhone))
-                return false;
-            else
             {
-                mobilePhone = Regex.Replace(mobilePhone, "[^0-9]", string.Empty);
-                return mobilePhone.StartsWith("05") && mobilePhone.Length == 11;
+                return false;
             }
+
+            mobilePhone = Regex.Replace(mobilePhone, "[^0-9]", string.Empty);
+            return mobilePhone.StartsWith("05") && mobilePhone.Length == 11;
         }
     }
 }

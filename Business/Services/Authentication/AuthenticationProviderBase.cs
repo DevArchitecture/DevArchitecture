@@ -39,7 +39,9 @@
 
 
 			if (accessToken.Provider == AuthenticationProviderType.Unknown)
-				throw new ArgumentException(Messages.TokenProviderException);
+            {
+                throw new ArgumentException(Messages.TokenProviderException);
+            }
 
 			login.IsUsed = true;
 			_logins.Update(login);

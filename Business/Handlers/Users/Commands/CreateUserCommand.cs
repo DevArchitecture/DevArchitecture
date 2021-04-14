@@ -48,8 +48,9 @@
                 var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
 
                 if (isThereAnyUser != null)
+                {
                     return new ErrorResult(Messages.NameAlreadyExist);
-
+                }
 
                 var user = new User
                 {

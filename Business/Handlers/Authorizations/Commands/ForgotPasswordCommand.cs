@@ -43,7 +43,10 @@
 				var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TcKimlikNo));
 
 				if (user == null)
-					return new ErrorResult(Messages.WrongCitizenId);
+                {
+                    return new ErrorResult(Messages.WrongCitizenId);
+                }
+
 				var generatedPassword = RandomPassword.CreateRandomPassword(14);
 				HashingHelper.CreatePasswordHash(generatedPassword, out var passwordSalt, out var passwordHash);
 

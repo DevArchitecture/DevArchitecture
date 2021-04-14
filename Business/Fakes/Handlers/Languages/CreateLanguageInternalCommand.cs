@@ -41,7 +41,9 @@
 				var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);
 
 				if (isThereLanguageRecord)
-					return new ErrorResult(Messages.NameAlreadyExist);
+                {
+                    return new ErrorResult(Messages.NameAlreadyExist);
+                }
 
 				var addedLanguage = new Language
 				{

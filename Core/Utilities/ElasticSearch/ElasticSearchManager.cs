@@ -24,8 +24,9 @@
         {
             var elasticClient = GetElasticClient(indexModel.IndexName);
             if (elasticClient.Indices.Exists(indexModel.IndexName).Exists)
+            {
                 return new Results.Result(success: false, message: "Index already exists");
-
+            }
 
             var response = await elasticClient.Indices.CreateAsync(indexModel.IndexName, se =>
                 se.Settings(a => a.NumberOfReplicas(indexModel.NumberOfReplicas)
@@ -168,7 +169,9 @@
         private ElasticClient GetElasticClient(string indexName)
         {
             if (string.IsNullOrEmpty(indexName))
+            {
                 throw new ArgumentNullException(indexName, "Index name cannot be null or empty ");
+            }
 
             return new ElasticClient(_connectionSettings);
         }

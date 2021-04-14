@@ -39,10 +39,14 @@
                 var user = await _userRepository.GetAsync(u => u.Email == request.Email && u.Status);
 
                 if (user == null)
+                {
                     return new ErrorDataResult<AccessToken>(Messages.UserNotFound);
+                }
 
                 if (!HashingHelper.VerifyPasswordHash(request.Password, user.PasswordSalt, user.PasswordHash))
+                {
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
+                }
 
                 var claims = _userRepository.GetClaims(user.UserId);
 

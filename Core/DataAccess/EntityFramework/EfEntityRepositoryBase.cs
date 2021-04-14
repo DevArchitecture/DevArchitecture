@@ -125,9 +125,11 @@
             catch (Exception ex)
             {
                 if (exceptionAction == null)
+                {
                     throw;
-                else
-                    exceptionAction(ex);
+                }
+
+                exceptionAction(ex);
             }
             return result;
         }
@@ -135,17 +137,18 @@
         public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             if (expression == null)
+            {
                 return await Context.Set<TEntity>().CountAsync();
+            }
             else
+            {
                 return await Context.Set<TEntity>().CountAsync(expression);
+            }
         }
 
         public int GetCount(Expression<Func<TEntity, bool>> expression = null)
         {
-            if (expression == null)
-                return Context.Set<TEntity>().Count();
-            else
-                return Context.Set<TEntity>().Count(expression);
+            return expression == null ? Context.Set<TEntity>().Count() : Context.Set<TEntity>().Count(expression);
         }
 
     }

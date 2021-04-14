@@ -34,7 +34,9 @@
                 foreach (var claim in request.OperationClaims)
                 {
                     if (await DoesClaimExistsForUser(new UserClaim { ClaimId = claim.Id, UserId = request.UserId }))
+                    {
                         continue;
+                    }
 
                     _userClaimsRepository.Add(new UserClaim
                     {

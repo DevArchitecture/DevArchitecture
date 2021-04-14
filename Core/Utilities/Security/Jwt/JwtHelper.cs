@@ -27,7 +27,10 @@
         {
             var handler = new JwtSecurityTokenHandler();
             if (input.StartsWith("Bearer "))
+            {
                 input = input.Substring("Bearer ".Length);
+            }
+
             return handler.ReadJwtToken(input).ToString();
         }
 
@@ -68,9 +71,14 @@
             var claims = new List<Claim>();
             claims.AddNameIdentifier(user.UserId.ToString());
             if (user.CitizenId > 0)
+            {
                 claims.AddNameUniqueIdentifier(user.CitizenId.ToString());
+            }
+
             if (!string.IsNullOrEmpty(user.FullName))
+            {
                 claims.AddName($"{user.FullName}");
+            }
 
             claims.Add(new Claim(ClaimTypes.Role, user.AuthenticationProviderType));
 

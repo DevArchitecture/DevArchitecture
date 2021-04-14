@@ -13,8 +13,7 @@
             {
                 invocation.Proceed();
                 var result = invocation.ReturnValue as Task;
-                if (result != null)
-                    result.Wait();
+                result?.Wait();
 
             }
             catch (System.Exception e)

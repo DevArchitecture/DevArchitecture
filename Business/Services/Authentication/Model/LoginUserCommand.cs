@@ -32,13 +32,13 @@
 			get
 			{
 				if (string.IsNullOrWhiteSpace(MobilePhone))
-					return false;
-				else
-				{
-					PostProcess();
-					MobilePhone = Regex.Replace(MobilePhone, "[^0-9]", string.Empty);
-					return MobilePhone.StartsWith("05") && MobilePhone.Length == 11;
-				}
+                {
+                    return false;
+                }
+
+				PostProcess();
+				MobilePhone = Regex.Replace(MobilePhone, "[^0-9]", string.Empty);
+				return MobilePhone.StartsWith("05") && MobilePhone.Length == 11;
 			}
 		}
 		public long AsCitizenId() => long.Parse(ExternalUserId);

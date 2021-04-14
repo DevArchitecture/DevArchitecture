@@ -17,7 +17,10 @@
                                 || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any())
                                 && !context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnonymousAttribute>().Any(); // this excludes methods with AllowAnonymous attribute
 
-            if (!isAuthorized) return;
+            if (!isAuthorized)
+            {
+                return;
+            }
 
             operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
             operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });

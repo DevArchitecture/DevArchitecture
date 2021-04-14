@@ -42,10 +42,7 @@
 				? _collection.AsQueryable()
 				: _collection.AsQueryable().Where(predicate);
 
-			if (data.FirstOrDefault() == null)
-				return false;
-			else
-				return true;
+			return data.FirstOrDefault() != null;
 		}
 
 		public virtual void Delete(ObjectId id)
@@ -146,14 +143,16 @@
 		{
 			if (settings.GetMongoClientSettings() != null &&
 						(string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
-				throw new Exception(DocumentDbMessages.NullOremptyMessage);
-
+            {
+                throw new Exception(DocumentDbMessages.NullOremptyMessage);
+            }
 
 			if (string.IsNullOrEmpty(CollectionName) ||
 						string.IsNullOrEmpty(settings.ConnectionString) ||
 						string.IsNullOrEmpty(settings.DatabaseName))
-				throw new Exception(DocumentDbMessages.NullOremptyMessage);
-
-		}
+            {
+                throw new Exception(DocumentDbMessages.NullOremptyMessage);
+            }
+        }
 	}
 }

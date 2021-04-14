@@ -36,26 +36,13 @@
 		{
 			var logDetailWithException = GetLogDetail(invocation);
 
-			if (e is AggregateException)
-				logDetailWithException.ExceptionMessage =
-					string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message));
-			else
-				logDetailWithException.ExceptionMessage = e.Message;
+			logDetailWithException.ExceptionMessage = e is AggregateException ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message)) : e.Message;
 			_loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
 		}
 
 		private LogDetailWithException GetLogDetail(IInvocation invocation)
 		{
-			var logParameters = new List<LogParameter>();
-			for (var i = 0; i < invocation.Arguments.Length; i++)
-			{
-				logParameters.Add(new LogParameter
-				{
-					Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
-					Value = invocation.Arguments[i],
-					Type = invocation.Arguments[i].GetType().Name
-				});
-			}
+			var logParameters = invocation.Arguments.Select((t, i) => new LogParameter { Name = invocation.GetConcreteMethod().GetParameters()[i].Name, Value = t, Type = t.GetType().Name }).ToList();
 			var logDetailWithException = new LogDetailWithException
 			{
 				MethodName = invocation.Method.Name,

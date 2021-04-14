@@ -45,7 +45,9 @@
                 var isThereTranslateRecord = _translateRepository.Query().Any(u => u.LangId == request.LangId && u.Code == request.Code);
 
                 if (isThereTranslateRecord == true)
+                {
                     return new ErrorResult(Messages.NameAlreadyExist);
+                }
 
                 var addedTranslate = new Translate
                 {

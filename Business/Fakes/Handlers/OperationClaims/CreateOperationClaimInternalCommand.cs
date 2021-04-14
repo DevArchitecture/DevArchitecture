@@ -25,7 +25,9 @@
 			public async Task<IResult> Handle(CreateOperationClaimInternalCommand request, CancellationToken cancellationToken)
 			{
 				if (IsClaimExists(request.ClaimName))
-					return new ErrorResult(Messages.OperationClaimExists);
+                {
+                    return new ErrorResult(Messages.OperationClaimExists);
+                }
 
 				var operationClaim = new OperationClaim
 				{

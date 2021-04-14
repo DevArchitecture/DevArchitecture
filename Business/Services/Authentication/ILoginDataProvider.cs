@@ -59,13 +59,17 @@
 
 		public void CleanRecord()
 		{
+			if (string.IsNullOrWhiteSpace(MobilePhone))
+            {
+                return;
+            }
 
-			if (!string.IsNullOrWhiteSpace(MobilePhone))
+			if (!MobilePhone.StartsWith("0"))
 			{
-				if (!MobilePhone.StartsWith("0"))
-					MobilePhone = "0" + MobilePhone;
-				MobilePhone = MobilePhone.Split('-')[0].Trim();
+				MobilePhone = "0" + MobilePhone;
 			}
+
+			MobilePhone = MobilePhone.Split('-')[0].Trim();
 		}
 	}
 }
