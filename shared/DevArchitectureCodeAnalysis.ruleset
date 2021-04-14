@@ -112,7 +112,7 @@
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.NamingRules">
         <Rule Id="SA1300" Action="Error"/>          <!-- Element should begin with upper-case letter -->
-        <Rule Id="SA1301" Action="None"/>             <!-- Element should begin with lower-case letter -->
+        <Rule Id="SA1301" Action="Error"/>             <!-- Element should begin with lower-case letter -->
         <Rule Id="SA1302" Action="None"/>          <!-- Interface names should begin with I -->
         <Rule Id="SA1303" Action="None"/>          <!-- Const field names should begin with upper-case letter -->
         <Rule Id="SA1304"
