@@ -127,7 +127,7 @@
         <Rule Id="SA1312" Action="None"/>          <!-- Variable names should begin with lower-case letter -->
         <Rule Id="SA1313" Action="None"/>          <!-- Parameter names should begin with lower-case letter -->
         <Rule Id="SA1314" Action="None"/>          <!-- Type parameter names should begin with T -->
-        <Rule Id="SX1309" Action="None"/>             <!-- Field names should begin with underscore -->
+        <Rule Id="SX1309" Action="Error"/>             <!-- Field names should begin with underscore -->
         <Rule Id="SX1309S" Action="None"/>             <!-- Static field names should begin with underscore -->
     </Rules>
 
