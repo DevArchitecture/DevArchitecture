@@ -143,7 +143,7 @@
         <Rule Id="SA1407" Action="None"/>          <!-- Arithmetic expressions should declare precedence -->
         <Rule Id="SA1408" Action="None"/>          <!-- Conditional expressions should declare precedence -->
         <Rule Id="SA1409" Action="None"/>          <!-- Remove unnecessary code -->
-        <Rule Id="SA1410" Action="None"/>          <!-- Remove delegate parenthesis when possible -->
+        <Rule Id="SA1410" Action="Error"/>          <!-- Remove delegate parenthesis when possible -->
         <Rule Id="SA1411" Action="None"/>          <!-- Attribute constructor should not use unnecessary parenthesis -->
         <Rule Id="SA1412" Action="None"/>          <!-- Store files as UTF-8 with byte order mark -->
         <Rule Id="SA1413" Action="None"/>          <!-- Use trailing comma in multi-line initializers -->
