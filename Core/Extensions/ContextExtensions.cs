@@ -14,7 +14,8 @@ namespace Core.Extensions
     /// <param name="context"></param>
     /// <param name="t"></param>
     /// <returns></returns>
-    public static DbSet<T> Set<T>(this DbContext context, Type t) where T : class
+    public static DbSet<T> Set<T>(this DbContext context, Type t)
+        where T : class
         {
             return (DbSet<T>)context.GetType().GetMethod("Set").MakeGenericMethod(t).Invoke(context, null);
         }
@@ -28,7 +29,8 @@ namespace Core.Extensions
     /// <param name="context"></param>
     /// <param name="typeName"></param>
     /// <returns></returns>
-    public static IQueryable<T> QueryableOf<T>(this DbContext context, string typeName) where T : class
+    public static IQueryable<T> QueryableOf<T>(this DbContext context, string typeName)
+        where T : class
         {
             var type = context.Model.GetEntityTypes(typeName).First();
             var q = (IQueryable)context

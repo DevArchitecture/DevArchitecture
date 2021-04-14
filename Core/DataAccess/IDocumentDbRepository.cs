@@ -8,7 +8,8 @@ using Core.Entities;
 
 namespace Core.DataAccess
 {
-	public interface IDocumentDbRepository<T> where T : DocumentDbEntity
+	public interface IDocumentDbRepository<T>
+		where T : DocumentDbEntity
 	{
 		void Add(T entity);
 		IQueryable<T> GetList(Expression<Func<T, bool>> predicate = null);

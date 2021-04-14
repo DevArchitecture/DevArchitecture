@@ -46,7 +46,8 @@ namespace Core.Utilities.ElasticSearch
                 message: response.IsValid ? "Success" : response.ServerError.Error.Reason);
         }
 
-        public async Task<List<ElasticSearchGetModel<T>>> GetAllSearch<T>(SearchParameters parameters) where T : class
+        public async Task<List<ElasticSearchGetModel<T>>> GetAllSearch<T>(SearchParameters parameters)
+            where T : class
         {
             var type = typeof(T);
 
@@ -95,7 +96,8 @@ namespace Core.Utilities.ElasticSearch
         }
 
         public async Task<List<ElasticSearchGetModel<T>>> GetSearchBySimpleQueryString<T>(
-            SearchByQueryParameters queryParameters) where T : class
+            SearchByQueryParameters queryParameters)
+            where T : class
         {
             var elasticClient = GetElasticClient(queryParameters.IndexName);
             var searchResponse = await elasticClient.SearchAsync<T>(s => s

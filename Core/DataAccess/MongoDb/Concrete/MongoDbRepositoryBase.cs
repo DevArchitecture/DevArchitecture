@@ -11,7 +11,8 @@ using MongoDB.Driver;
 
 namespace Core.DataAccess.MongoDb.Concrete
 {
-	public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T> where T : DocumentDbEntity
+	public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T>
+		where T : DocumentDbEntity
 	{
 		private readonly IMongoCollection<T> _collection;
 		protected string CollectionName;

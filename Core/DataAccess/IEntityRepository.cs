@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess
 {
-    public interface IEntityRepository<T> where T : class, IEntity
+    public interface IEntityRepository<T>
+        where T : class, IEntity
     {
         T Add(T entity);
         T Update(T entity);
