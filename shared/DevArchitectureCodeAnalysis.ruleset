@@ -93,7 +93,7 @@
         <Rule Id="SA1204" Action="Error"/>          <!-- Static elements should appear before instance elements -->
         <Rule Id="SA1205" Action="Error"/>          <!-- Partial elements should declare access -->
         <Rule Id="SA1206" Action="Error"/>          <!-- Declaration keywords should follow order -->
-        <Rule Id="SA1207" Action="None"/>          <!-- Protected should come before internal -->
+        <Rule Id="SA1207" Action="Error"/>          <!-- Protected should come before internal -->
         <Rule Id="SA1208"
               Action="None"/>          <!-- System using directives should be placed before other using directives -->
         <Rule Id="SA1209"
