@@ -26,8 +26,8 @@ namespace Tests.Business.Handlers
         private UpdateUserGroupCommandHandler _updateUserGroupCommandHandler;
         private DeleteUserGroupCommandHandler _deleteUserGroupCommandHandler;
 
-		[SetUp]
-		public void Setup()
+        [SetUp]
+        public void Setup()
 		{
 			_userGroupRepository = new Mock<IUserGroupRepository>();
 			_getUserGroupsQueryHandler = new GetUserGroupsQueryHandler(_userGroupRepository.Object);
@@ -36,8 +36,8 @@ namespace Tests.Business.Handlers
 			_deleteUserGroupCommandHandler = new DeleteUserGroupCommandHandler(_userGroupRepository.Object);
 		}
 
-		[Test]
-		public void Handler_GetList()
+        [Test]
+        public void Handler_GetList()
 		{
 			var userGroup = new UserGroup() { GroupId = 1, UserId = 1 };
 			_userGroupRepository.Setup(x => x.GetListAsync(null)).
@@ -47,8 +47,8 @@ namespace Tests.Business.Handlers
 			result.Data.Should().HaveCount(1);
 		}
 
-		[Test]
-		public void Handler_CreateUserGroup()
+        [Test]
+        public void Handler_CreateUserGroup()
 		{
 			var createUserCommand = new CreateUserGroupCommand();
 			createUserCommand.UserId = 1;
@@ -59,8 +59,8 @@ namespace Tests.Business.Handlers
 
 		}
 
-		[Test]
-		public void Handler_UpdateUserGroup()
+        [Test]
+        public void Handler_UpdateUserGroup()
 		{
 			var updateUserCommand = new UpdateUserGroupCommand();
 			updateUserCommand.GroupId = new int[] { 1 };
@@ -73,8 +73,8 @@ namespace Tests.Business.Handlers
 
 		}
 
-		[Test]
-		public void Handler_DeleteUser()
+        [Test]
+        public void Handler_DeleteUser()
 		{
 			var deleteUserCommand = new DeleteUserGroupCommand();
 			var result = _deleteUserGroupCommandHandler.
@@ -83,14 +83,14 @@ namespace Tests.Business.Handlers
 			result.Success.Should().BeTrue();
 		}
 
-		[Test]
-		[TransactionScopeAspectAsync]
-		public async Task Handler_TransactionScopeAspectAsyncTest()
+        [Test]
+        [TransactionScopeAspectAsync]
+        public async Task Handler_TransactionScopeAspectAsyncTest()
 		{
 			await SomeMethodInTheCallStackAsync().ConfigureAwait(false);
 		}
 
-		private static async Task SomeMethodInTheCallStackAsync()
+        private static async Task SomeMethodInTheCallStackAsync()
 		{
 			const int delayAmount = 500;
 

@@ -25,7 +25,7 @@ namespace Business.Handlers.Authorizations.Queries
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [LogAspect(typeof(FileLogger))]
+        [LogAspect(typeof(FileLogger))]
         public async Task<IDataResult<DArchToken>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
             var provider = _coordinator.SelectProvider(request.Provider);

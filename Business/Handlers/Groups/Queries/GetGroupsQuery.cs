@@ -26,9 +26,9 @@ namespace Business.Handlers.Groups.Queries
 				_groupRepository = groupRepository;
 			}
 
-            [SecuredOperation(Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
-            [CacheAspect(10)]
+			[SecuredOperation(Priority = 1)]
+			[LogAspect(typeof(FileLogger))]
+			[CacheAspect(10)]
 			public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
 			{
 

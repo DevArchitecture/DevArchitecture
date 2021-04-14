@@ -36,21 +36,21 @@ namespace Tests.Business.Handlers
         private ForgotPasswordCommandHandler _forgotPasswordCommandHandler;
         private ForgotPasswordCommand _forgotPasswordCommand;
 
-		[SetUp]
-		public void Setup()
+        [SetUp]
+        public void Setup()
 		{
 			_userRepository = new Mock<IUserRepository>();
 			_tokenHelper = new Mock<ITokenHelper>();
 			_mediator = new Mock<IMediator>();
-            _cacheManager = new Mock<ICacheManager>();
+			_cacheManager = new Mock<ICacheManager>();
 
 			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _mediator.Object, _cacheManager.Object);
 			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}
 
-		[Test]
-		public async Task Handler_Login()
+        [Test]
+        public async Task Handler_Login()
 		{
 			var user = DataHelper.GetUser("test");
 			HashingHelper.CreatePasswordHash("123456", out var passwordSalt, out var passwordHash);
@@ -74,8 +74,8 @@ namespace Tests.Business.Handlers
 
 		}
 
-		[Test]
-		public async Task Handler_Register()
+        [Test]
+        public async Task Handler_Register()
 		{
 			var registerUser = new User { Email = "test@test.com", FullName = "test test" };
 			_command = new RegisterUserCommand
@@ -89,8 +89,8 @@ namespace Tests.Business.Handlers
 			result.Message.Should().Be(Messages.Added);
 		}
 
-		[Test]
-		public async Task Handler_ForgotPassword()
+        [Test]
+        public async Task Handler_ForgotPassword()
 		{
 			var user = DataHelper.GetUser("test");
 			_userRepository.
@@ -101,7 +101,7 @@ namespace Tests.Business.Handlers
 				TcKimlikNo = Convert.ToString(user.CitizenId)
 			};
 			var result = await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand, new System.Threading.CancellationToken());
-            result.Success.Should().BeTrue();
+			result.Success.Should().BeTrue();
 		}
 	}
 }

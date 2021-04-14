@@ -57,7 +57,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
         {
             var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty(
                 "EntriesCollection",
-               BindingFlags.NonPublic | BindingFlags.Instance);
+                BindingFlags.NonPublic | BindingFlags.Instance);
             var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
 
             var cacheCollectionValues = new List<ICacheEntry>();

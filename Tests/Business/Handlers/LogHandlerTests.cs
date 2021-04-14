@@ -11,15 +11,15 @@ namespace Tests.Business.Handlers
 	{
         private Mock<ILogRepository> _logRepository;
         private Mock<IMediator> _mediator;
-		[SetUp]
-		public void Setup()
+        [SetUp]
+        public void Setup()
 		{
 			_logRepository = new Mock<ILogRepository>();
 			_mediator = new Mock<IMediator>();
 		}
 
-		[Test]
-		public Task Log_GetQuery_Success()
+        [Test]
+        public Task Log_GetQuery_Success()
 		{
             return Task.CompletedTask;
         }

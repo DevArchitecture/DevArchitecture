@@ -12,16 +12,16 @@ namespace Tests.Business.Adapters
         private Mock<ISmsService> _smsService;
         private SmsServiceHelper _smsServiceHelper;
 
-		[SetUp]
-		public void Setup()
+        [SetUp]
+        public void Setup()
 		{
 			_smsService = new Mock<ISmsService>();
 			_smsServiceHelper = new SmsServiceHelper(_smsService.Object);
 		}
 
-		[Test]
-		[TestCase("11111", "test", "123456")]
-		public void Send(string password, string text, string cellPhone)
+        [Test]
+        [TestCase("11111", "test", "123456")]
+        public void Send(string password, string text, string cellPhone)
 		{
 			// Arrange
 			_smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
@@ -34,9 +34,9 @@ namespace Tests.Business.Adapters
 			result.Should().BeTrue();
 		}
 
-		[Test]
-		[TestCase("test", "123456")]
-		public void SendAssist(string text, string cellPhone)
+        [Test]
+        [TestCase("test", "123456")]
+        public void SendAssist(string text, string cellPhone)
 		{
 			// Arrange
 			_smsService.Setup(x => x.SendAssist(text, cellPhone)).ReturnsAsync(true);

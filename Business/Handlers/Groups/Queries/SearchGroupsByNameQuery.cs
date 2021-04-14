@@ -29,7 +29,7 @@ namespace Business.Handlers.Groups.Queries
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
-      public async Task<IDataResult<IEnumerable<Group>>> Handle(SearchGroupsByNameQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Group>>> Handle(SearchGroupsByNameQuery request, CancellationToken cancellationToken)
             {
                 var result = BusinessRules.Run(StringLengthMustBeGreaterThanThree(request.GroupName));
 

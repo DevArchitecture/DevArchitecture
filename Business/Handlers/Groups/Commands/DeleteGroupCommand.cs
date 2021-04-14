@@ -24,9 +24,9 @@ namespace Business.Handlers.Groups.Commands
 				_groupRepository = groupRepository;
 			}
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
 			{
 				var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);

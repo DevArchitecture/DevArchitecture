@@ -26,8 +26,8 @@ namespace Tests.Business.Services.Authentication
         private Mock<IEntityRepository<User>> _entityRepository;
         private Mock<IAuthenticationProvider> _provider;
 
-		[SetUp]
-		public void Setup()
+        [SetUp]
+        public void Setup()
 		{
 			_userRepository = new Mock<IUserRepository>() { CallBase = true };
 			_mobileLoginRepository = new Mock<IMobileLoginRepository>();
@@ -37,8 +37,8 @@ namespace Tests.Business.Services.Authentication
 			_provider = new Mock<IAuthenticationProvider>();
 		}
 
-		[Test]
-		public async Task CreateTokenAsync()
+        [Test]
+        public async Task CreateTokenAsync()
 		{
 			var user = DataHelper.GetUser("test");
 
@@ -79,7 +79,7 @@ namespace Tests.Business.Services.Authentication
 			result.Token.Should().Be("User Token");
 		}
 		// [Test]
-		public async Task Person_Authentication_Login()
+        public async Task Person_Authentication_Login()
 		{
 			var user = DataHelper.GetUser("test");
 			_userRepository.

@@ -25,9 +25,9 @@ namespace Business.Handlers.UserGroups.Queries
 				_userGroupRepository = userGroupRepository;
 			}
 
-            [SecuredOperation(Priority = 1)]
-            [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			[CacheAspect(10)]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request, CancellationToken cancellationToken)
 			{
 				var data = await _userGroupRepository.GetUserGroupSelectedList(request.UserId);

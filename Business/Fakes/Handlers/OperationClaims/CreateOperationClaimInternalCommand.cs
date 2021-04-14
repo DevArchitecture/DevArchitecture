@@ -15,7 +15,7 @@ namespace Business.Fakes.Handlers.OperationClaims
 	{
 		public string ClaimName { get; set; }
 
-        public class CreateOperationClaimInternalCommandHandler : IRequestHandler<CreateOperationClaimInternalCommand, IResult>
+		public class CreateOperationClaimInternalCommandHandler : IRequestHandler<CreateOperationClaimInternalCommand, IResult>
 		{
 			private readonly IOperationClaimRepository _operationClaimRepository;
 

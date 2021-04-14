@@ -28,9 +28,9 @@ namespace Business.Handlers.OperationClaims.Commands
 			{
 				_operationClaimRepository = operationClaimRepository;
 			}
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
 			{
 				if (IsClaimExists(request.ClaimName))
