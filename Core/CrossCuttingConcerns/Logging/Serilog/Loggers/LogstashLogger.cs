@@ -1,12 +1,11 @@
 ﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
-    using global::Serilog;
-    using global::Serilog.Formatting.Elasticsearch;
-    using global::Serilog.Sinks.Http.BatchFormatters;
-
     using System;
     using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
     using Core.Utilities.IoC;
+    using global::Serilog;
+    using global::Serilog.Formatting.Elasticsearch;
+    using global::Serilog.Sinks.Http.BatchFormatters;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 

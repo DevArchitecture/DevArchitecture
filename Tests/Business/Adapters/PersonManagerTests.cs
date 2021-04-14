@@ -1,10 +1,9 @@
 ﻿namespace Tests.Business.Adapters
 {
-    using global::Business.Adapters.PersonService;
-
     using System.Net;
     using Entities.Dtos;
     using FluentAssertions;
+    using global::Business.Adapters.PersonService;
     using Moq;
     using NUnit.Framework;
     using Tests.Helpers.Adapter;

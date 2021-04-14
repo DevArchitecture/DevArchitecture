@@ -1,14 +1,13 @@
 ﻿namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
-    using global::Microsoft.Extensions.Caching.Memory;
-    using global::Microsoft.Extensions.DependencyInjection;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
     using Core.Utilities.IoC;
+    using global::Microsoft.Extensions.Caching.Memory;
+    using global::Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Microsoft MemoryCacheManager

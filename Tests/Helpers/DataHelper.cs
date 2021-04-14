@@ -1,12 +1,11 @@
 ﻿namespace Tests.Helpers
 {
-	using global::Core.Entities.Concrete;
-	using global::Core.Utilities.Security.Hashing;
+    using System;
+    using System.Collections.Generic;
+    using global::Core.Entities.Concrete;
+    using global::Core.Utilities.Security.Hashing;
 
-	using System;
-	using System.Collections.Generic;
-
-	public static class DataHelper
+    public static class DataHelper
 	{
 		public static User GetUser(string name)
 		{

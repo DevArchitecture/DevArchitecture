@@ -1,16 +1,5 @@
 ﻿namespace Tests.Business.Handlers
 {
-    using static global::Business.Handlers.Languages.Commands.CreateLanguageCommand;
-    using static global::Business.Handlers.Languages.Commands.DeleteLanguageCommand;
-    using static global::Business.Handlers.Languages.Commands.UpdateLanguageCommand;
-    using static global::Business.Handlers.Languages.Queries.GetLanguageQuery;
-    using static global::Business.Handlers.Languages.Queries.GetLanguagesQuery;
-
-    using global::Business.Constants;
-    using global::Business.Handlers.Languages.Commands;
-    using global::Business.Handlers.Languages.Queries;
-    using global::Core.Entities.Concrete;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,9 +7,18 @@
     using System.Threading.Tasks;
     using DataAccess.Abstract;
     using FluentAssertions;
+    using global::Business.Constants;
+    using global::Business.Handlers.Languages.Commands;
+    using global::Business.Handlers.Languages.Queries;
+    using global::Core.Entities.Concrete;
     using MediatR;
     using Moq;
     using NUnit.Framework;
+    using static global::Business.Handlers.Languages.Commands.CreateLanguageCommand;
+    using static global::Business.Handlers.Languages.Commands.DeleteLanguageCommand;
+    using static global::Business.Handlers.Languages.Commands.UpdateLanguageCommand;
+    using static global::Business.Handlers.Languages.Queries.GetLanguageQuery;
+    using static global::Business.Handlers.Languages.Queries.GetLanguagesQuery;
 
     [TestFixture]
     public class LanguageHandlerTests

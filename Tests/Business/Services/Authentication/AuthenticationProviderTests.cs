@@ -1,24 +1,23 @@
 ﻿namespace Tests.Business.Services.Authentication
 {
-	using global::Business.Adapters.SmsService;
-	using global::Business.Services.Authentication;
-	using global::Business.Services.Authentication.Model;
-	using global::Core.DataAccess;
-	using global::Core.Entities.Concrete;
-	using global::Core.Utilities.Security.Jwt;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using global::Business.Adapters.SmsService;
+    using global::Business.Services.Authentication;
+    using global::Business.Services.Authentication.Model;
+    using global::Core.DataAccess;
+    using global::Core.Entities.Concrete;
+    using global::Core.Utilities.Security.Jwt;
+    using Moq;
+    using NUnit.Framework;
+    using Tests.Helpers;
 
-	using System;
-	using System.Collections.Generic;
-	using System.Linq.Expressions;
-	using System.Threading.Tasks;
-	using DataAccess.Abstract;
-	using FluentAssertions;
-	using Moq;
-	using NUnit.Framework;
-	using Tests.Helpers;
-
-	[TestFixture]
-	public class AuthenticationProviderTests
+    [TestFixture]
+    public class AuthenticationProviderTests
 	{
         private Mock<IUserRepository> _userRepository;
         private Mock<IMobileLoginRepository> _mobileLoginRepository;

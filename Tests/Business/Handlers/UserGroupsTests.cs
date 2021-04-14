@@ -1,25 +1,23 @@
 ﻿namespace Tests.Business.Handlers
 {
-	using static global::Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
-	using static global::Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
-	using static global::Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
-	using static global::Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using global::Business.Handlers.UserGroups.Commands;
+    using global::Business.Handlers.UserGroups.Queries;
+    using global::Core.Aspects.Autofac.Transaction;
+    using global::Core.Entities.Concrete;
+    using Moq;
+    using NUnit.Framework;
+    using static global::Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
+    using static global::Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
+    using static global::Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
+    using static global::Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
 
-	using global::Business.Handlers.UserGroups.Commands;
-	using global::Business.Handlers.UserGroups.Queries;
-	using global::Core.Aspects.Autofac.Transaction;
-	using global::Core.Entities.Concrete;
-
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using DataAccess.Abstract;
-	using FluentAssertions;
-	using Moq;
-	using NUnit.Framework;
-
-	[TestFixture]
-	public class UserGroupsTests
+    [TestFixture]
+    public class UserGroupsTests
 	{
         private Mock<IUserGroupRepository> _userGroupRepository;
 

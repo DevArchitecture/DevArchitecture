@@ -1,30 +1,28 @@
 ﻿namespace Tests.Business.Handlers
 {
-	using static global::Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
-	using static global::Business.Handlers.Authorizations.Commands.RegisterUserCommand;
-	using static global::Business.Handlers.Authorizations.Queries.LoginUserQuery;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using global::Business.Constants;
+    using global::Business.Handlers.Authorizations.Commands;
+    using global::Business.Handlers.Authorizations.Queries;
+    using global::Core.CrossCuttingConcerns.Caching;
+    using global::Core.Entities.Concrete;
+    using global::Core.Utilities.Security.Hashing;
+    using global::Core.Utilities.Security.Jwt;
+    using MediatR;
+    using Moq;
+    using NUnit.Framework;
+    using Tests.Helpers;
+    using static global::Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
+    using static global::Business.Handlers.Authorizations.Commands.RegisterUserCommand;
+    using static global::Business.Handlers.Authorizations.Queries.LoginUserQuery;
 
-	using global::Business.Constants;
-	using global::Business.Handlers.Authorizations.Commands;
-	using global::Business.Handlers.Authorizations.Queries;
-	using global::Core.CrossCuttingConcerns.Caching;
-	using global::Core.Entities.Concrete;
-	using global::Core.Utilities.Security.Hashing;
-	using global::Core.Utilities.Security.Jwt;
-
-	using System;
-	using System.Collections.Generic;
-	using System.Linq.Expressions;
-	using System.Threading.Tasks;
-	using DataAccess.Abstract;
-	using FluentAssertions;
-	using MediatR;
-	using Moq;
-	using NUnit.Framework;
-	using Tests.Helpers;
-
-	[TestFixture]
-	public class AuthorizationsTests
+    [TestFixture]
+    public class AuthorizationsTests
 	{
         private Mock<IUserRepository> _userRepository;
         private Mock<ITokenHelper> _tokenHelper;

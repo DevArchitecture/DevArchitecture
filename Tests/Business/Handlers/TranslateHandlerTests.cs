@@ -1,16 +1,5 @@
 ﻿namespace Tests.Business.Handlers
 {
-    using static global::Business.Handlers.Translates.Commands.CreateTranslateCommand;
-    using static global::Business.Handlers.Translates.Commands.DeleteTranslateCommand;
-    using static global::Business.Handlers.Translates.Commands.UpdateTranslateCommand;
-    using static global::Business.Handlers.Translates.Queries.GetTranslateQuery;
-    using static global::Business.Handlers.Translates.Queries.GetTranslatesQuery;
-
-    using global::Business.Constants;
-    using global::Business.Handlers.Translates.Commands;
-    using global::Business.Handlers.Translates.Queries;
-    using global::Core.Entities.Concrete;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,9 +7,18 @@
     using System.Threading.Tasks;
     using DataAccess.Abstract;
     using FluentAssertions;
+    using global::Business.Constants;
+    using global::Business.Handlers.Translates.Commands;
+    using global::Business.Handlers.Translates.Queries;
+    using global::Core.Entities.Concrete;
     using MediatR;
     using Moq;
     using NUnit.Framework;
+    using static global::Business.Handlers.Translates.Commands.CreateTranslateCommand;
+    using static global::Business.Handlers.Translates.Commands.DeleteTranslateCommand;
+    using static global::Business.Handlers.Translates.Commands.UpdateTranslateCommand;
+    using static global::Business.Handlers.Translates.Queries.GetTranslateQuery;
+    using static global::Business.Handlers.Translates.Queries.GetTranslatesQuery;
 
     [TestFixture]
     public class TranslateHandlerTests

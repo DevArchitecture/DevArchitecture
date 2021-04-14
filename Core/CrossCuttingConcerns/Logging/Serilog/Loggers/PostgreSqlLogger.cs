@@ -1,12 +1,11 @@
 ﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
-    using global::Serilog;
-    using global::Serilog.Sinks.PostgreSQL.ColumnWriters;
-
     using System;
     using System.Collections.Generic;
     using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
     using Core.Utilities.IoC;
+    using global::Serilog;
+    using global::Serilog.Sinks.PostgreSQL.ColumnWriters;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using NpgsqlTypes;

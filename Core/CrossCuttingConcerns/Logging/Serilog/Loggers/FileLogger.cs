@@ -1,11 +1,10 @@
 ﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
-    using global::Serilog;
-
     using System;
     using System.IO;
     using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
     using Core.Utilities.IoC;
+    using global::Serilog;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
