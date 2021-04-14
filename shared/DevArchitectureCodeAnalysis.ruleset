@@ -119,7 +119,7 @@
               Action="Error"/>          <!-- Non-private readonly fields should begin with upper-case letter -->
         <Rule Id="SA1305" Action="Error"/>             <!-- Field names should not use Hungarian notation -->
         <Rule Id="SA1306" Action="Error"/>          <!-- Field names should begin with lower-case letter -->
-        <Rule Id="SA1307" Action="None"/>          <!-- Accessible fields should begin with upper-case letter -->
+        <Rule Id="SA1307" Action="Error"/>          <!-- Accessible fields should begin with upper-case letter -->
         <Rule Id="SA1308" Action="None"/>          <!-- Variable names should not be prefixed -->
         <Rule Id="SA1309" Action="None"/>          <!-- Field names should not begin with underscore -->
         <Rule Id="SA1310" Action="None"/>          <!-- Field names should not contain underscore -->
