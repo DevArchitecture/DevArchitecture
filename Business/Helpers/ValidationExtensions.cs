@@ -66,7 +66,7 @@ namespace Business.Helpers
                 return false;
             else
             {
-                mobilePhone = Regex.Replace(mobilePhone, "[^0-9]", "");
+                mobilePhone = Regex.Replace(mobilePhone, "[^0-9]", string.Empty);
                 return mobilePhone.StartsWith("05") && mobilePhone.Length == 11;
             }
         }

@@ -36,7 +36,7 @@ namespace Business.Services.Authentication.Model
 				else
 				{
 					PostProcess();
-					MobilePhone = Regex.Replace(MobilePhone, "[^0-9]", "");
+					MobilePhone = Regex.Replace(MobilePhone, "[^0-9]", string.Empty);
 					return MobilePhone.StartsWith("05") && MobilePhone.Length == 11;
 				}
 			}
@@ -47,7 +47,7 @@ namespace Business.Services.Authentication.Model
 		/// </summary>
 		public void PostProcess()
 		{
-			MobilePhone = Regex.Replace(MobilePhone, "[^0-9]", "");
+			MobilePhone = Regex.Replace(MobilePhone, "[^0-9]", string.Empty);
 		}
 	}
 }

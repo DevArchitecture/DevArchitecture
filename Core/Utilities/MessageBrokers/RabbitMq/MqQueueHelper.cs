@@ -36,7 +36,7 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                 var message = JsonConvert.SerializeObject(messageText);
                 var body = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish(exchange: "", routingKey: "DArchQueue", basicProperties: null, body: body);
+                channel.BasicPublish(exchange: string.Empty, routingKey: "DArchQueue", basicProperties: null, body: body);
             }
         }
     }
