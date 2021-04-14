@@ -101,7 +101,7 @@
         <Rule Id="SA1210"
               Action="Error"/>          <!-- Using directives should be ordered alphabetically by namespace -->
         <Rule Id="SA1211"
-              Action="None"/>          <!-- Using alias directives should be ordered alphabetically by alias name -->
+              Action="Error"/>          <!-- Using alias directives should be ordered alphabetically by alias name -->
         <Rule Id="SA1212" Action="None"/>          <!-- Property accessors should follow order -->
         <Rule Id="SA1213" Action="None"/>          <!-- Event accessors should follow order -->
         <Rule Id="SA1214" Action="None"/>          <!-- Readonly fields should appear before non-readonly fields -->
