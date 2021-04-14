@@ -11,6 +11,8 @@
     [TestFixture]
     public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
     {
+        private static readonly JwtSecurityTokenHandler STokenHandler = new ();
+
         protected HttpClient Client;
 
         protected WebApplicationFactory<Startup> Factory => new ();
@@ -19,9 +21,6 @@
         public string Audience { get; } = "www.devarchitecture.com";
 
         public SigningCredentials SigningCredentials { get; }
-
-        private static readonly JwtSecurityTokenHandler STokenHandler = new ();
-
 
         [SetUp]
         public void Setup()

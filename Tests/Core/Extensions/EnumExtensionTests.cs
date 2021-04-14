@@ -5,6 +5,18 @@
     using FluentAssertions;
     using NUnit.Framework;
 
+    public enum UserType
+    {
+	    [System.ComponentModel.Description("Admin")]
+	    Admin = 1,
+
+	    [System.ComponentModel.Description("Guess")]
+	    Guess = 2,
+
+	    [System.ComponentModel.Description("Office")]
+	    Office = 3
+    }
+
     [TestFixture]
     public class EnumExtensionTests
 	{
@@ -15,17 +27,5 @@
 
 			description.Should().Be("Admin");
 		}
-	}
-
-    public enum UserType
-	{
-		[System.ComponentModel.Description("Admin")]
-		Admin = 1,
-
-		[System.ComponentModel.Description("Guess")]
-		Guess = 2,
-
-		[System.ComponentModel.Description("Office")]
-		Office = 3
 	}
 }

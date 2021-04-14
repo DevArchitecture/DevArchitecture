@@ -18,7 +18,7 @@
         private readonly IUserRepository _users;
 
         private readonly ITokenHelper _tokenHelper;
-        public AuthenticationProviderType ProviderType { get; }
+
         public PersonAuthenticationProvider(AuthenticationProviderType providerType, IUserRepository users, IMobileLoginRepository mobileLogins, ITokenHelper tokenHelper, ISmsService smsService)
                         : base(mobileLogins, smsService)
         {
@@ -26,6 +26,8 @@
             ProviderType = providerType;
             _tokenHelper = tokenHelper;
         }
+
+        public AuthenticationProviderType ProviderType { get; }
 
         public override async Task<LoginUserResult> Login(LoginUserCommand command)
         {

@@ -10,17 +10,17 @@
     {
         private readonly RedisEndpoint _redisEndpoint;
 
+        public RedisCacheManager()
+        {
+            _redisEndpoint = new RedisEndpoint("localhost", 6379);
+        }
+
         private void RedisInvoker(Action<RedisClient> redisAction)
         {
             using (var client = new RedisClient(_redisEndpoint))
             {
                 redisAction.Invoke(client);
             }
-        }
-
-        public RedisCacheManager()
-        {
-            _redisEndpoint = new RedisEndpoint("localhost", 6379);
         }
 
         public T Get<T>(string key)

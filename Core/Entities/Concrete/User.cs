@@ -5,6 +5,12 @@
 
     public class User : IEntity
 	{
+		public User()
+		{
+			UpdateContactDate = RecordDate = DateTime.Now;
+			Status = true;
+		}
+
 		public int UserId { get; set; }
 		public long CitizenId { get; set; }
 		public string FullName { get; set; }
@@ -25,11 +31,7 @@
 		public string AuthenticationProviderType { get; set; } = "Person";
 		public byte[] PasswordSalt { get; set; }
 		public byte[] PasswordHash { get; set; }
-		public User()
-		{
-			UpdateContactDate = RecordDate = DateTime.Now;
-			Status = true;
-		}
+
 		public bool UpdateMobilePhone(string mobilePhone)
 		{
 			if (mobilePhone != MobilePhones)

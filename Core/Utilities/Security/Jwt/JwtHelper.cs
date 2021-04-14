@@ -12,7 +12,6 @@
 
     public class JwtHelper : ITokenHelper
     {
-        public IConfiguration Configuration { get; }
         private readonly TokenOptions _tokenOptions;
         private DateTime _accessTokenExpiration;
 
@@ -21,6 +20,8 @@
             Configuration = configuration;
             _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
+
+        public IConfiguration Configuration { get; }
 
         public string DecodeToken(string input)
         {

@@ -4,6 +4,16 @@
 
     public class MongoConnectionSettings
 	{
+		public MongoConnectionSettings()
+		{
+
+		}
+
+		public MongoConnectionSettings(MongoClientSettings mongoClientSettings)
+		{
+			MongoClientSettings = mongoClientSettings;
+		}
+
 		/// <summary>
 		/// To be set if the MongoClientSetting class is to be used.
 		/// </summary>
@@ -11,14 +21,6 @@
 
 		public string ConnectionString { get; set; }
 		public string DatabaseName { get; set; }
-		public MongoConnectionSettings(MongoClientSettings mongoClientSettings)
-		{
-			MongoClientSettings = mongoClientSettings;
-		}
-		public MongoConnectionSettings()
-		{
-
-		}
 
 		public MongoClientSettings GetMongoClientSettings()
 		{
