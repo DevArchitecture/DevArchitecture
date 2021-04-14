@@ -15,14 +15,6 @@
             _redisEndpoint = new RedisEndpoint("localhost", 6379);
         }
 
-        private void RedisInvoker(Action<RedisClient> redisAction)
-        {
-            using (var client = new RedisClient(_redisEndpoint))
-            {
-                redisAction.Invoke(client);
-            }
-        }
-
         public T Get<T>(string key)
         {
             var result = default(T);
@@ -67,6 +59,14 @@
         public void Clear()
         {
             RedisInvoker(x => x.FlushAll());
+        }
+
+        private void RedisInvoker(Action<RedisClient> redisAction)
+        {
+            using (var client = new RedisClient(_redisEndpoint))
+            {
+                redisAction.Invoke(client);
+            }
         }
     }
 }

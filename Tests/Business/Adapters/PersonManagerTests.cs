@@ -20,21 +20,6 @@
         private Mock<IPersonService>? _personService;
         private PersonServiceHelper? _personServiceHelper;
 
-        private static Citizen CreateCitizen(
-            int birthYear = BirthYear,
-            string surname = Surname,
-            string name = Name,
-            long citizenId = CitizenId)
-        {
-            return new ()
-            {
-                BirthYear = birthYear,
-                Surname = surname,
-                Name = name,
-                CitizenId = citizenId
-            };
-        }
-
         [SetUp]
         public void Setup()
         {
@@ -70,6 +55,21 @@
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        private static Citizen CreateCitizen(
+            int birthYear = BirthYear,
+            string surname = Surname,
+            string name = Name,
+            long citizenId = CitizenId)
+        {
+            return new ()
+            {
+                BirthYear = birthYear,
+                Surname = surname,
+                Name = name,
+                CitizenId = citizenId
+            };
         }
     }
 }

@@ -14,8 +14,10 @@
     public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T>
 		where T : DocumentDbEntity
 	{
-		private readonly IMongoCollection<T> _collection;
 		protected string CollectionName;
+
+		private readonly IMongoCollection<T> _collection;
+
 		protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
 		{
 			CollectionName = collectionName;
@@ -32,6 +34,18 @@
 			var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
 			_collection = database.GetCollection<T>(collectionName);
 
+		}
+
+		public bool Any(Expression<Func<T, bool>> predicate = null)
+		{
+			var data = predicate == null
+				? _collection.AsQueryable()
+				: _collection.AsQueryable().Where(predicate);
+
+			if (data.FirstOrDefault() == null)
+				return false;
+			else
+				return true;
 		}
 
 		public virtual void Delete(ObjectId id)
@@ -140,18 +154,6 @@
 						string.IsNullOrEmpty(settings.DatabaseName))
 				throw new Exception(DocumentDbMessages.NullOremptyMessage);
 
-		}
-
-		public bool Any(Expression<Func<T, bool>> predicate = null)
-		{
-			var data = predicate == null
-							? _collection.AsQueryable()
-							: _collection.AsQueryable().Where(predicate);
-
-			if (data.FirstOrDefault() == null)
-				return false;
-			else
-				return true;
 		}
 	}
 }
