@@ -84,7 +84,7 @@ namespace Tests.Business.Handlers
 				FullName = registerUser.FullName,
 				Password = "123456"
 			};
-			var result = await _registerUserCommandHandler.Handle(_command, new System.Threading.CancellationToken());
+			var result = await _registerUserCommandHandler.Handle(_command, System.Threading.CancellationToken.None);
 
 			result.Message.Should().Be(Messages.Added);
 		}
