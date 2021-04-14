@@ -34,8 +34,8 @@ namespace Business.Handlers.OperationClaims.Queries
 					Id = x.Id.ToString(),
 					Label = x.Alias ?? x.Name
                 });
-				return new SuccessDataResult<IEnumerable<SelectionItem>>
-								(operationClaim);
+				return new SuccessDataResult<IEnumerable<SelectionItem>>(
+								operationClaim);
 			}
 		}
 	}

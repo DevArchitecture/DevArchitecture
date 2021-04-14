@@ -54,7 +54,7 @@
         <Rule Id="SA1107" Action="Error"/>          <!-- Code should not contain multiple statements on one line -->
         <Rule Id="SA1108" Action="Error"/>          <!-- Block statements should not contain embedded comments -->
         <Rule Id="SA1109" Action="Error"/>             <!-- Block statements should not contain embedded regions -->
-        <Rule Id="SA1110" Action="None"/>          <!-- Opening parenthesis or bracket should be on declaration line -->
+        <Rule Id="SA1110" Action="Error"/>          <!-- Opening parenthesis or bracket should be on declaration line -->
         <Rule Id="SA1111" Action="None"/>          <!-- Closing parenthesis should be on line of last parameter -->
         <Rule Id="SA1112" Action="None"/>          <!-- Closing parenthesis should be on line of opening parenthesis -->
         <Rule Id="SA1113" Action="None"/>          <!-- Comma should be on the same line as previous parameter -->

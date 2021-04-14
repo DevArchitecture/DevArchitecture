@@ -29,8 +29,8 @@ namespace Business.Handlers.UserGroups.Queries
             [LogAspect(typeof(FileLogger))]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUsersInGroupLookupByGroupIdQuery request, CancellationToken cancellationToken)
 			{
-				return new SuccessDataResult<IEnumerable<SelectionItem>>
-								(await _userGroupRepository.GetUsersInGroupSelectedListByGroupId(request.GroupId));
+				return new SuccessDataResult<IEnumerable<SelectionItem>>(
+								await _userGroupRepository.GetUsersInGroupSelectedListByGroupId(request.GroupId));
 			}
 		}
 	}
