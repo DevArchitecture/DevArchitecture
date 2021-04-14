@@ -53,8 +53,8 @@
             atcno = atcno / 10;
             c9 = atcno % 10;
             atcno = atcno / 10;
-            q1 = ((10 - ((((c1 + c3 + c5 + c7 + c9) * 3) + (c2 + c4 + c6 + c8)) % 10)) % 10);
-            q2 = ((10 - (((((c2 + c4 + c6 + c8) + q1) * 3) + (c1 + c3 + c5 + c7 + c9)) % 10)) % 10);
+            q1 = (10 - ((((c1 + c3 + c5 + c7 + c9) * 3) + (c2 + c4 + c6 + c8)) % 10)) % 10;
+            q2 = (10 - (((((c2 + c4 + c6 + c8) + q1) * 3) + (c1 + c3 + c5 + c7 + c9)) % 10)) % 10;
             var returnValue = q1 * 10 + q2;
 
             return returnValue;

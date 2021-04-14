@@ -132,7 +132,7 @@
     </Rules>
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.MaintainabilityRules">
-        <Rule Id="SA1119" Action="None"/>          <!-- Statement should not use unnecessary parenthesis -->
+        <Rule Id="SA1119" Action="Error"/>          <!-- Statement should not use unnecessary parenthesis -->
         <Rule Id="SA1400" Action="None"/>          <!-- Access modifier should be declared -->
         <Rule Id="SA1401" Action="None"/>          <!-- Fields should be private -->
         <Rule Id="SA1402" Action="None"/>          <!-- File may only contain a single type -->
