@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Core.CrossCuttingConcerns.Logging
+﻿namespace Core.CrossCuttingConcerns.Logging
 {
-	public class LogDetail
+    using System.Collections.Generic;
+
+    public class LogDetail
 	{
 		public string FullName { get; set; }
 		public string MethodName { get; set; }

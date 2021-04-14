@@ -1,14 +1,14 @@
-﻿using Core.Entities.Concrete;
-using Core.Extensions;
-using FluentAssertions;
-using NUnit.Framework;
-using Tests.Helpers;
-
-
-namespace Tests.Core.Extensions
+﻿namespace Tests.Core.Extensions
 {
-	[TestFixture]
-	public class CloneExtensionServiceTests
+    using global::Core.Entities.Concrete;
+    using global::Core.Extensions;
+
+    using FluentAssertions;
+    using NUnit.Framework;
+    using Tests.Helpers;
+
+    [TestFixture]
+    public class CloneExtensionServiceTests
 	{
 		[Test]
 		public void CloneServiceExtensionTest()

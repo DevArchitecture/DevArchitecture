@@ -1,25 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Business.Constants;
-using Business.Handlers.Languages.Commands;
-using Business.Handlers.Languages.Queries;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using FluentAssertions;
-using MediatR;
-using Moq;
-using NUnit.Framework;
-using static Business.Handlers.Languages.Queries.GetLanguageQuery;
-using static Business.Handlers.Languages.Queries.GetLanguagesQuery;
-using static Business.Handlers.Languages.Commands.CreateLanguageCommand;
-using static Business.Handlers.Languages.Commands.UpdateLanguageCommand;
-using static Business.Handlers.Languages.Commands.DeleteLanguageCommand;
-
-namespace Tests.Business.Handlers
+﻿namespace Tests.Business.Handlers
 {
+    using static global::Business.Handlers.Languages.Commands.CreateLanguageCommand;
+    using static global::Business.Handlers.Languages.Commands.DeleteLanguageCommand;
+    using static global::Business.Handlers.Languages.Commands.UpdateLanguageCommand;
+    using static global::Business.Handlers.Languages.Queries.GetLanguageQuery;
+    using static global::Business.Handlers.Languages.Queries.GetLanguagesQuery;
+
+    using global::Business.Constants;
+    using global::Business.Handlers.Languages.Commands;
+    using global::Business.Handlers.Languages.Queries;
+    using global::Core.Entities.Concrete;
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using MediatR;
+    using Moq;
+    using NUnit.Framework;
+
     [TestFixture]
     public class LanguageHandlerTests
     {

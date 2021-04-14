@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using Newtonsoft.Json;
+
     public class ErrorDetails
     {
         public string Message { get; set; }

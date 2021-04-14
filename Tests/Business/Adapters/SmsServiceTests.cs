@@ -1,13 +1,14 @@
-﻿using Business.Adapters.SmsService;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
-using Tests.Helpers.Adapter;
-
-namespace Tests.Business.Adapters
+﻿namespace Tests.Business.Adapters
 {
-	[TestFixture]
-	public class SmsServiceTests
+    using global::Business.Adapters.SmsService;
+
+    using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
+    using Tests.Helpers.Adapter;
+
+    [TestFixture]
+    public class SmsServiceTests
 	{
         private Mock<ISmsService> _smsService;
         private SmsServiceHelper _smsServiceHelper;

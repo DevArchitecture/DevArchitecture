@@ -1,37 +1,33 @@
-using Autofac;
-using AutoMapper;
-using Business.Constants;
-using Business.DependencyResolvers;
-using Business.Fakes.DArch;
-using Business.Services.Authentication;
-using Core.DependencyResolvers;
-using Core.Extensions;
-using Core.Utilities.ElasticSearch;
-using Core.Utilities.IoC;
-using Core.Utilities.MessageBrokers.RabbitMq;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Concrete.MongoDb.Context;
-using DataAccess.Concrete.MongoDb;
-using DataAccess.Concrete.MongoDb.Collections;
-using FluentValidation;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
-using System.Security.Claims;
-using System.Security.Principal;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.Microsoft;
-
-
 namespace Business
 {
+    using System;
+    using System.Reflection;
+    using System.Security.Claims;
+    using System.Security.Principal;
+    using Autofac;
+    using Business.Constants;
+    using Business.DependencyResolvers;
+    using Business.Fakes.DArch;
+    using Business.Services.Authentication;
+    using Core.CrossCuttingConcerns.Caching;
+    using Core.CrossCuttingConcerns.Caching.Microsoft;
+    using Core.DependencyResolvers;
+    using Core.Extensions;
+    using Core.Utilities.ElasticSearch;
+    using Core.Utilities.IoC;
+    using Core.Utilities.MessageBrokers.RabbitMq;
+    using Core.Utilities.Security.Jwt;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using DataAccess.Concrete.MongoDb.Context;
+    using FluentValidation;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     public partial class BusinessStartup
     {
         protected readonly IHostEnvironment HostEnvironment;

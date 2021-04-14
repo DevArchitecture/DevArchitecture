@@ -1,14 +1,15 @@
-﻿using Core.Utilities.IoC;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
-
-namespace Core.CrossCuttingConcerns.Caching.Microsoft
+﻿namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
+    using global::Microsoft.Extensions.Caching.Memory;
+    using global::Microsoft.Extensions.DependencyInjection;
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text.RegularExpressions;
+    using Core.Utilities.IoC;
+
     /// <summary>
     /// Microsoft MemoryCacheManager
     /// </summary>

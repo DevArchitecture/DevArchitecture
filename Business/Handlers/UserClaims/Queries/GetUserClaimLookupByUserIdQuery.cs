@@ -1,17 +1,16 @@
-﻿using Business.BusinessAspects;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using Core.Entities.Dtos;
-using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.UserClaims.Queries
+﻿namespace Business.Handlers.UserClaims.Queries
 {
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Dtos;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     public class GetUserClaimLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int Id { get; set; }

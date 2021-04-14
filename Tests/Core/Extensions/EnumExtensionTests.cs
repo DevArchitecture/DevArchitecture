@@ -1,11 +1,12 @@
-﻿using Core.Extensions;
-using FluentAssertions;
-using NUnit.Framework;
-
-namespace Tests.Core.Extensions
+﻿namespace Tests.Core.Extensions
 {
-	[TestFixture]
-	public class EnumExtensionTests
+    using global::Core.Extensions;
+
+    using FluentAssertions;
+    using NUnit.Framework;
+
+    [TestFixture]
+    public class EnumExtensionTests
 	{
 		[Test]
 		public void GetDescriptionTest()
@@ -16,7 +17,7 @@ namespace Tests.Core.Extensions
 		}
 	}
 
-	public enum UserType
+    public enum UserType
 	{
 		[System.ComponentModel.Description("Admin")]
 		Admin = 1,

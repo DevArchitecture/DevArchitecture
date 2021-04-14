@@ -1,16 +1,16 @@
-using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
-using Entities.Concrete;
 namespace DataAccess.Concrete.EntityFramework.Contexts
 {
+    using System.Reflection;
+    using Core.Entities.Concrete;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+
 	/// <summary>
 	/// Because this context is followed by migration for more than one provider
 	/// works on PostGreSql db by default. If you want to pass sql
 	/// When adding AddDbContext, use MsDbContext derived from it.
 	/// </summary>
-	public class ProjectDbContext : DbContext
+    public class ProjectDbContext : DbContext
 	{
 		protected readonly IConfiguration Configuration;
 

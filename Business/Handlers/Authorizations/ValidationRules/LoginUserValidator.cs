@@ -1,11 +1,10 @@
-﻿using Business.Constants;
-using Business.Helpers;
-using Business.Services.Authentication.Model;
-using Core.Entities.Concrete;
-using FluentValidation;
-
-namespace Business.Handlers.Authorizations.ValidationRules
+﻿namespace Business.Handlers.Authorizations.ValidationRules
 {
+    using Business.Constants;
+    using Business.Helpers;
+    using Business.Services.Authentication.Model;
+    using Core.Entities.Concrete;
+    using FluentValidation;
 
     public class LoginUserValidator : AbstractValidator<LoginUserCommand>
     {

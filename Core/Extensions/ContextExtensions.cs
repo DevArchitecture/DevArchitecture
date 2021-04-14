@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using System;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+
     public static class ContextExtensions
     {
     /// <summary>

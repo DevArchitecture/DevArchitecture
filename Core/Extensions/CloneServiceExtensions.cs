@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using Newtonsoft.Json;
+
     public static class CloneServiceExtensions
     {
         public static T Clone<T>(this T source)

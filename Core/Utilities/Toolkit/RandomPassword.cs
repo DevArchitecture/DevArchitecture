@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Core.Utilities.Toolkit
+﻿namespace Core.Utilities.Toolkit
 {
+    using System;
+
   /// <summary>
   /// One time password generator for mobile login etc.
   /// </summary>

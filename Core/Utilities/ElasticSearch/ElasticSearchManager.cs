@@ -1,14 +1,14 @@
-﻿using Core.Utilities.ElasticSearch.Models;
-using Core.Utilities.Results;
-using Microsoft.Extensions.Configuration;
-using Nest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Core.Utilities.ElasticSearch
+﻿namespace Core.Utilities.ElasticSearch
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.Utilities.ElasticSearch.Models;
+    using Core.Utilities.Results;
+    using Microsoft.Extensions.Configuration;
+    using Nest;
+
     public class ElasticSearchManager : IElasticSearch
     {
         private readonly ConnectionSettings _connectionSettings;

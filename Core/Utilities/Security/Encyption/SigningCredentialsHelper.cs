@@ -1,7 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-
-namespace Core.Utilities.Security.Encyption
+﻿namespace Core.Utilities.Security.Encyption
 {
+    using Microsoft.IdentityModel.Tokens;
+
     public static class SigningCredentialsHelper
     {
         public static SigningCredentials CreateSigningCredentials(SecurityKey securityKey)

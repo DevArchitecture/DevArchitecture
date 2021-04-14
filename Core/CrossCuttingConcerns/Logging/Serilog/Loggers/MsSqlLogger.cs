@@ -1,13 +1,14 @@
-﻿using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
-using Core.Utilities.IoC;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-using Serilog.Sinks.MSSqlServer;
-using System;
-
-namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
+	using global::Serilog;
+	using global::Serilog.Sinks.MSSqlServer;
+
+	using System;
+	using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+	using Core.Utilities.IoC;
+	using Microsoft.Extensions.Configuration;
+	using Microsoft.Extensions.DependencyInjection;
+
 	public class MsSqlLogger : LoggerServiceBase
 	{
 		public MsSqlLogger()

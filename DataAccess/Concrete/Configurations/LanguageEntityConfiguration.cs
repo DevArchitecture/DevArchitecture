@@ -1,10 +1,10 @@
-﻿using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace DataAccess.Concrete.Configurations
+﻿namespace DataAccess.Concrete.Configurations
 {
-	public class LanguageEntityConfiguration : IEntityTypeConfiguration<Language>
+    using Core.Entities.Concrete;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    public class LanguageEntityConfiguration : IEntityTypeConfiguration<Language>
 	{
 		public void Configure(EntityTypeBuilder<Language> builder)
 		{

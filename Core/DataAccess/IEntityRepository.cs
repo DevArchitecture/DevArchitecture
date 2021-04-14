@@ -1,12 +1,12 @@
-﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-namespace Core.DataAccess
+﻿namespace Core.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Core.Entities;
+
     public interface IEntityRepository<T>
         where T : class, IEntity
     {

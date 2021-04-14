@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Text;
-
-namespace Core.Utilities.MessageBrokers.RabbitMq
+﻿namespace Core.Utilities.MessageBrokers.RabbitMq
 {
+    using System;
+    using System.Text;
+    using Microsoft.Extensions.Configuration;
+    using RabbitMQ.Client;
+    using RabbitMQ.Client.Events;
+
     public class MqConsumerHelper : IMessageConsumer
     {
         private readonly IConfiguration _configuration;

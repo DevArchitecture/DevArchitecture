@@ -1,16 +1,16 @@
-﻿using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
-using Core.Utilities.IoC;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using NpgsqlTypes;
-using Serilog;
-using Serilog.Sinks.PostgreSQL;
-using Serilog.Sinks.PostgreSQL.ColumnWriters;
-using System;
-using System.Collections.Generic;
-
-namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
+    using global::Serilog;
+    using global::Serilog.Sinks.PostgreSQL.ColumnWriters;
+
+    using System;
+    using System.Collections.Generic;
+    using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+    using Core.Utilities.IoC;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using NpgsqlTypes;
+
     public class PostgreSqlLogger : LoggerServiceBase
     {
         public PostgreSqlLogger()

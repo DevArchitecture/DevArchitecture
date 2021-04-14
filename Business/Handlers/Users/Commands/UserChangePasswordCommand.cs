@@ -1,18 +1,17 @@
-﻿using Business.Constants;
-using Business.BusinessAspects;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Utilities.Security.Hashing;
-
-namespace Business.Handlers.Users.Commands
+﻿namespace Business.Handlers.Users.Commands
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using Core.Utilities.Security.Hashing;
+    using DataAccess.Abstract;
+    using MediatR;
 
-	public class UserChangePasswordCommand : IRequest<IResult>
+    public class UserChangePasswordCommand : IRequest<IResult>
 	{
 
 		public int UserId { get; set; }

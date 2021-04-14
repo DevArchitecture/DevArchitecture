@@ -1,7 +1,7 @@
-﻿using Core.Utilities.Results;
-
-namespace Core.Utilities.Business
+﻿namespace Core.Utilities.Business
 {
+    using Core.Utilities.Results;
+
     public static class BusinessRules
     {
         public static IResult Run(params IResult[] logics)

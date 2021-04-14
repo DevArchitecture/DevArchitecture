@@ -1,18 +1,18 @@
-﻿using Business.Adapters.SmsService;
-using Business.Constants;
-using Business.Services.Authentication.Model;
-using Core.Utilities.Results;
-using Core.Utilities.Toolkit;
-using DataAccess.Abstract;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Entities.Concrete;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
-	public abstract class AuthenticationProviderBase : IAuthenticationProvider
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Business.Adapters.SmsService;
+    using Business.Constants;
+    using Business.Services.Authentication.Model;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using Core.Utilities.Toolkit;
+    using DataAccess.Abstract;
+    using Microsoft.EntityFrameworkCore;
+
+    public abstract class AuthenticationProviderBase : IAuthenticationProvider
 	{
 		private readonly IMobileLoginRepository _logins;
 		private readonly ISmsService _smsService;

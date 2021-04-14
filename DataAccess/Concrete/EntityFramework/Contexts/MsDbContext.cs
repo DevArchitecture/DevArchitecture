@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
-namespace DataAccess.Concrete.EntityFramework.Contexts
+﻿namespace DataAccess.Concrete.EntityFramework.Contexts
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+
     public sealed class MsDbContext : ProjectDbContext
     {
         public MsDbContext(DbContextOptions<MsDbContext> options, IConfiguration configuration)

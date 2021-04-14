@@ -1,16 +1,16 @@
-﻿using Core.DataAccess.EntityFramework;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using Core.Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
-	public class GroupClaimRepository : EfEntityRepositoryBase<GroupClaim, ProjectDbContext>, IGroupClaimRepository
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using Microsoft.EntityFrameworkCore;
+
+    public class GroupClaimRepository : EfEntityRepositoryBase<GroupClaim, ProjectDbContext>, IGroupClaimRepository
 	{
 		public GroupClaimRepository(ProjectDbContext context)
 			: base(context)

@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using System;
-
-namespace WebAPI.EntityBaseOverride
+﻿namespace WebAPI.EntityBaseOverride
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Design;
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+
     /// <summary>
     ///
     /// </summary>

@@ -1,20 +1,19 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using Core.Aspects.Autofac.Performance;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Caching;
-using Core.Entities.Dtos;
-using Newtonsoft.Json;
-
-namespace Business.Handlers.Logs.Queries
+﻿namespace Business.Handlers.Logs.Queries
 {
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.Aspects.Autofac.Performance;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Dtos;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+    using Newtonsoft.Json;
+
     public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
 	{
 		public class GetLogDtoQueryHandler : IRequestHandler<GetLogDtoQuery, IDataResult<IEnumerable<LogDto>>>

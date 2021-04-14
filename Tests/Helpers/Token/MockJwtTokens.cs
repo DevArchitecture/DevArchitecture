@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-
-namespace Tests.Helpers.Token
+﻿namespace Tests.Helpers.Token
 {
-	public static class MockJwtTokens
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+    using Microsoft.IdentityModel.Tokens;
+
+    public static class MockJwtTokens
 	{
 		public static string Issuer { get; } = "www.devarchitecture.com";
 		public static string Audience { get; } = "www.devarchitecture.com";

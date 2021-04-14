@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Core.Entities.Concrete
+﻿namespace Core.Entities.Concrete
 {
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
-	public class User : IEntity
+    public class User : IEntity
 	{
 		public int UserId { get; set; }
 		public long CitizenId { get; set; }

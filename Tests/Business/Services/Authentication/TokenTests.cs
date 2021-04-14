@@ -1,16 +1,15 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NUnit.Framework;
-using Tests.Helpers;
-using Tests.Helpers.Token;
-
-namespace Tests.Business.Services.Authentication
+﻿namespace Tests.Business.Services.Authentication
 {
-	[TestFixture]
-	public class TokenTests : BaseIntegrationTest
+    using System.Net;
+    using System.Net.Http.Headers;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using Tests.Helpers;
+    using Tests.Helpers.Token;
+
+    [TestFixture]
+    public class TokenTests : BaseIntegrationTest
 	{
 		private const string AuthenticationScheme = "Bearer";
 		private const string RequestUri = "api/users/getall";

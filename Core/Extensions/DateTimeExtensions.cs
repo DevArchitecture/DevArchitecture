@@ -1,8 +1,8 @@
-﻿using System;
-using System.Globalization;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using System;
+    using System.Globalization;
+
     public static class DateTimeExtensions
     {
         public static string ToPrettyDate(this DateTime date, CultureInfo culture)

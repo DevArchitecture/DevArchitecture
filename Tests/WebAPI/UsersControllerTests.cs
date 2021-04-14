@@ -1,15 +1,15 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NUnit.Framework;
-using Tests.Helpers;
-using Tests.Helpers.Token;
-
-namespace Tests.WebAPI
+﻿namespace Tests.WebAPI
 {
-	[TestFixture]
-	public class UsersControllerTests : BaseIntegrationTest
+    using System.Net;
+    using System.Net.Http.Headers;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using Tests.Helpers;
+    using Tests.Helpers.Token;
+
+    [TestFixture]
+    public class UsersControllerTests : BaseIntegrationTest
 	{
 		[Test]
 		public async Task GetAll()

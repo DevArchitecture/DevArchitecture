@@ -1,13 +1,14 @@
-﻿using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
-using Core.Utilities.IoC;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-using System;
-using System.IO;
-
-namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
+    using global::Serilog;
+
+    using System;
+    using System.IO;
+    using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+    using Core.Utilities.IoC;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class FileLogger : LoggerServiceBase
     {
         public FileLogger()

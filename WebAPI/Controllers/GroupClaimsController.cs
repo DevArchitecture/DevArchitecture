@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Business.Handlers.GroupClaims.Commands;
-using Business.Handlers.GroupClaims.Queries;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Core.Entities.Concrete;
-using Core.Entities.Dtos;
-using Microsoft.AspNetCore.Http;
-
-namespace WebAPI.Controllers
+﻿namespace WebAPI.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Business.Handlers.GroupClaims.Commands;
+    using Business.Handlers.GroupClaims.Queries;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     /// <summary>
     ///
     /// </summary>

@@ -1,9 +1,8 @@
-﻿
-using Business.Handlers.Translates.Commands;
-using FluentValidation;
-
-namespace Business.Handlers.Translates.ValidationRules
+﻿namespace Business.Handlers.Translates.ValidationRules
 {
+    using Business.Handlers.Translates.Commands;
+    using FluentValidation;
+
     public class CreateTranslateValidator : AbstractValidator<CreateTranslateCommand>
     {
         public CreateTranslateValidator()

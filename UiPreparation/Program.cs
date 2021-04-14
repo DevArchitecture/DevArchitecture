@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Text;
-
-namespace UiPreparation
+﻿namespace UiPreparation
 {
-	internal static class Program
+    using System;
+    using System.IO;
+    using System.Text;
+
+    internal static class Program
 	{
 		private static void Main()
 		{

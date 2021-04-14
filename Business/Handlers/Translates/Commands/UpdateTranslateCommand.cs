@@ -1,20 +1,17 @@
-﻿
-using Business.Constants;
-using Business.BusinessAspects;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.Translates.ValidationRules;
-
-
-namespace Business.Handlers.Translates.Commands
+﻿namespace Business.Handlers.Translates.Commands
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Business.Handlers.Translates.ValidationRules;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.Aspects.Autofac.Validation;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
 
     public class UpdateTranslateCommand : IRequest<IResult>
     {

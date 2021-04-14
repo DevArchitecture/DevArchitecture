@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace Core.Entities.Concrete
+﻿namespace Core.Entities.Concrete
 {
-	public class MobileLogin : IEntity
+    using System;
+
+    public class MobileLogin : IEntity
 	{
 		public int Id { get; set; }
 		public AuthenticationProviderType Provider { get; set; }

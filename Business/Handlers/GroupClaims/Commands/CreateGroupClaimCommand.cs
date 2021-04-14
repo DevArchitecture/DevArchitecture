@@ -1,21 +1,18 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
-using Business.Constants;
-using Business.Handlers.Translates.ValidationRules;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-
-namespace Business.Handlers.GroupClaims.Commands
+﻿namespace Business.Handlers.GroupClaims.Commands
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
 
-	public class CreateGroupClaimCommand : IRequest<IResult>
+    public class CreateGroupClaimCommand : IRequest<IResult>
 	{
 		public string ClaimName { get; set; }
 

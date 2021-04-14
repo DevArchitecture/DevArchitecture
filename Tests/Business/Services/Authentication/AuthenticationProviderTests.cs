@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Business.Adapters.SmsService;
-using Business.Services.Authentication;
-using Business.Services.Authentication.Model;
-using Core.DataAccess;
-using Core.Entities.Concrete;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
-using Tests.Helpers;
-
-namespace Tests.Business.Services.Authentication
+﻿namespace Tests.Business.Services.Authentication
 {
+	using global::Business.Adapters.SmsService;
+	using global::Business.Services.Authentication;
+	using global::Business.Services.Authentication.Model;
+	using global::Core.DataAccess;
+	using global::Core.Entities.Concrete;
+	using global::Core.Utilities.Security.Jwt;
+
+	using System;
+	using System.Collections.Generic;
+	using System.Linq.Expressions;
+	using System.Threading.Tasks;
+	using DataAccess.Abstract;
+	using FluentAssertions;
+	using Moq;
+	using NUnit.Framework;
+	using Tests.Helpers;
+
 	[TestFixture]
 	public class AuthenticationProviderTests
 	{

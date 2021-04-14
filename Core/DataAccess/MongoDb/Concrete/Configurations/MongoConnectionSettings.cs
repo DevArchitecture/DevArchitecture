@@ -1,8 +1,8 @@
-﻿using MongoDB.Driver;
-
-namespace Core.DataAccess.MongoDb.Concrete.Configurations
+﻿namespace Core.DataAccess.MongoDb.Concrete.Configurations
 {
-	public class MongoConnectionSettings
+    using MongoDB.Driver;
+
+    public class MongoConnectionSettings
 	{
 		/// <summary>
 		/// To be set if the MongoClientSetting class is to be used.

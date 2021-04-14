@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Core.ApiDoc
+﻿namespace Core.ApiDoc
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.OpenApi.Models;
+    using Swashbuckle.AspNetCore.SwaggerGen;
+
   /// <summary>
   /// Filter that adds Authorization bearer to required API methods.
   /// </summary>
-  internal class AddAuthHeaderOperationFilter : IOperationFilter
+    internal class AddAuthHeaderOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

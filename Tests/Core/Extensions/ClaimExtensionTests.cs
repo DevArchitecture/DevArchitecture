@@ -1,13 +1,14 @@
-﻿using Core.Extensions;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using FluentAssertions;
-
-namespace Tests.Core.Extensions
+﻿namespace Tests.Core.Extensions
 {
+	using global::Core.Extensions;
+
+	using System.Collections.Generic;
+	using System.IdentityModel.Tokens.Jwt;
+	using System.Linq;
+	using System.Security.Claims;
+	using FluentAssertions;
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class ClaimExtensionTests
 	{

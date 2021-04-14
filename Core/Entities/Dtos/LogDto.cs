@@ -1,9 +1,9 @@
 ﻿
-using System;
-
 namespace Core.Entities.Dtos
 {
-	public class LogDto : IEntity
+    using System;
+
+    public class LogDto : IEntity
 	{
 		public int Id { get; set; }
 		public string Level { get; set; }

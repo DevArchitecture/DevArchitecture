@@ -1,13 +1,14 @@
-﻿using Business.Adapters.PersonService;
-using Entities.Dtos;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
-using System.Net;
-using Tests.Helpers.Adapter;
-
-namespace Tests.Business.Adapters
+﻿namespace Tests.Business.Adapters
 {
+    using global::Business.Adapters.PersonService;
+
+    using System.Net;
+    using Entities.Dtos;
+    using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
+    using Tests.Helpers.Adapter;
+
     [TestFixture]
     public class PersonManagerTests
     {

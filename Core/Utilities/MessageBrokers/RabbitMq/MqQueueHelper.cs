@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using RabbitMQ.Client;
-using System.Text;
-
-namespace Core.Utilities.MessageBrokers.RabbitMq
+﻿namespace Core.Utilities.MessageBrokers.RabbitMq
 {
+    using System.Text;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using RabbitMQ.Client;
+
     public class MqQueueHelper : IMessageBrokerHelper
     {
         public IConfiguration Configuration;

@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace DataAccess.Concrete.MongoDb.Context
+﻿namespace DataAccess.Concrete.MongoDb.Context
 {
+    using Microsoft.Extensions.Configuration;
 
     public class MongoDbContext : MongoDbContextBase
     {

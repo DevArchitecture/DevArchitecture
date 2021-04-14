@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.DataAccess.MongoDb.Concrete.Configurations;
-using Core.Entities;
-using Core.Utilities.Messages;
-using MongoDB.Bson;
-using MongoDB.Driver;
-
-namespace Core.DataAccess.MongoDb.Concrete
+﻿namespace Core.DataAccess.MongoDb.Concrete
 {
-	public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T>
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Core.DataAccess.MongoDb.Concrete.Configurations;
+    using Core.Entities;
+    using Core.Utilities.Messages;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+
+    public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T>
 		where T : DocumentDbEntity
 	{
 		private readonly IMongoCollection<T> _collection;

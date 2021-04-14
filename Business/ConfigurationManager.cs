@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using System;
-
-namespace Business
+﻿namespace Business
 {
+    using System;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Hosting;
+
     public class ConfigurationManager
     {
         private readonly IConfiguration _configuration;

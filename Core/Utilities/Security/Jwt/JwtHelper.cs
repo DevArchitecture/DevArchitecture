@@ -1,16 +1,15 @@
-﻿using Core.Entities.Concrete;
-using Core.Extensions;
-using Core.Utilities.Security.Encyption;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-
-namespace Core.Utilities.Security.Jwt
+﻿namespace Core.Utilities.Security.Jwt
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using Core.Entities.Concrete;
+    using Core.Extensions;
+    using Core.Utilities.Security.Encyption;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+
     public class JwtHelper : ITokenHelper
     {
         public IConfiguration Configuration { get; }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using System;
+    using System.ComponentModel;
+
     public static class EnumExtensions
     {
         public static string GetDescription<T>(this T enumValue)

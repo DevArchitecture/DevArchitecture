@@ -1,10 +1,10 @@
-﻿using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace DataAccess.Concrete.Configurations
+﻿namespace DataAccess.Concrete.Configurations
 {
-	public class MobileLoginEntityConfiguration : IEntityTypeConfiguration<MobileLogin>
+    using Core.Entities.Concrete;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    public class MobileLoginEntityConfiguration : IEntityTypeConfiguration<MobileLogin>
 	{
 		public void Configure(EntityTypeBuilder<MobileLogin> builder)
 		{

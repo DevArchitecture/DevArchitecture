@@ -1,25 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Business.Constants;
-using Business.Handlers.Translates.Commands;
-using Business.Handlers.Translates.Queries;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using FluentAssertions;
-using MediatR;
-using Moq;
-using NUnit.Framework;
-using static Business.Handlers.Translates.Queries.GetTranslateQuery;
-using static Business.Handlers.Translates.Queries.GetTranslatesQuery;
-using static Business.Handlers.Translates.Commands.CreateTranslateCommand;
-using static Business.Handlers.Translates.Commands.UpdateTranslateCommand;
-using static Business.Handlers.Translates.Commands.DeleteTranslateCommand;
-
-namespace Tests.Business.Handlers
+﻿namespace Tests.Business.Handlers
 {
+    using static global::Business.Handlers.Translates.Commands.CreateTranslateCommand;
+    using static global::Business.Handlers.Translates.Commands.DeleteTranslateCommand;
+    using static global::Business.Handlers.Translates.Commands.UpdateTranslateCommand;
+    using static global::Business.Handlers.Translates.Queries.GetTranslateQuery;
+    using static global::Business.Handlers.Translates.Queries.GetTranslatesQuery;
+
+    using global::Business.Constants;
+    using global::Business.Handlers.Translates.Commands;
+    using global::Business.Handlers.Translates.Queries;
+    using global::Core.Entities.Concrete;
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using MediatR;
+    using Moq;
+    using NUnit.Framework;
+
     [TestFixture]
     public class TranslateHandlerTests
     {

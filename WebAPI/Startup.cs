@@ -1,25 +1,25 @@
-﻿using Business;
-using Business.Helpers;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Extensions;
-using Core.Utilities.IoC;
-using Core.Utilities.Security.Encyption;
-using Core.Utilities.Security.Jwt;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Globalization;
-using System.IO;
-using System.Text.Json.Serialization;
-
-namespace WebAPI
+﻿namespace WebAPI
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Text.Json.Serialization;
+    using Business;
+    using Business.Helpers;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Extensions;
+    using Core.Utilities.IoC;
+    using Core.Utilities.Security.Encyption;
+    using Core.Utilities.Security.Jwt;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Localization;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+
     /// <summary>
     ///
     /// </summary>

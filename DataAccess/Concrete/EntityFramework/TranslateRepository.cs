@@ -1,16 +1,16 @@
-﻿using Core.DataAccess.EntityFramework;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Abstract;
-using Core.Entities.Concrete;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Core.Entities.Dtos;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
+
     public class TranslateRepository : EfEntityRepositoryBase<Translate, ProjectDbContext>, ITranslateRepository
     {
         public TranslateRepository(ProjectDbContext context)

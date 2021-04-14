@@ -1,10 +1,10 @@
-﻿using DataAccess.Concrete.EntityFramework.Contexts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
-namespace Business.Fakes.DArch
+﻿namespace Business.Fakes.DArch
 {
-	public sealed class DArchInMemory : ProjectDbContext
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+
+    public sealed class DArchInMemory : ProjectDbContext
 	{
 		public DArchInMemory(DbContextOptions<DArchInMemory> options, IConfiguration configuration)
 			: base(options, configuration)

@@ -1,8 +1,8 @@
-﻿using Castle.DynamicProxy;
-using System.Threading.Tasks;
-
-namespace Core.Utilities.Interceptors
+﻿namespace Core.Utilities.Interceptors
 {
+    using System.Threading.Tasks;
+    using Castle.DynamicProxy;
+
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
         protected virtual void OnBefore(IInvocation invocation) { }

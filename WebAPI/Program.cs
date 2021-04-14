@@ -1,11 +1,10 @@
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-
 namespace WebAPI
 {
+    using Autofac.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+
     /// <summary>
     ///
     /// </summary>

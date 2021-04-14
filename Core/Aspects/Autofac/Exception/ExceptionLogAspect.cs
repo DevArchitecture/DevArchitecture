@@ -1,24 +1,22 @@
-﻿using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
-using Core.Utilities.Messages;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-
-
-namespace Core.Aspects.Autofac.Exception
+﻿namespace Core.Aspects.Autofac.Exception
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Castle.DynamicProxy;
+    using Core.CrossCuttingConcerns.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog;
+    using Core.Utilities.Interceptors;
+    using Core.Utilities.IoC;
+    using Core.Utilities.Messages;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
+
 	/// <summary>
 	/// ExceptionLogAspect
 	/// </summary>
-	public class ExceptionLogAspect : MethodInterception
+    public class ExceptionLogAspect : MethodInterception
 	{
 		private readonly LoggerServiceBase _loggerServiceBase;
 		private readonly IHttpContextAccessor _httpContextAccessor;

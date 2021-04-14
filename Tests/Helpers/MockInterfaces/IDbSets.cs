@@ -1,8 +1,9 @@
-﻿using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-
-namespace Tests.Helpers.MockInterfaces
+﻿namespace Tests.Helpers.MockInterfaces
 {
+    using global::Core.Entities.Concrete;
+
+    using Microsoft.EntityFrameworkCore;
+
     public interface IDbSets
 	{
 

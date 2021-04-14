@@ -1,9 +1,9 @@
-﻿using Castle.DynamicProxy;
-using Core.Utilities.Interceptors;
-using System.Transactions;
-
-namespace Core.Aspects.Autofac.Transaction
+﻿namespace Core.Aspects.Autofac.Transaction
 {
+    using System.Transactions;
+    using Castle.DynamicProxy;
+    using Core.Utilities.Interceptors;
+
     /// <summary>
     /// TransactionScopeAspect
     /// </summary>

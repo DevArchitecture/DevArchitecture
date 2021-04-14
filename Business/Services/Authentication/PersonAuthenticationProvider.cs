@@ -1,20 +1,19 @@
-﻿
-using Business.Services.Authentication.Model;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Adapters.SmsService;
-using Business.Constants;
-using Core.Entities.Concrete;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Business.Adapters.SmsService;
+    using Business.Constants;
+    using Business.Services.Authentication.Model;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Security.Jwt;
+    using DataAccess.Abstract;
+    using Microsoft.EntityFrameworkCore;
+
   /// <summary>
   /// Provider that logs in using the DevArchitecture database.
   /// </summary>
-  public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
+    public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
     {
         private readonly IUserRepository _users;
 

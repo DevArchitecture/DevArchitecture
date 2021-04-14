@@ -1,17 +1,16 @@
-﻿using Business.Handlers.Authorizations.Commands;
-using Business.Handlers.Authorizations.Queries;
-using Business.Handlers.Users.Commands;
-using Business.Services.Authentication.Model;
-using Core.Utilities.Security.Jwt;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
-using Core.Utilities.Results;
-using Microsoft.AspNetCore.Http;
-
-namespace WebAPI.Controllers
+﻿namespace WebAPI.Controllers
 {
+    using System.Threading.Tasks;
+    using Business.Handlers.Authorizations.Commands;
+    using Business.Handlers.Authorizations.Queries;
+    using Business.Handlers.Users.Commands;
+    using Core.Utilities.Results;
+    using Core.Utilities.Security.Jwt;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+
     /// <summary>
     /// Make it Authorization operations
     /// </summary>

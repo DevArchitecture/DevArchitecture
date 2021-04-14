@@ -1,8 +1,8 @@
-﻿using Core.Entities;
-
-namespace Entities.Dtos
+﻿namespace Entities.Dtos
 {
-	public class Citizen : IDto
+    using Core.Entities;
+
+    public class Citizen : IDto
 	{
 		public long CitizenId { get; set; }
 		public string Name { get; set; }

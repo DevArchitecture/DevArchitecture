@@ -1,11 +1,11 @@
-﻿using Core.Utilities.ElasticSearch.Models;
-using Core.Utilities.Results;
-using Nest;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Core.Utilities.ElasticSearch
+﻿namespace Core.Utilities.ElasticSearch
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Core.Utilities.ElasticSearch.Models;
+    using Core.Utilities.Results;
+    using Nest;
+
     public interface IElasticSearch
     {
         Task<IResult> CreateNewIndexAsync(IndexModel indexModel);

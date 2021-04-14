@@ -1,12 +1,12 @@
-﻿using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
-using MimeKit;
-using MimeKit.Text;
-using System;
-using System.Linq;
-
-namespace Core.Utilities.Mail
+﻿namespace Core.Utilities.Mail
 {
+    using System;
+    using System.Linq;
+    using MailKit.Net.Smtp;
+    using Microsoft.Extensions.Configuration;
+    using MimeKit;
+    using MimeKit.Text;
+
     public class MailManager : IMailService
     {
 

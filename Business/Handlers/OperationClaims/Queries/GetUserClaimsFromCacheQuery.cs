@@ -1,25 +1,22 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using Core.Aspects.Autofac.Performance;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using Business.Constants;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Caching;
-using Core.CrossCuttingConcerns.Caching;
-using Microsoft.AspNetCore.Http;
-
-namespace Business.Handlers.OperationClaims.Queries
+﻿namespace Business.Handlers.OperationClaims.Queries
 {
-	public class GetUserClaimsFromCacheQuery : IRequest<IDataResult<IEnumerable<string>>>
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.Aspects.Autofac.Performance;
+    using Core.CrossCuttingConcerns.Caching;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+
+    public class GetUserClaimsFromCacheQuery : IRequest<IDataResult<IEnumerable<string>>>
 	{
 		public class GetUserClaimsFromCacheQueryHandler : IRequestHandler<GetUserClaimsFromCacheQuery, IDataResult<IEnumerable<string>>>
 		{

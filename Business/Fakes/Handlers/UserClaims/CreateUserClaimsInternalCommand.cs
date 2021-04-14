@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.Constants;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-
-namespace Business.Fakes.Handlers.UserClaims
+﻿namespace Business.Fakes.Handlers.UserClaims
 {
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.Constants;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     /// <summary>
     /// For Internal Use Only,
     /// Registers All Existing Operation Claims To Given User

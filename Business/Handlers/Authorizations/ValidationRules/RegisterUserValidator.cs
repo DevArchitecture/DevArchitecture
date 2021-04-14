@@ -1,8 +1,7 @@
-﻿using Business.Handlers.Authorizations.Commands;
-using FluentValidation;
-
-namespace Business.Handlers.Authorizations.ValidationRules
+﻿namespace Business.Handlers.Authorizations.ValidationRules
 {
+    using Business.Handlers.Authorizations.Commands;
+    using FluentValidation;
 
     public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
     {

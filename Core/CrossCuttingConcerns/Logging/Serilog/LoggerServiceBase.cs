@@ -1,7 +1,7 @@
-﻿using Serilog;
-
-namespace Core.CrossCuttingConcerns.Logging.Serilog
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog
 {
+    using global::Serilog;
+
     public abstract class LoggerServiceBase
     {
         public ILogger Logger;

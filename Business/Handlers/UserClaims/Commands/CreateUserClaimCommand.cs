@@ -1,19 +1,19 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.UserClaims.Commands
+﻿namespace Business.Handlers.UserClaims.Commands
 {
-	public class CreateUserClaimCommand : IRequest<IResult>
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Caching;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
+    public class CreateUserClaimCommand : IRequest<IResult>
 	{
 		public int UserId { get; set; }
 		public int ClaimId { get; set; }

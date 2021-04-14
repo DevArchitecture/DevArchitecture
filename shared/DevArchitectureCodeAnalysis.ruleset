@@ -86,7 +86,7 @@
     </Rules>
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.OrderingRules">
-        <Rule Id="SA1200" Action="None"/>          <!-- Using directives should be placed correctly -->
+        <Rule Id="SA1200" Action="Error"/>          <!-- Using directives should be placed correctly -->
         <Rule Id="SA1201" Action="None"/>          <!-- Elements should appear in the correct order -->
         <Rule Id="SA1202" Action="None"/>          <!-- Elements should be ordered by access -->
         <Rule Id="SA1203" Action="None"/>          <!-- Constants should appear before fields -->

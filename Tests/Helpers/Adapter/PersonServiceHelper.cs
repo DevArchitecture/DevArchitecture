@@ -1,9 +1,10 @@
-﻿using System.Net;
-using Business.Adapters.PersonService;
-using Entities.Dtos;
-
-namespace Tests.Helpers.Adapter
+﻿namespace Tests.Helpers.Adapter
 {
+	using global::Business.Adapters.PersonService;
+
+	using System.Net;
+	using Entities.Dtos;
+
 	public class PersonServiceHelper
 	{
 		private readonly IPersonService _personService;
