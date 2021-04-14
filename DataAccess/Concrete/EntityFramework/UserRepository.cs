@@ -28,8 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
                                               join userClaim in Context.UserClaims on user.UserId equals userClaim.UserId
                                               join operationClaim in Context.OperationClaims on userClaim.ClaimId equals operationClaim.Id
                                               where user.UserId == userId
-
-                                              select new
+                                            select new
                                               {
                                                   operationClaim.Name
                                               });
