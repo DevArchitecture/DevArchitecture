@@ -30,7 +30,8 @@
         <Rule Id="SA1020" Action="Error"/>          <!-- Increment decrement symbols should be spaced correctly -->
         <Rule Id="SA1021" Action="Error"/>          <!-- Negative signs should be spaced correctly -->
         <Rule Id="SA1022" Action="Error"/>          <!-- Positive signs should be spaced correctly -->
-        <Rule Id="SA1023" Action="Error"/>          <!-- Dereference and access of symbols should be spaced correctly -->
+        <Rule Id="SA1023"
+              Action="Error"/>          <!-- Dereference and access of symbols should be spaced correctly -->
         <Rule Id="SA1024" Action="Error"/>          <!-- Colons should be spaced correctly -->
         <Rule Id="SA1025" Action="Error"/>          <!-- Code should not contain multiple whitespace in a row -->
         <Rule Id="SA1026"
@@ -41,7 +42,7 @@
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.ReadabilityRules">
         <Rule Id="SA1100"
-              Action="None"/>          <!-- Do not prefix calls with base unless local implementation exists -->
+              Action="Error"/>          <!-- Do not prefix calls with base unless local implementation exists -->
         <Rule Id="SA1101" Action="None"/>          <!-- Prefix local calls with this -->
         <Rule Id="SA1102" Action="None"/>          <!-- Query clause should follow previous clause -->
         <Rule Id="SA1103" Action="None"/>          <!-- Query clauses should be on separate lines or all on one line -->
