@@ -58,7 +58,7 @@
         <Rule Id="SA1111" Action="Error"/>          <!-- Closing parenthesis should be on line of last parameter -->
         <Rule Id="SA1112" Action="Error"/>          <!-- Closing parenthesis should be on line of opening parenthesis -->
         <Rule Id="SA1113" Action="Error"/>          <!-- Comma should be on the same line as previous parameter -->
-        <Rule Id="SA1114" Action="None"/>          <!-- Parameter list should follow declaration -->
+        <Rule Id="SA1114" Action="Error"/>          <!-- Parameter list should follow declaration -->
         <Rule Id="SA1115" Action="None"/>          <!-- Parameter should follow comma -->
         <Rule Id="SA1116" Action="None"/>          <!-- Split parameters should start on line after declaration -->
         <Rule Id="SA1117" Action="None"/>          <!-- Parameters should be on same line or separate lines -->

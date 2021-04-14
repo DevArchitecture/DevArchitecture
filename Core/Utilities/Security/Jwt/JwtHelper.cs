@@ -16,11 +16,11 @@ namespace Core.Utilities.Security.Jwt
         public IConfiguration Configuration { get; }
         private readonly TokenOptions _tokenOptions;
         private DateTime _accessTokenExpiration;
+
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
             _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
         }
 
         public string DecodeToken(string input)
@@ -49,16 +49,15 @@ namespace Core.Utilities.Security.Jwt
         }
 
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
-                SigningCredentials signingCredentials)
+            SigningCredentials signingCredentials)
         {
             var jwt = new JwtSecurityToken(
-
-                    issuer: tokenOptions.Issuer,
-                    audience: tokenOptions.Audience,
-                    expires: _accessTokenExpiration,
-                    notBefore: DateTime.Now,
-                    claims: SetClaims(user),
-                    signingCredentials: signingCredentials);
+                tokenOptions.Issuer,
+                tokenOptions.Audience,
+                expires: _accessTokenExpiration,
+                notBefore: DateTime.Now,
+                claims: SetClaims(user),
+                signingCredentials: signingCredentials);
             return jwt;
         }
 
@@ -76,6 +75,5 @@ namespace Core.Utilities.Security.Jwt
 
             return claims;
         }
-
     }
 }
