@@ -25,7 +25,7 @@ namespace Tests.Business.Handlers
     {
         private Mock<ILanguageRepository> _languageRepository;
         private Mock<IMediator> _mediator;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -108,7 +108,7 @@ namespace Tests.Business.Handlers
         {
             // Arrange
             var command = new CreateLanguageCommand();
-            // propertyler buraya yazılacak 
+            // propertyler buraya yazılacak
             // command.LanguageName = "test";
 
             _languageRepository.Setup(x => x.Query())

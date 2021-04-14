@@ -91,12 +91,12 @@ namespace Core.DataAccess.EntityFramework
     /// <param name="exceptionAction"></param>
     /// <returns></returns>
     public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
-        {      
+        {
             var result = default(TResult);
             try
             {
-        
-                
+
+
                 if (Context.Database.ProviderName.EndsWith("InMemory"))
                 {
                     result = action();

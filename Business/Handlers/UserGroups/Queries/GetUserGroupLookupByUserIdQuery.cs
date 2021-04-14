@@ -12,7 +12,7 @@ using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.UserGroups.Queries
 {
-	
+
 	public class GetUserGroupLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int UserId { get; set; }

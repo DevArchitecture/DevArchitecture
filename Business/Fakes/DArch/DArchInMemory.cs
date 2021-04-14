@@ -15,9 +15,9 @@ namespace Business.Fakes.DArch
 			if (!optionsBuilder.IsConfigured)
 			{
 				base.OnConfiguring(optionsBuilder.UseInMemoryDatabase(Configuration.GetConnectionString("DArchInMemory")));
-								
+
 			}
 		}
-		
+
 	}
 }

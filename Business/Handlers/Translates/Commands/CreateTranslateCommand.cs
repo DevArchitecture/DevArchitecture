@@ -17,10 +17,10 @@ using Core.Entities.Concrete;
 namespace Business.Handlers.Translates.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateTranslateCommand : IRequest<IResult>
-    {      
+    {
 
         public int LangId { get; set; }
         public string Value { get; set; }

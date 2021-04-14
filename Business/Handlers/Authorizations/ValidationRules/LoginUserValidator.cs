@@ -6,7 +6,7 @@ using FluentValidation;
 
 namespace Business.Handlers.Authorizations.ValidationRules
 {
-  
+
     public class LoginUserValidator : AbstractValidator<LoginUserCommand>
     {
         public LoginUserValidator()

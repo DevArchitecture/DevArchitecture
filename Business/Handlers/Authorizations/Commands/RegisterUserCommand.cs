@@ -15,7 +15,7 @@ using Business.Handlers.Authorizations.ValidationRules;
 
 namespace Business.Handlers.Authorizations.Commands
 {
-    
+
     public class RegisterUserCommand : IRequest<IResult>
     {
         public string Email { get; set; }

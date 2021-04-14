@@ -12,7 +12,7 @@ namespace Business.Services.Authentication.Model
 	{
 		/// <summary>
 		/// It is the user number that changes according to the provider.
-		/// 
+		///
 		/// Person: CitizenId
 		/// Staff: Personnel registration number
 		/// Agent: External staff registration number

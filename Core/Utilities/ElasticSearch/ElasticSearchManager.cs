@@ -117,7 +117,7 @@ namespace Core.Utilities.ElasticSearch
                                       .FuzzyMaxExpansions(50)
                                       .FuzzyTranspositions()
                                       .AutoGenerateSynonymsPhraseQuery(false))));
-            
+
             var list = searchResponse.Hits.Select(x => new ElasticSearchGetModel<T>()
             {
                 ElasticId = x.Id,

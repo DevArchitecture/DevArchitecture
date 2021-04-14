@@ -4,7 +4,7 @@ using Core.Entities.Concrete;
 namespace Business.Services.Authentication
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class AuthenticationCoordinator : IAuthenticationCoordinator
     {

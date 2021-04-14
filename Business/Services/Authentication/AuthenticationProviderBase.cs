@@ -66,7 +66,7 @@ namespace Business.Services.Authentication
 			var externalUserId = command.ExternalUserId;
 			var date = DateTime.Now;
 			var login = await _logins.GetAsync(m => m.Provider == command.Provider && m.Code == command.Code &&
-							
+
 							m.ExternalUserId == externalUserId && m.SendDate.AddSeconds(100) > date);
 
 			if (login == null)
@@ -75,7 +75,7 @@ namespace Business.Services.Authentication
 			}
 			var accessToken = await CreateToken(command);
 
-			
+
 			if (accessToken.Provider == AuthenticationProviderType.Unknown)
 				throw new ArgumentException(Messages.TokenProviderException);
 

@@ -14,7 +14,7 @@ namespace Tests.Business.Services.Authentication
 	{
 		private const string AuthenticationScheme = "Bearer";
 		private const string RequestUri = "api/users/getall";
-		
+
 		[Test]
 		public async Task TokenAuthorizeTest()
 		{
@@ -33,7 +33,7 @@ namespace Tests.Business.Services.Authentication
 		public async Task TokenExpiredTest()
 		{
 			const int delayAmount = 10000;
-			
+
 			// Arrange
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
 			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
@@ -42,7 +42,7 @@ namespace Tests.Business.Services.Authentication
 			await Task.Delay(delayAmount);
 
 			var response = await Client.GetAsync(RequestUri);
-			
+
 			// Assert
 			response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 		}

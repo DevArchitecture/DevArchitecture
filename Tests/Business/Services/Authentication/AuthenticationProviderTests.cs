@@ -73,7 +73,7 @@ namespace Tests.Business.Services.Authentication
 				Provider = AuthenticationProviderType.Person,
 				ProviderSubType = "Person"
 			};
-			
+
 			var result = await service.CreateToken(command);
 
 			result.Token.Should().Be("User Token");

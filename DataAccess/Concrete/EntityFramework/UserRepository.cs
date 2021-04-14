@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
                                               {
                                                   operationClaim.Name
                                               });
-            
+
             return result.Select(x => new OperationClaim { Name = x.Name }).Distinct()
                     .ToList();
         }

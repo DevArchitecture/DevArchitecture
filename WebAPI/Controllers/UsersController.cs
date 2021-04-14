@@ -16,11 +16,11 @@ namespace WebAPI.Controllers
     public class UsersController : BaseApiController
     {
         /// <summary>
-        /// List Users 
+        /// List Users
         /// </summary>
         /// <remarks>bla bla bla Users</remarks>
         /// <return>Users List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Users</remarks>
         /// <return>Users List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

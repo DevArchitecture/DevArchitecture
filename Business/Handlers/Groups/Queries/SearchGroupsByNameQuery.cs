@@ -14,7 +14,7 @@ using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.Groups.Queries
 {
-    
+
     public class SearchGroupsByNameQuery : IRequest<IDataResult<IEnumerable<Group>>>
     {
         public string GroupName { get; set; }

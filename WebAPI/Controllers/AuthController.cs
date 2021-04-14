@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         /// Make it User Login operations
         /// </summary>
         /// <param name="loginModel"></param>
-        /// <returns></returns>  
+        /// <returns></returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
         ///  Make it User Register operations
         /// </summary>
         /// <param name="createUser"></param>
-        /// <returns></returns>        
+        /// <returns></returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -81,7 +81,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>tckimlikno</remarks>
         /// <return></return>
-        /// <response code="200"></response>   
+        /// <response code="200"></response>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
         /// Mobile Login
         /// </summary>
         /// <param name="verifyCid"></param>
-        /// <returns></returns>        
+        /// <returns></returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

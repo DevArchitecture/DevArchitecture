@@ -21,12 +21,12 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                 .Get<PostgreConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
 
             IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
-                        {                            
+                        {
                             { "MessageTemplate", new MessageTemplateColumnWriter(NpgsqlDbType.Text) },
                             { "Level", new LevelColumnWriter(true, NpgsqlDbType.Varchar) },
                             { "TimeStamp", new TimestampColumnWriter(NpgsqlDbType.Timestamp) },
                             { "Exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
-                    
+
                         };
 
 

@@ -36,7 +36,7 @@ namespace Business
 	{
 		protected readonly IHostEnvironment HostEnvironment;
 
-		
+
 		public BusinessStartup(IConfiguration configuration, IHostEnvironment hostEnvironment)
 		{
 			Configuration = configuration;
@@ -47,7 +47,7 @@ namespace Business
 
 
 		/// <summary>
-		/// This method gets called by the runtime. Use this method to add services to the container. 
+		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// </summary>
 		/// <remarks>
 		/// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
@@ -97,7 +97,7 @@ namespace Business
 		/// <summary>
 		/// This method gets called by the Development
 		/// </summary>
-		/// <param name="services"></param> 
+		/// <param name="services"></param>
 		public void ConfigureDevelopmentServices(IServiceCollection services)
 		{
 
@@ -120,7 +120,7 @@ namespace Business
 
 
 		}
-		/// <summary>		
+		/// <summary>
 		/// This method gets called by the Staging
 		/// </summary>
 		/// <param name="services"></param>
@@ -170,7 +170,7 @@ namespace Business
 
 
 		/// <summary>
-		///  
+		///
 		/// </summary>
 		/// <param name="builder"></param>
 		public void ConfigureContainer(ContainerBuilder builder)

@@ -15,7 +15,7 @@ using Business.Handlers.Translates.ValidationRules;
 
 namespace Business.Handlers.Translates.Commands
 {
-    
+
     public class UpdateTranslateCommand : IRequest<IResult>
     {
         public int Id { get; set; }

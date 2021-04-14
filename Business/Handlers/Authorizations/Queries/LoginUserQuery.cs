@@ -45,7 +45,7 @@ namespace Business.Handlers.Authorizations.Queries
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
 
                 var claims = _userRepository.GetClaims(user.UserId);
-                
+
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
 

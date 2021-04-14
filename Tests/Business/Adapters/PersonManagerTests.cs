@@ -46,7 +46,7 @@ namespace Tests.Business.Adapters
         {
             // Arrange
             var citizen = CreateCitizen();
-            
+
             _personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
             // Act

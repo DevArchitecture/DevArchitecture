@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Languages</remarks>
         /// <return>Languages List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Languages</remarks>
         /// <return>Languages List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Languages</remarks>
         /// <return>Languages List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla </remarks>
         /// <return>Language List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

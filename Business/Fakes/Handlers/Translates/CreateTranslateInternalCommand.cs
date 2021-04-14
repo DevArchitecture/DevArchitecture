@@ -15,10 +15,10 @@ using MediatR;
 namespace Business.Fakes.Handlers.Translates
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateTranslateInternalCommand : IRequest<IResult>
-    {      
+    {
 
         public int LangId { get; set; }
         public string Value { get; set; }
@@ -35,7 +35,7 @@ namespace Business.Fakes.Handlers.Translates
                 _mediator = mediator;
             }
 
-            
+
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             public async Task<IResult> Handle(CreateTranslateInternalCommand request, CancellationToken cancellationToken)

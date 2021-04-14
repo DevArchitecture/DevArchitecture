@@ -25,11 +25,11 @@ namespace Tests.Business.Adapters
 		{
 			// Arrange
 			_smsService.Setup(x => x.Send(password, text, cellPhone)).ReturnsAsync(true);
-			
+
 			// Act
 			var result = _smsServiceHelper.Send(password, text, cellPhone);
 			_smsService.Verify(x => x.Send(password, text, cellPhone));
-			
+
 			// Assert
 			result.Should().BeTrue();
 		}
@@ -40,11 +40,11 @@ namespace Tests.Business.Adapters
 		{
 			// Arrange
 			_smsService.Setup(x => x.SendAssist(text, cellPhone)).ReturnsAsync(true);
-			
+
 			// Act
 			var result = _smsServiceHelper.SendAssist(text, cellPhone);
 			_smsService.Verify(x => x.SendAssist(text, cellPhone));
-			
+
 			// Assert
 			result.Should().BeTrue();
 		}

@@ -41,7 +41,7 @@ namespace Tests.Business.Handlers
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
                         .ReturnsAsync(new Translate());
 // propertyler buraya yazılacak
-// {																		
+// {
 // TranslateId = 1,
 // TranslateName = "Test"
 // }
@@ -106,7 +106,7 @@ namespace Tests.Business.Handlers
         {
             // Arrange
             var command = new CreateTranslateCommand();
-            // propertyler buraya yazılacak 
+            // propertyler buraya yazılacak
             // command.TranslateName = "test";
 
             _translateRepository.Setup(x => x.Query())

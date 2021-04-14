@@ -9,10 +9,10 @@ namespace Core.Utilities.Toolkit
     {
         public static string CreateRandomPassword(int length = 14)
         {
-          
+
             var validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
             var random = new Random();
-            
+
             var chars = new char[length];
             for (var i = 0; i < length; i++)
             {

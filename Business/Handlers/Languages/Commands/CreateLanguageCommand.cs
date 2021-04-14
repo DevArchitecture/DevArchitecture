@@ -17,11 +17,11 @@ using Core.Entities.Concrete;
 namespace Business.Handlers.Languages.Commands
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
-   
+
     public class CreateLanguageCommand : IRequest<IResult>
-    {     
+    {
 
         public string Name { get; set; }
         public string Code { get; set; }

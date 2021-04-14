@@ -36,7 +36,7 @@
         <Rule Id="SA1026"
               Action="Error"/>          <!-- Code should not contain space after new or stackalloc keyword in implicitly typed array allocation -->
         <Rule Id="SA1027" Action="None"/>          <!-- Use tabs correctly -->
-        <Rule Id="SA1028" Action="None"/>          <!-- Code should not contain trailing whitespace -->
+        <Rule Id="SA1028" Action="Error"/>          <!-- Code should not contain trailing whitespace -->
     </Rules>
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.ReadabilityRules">

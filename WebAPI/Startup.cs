@@ -21,12 +21,12 @@ using System.Text.Json.Serialization;
 namespace WebAPI
 {
 	/// <summary>
-	/// 
+	///
 	/// </summary>
 	public partial class Startup : BusinessStartup
 	{
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="configuration"></param>
 		/// <param name="hostEnvironment"></param>
@@ -37,7 +37,7 @@ namespace WebAPI
 
 
 		/// <summary>
-		/// This method gets called by the runtime. Use this method to add services to the container. 
+		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// </summary>
 		/// <remarks>
 		/// It is common to all configurations and must be called. Aspnet core does not call this method because there are other methods.
@@ -106,14 +106,14 @@ namespace WebAPI
 			// By the way, we can construct with DI by taking type to avoid calling static methods in aspects.
 			ServiceTool.ServiceProvider = app.ApplicationServices;
 
-			
+
 			var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
 			switch (configurationManager.Mode)
 			{
 				case ApplicationMode.Development:
 					app.UseDbFakeDataCreator();
 					break;
-					
+
 				case ApplicationMode.Profiling:
 				case ApplicationMode.Staging:
 
@@ -121,7 +121,7 @@ namespace WebAPI
 				case ApplicationMode.Production:
 					break;
 			}
-			
+
 			app.UseDeveloperExceptionPage();
 
 			app.ConfigureCustomExceptionMiddleware();

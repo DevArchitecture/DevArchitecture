@@ -11,7 +11,7 @@ using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Handlers.GroupClaims.Queries
 {
-	
+
 	public class GetGroupClaimsLookupByGroupIdQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public int GroupId { get; set; }

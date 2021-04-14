@@ -10,6 +10,6 @@ namespace DataAccess.Abstract
     {
         Task<List<SelectionItem>> GetLanguagesLookUp();
         Task<List<SelectionItem>> GetLanguagesLookUpWithCode();
-        
+
     }
 }

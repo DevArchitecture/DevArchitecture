@@ -12,7 +12,7 @@ namespace WebAPI.Controllers
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    /// 
+    ///
     [Route("api/[controller]")]
     [ApiController]
     public class GroupsController : BaseApiController
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Groups</remarks>
         /// <return>Grup List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         // [AllowAnonymous]
         // [Produces("application/json","text/plain")]
         // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla </remarks>
         /// <return>Grup List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>Group Lookup döner </remarks>
         /// <return>Grup Lokup</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

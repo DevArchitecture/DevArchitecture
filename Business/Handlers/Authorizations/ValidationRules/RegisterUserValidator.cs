@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Business.Handlers.Authorizations.ValidationRules
 {
- 
+
     public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
     {
         public RegisterUserValidator()

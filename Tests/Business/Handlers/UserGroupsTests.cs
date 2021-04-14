@@ -25,7 +25,7 @@ namespace Tests.Business.Handlers
         private CreateUserGroupCommandHandler _createUserGroupCommandHandler;
         private UpdateUserGroupCommandHandler _updateUserGroupCommandHandler;
         private DeleteUserGroupCommandHandler _deleteUserGroupCommandHandler;
-        
+
 		[SetUp]
 		public void Setup()
 		{
@@ -93,7 +93,7 @@ namespace Tests.Business.Handlers
 		private static async Task SomeMethodInTheCallStackAsync()
 		{
 			const int delayAmount = 500;
-			
+
 			await Task.Delay(delayAmount).ConfigureAwait(false);
 		}
 	}

@@ -43,7 +43,7 @@ namespace Business.Services.Authentication
                 return new LoginUserResult
                 {
                     Message = Messages.TrueButCellPhone,
-                  
+
                     Status = LoginUserResult.LoginStatus.PhoneNumberRequired,
                     MobilePhones = new string[] { user.MobilePhones }
                 };

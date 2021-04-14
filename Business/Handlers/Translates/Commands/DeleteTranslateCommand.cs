@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Business.Handlers.Translates.Commands
 {
-    
+
     public class DeleteTranslateCommand : IRequest<IResult>
     {
         public int Id { get; set; }

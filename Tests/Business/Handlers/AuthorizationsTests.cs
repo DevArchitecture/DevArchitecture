@@ -48,7 +48,7 @@ namespace Tests.Business.Handlers
 			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}
-		
+
 		[Test]
 		public async Task Handler_Login()
 		{
@@ -88,7 +88,7 @@ namespace Tests.Business.Handlers
 
 			result.Message.Should().Be(Messages.Added);
 		}
-		
+
 		[Test]
 		public async Task Handler_ForgotPassword()
 		{

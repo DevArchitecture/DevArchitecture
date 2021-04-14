@@ -6,12 +6,12 @@ using System;
 namespace WebAPI.EntityBaseOverride
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class OverrideBase : CSharpEntityTypeGenerator
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="annotationCodeGenerator"></param>
         /// <param name="cSharpHelper"></param>
@@ -22,7 +22,7 @@ namespace WebAPI.EntityBaseOverride
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entityType"></param>
         /// <param name="namespace"></param>

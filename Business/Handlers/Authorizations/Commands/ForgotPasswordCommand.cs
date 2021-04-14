@@ -30,7 +30,7 @@ namespace Business.Handlers.Authorizations.Commands
 				_userRepository = userRepository;
 			}
 
-			/// <summary>           
+			/// <summary>
 			/// </summary>
 			/// <param name="request"></param>
 			/// <param name="cancellationToken"></param>

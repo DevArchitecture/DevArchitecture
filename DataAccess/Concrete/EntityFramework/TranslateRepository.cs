@@ -42,7 +42,7 @@ namespace DataAccess.Concrete.EntityFramework
 
             var str = JsonConvert.SerializeObject(data);
             return str;
-       
+
         }
 
         public async Task<Dictionary<string, string>> GetTranslateWordList(string lang)

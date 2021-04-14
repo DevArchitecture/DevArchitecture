@@ -54,12 +54,12 @@ namespace Business.Services.Authentication
 
 		/// <summary>
 		/// Notes
-		/// </summary>		
+		/// </summary>
 		public string Notes { get; set; }
 
 		public void CleanRecord()
 		{
-		
+
 			if (!string.IsNullOrWhiteSpace(MobilePhone))
 			{
 				if (!MobilePhone.StartsWith("0"))

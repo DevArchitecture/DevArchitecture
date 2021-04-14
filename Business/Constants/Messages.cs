@@ -4,7 +4,7 @@
 	/// This class was created to get rid of magic strings and write more readable code.
 	/// </summary>
 	public static class Messages
-	{		
+	{
 		public static string StringLengthMustBeGreaterThanThree => "StringLengthMustBeGreaterThanThree";
 		public static string CouldNotBeVerifyCid => "CouldNotBeVerifyCid";
 		public static string VerifyCid => "VerifyCid";
@@ -26,7 +26,7 @@
 		public static string PasswordLowercaseLetter => "PasswordLowercaseLetter";
 		public static string PasswordDigit => "PasswordDigit";
 		public static string PasswordSpecialCharacter => "PasswordSpecialCharacter";
-		public static string SendPassword => "SendPassword";	
+		public static string SendPassword => "SendPassword";
 		public static string InvalidCode => "InvalidCode";
 		public static string SmsServiceNotFound => "SmsServiceNotFound";
 		public static string TrueButCellPhone => "TrueButCellPhone";
