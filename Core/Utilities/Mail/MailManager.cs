@@ -32,7 +32,8 @@ namespace Core.Utilities.Mail
             };
             using (var emailClient = new SmtpClient())
             {
-                emailClient.Connect(_configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
+                emailClient.Connect(
+                    _configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
                     Convert.ToInt32(_configuration.GetSection("EmailConfiguration").GetSection("SmtpPort").Value),
                     MailKit.Security.SecureSocketOptions.Auto);
                 emailClient.Send(message);
