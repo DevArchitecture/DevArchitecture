@@ -16,47 +16,42 @@ import { SharedService } from 'app/core/services/shared.service';
 
 export class AuthService {
 
-  userName: string;
+ userName: string;
   isLoggin: boolean;
   decodedToken: any;
   userToken: string;
   jwtHelper: JwtHelperService = new JwtHelperService();
   claims: string[];
 
-  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, private router: Router, private alertifyService: AlertifyService,private sharedService:SharedService) {
+  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, private sharedService:SharedService) {
 
     this.setClaims();
   }
 
-  login(loginUser: LoginUser) {
+  async login(loginUser: LoginUser): Promise<boolean> {
 
     let headers = new HttpHeaders();
     headers = headers.append("Content-Type", "application/json")
 
-    this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/login", loginUser, { headers: headers }).subscribe(data => {
+    var data= await this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/login", loginUser, { headers: headers }).toPromise();
+    
+    if (data.success) {
 
-
-      if (data.success) {
-
-        this.storageService.setToken(data.data.token);
-        this.claims=data.data.claims;
-
-
-         var decode = this.jwtHelper.decodeToken(this.storageService.getToken());
-
-
-        var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
-        this.userName = decode[propUserName];
-        this.sharedService.sendChangeUserNameEvent();
-
-        this.router.navigateByUrl("/dashboard");
-      }
-      else {
-        this.alertifyService.warning(data.message);
-      }
-
+      this.storageService.setToken(data.data.token);
+      this.claims=data.data.claims;
+      console.log(data.data.claims.length+",claims")
+      var decode = this.jwtHelper.decodeToken(this.storageService.getToken());
+      var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
+      this.userName = decode[propUserName];
+      this.sharedService.sendChangeUserNameEvent();
+      return true;
+      
     }
-    );
+    else {
+      return false;
+    }
+
+
   }
 
   getUserName(): string {
