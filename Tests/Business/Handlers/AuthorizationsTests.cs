@@ -1,4 +1,6 @@
-﻿namespace Tests.Business.Handlers
+﻿
+
+namespace Tests.Business.Handlers
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +11,7 @@
     using global::Business.Constants;
     using global::Business.Handlers.Authorizations.Commands;
     using global::Business.Handlers.Authorizations.Queries;
+    using global:: Business.Services.Authentication;
     using global::Core.CrossCuttingConcerns.Caching;
     using global::Core.Entities.Concrete;
     using global::Core.Utilities.Security.Hashing;
@@ -59,6 +62,13 @@
 			_userRepository.
 							Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
 
+
+			_tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).Returns(new DArchToken()
+            {
+                Token = "TestToken",
+                Claims = new List<string>(),
+                Expiration = DateTime.Now.AddHours(1)
+            });
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
 							.Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });

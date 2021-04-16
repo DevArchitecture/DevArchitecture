@@ -1,9 +1,14 @@
-﻿namespace Tests.Business.Services.Authentication
+﻿
+
+namespace Tests.Business.Services.Authentication
 {
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using FluentAssertions;
+    using global::Core.CrossCuttingConcerns.Caching;
+    using global:: Core.CrossCuttingConcerns.Caching.Microsoft;
     using NUnit.Framework;
     using Tests.Helpers;
     using Tests.Helpers.Token;
@@ -20,7 +25,9 @@
 			// Arrange
 			var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
 			HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
+			var cache = new MemoryCacheManager();
 
+			cache.Add($"{CacheKeys.UserIdForClaim}=1", new List<string>() { "GetUsersQuery" });
 			// Act
 			var response = await HttpClient.GetAsync(RequestUri);
 

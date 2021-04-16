@@ -10,7 +10,8 @@
 			return new ()
 			{
 				new Claim("username", "deneme"),
-				new Claim("email", "test@test.com")
+				new Claim("email", "test@test.com"),
+				new Claim("nameidentifier", "1")
 
 			};
 		}
