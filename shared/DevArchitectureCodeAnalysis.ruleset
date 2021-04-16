@@ -33,7 +33,7 @@
         <Rule Id="SA1023"
               Action="Error"/>          <!-- Dereference and access of symbols should be spaced correctly -->
         <Rule Id="SA1024" Action="Error"/>          <!-- Colons should be spaced correctly -->
-        <Rule Id="SA1025" Action="Error"/>          <!-- Code should not contain multiple whitespace in a row -->
+        <Rule Id="SA1025" Action="None"/>          <!-- Code should not contain multiple whitespace in a row -->
         <Rule Id="SA1026"
               Action="Error"/>          <!-- Code should not contain space after new or stackalloc keyword in implicitly typed array allocation -->
         <Rule Id="SA1027" Action="None"/>          <!-- Use tabs correctly -->
@@ -62,7 +62,7 @@
         <Rule Id="SA1115" Action="Error"/>          <!-- Parameter should follow comma -->
         <Rule Id="SA1116" Action="Error"/>          <!-- Split parameters should start on line after declaration -->
         <Rule Id="SA1117" Action="Error"/>          <!-- Parameters should be on same line or separate lines -->
-        <Rule Id="SA1118" Action="Error"/>          <!-- Parameter should not span multiple lines -->
+        <Rule Id="SA1118" Action="None"/>          <!-- Parameter should not span multiple lines -->
         <Rule Id="SA1120" Action="Error"/>          <!-- Comments should contain text -->
         <Rule Id="SA1121" Action="Error"/>          <!-- Use built-in type alias -->
         <Rule Id="SA1122" Action="Error"/>          <!-- Use string.Empty for empty strings -->
@@ -80,13 +80,13 @@
         <Rule Id="SA1134" Action="Error"/>          <!-- Attributes should not share line -->
         <Rule Id="SA1135" Action="Error"/>          <!-- Using directives should be qualified -->
         <Rule Id="SA1136" Action="Error"/>          <!-- Enum values should be on separate lines -->
-        <Rule Id="SA1137" Action="Error"/>          <!-- Elements should have the same indentation -->
+        <Rule Id="SA1137" Action="None"/>          <!-- Elements should have the same indentation -->
         <Rule Id="SA1139" Action="Error"/>          <!-- Use literal suffix notation instead of casting -->
         <Rule Id="SX1101" Action="Error"/>             <!-- Do not prefix local calls with 'this.' -->
     </Rules>
 
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers.OrderingRules">
-        <Rule Id="SA1200" Action="Error"/>          <!-- Using directives should be placed correctly -->
+        <Rule Id="SA1200" Action="None"/>          <!-- Using directives should be placed correctly -->
         <Rule Id="SA1201" Action="Error"/>          <!-- Elements should appear in the correct order -->
         <Rule Id="SA1202" Action="Error"/>          <!-- Elements should be ordered by access -->
         <Rule Id="SA1203" Action="Error"/>          <!-- Constants should appear before fields -->
@@ -95,11 +95,11 @@
         <Rule Id="SA1206" Action="Error"/>          <!-- Declaration keywords should follow order -->
         <Rule Id="SA1207" Action="Error"/>          <!-- Protected should come before internal -->
         <Rule Id="SA1208"
-              Action="Error"/>          <!-- System using directives should be placed before other using directives -->
+              Action="None"/>          <!-- System using directives should be placed before other using directives -->
         <Rule Id="SA1209"
               Action="Error"/>          <!-- Using alias directives should be placed after other using directives -->
         <Rule Id="SA1210"
-              Action="Error"/>          <!-- Using directives should be ordered alphabetically by namespace -->
+              Action="None"/>          <!-- Using directives should be ordered alphabetically by namespace -->
         <Rule Id="SA1211"
               Action="Error"/>          <!-- Using alias directives should be ordered alphabetically by alias name -->
         <Rule Id="SA1212" Action="Error"/>          <!-- Property accessors should follow order -->
