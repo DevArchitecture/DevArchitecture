@@ -1,18 +1,18 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Business.Handlers.Users.Commands
+﻿namespace Business.Handlers.Users.Commands
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     public class CreateUserCommand : IRequest<IResult>
     {
 
@@ -48,8 +48,9 @@ namespace Business.Handlers.Users.Commands
                 var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
 
                 if (isThereAnyUser != null)
+                {
                     return new ErrorResult(Messages.NameAlreadyExist);
-
+                }
 
                 var user = new User
                 {

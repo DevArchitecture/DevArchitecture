@@ -1,15 +1,16 @@
-using Core.DataAccess.EntityFramework;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace DataAccess.Concrete.EntityFramework
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+
     public class UserRepository : EfEntityRepositoryBase<User, ProjectDbContext>, IUserRepository
     {
-        public UserRepository(ProjectDbContext context) : base(context)
+        public UserRepository(ProjectDbContext context)
+            : base(context)
         {
         }
 
@@ -28,12 +29,11 @@ namespace DataAccess.Concrete.EntityFramework
                                               join userClaim in Context.UserClaims on user.UserId equals userClaim.UserId
                                               join operationClaim in Context.OperationClaims on userClaim.ClaimId equals operationClaim.Id
                                               where user.UserId == userId
-
-                                              select new
+                                            select new
                                               {
                                                   operationClaim.Name
                                               });
-            
+
             return result.Select(x => new OperationClaim { Name = x.Name }).Distinct()
                     .ToList();
         }

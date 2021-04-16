@@ -1,21 +1,19 @@
-﻿using Business.BusinessAspects;
-using Business.Handlers.OperationClaims.Queries;
-using Business.Handlers.UserClaims.Commands;
-using Core.Utilities.IoC;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Business.Fakes.Handlers.Authorizations;
-using Business.Fakes.Handlers.OperationClaims;
-using Business.Fakes.Handlers.UserClaims;
-
-namespace Business.Helpers
+﻿namespace Business.Helpers
 {
-	public static class OperationClaimCreatorMiddleware
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Fakes.Handlers.Authorizations;
+    using Business.Fakes.Handlers.OperationClaims;
+    using Business.Fakes.Handlers.UserClaims;
+    using Core.Utilities.IoC;
+    using MediatR;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.DependencyInjection;
+
+    public static class OperationClaimCreatorMiddleware
 	{
 		public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
 		{

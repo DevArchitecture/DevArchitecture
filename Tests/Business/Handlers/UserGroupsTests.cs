@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Handlers.UserGroups.Commands;
-using Business.Handlers.UserGroups.Queries;
-using Core.Aspects.Autofac.Transaction;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
-using static Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
-using static Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
-using static Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
-using static Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
-
-namespace Tests.Business.Handlers
+﻿namespace Tests.Business.Handlers
 {
-	[TestFixture]
-	public class UserGroupsTests
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using global::Business.Handlers.UserGroups.Commands;
+    using global::Business.Handlers.UserGroups.Queries;
+    using global::Core.Aspects.Autofac.Transaction;
+    using global::Core.Entities.Concrete;
+    using Moq;
+    using NUnit.Framework;
+    using static global::Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
+    using static global::Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
+    using static global::Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
+    using static global::Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
+
+    [TestFixture]
+    public class UserGroupsTests
 	{
         private Mock<IUserGroupRepository> _userGroupRepository;
 
@@ -25,9 +25,9 @@ namespace Tests.Business.Handlers
         private CreateUserGroupCommandHandler _createUserGroupCommandHandler;
         private UpdateUserGroupCommandHandler _updateUserGroupCommandHandler;
         private DeleteUserGroupCommandHandler _deleteUserGroupCommandHandler;
-        
-		[SetUp]
-		public void Setup()
+
+        [SetUp]
+        public void Setup()
 		{
 			_userGroupRepository = new Mock<IUserGroupRepository>();
 			_getUserGroupsQueryHandler = new GetUserGroupsQueryHandler(_userGroupRepository.Object);
@@ -36,8 +36,8 @@ namespace Tests.Business.Handlers
 			_deleteUserGroupCommandHandler = new DeleteUserGroupCommandHandler(_userGroupRepository.Object);
 		}
 
-		[Test]
-		public void Handler_GetList()
+        [Test]
+        public void Handler_GetList()
 		{
 			var userGroup = new UserGroup() { GroupId = 1, UserId = 1 };
 			_userGroupRepository.Setup(x => x.GetListAsync(null)).
@@ -47,8 +47,8 @@ namespace Tests.Business.Handlers
 			result.Data.Should().HaveCount(1);
 		}
 
-		[Test]
-		public void Handler_CreateUserGroup()
+        [Test]
+        public void Handler_CreateUserGroup()
 		{
 			var createUserCommand = new CreateUserGroupCommand();
 			createUserCommand.UserId = 1;
@@ -59,8 +59,8 @@ namespace Tests.Business.Handlers
 
 		}
 
-		[Test]
-		public void Handler_UpdateUserGroup()
+        [Test]
+        public void Handler_UpdateUserGroup()
 		{
 			var updateUserCommand = new UpdateUserGroupCommand();
 			updateUserCommand.GroupId = new int[] { 1 };
@@ -73,8 +73,8 @@ namespace Tests.Business.Handlers
 
 		}
 
-		[Test]
-		public void Handler_DeleteUser()
+        [Test]
+        public void Handler_DeleteUser()
 		{
 			var deleteUserCommand = new DeleteUserGroupCommand();
 			var result = _deleteUserGroupCommandHandler.
@@ -83,17 +83,17 @@ namespace Tests.Business.Handlers
 			result.Success.Should().BeTrue();
 		}
 
-		[Test]
-		[TransactionScopeAspectAsync]
-		public async Task Handler_TransactionScopeAspectAsyncTest()
+        [Test]
+        [TransactionScopeAspectAsync]
+        public async Task Handler_TransactionScopeAspectAsyncTest()
 		{
 			await SomeMethodInTheCallStackAsync().ConfigureAwait(false);
 		}
 
-		private static async Task SomeMethodInTheCallStackAsync()
+        private static async Task SomeMethodInTheCallStackAsync()
 		{
 			const int delayAmount = 500;
-			
+
 			await Task.Delay(delayAmount).ConfigureAwait(false);
 		}
 	}

@@ -1,14 +1,13 @@
-﻿using Castle.DynamicProxy;
-using Core.Aspects.Autofac.Exception;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using System;
-using System.Linq;
-using System.Reflection;
-
-
-namespace Core.Utilities.Interceptors
+﻿namespace Core.Utilities.Interceptors
 {
-	public class AspectInterceptorSelector : IInterceptorSelector
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using Castle.DynamicProxy;
+    using Core.Aspects.Autofac.Exception;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+
+    public class AspectInterceptorSelector : IInterceptorSelector
 	{
 		public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
 		{

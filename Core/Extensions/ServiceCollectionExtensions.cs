@@ -1,9 +1,9 @@
-﻿using Core.Utilities.IoC;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using Core.Utilities.IoC;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class ServiceCollectionExtensions
     {
         public static void AddDependencyResolvers(this IServiceCollection services, IConfiguration configuration, ICoreModule[] modules)

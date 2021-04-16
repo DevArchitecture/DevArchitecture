@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Core.Utilities.Mail
+﻿namespace Core.Utilities.Mail
 {
+    using System.Collections.Generic;
+
     public class EmailMessage
     {
         public EmailMessage()

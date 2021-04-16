@@ -1,24 +1,22 @@
-﻿using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
-using Core.Utilities.Messages;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-
-
-namespace Core.Aspects.Autofac.Exception
+﻿namespace Core.Aspects.Autofac.Exception
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Castle.DynamicProxy;
+    using Core.CrossCuttingConcerns.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog;
+    using Core.Utilities.Interceptors;
+    using Core.Utilities.IoC;
+    using Core.Utilities.Messages;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
+
 	/// <summary>
 	/// ExceptionLogAspect
 	/// </summary>
-	public class ExceptionLogAspect : MethodInterception
+    public class ExceptionLogAspect : MethodInterception
 	{
 		private readonly LoggerServiceBase _loggerServiceBase;
 		private readonly IHttpContextAccessor _httpContextAccessor;
@@ -38,26 +36,13 @@ namespace Core.Aspects.Autofac.Exception
 		{
 			var logDetailWithException = GetLogDetail(invocation);
 
-			if (e is AggregateException)
-				logDetailWithException.ExceptionMessage =
-					string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message));
-			else
-				logDetailWithException.ExceptionMessage = e.Message;
+			logDetailWithException.ExceptionMessage = e is AggregateException ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message)) : e.Message;
 			_loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
 		}
 
 		private LogDetailWithException GetLogDetail(IInvocation invocation)
 		{
-			var logParameters = new List<LogParameter>();
-			for (var i = 0; i < invocation.Arguments.Length; i++)
-			{
-				logParameters.Add(new LogParameter
-				{
-					Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
-					Value = invocation.Arguments[i],
-					Type = invocation.Arguments[i].GetType().Name
-				});
-			}
+			var logParameters = invocation.Arguments.Select((t, i) => new LogParameter { Name = invocation.GetConcreteMethod().GetParameters()[i].Name, Value = t, Type = t.GetType().Name }).ToList();
 			var logDetailWithException = new LogDetailWithException
 			{
 				MethodName = invocation.Method.Name,

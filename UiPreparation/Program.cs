@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Text;
-
-namespace UiPreparation
+﻿namespace UiPreparation
 {
-	internal static class Program
+    using System;
+    using System.IO;
+    using System.Text;
+
+    internal static class Program
 	{
 		private static void Main()
 		{
@@ -18,9 +18,9 @@ namespace UiPreparation
 			bld.Append("npm install popper.js --save&");
 			bld.Append("code .&");
 			bld.Append($"RD /S /Q {deletePath} &");
-            bld.Append("npm run start&");
+			bld.Append("npm run start&");
 
-            var cmd = new System.Diagnostics.Process
+			var cmd = new System.Diagnostics.Process
             {
                 StartInfo =
                 {
@@ -28,9 +28,9 @@ namespace UiPreparation
                     FileName = "cmd.exe",
                     WorkingDirectory = exePath,
                     Arguments = @"/c " + bld
-								}
+                }
             };
-            cmd.Start();
+			cmd.Start();
 			Console.ReadLine();
 			cmd.WaitForExit();
 		}

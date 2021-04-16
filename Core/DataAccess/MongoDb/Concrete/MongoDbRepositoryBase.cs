@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.DataAccess.MongoDb.Concrete.Configurations;
-using Core.Entities;
-using Core.Utilities.Messages;
-using MongoDB.Bson;
-using MongoDB.Driver;
-
-namespace Core.DataAccess.MongoDb.Concrete
+﻿namespace Core.DataAccess.MongoDb.Concrete
 {
-	public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T> where T : DocumentDbEntity
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Core.DataAccess.MongoDb.Concrete.Configurations;
+    using Core.Entities;
+    using Core.Utilities.Messages;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+
+    public abstract class MongoDbRepositoryBase<T> : IDocumentDbRepository<T>
+		where T : DocumentDbEntity
 	{
 		private readonly IMongoCollection<T> _collection;
-		protected string CollectionName;
+
 		protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
 		{
-			CollectionName = collectionName;
+			collectionName = collectionName;
 
 			ConnectionSettingControl(mongoConnectionSetting);
 
@@ -31,6 +32,17 @@ namespace Core.DataAccess.MongoDb.Concrete
 			var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
 			_collection = database.GetCollection<T>(collectionName);
 
+		}
+
+		protected string CollectionName { get; set; }
+
+		public bool Any(Expression<Func<T, bool>> predicate = null)
+		{
+			var data = predicate == null
+				? _collection.AsQueryable()
+				: _collection.AsQueryable().Where(predicate);
+
+			return data.FirstOrDefault() != null;
 		}
 
 		public virtual void Delete(ObjectId id)
@@ -131,26 +143,16 @@ namespace Core.DataAccess.MongoDb.Concrete
 		{
 			if (settings.GetMongoClientSettings() != null &&
 						(string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
-				throw new Exception(DocumentDbMessages.NullOremptyMessage);
-
+            {
+                throw new Exception(DocumentDbMessages.NullOremptyMessage);
+            }
 
 			if (string.IsNullOrEmpty(CollectionName) ||
 						string.IsNullOrEmpty(settings.ConnectionString) ||
 						string.IsNullOrEmpty(settings.DatabaseName))
-				throw new Exception(DocumentDbMessages.NullOremptyMessage);
-
-		}
-
-		public bool Any(Expression<Func<T, bool>> predicate = null)
-		{
-			var data = predicate == null
-							? _collection.AsQueryable()
-							: _collection.AsQueryable().Where(predicate);
-
-			if (data.FirstOrDefault() == null)
-				return false;
-			else
-				return true;
-		}
+            {
+                throw new Exception(DocumentDbMessages.NullOremptyMessage);
+            }
+        }
 	}
 }

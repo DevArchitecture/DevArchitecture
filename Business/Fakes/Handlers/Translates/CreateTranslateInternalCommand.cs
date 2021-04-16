@@ -1,24 +1,22 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.Constants;
-using Business.Handlers.Translates.ValidationRules;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-
-namespace Business.Fakes.Handlers.Translates
+﻿namespace Business.Fakes.Handlers.Translates
 {
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.Constants;
+    using Business.Handlers.Translates.ValidationRules;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Validation;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateTranslateInternalCommand : IRequest<IResult>
-    {      
+    {
 
         public int LangId { get; set; }
         public string Value { get; set; }
@@ -35,7 +33,7 @@ namespace Business.Fakes.Handlers.Translates
                 _mediator = mediator;
             }
 
-            
+
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             public async Task<IResult> Handle(CreateTranslateInternalCommand request, CancellationToken cancellationToken)
@@ -43,7 +41,9 @@ namespace Business.Fakes.Handlers.Translates
                 var isThereTranslateRecord = _translateRepository.Query().Any(u => u.LangId == request.LangId && u.Code == request.Code);
 
                 if (isThereTranslateRecord == true)
+                {
                     return new ErrorResult(Messages.NameAlreadyExist);
+                }
 
                 var addedTranslate = new Translate
                 {

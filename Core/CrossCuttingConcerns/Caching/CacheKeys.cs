@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.CrossCuttingConcerns.Caching
+﻿namespace Core.CrossCuttingConcerns.Caching
 {
     public static class CacheKeys
     {

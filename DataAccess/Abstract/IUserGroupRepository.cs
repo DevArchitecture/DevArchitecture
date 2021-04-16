@@ -1,12 +1,12 @@
-﻿using Core.DataAccess;
-using Core.Entities.Concrete;
-using Core.Entities.Dtos;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace DataAccess.Abstract
+﻿namespace DataAccess.Abstract
 {
-	public interface IUserGroupRepository : IEntityRepository<UserGroup>
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Core.DataAccess;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+
+    public interface IUserGroupRepository : IEntityRepository<UserGroup>
 	{
 		Task<IEnumerable<SelectionItem>> GetUserGroupSelectedList(int userId);
 		Task<IEnumerable<SelectionItem>> GetUsersInGroupSelectedListByGroupId(int groupId);

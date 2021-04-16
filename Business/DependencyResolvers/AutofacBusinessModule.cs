@@ -1,12 +1,12 @@
-﻿using Autofac;
-using Autofac.Extras.DynamicProxy;
-using Castle.DynamicProxy;
-using Core.Utilities.Interceptors;
-using FluentValidation;
-using MediatR;
-
-namespace Business.DependencyResolvers
+﻿namespace Business.DependencyResolvers
 {
+    using Autofac;
+    using Autofac.Extras.DynamicProxy;
+    using Castle.DynamicProxy;
+    using Core.Utilities.Interceptors;
+    using FluentValidation;
+    using MediatR;
+
     public class AutofacBusinessModule : Module
     {
         private readonly ConfigurationManager _configuration;

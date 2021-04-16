@@ -1,22 +1,21 @@
-﻿using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
-using Core.Utilities.Messages;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
-
-
-namespace Core.Aspects.Autofac.Logging
+﻿namespace Core.Aspects.Autofac.Logging
 {
+    using System;
+    using System.Collections.Generic;
+    using Castle.DynamicProxy;
+    using Core.CrossCuttingConcerns.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog;
+    using Core.Utilities.Interceptors;
+    using Core.Utilities.IoC;
+    using Core.Utilities.Messages;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
+
 	/// <summary>
 	/// LogAspect
 	/// </summary>
-	public class LogAspect : MethodInterception
+    public class LogAspect : MethodInterception
 	{
 		private readonly LoggerServiceBase _loggerServiceBase;
 		private readonly IHttpContextAccessor _httpContextAccessor;
@@ -45,7 +44,7 @@ namespace Core.Aspects.Autofac.Logging
 					Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
 					Value = invocation.Arguments[i],
 					Type = invocation.Arguments[i].GetType().Name,
-					
+
 
 				});
 			}

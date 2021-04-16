@@ -1,18 +1,19 @@
-﻿using System.Linq;
-using Core.DataAccess.EntityFramework;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Abstract;
-using Core.Entities.Concrete;
-using System.Collections.Generic;
-using Core.Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using Microsoft.EntityFrameworkCore;
+
     public class LanguageRepository : EfEntityRepositoryBase<Language, ProjectDbContext>, ILanguageRepository
     {
-        public LanguageRepository(ProjectDbContext context) : base(context)
+        public LanguageRepository(ProjectDbContext context)
+            : base(context)
         {
         }
 

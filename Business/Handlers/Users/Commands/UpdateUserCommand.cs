@@ -1,18 +1,17 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Aspects.Autofac.Caching;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.Users.Commands
+﻿namespace Business.Handlers.Users.Commands
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
 
-	public class UpdateUserCommand : IRequest<IResult>
+    public class UpdateUserCommand : IRequest<IResult>
 	{
 
 		public int UserId { get; set; }
@@ -32,9 +31,9 @@ namespace Business.Handlers.Users.Commands
 			}
 
 
-            [SecuredOperation(Priority = 1)]
+			[SecuredOperation(Priority = 1)]
 			[CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
 			{
 				var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);

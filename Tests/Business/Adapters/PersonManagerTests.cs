@@ -1,13 +1,13 @@
-﻿using Business.Adapters.PersonService;
-using Entities.Dtos;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
-using System.Net;
-using Tests.Helpers.Adapter;
-
-namespace Tests.Business.Adapters
+﻿namespace Tests.Business.Adapters
 {
+    using System.Net;
+    using Entities.Dtos;
+    using FluentAssertions;
+    using global::Business.Adapters.PersonService;
+    using Moq;
+    using NUnit.Framework;
+    using Tests.Helpers.Adapter;
+
     [TestFixture]
     public class PersonManagerTests
     {
@@ -18,21 +18,6 @@ namespace Tests.Business.Adapters
 
         private Mock<IPersonService>? _personService;
         private PersonServiceHelper? _personServiceHelper;
-
-        private static Citizen CreateCitizen(
-            int birthYear = BirthYear,
-            string surname = Surname,
-            string name = Name,
-            long citizenId = CitizenId)
-        {
-            return new ()
-            {
-                BirthYear = birthYear,
-                Surname = surname,
-                Name = name,
-                CitizenId = citizenId
-            };
-        }
 
         [SetUp]
         public void Setup()
@@ -46,7 +31,7 @@ namespace Tests.Business.Adapters
         {
             // Arrange
             var citizen = CreateCitizen();
-            
+
             _personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
             // Act
@@ -69,6 +54,21 @@ namespace Tests.Business.Adapters
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        private static Citizen CreateCitizen(
+            int birthYear = BirthYear,
+            string surname = Surname,
+            string name = Name,
+            long citizenId = CitizenId)
+        {
+            return new ()
+            {
+                BirthYear = birthYear,
+                Surname = surname,
+                Name = name,
+                CitizenId = citizenId
+            };
         }
     }
 }

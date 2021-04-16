@@ -1,15 +1,14 @@
-﻿using Core.Utilities.IoC;
-using MediatR;
-using System.Threading.Tasks;
-using Business.Fakes.Handlers.Languages;
-using Business.Fakes.Handlers.Translates;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
-
-namespace Business.Helpers
+﻿namespace Business.Helpers
 {
-	public static class FakeDataMiddlleware
+    using System.Threading.Tasks;
+    using Business.Fakes.Handlers.Languages;
+    using Business.Fakes.Handlers.Translates;
+    using Core.Utilities.IoC;
+    using MediatR;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.DependencyInjection;
+
+    public static class FakeDataMiddlleware
 	{
 		public static async Task UseDbFakeDataCreator(this IApplicationBuilder app)
 		{
@@ -154,7 +153,7 @@ namespace Business.Helpers
 			await mediator.Send(new CreateTranslateInternalCommand { LangId = 2, Code = "LogList", Value = "LogList" });
 			await mediator.Send(new CreateTranslateInternalCommand { LangId = 1, Code = "DeleteConfirm", Value = "Emin misiniz?" });
 			await mediator.Send(new CreateTranslateInternalCommand { LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" });
-			
+
 
 		}
 	}

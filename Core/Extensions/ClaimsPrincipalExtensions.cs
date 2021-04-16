@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+
     public static class ClaimsPrincipalExtensions
     {
         public static List<string> Claims(this ClaimsPrincipal claimsPrincipal, string claimType)

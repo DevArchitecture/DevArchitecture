@@ -1,21 +1,22 @@
-﻿using Core.Utilities.IoC;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
-
-namespace Core.CrossCuttingConcerns.Caching.Microsoft
+﻿namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text.RegularExpressions;
+    using Core.Utilities.IoC;
+    using global::Microsoft.Extensions.Caching.Memory;
+    using global::Microsoft.Extensions.DependencyInjection;
+
     /// <summary>
     /// Microsoft MemoryCacheManager
     /// </summary>
     public class MemoryCacheManager : ICacheManager
     {
         private readonly IMemoryCache _cache;
-        public MemoryCacheManager() : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
+        public MemoryCacheManager()
+            : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
         }
         public MemoryCacheManager(IMemoryCache cache)
@@ -54,8 +55,9 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void RemoveByPattern(string pattern)
         {
-            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection",
-               BindingFlags.NonPublic | BindingFlags.Instance);
+            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty(
+                "EntriesCollection",
+                BindingFlags.NonPublic | BindingFlags.Instance);
             var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
 
             var cacheCollectionValues = new List<ICacheEntry>();

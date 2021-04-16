@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace Core.Entities.Concrete
+﻿namespace Core.Entities.Concrete
 {
-	public class Log : IEntity
+    using System;
+
+    public class Log : IEntity
 	{
 		public int Id { get; set; }
 		public string MessageTemplate { get; set; }

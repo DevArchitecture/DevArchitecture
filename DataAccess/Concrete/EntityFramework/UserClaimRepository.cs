@@ -1,26 +1,27 @@
-﻿using Core.DataAccess.EntityFramework;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using Core.Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
-	public class UserClaimRepository : EfEntityRepositoryBase<UserClaim, ProjectDbContext>, IUserClaimRepository
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using Microsoft.EntityFrameworkCore;
+
+    public class UserClaimRepository : EfEntityRepositoryBase<UserClaim, ProjectDbContext>, IUserClaimRepository
 	{
-		public UserClaimRepository(ProjectDbContext context) : base(context)
+		public UserClaimRepository(ProjectDbContext context)
+			: base(context)
 		{
 		}
 
 		public async Task<IEnumerable<UserClaim>> BulkInsert(int userId, IEnumerable<UserClaim> userClaims)
 		{
-			var dbClaimList = Context.UserClaims.Where(x => x.UserId == userId);
+			var DbClaimList = Context.UserClaims.Where(x => x.UserId == userId);
 
-			Context.UserClaims.RemoveRange(dbClaimList);
+			Context.UserClaims.RemoveRange(DbClaimList);
 			await Context.UserClaims.AddRangeAsync(userClaims);
 			return userClaims;
 		}

@@ -1,35 +1,36 @@
-﻿using Core.DataAccess.EntityFramework;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using Core.Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
-	public class UserGroupRepository : EfEntityRepositoryBase<UserGroup, ProjectDbContext>, IUserGroupRepository
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+    using Microsoft.EntityFrameworkCore;
+
+    public class UserGroupRepository : EfEntityRepositoryBase<UserGroup, ProjectDbContext>, IUserGroupRepository
 	{
-		public UserGroupRepository(ProjectDbContext context) : base(context)
+		public UserGroupRepository(ProjectDbContext context)
+			: base(context)
 		{
 		}
 
 		public async Task BulkInsert(int userId, IEnumerable<UserGroup> userGroups)
 		{
-			var dbUserGroupList = Context.UserGroups.Where(x => x.UserId == userId);
+			var DbUserGroupList = Context.UserGroups.Where(x => x.UserId == userId);
 
-			Context.UserGroups.RemoveRange(dbUserGroupList);
+			Context.UserGroups.RemoveRange(DbUserGroupList);
 			await Context.UserGroups.AddRangeAsync(userGroups);
 
 		}
 
 		public async Task BulkInsertByGroupId(int groupId, IEnumerable<UserGroup> userGroups)
 		{
-			var dbUserGroupList = Context.UserGroups.Where(x => x.GroupId == groupId);
+			var DbUserGroupList = Context.UserGroups.Where(x => x.GroupId == groupId);
 
-			Context.UserGroups.RemoveRange(dbUserGroupList);
+			Context.UserGroups.RemoveRange(DbUserGroupList);
 			await Context.UserGroups.AddRangeAsync(userGroups);
 		}
 

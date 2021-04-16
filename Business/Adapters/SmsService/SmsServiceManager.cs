@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-
-namespace Business.Adapters.SmsService
+﻿namespace Business.Adapters.SmsService
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class SmsServiceManager : ISmsService
     {
         public async Task<bool> Send(string password, string text, string cellPhone)

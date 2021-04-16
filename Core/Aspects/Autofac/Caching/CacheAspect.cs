@@ -1,12 +1,12 @@
-﻿using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Caching;
-using Core.Utilities.Interceptors;
-using Core.Utilities.IoC;
-using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-
-namespace Core.Aspects.Autofac.Caching
+﻿namespace Core.Aspects.Autofac.Caching
 {
+    using System.Linq;
+    using Castle.DynamicProxy;
+    using Core.CrossCuttingConcerns.Caching;
+    using Core.Utilities.Interceptors;
+    using Core.Utilities.IoC;
+    using Microsoft.Extensions.DependencyInjection;
+
     /// <summary>
     /// CacheAspect
     /// </summary>

@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Core.ApiDoc
+﻿namespace Core.ApiDoc
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.OpenApi.Models;
+    using Swashbuckle.AspNetCore.SwaggerGen;
+
   /// <summary>
   /// Filter that adds Authorization bearer to required API methods.
   /// </summary>
-  internal class AddAuthHeaderOperationFilter : IOperationFilter
+    internal class AddAuthHeaderOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
@@ -17,7 +17,10 @@ namespace Core.ApiDoc
                                 || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any())
                                 && !context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnonymousAttribute>().Any(); // this excludes methods with AllowAnonymous attribute
 
-            if (!isAuthorized) return;
+            if (!isAuthorized)
+            {
+                return;
+            }
 
             operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
             operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });

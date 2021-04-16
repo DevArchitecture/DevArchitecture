@@ -1,19 +1,18 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.Groups.Commands
+﻿namespace Business.Handlers.Groups.Commands
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
 
-	public class UpdateGroupCommand : IRequest<IResult>
+    public class UpdateGroupCommand : IRequest<IResult>
 	{
 		public int Id { get; set; }
 		public string GroupName { get; set; }
@@ -27,9 +26,9 @@ namespace Business.Handlers.Groups.Commands
 				_groupRepository = groupRepository;
 			}
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
 			{
 				var groupToUpdate = new Group

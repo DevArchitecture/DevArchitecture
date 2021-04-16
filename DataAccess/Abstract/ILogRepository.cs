@@ -1,8 +1,9 @@
-﻿using Core.DataAccess;
-using Core.Entities.Concrete;
-namespace DataAccess.Abstract
+﻿namespace DataAccess.Abstract
 {
-	public interface ILogRepository : IEntityRepository<Log>
+    using Core.DataAccess;
+    using Core.Entities.Concrete;
+
+    public interface ILogRepository : IEntityRepository<Log>
 	{
 	}
 }

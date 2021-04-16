@@ -1,8 +1,8 @@
-﻿using Business.Adapters.SmsService;
-
-namespace Tests.Helpers.Adapter
+﻿namespace Tests.Helpers.Adapter
 {
-	public class SmsServiceHelper
+    using global::Business.Adapters.SmsService;
+
+    public class SmsServiceHelper
 	{
 		private readonly ISmsService _smsService;
 		public SmsServiceHelper(ISmsService smsService)

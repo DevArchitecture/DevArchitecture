@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-
-namespace Tests.Helpers
+﻿namespace Tests.Helpers
 {
-	public static class ClaimsData
+    using System.Collections.Generic;
+    using System.Security.Claims;
+
+    public static class ClaimsData
 	{
 		public static List<Claim> GetClaims()
 		{

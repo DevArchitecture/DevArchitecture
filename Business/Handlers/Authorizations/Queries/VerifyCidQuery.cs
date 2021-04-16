@@ -1,12 +1,12 @@
-﻿using Business.Adapters.PersonService;
-using Business.Constants;
-using Core.Utilities.Results;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Business.Handlers.Authorizations.Queries
+﻿namespace Business.Handlers.Authorizations.Queries
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.Adapters.PersonService;
+    using Business.Constants;
+    using Core.Utilities.Results;
+    using MediatR;
+
     public class VerifyCidQuery : IRequest<IDataResult<bool>>
     {
         public string Name { get; set; }

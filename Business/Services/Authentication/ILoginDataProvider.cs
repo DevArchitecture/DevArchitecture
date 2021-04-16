@@ -1,17 +1,17 @@
-﻿using System.Threading.Tasks;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
+    using System.Threading.Tasks;
+
 	/// <summary>
 	/// Input data providers call us with a coded parameter when logging into the system.
 	/// This interface defines the interface that the providers whose information is decoded by asking that code to a certain url.
 	/// </summary>
-	public interface ILoginDataProvider
+    public interface ILoginDataProvider
 	{
 		Task<LoginDataProviderResult> Verify(string accessToken);
 	}
 
-	public class LoginDataProviderResult
+    public class LoginDataProviderResult
 	{
 		public bool IsSuccess { get; set; }
 		public string Message { get; set; }
@@ -25,7 +25,7 @@ namespace Business.Services.Authentication
 	/// <remarks>
 	/// Contains the fields expected to be received when the given GUID is withdrawn from the REST service.
 	/// </remarks>
-	public class ExternalUser
+    public class ExternalUser
 	{
 		/// <summary>
 		/// Outsource personnel Id
@@ -54,18 +54,22 @@ namespace Business.Services.Authentication
 
 		/// <summary>
 		/// Notes
-		/// </summary>		
+		/// </summary>
 		public string Notes { get; set; }
 
 		public void CleanRecord()
 		{
-		
-			if (!string.IsNullOrWhiteSpace(MobilePhone))
+			if (string.IsNullOrWhiteSpace(MobilePhone))
+            {
+                return;
+            }
+
+			if (!MobilePhone.StartsWith("0"))
 			{
-				if (!MobilePhone.StartsWith("0"))
-					MobilePhone = "0" + MobilePhone;
-				MobilePhone = MobilePhone.Split('-')[0].Trim();
+				MobilePhone = "0" + MobilePhone;
 			}
+
+			MobilePhone = MobilePhone.Split('-')[0].Trim();
 		}
 	}
 }

@@ -1,19 +1,16 @@
-﻿
-using Business.Constants;
-using Core.Aspects.Autofac.Caching;
-using Business.BusinessAspects;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-
-namespace Business.Handlers.Translates.Commands
+﻿namespace Business.Handlers.Translates.Commands
 {
-    
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     public class DeleteTranslateCommand : IRequest<IResult>
     {
         public int Id { get; set; }

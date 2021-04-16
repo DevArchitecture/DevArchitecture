@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Business.Adapters.SmsService
+﻿namespace Business.Adapters.SmsService
 {
+    using System.Threading.Tasks;
+
     public interface ISmsService
     {
         Task<bool> Send(string password, string text, string cellPhone);

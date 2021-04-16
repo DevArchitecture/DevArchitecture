@@ -1,11 +1,11 @@
-﻿using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
-using Core.Utilities.IoC;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-
-namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
+    using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+    using Core.Utilities.IoC;
+    using global::Serilog;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class MongoDbLogger : LoggerServiceBase
     {
         public MongoDbLogger()

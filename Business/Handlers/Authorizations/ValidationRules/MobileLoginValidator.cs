@@ -1,10 +1,10 @@
-﻿using Business.Constants;
-using Business.Services.Authentication.Model;
-using Core.Entities.Concrete;
-using FluentValidation;
-
-namespace Business.Handlers.Authorizations.ValidationRules
+﻿namespace Business.Handlers.Authorizations.ValidationRules
 {
+    using Business.Constants;
+    using Business.Services.Authentication.Model;
+    using Core.Entities.Concrete;
+    using FluentValidation;
+
     public class MobileLoginValidator : AbstractValidator<VerifyOtpCommand>
     {
         public MobileLoginValidator()

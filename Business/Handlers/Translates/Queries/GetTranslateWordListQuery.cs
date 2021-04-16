@@ -1,18 +1,17 @@
-﻿
-using Business.BusinessAspects;
-using Core.Utilities.Results;
-using Core.Aspects.Autofac.Performance;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Caching;
-
-namespace Business.Handlers.Translates.Queries
+﻿namespace Business.Handlers.Translates.Queries
 {
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.Aspects.Autofac.Performance;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string, string>>>
     {
         public string Lang { get; set; }

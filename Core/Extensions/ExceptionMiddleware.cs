@@ -1,15 +1,14 @@
-﻿using Core.Utilities.Messages;
-using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Net;
-using System.Security;
-using System.Threading.Tasks;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using System;
+    using System.Net;
+    using System.Security;
+    using System.Threading.Tasks;
+    using Core.Utilities.Messages;
+    using FluentValidation;
+    using Microsoft.AspNetCore.Http;
 
-	public class ExceptionMiddleware
+    public class ExceptionMiddleware
 	{
 		private readonly RequestDelegate _next;
 
