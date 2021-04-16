@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Business.Constants;
 using Business.Handlers.Authorizations.Commands;
 using Business.Handlers.Authorizations.Queries;
-using Business.Services.Authentication;
-using Castle.Components.DictionaryAdapter;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
@@ -64,20 +62,11 @@ namespace Tests.Business.Handlers
 
 			_userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
 							.Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });
-			
-
 			_loginUserQuery = new LoginUserQuery
 			{
 				Email = user.Email,
 				Password = "123456"
 			};
-
-            _tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).Returns(new DArchToken()
-            {
-				Token = "TestToken",
-				Claims = new List<string>(),
-				Expiration = DateTime.Now.AddHours(1)
-            });
 
 			var result = await _loginUserQueryHandler.Handle(_loginUserQuery, new System.Threading.CancellationToken());
 
