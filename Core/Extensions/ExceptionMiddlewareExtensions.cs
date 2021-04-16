@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace Core.Extensions
+﻿namespace Core.Extensions
 {
+    using Microsoft.AspNetCore.Builder;
+
     public static class ExceptionMiddlewareExtensions
     {
         public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)

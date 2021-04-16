@@ -5,6 +5,15 @@
 	/// </summary>
 	public class LoginUserResult
 	{
+		public enum LoginStatus
+		{
+			UserNotFound,
+			WrongCredentials,
+			PhoneNumberRequired,
+			ServiceError,
+			Ok
+		}
+
 		/// <summary>
 		/// Login query result.
 		/// </summary>
@@ -17,14 +26,5 @@
 		/// List of registered phone numbers for users in the system.
 		/// </summary>
 		public string[] MobilePhones { get; set; }
-
-		public enum LoginStatus
-		{
-			UserNotFound,
-			WrongCredentials,
-			PhoneNumberRequired,
-			ServiceError,
-			Ok
-		}
 	}
 }

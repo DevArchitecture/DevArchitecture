@@ -1,13 +1,13 @@
-﻿using Core.Utilities.Results;
-using Core.Entities.Concrete;
-using MediatR;
-
-namespace Business.Services.Authentication.Model
+﻿namespace Business.Services.Authentication.Model
 {
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using MediatR;
+
 	/// <summary>
 	/// It is the command sent to the user for One Time Password control.
 	/// </summary>
-	public class VerifyOtpCommand : IRequest<IDataResult<DArchToken>>
+    public class VerifyOtpCommand : IRequest<IDataResult<DArchToken>>
 	{
 		public AuthenticationProviderType Provider { get; set; }
 		/// <summary>

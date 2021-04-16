@@ -1,8 +1,8 @@
-﻿using Core.Utilities.Security.Jwt;
-using Core.Entities.Concrete;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
+    using Core.Entities.Concrete;
+    using Core.Utilities.Security.Jwt;
+
     public class DArchToken : AccessToken
     {
         public string ExternalUserId { get; set; }

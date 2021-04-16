@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Business.Helpers
+﻿namespace Business.Helpers
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+
   /// <summary>
   /// Since we cannot lock the async await binary with the classic C # lock () clause, we are referring to this solution.
   /// </summary>
-  public class AwaitableLock
+    public class AwaitableLock
     {
         private readonly SemaphoreSlim _toLock;
 

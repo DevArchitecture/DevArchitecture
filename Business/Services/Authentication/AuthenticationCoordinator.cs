@@ -1,10 +1,10 @@
-﻿using System;
-using Core.Entities.Concrete;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
+    using System;
+    using Core.Entities.Concrete;
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class AuthenticationCoordinator : IAuthenticationCoordinator
     {

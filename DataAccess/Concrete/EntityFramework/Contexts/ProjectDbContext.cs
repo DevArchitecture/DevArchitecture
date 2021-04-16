@@ -1,20 +1,17 @@
-using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
-using Entities.Concrete;
 namespace DataAccess.Concrete.EntityFramework.Contexts
 {
+    using System.Reflection;
+    using Core.Entities.Concrete;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+
 	/// <summary>
 	/// Because this context is followed by migration for more than one provider
 	/// works on PostGreSql db by default. If you want to pass sql
 	/// When adding AddDbContext, use MsDbContext derived from it.
 	/// </summary>
-	public class ProjectDbContext : DbContext
+    public class ProjectDbContext : DbContext
 	{
-		protected readonly IConfiguration Configuration;
-
-
 		/// <summary>
 		/// in constructor we get IConfiguration, parallel to more than one db
 		/// we can create migration.
@@ -38,20 +35,6 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 			Configuration = configuration;
 		}
 
-
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-		}
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				base.OnConfiguring(optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DArchPgContext")).EnableSensitiveDataLogging());
-
-			}
-		}
-
 		public DbSet<OperationClaim> OperationClaims { get; set; }
 		public DbSet<UserClaim> UserClaims { get; set; }
 		public DbSet<Group> Groups { get; set; }
@@ -62,6 +45,22 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 		public DbSet<MobileLogin> MobileLogins { get; set; }
 		public DbSet<Language> Languages { get; set; }
 		public DbSet<Translate> Translates { get; set; }
+
+		protected IConfiguration Configuration { get; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			if (!optionsBuilder.IsConfigured)
+			{
+				base.OnConfiguring(optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DArchPgContext")).EnableSensitiveDataLogging());
+
+			}
+		}
 
 	}
 }

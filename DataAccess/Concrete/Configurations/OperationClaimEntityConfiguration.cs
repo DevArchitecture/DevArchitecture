@@ -1,9 +1,9 @@
-﻿using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace DataAccess.Concrete.Configurations
+﻿namespace DataAccess.Concrete.Configurations
 {
+    using Core.Entities.Concrete;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     public class OperationClaimEntityConfiguration : IEntityTypeConfiguration<OperationClaim>
     {
         public void Configure(EntityTypeBuilder<OperationClaim> builder)

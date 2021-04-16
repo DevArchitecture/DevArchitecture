@@ -1,26 +1,25 @@
-﻿
-using Business.BusinessAspects;
-using Business.Constants;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
-using Business.Handlers.Translates.ValidationRules;
-using Core.Entities.Concrete;
-
-namespace Business.Handlers.Translates.Commands
+﻿namespace Business.Handlers.Translates.Commands
 {
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Business.Handlers.Translates.ValidationRules;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.Aspects.Autofac.Validation;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class CreateTranslateCommand : IRequest<IResult>
-    {      
+    {
 
         public int LangId { get; set; }
         public string Value { get; set; }
@@ -46,7 +45,9 @@ namespace Business.Handlers.Translates.Commands
                 var isThereTranslateRecord = _translateRepository.Query().Any(u => u.LangId == request.LangId && u.Code == request.Code);
 
                 if (isThereTranslateRecord == true)
+                {
                     return new ErrorResult(Messages.NameAlreadyExist);
+                }
 
                 var addedTranslate = new Translate
                 {

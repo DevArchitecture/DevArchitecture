@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using Business.Handlers.Languages.Commands;
-using Business.Handlers.Languages.Queries;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Core.Entities.Concrete;
-using Core.Entities.Dtos;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-
-namespace WebAPI.Controllers
+﻿namespace WebAPI.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Business.Handlers.Languages.Commands;
+    using Business.Handlers.Languages.Queries;
+    using Core.Entities.Concrete;
+    using Core.Entities.Dtos;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Languages</remarks>
         /// <return>Languages List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Languages</remarks>
         /// <return>Languages List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Languages</remarks>
         /// <return>Languages List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla </remarks>
         /// <return>Language List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

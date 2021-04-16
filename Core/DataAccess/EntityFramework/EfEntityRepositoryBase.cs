@@ -1,13 +1,13 @@
-﻿using Core.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-namespace Core.DataAccess.EntityFramework
+﻿namespace Core.DataAccess.EntityFramework
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Core.Entities;
+    using Microsoft.EntityFrameworkCore;
+
     /// <summary>
     ///
     /// </summary>
@@ -18,12 +18,12 @@ namespace Core.DataAccess.EntityFramework
             where TEntity : class, IEntity
             where TContext : DbContext
     {
-        protected readonly TContext Context;
-
         public EfEntityRepositoryBase(TContext context)
         {
             Context = context;
         }
+
+        protected TContext Context { get; }
 
         public TEntity Add(TEntity entity)
         {
@@ -90,13 +90,13 @@ namespace Core.DataAccess.EntityFramework
     /// <param name="successAction"></param>
     /// <param name="exceptionAction"></param>
     /// <returns></returns>
-    public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
-        {      
+        public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
+        {
             var result = default(TResult);
             try
             {
-        
-                
+
+
                 if (Context.Database.ProviderName.EndsWith("InMemory"))
                 {
                     result = action();
@@ -125,9 +125,11 @@ namespace Core.DataAccess.EntityFramework
             catch (Exception ex)
             {
                 if (exceptionAction == null)
+                {
                     throw;
-                else
-                    exceptionAction(ex);
+                }
+
+                exceptionAction(ex);
             }
             return result;
         }
@@ -135,17 +137,18 @@ namespace Core.DataAccess.EntityFramework
         public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             if (expression == null)
+            {
                 return await Context.Set<TEntity>().CountAsync();
+            }
             else
+            {
                 return await Context.Set<TEntity>().CountAsync(expression);
+            }
         }
 
         public int GetCount(Expression<Func<TEntity, bool>> expression = null)
         {
-            if (expression == null)
-                return Context.Set<TEntity>().Count();
-            else
-                return Context.Set<TEntity>().Count(expression);
+            return expression == null ? Context.Set<TEntity>().Count() : Context.Set<TEntity>().Count(expression);
         }
 
     }

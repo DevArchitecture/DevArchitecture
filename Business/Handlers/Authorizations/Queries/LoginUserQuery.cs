@@ -1,19 +1,19 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.Constants;
-using Business.Services.Authentication;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Results;
-using Core.Utilities.Security.Hashing;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using MediatR;
-
-namespace Business.Handlers.Authorizations.Queries
+﻿namespace Business.Handlers.Authorizations.Queries
 {
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.Constants;
+    using Business.Services.Authentication;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Caching;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using Core.Utilities.Security.Hashing;
+    using Core.Utilities.Security.Jwt;
+    using DataAccess.Abstract;
+    using MediatR;
+
     public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
     {
         public string Email { get; set; }
@@ -39,13 +39,17 @@ namespace Business.Handlers.Authorizations.Queries
                 var user = await _userRepository.GetAsync(u => u.Email == request.Email && u.Status);
 
                 if (user == null)
+                {
                     return new ErrorDataResult<AccessToken>(Messages.UserNotFound);
+                }
 
                 if (!HashingHelper.VerifyPasswordHash(request.Password, user.PasswordSalt, user.PasswordHash))
+                {
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
+                }
 
                 var claims = _userRepository.GetClaims(user.UserId);
-                
+
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
 

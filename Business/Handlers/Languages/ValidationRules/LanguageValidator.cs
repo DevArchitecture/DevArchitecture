@@ -1,9 +1,8 @@
-﻿
-using Business.Handlers.Languages.Commands;
-using FluentValidation;
-
-namespace Business.Handlers.Languages.ValidationRules
+﻿namespace Business.Handlers.Languages.ValidationRules
 {
+    using Business.Handlers.Languages.Commands;
+    using FluentValidation;
+
     public class CreateLanguageValidator : AbstractValidator<CreateLanguageCommand>
     {
         public CreateLanguageValidator()

@@ -1,17 +1,17 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.OperationClaims.Commands
+﻿namespace Business.Handlers.OperationClaims.Commands
 {
-	public class UpdateOperationClaimCommand : IRequest<IResult>
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
+    public class UpdateOperationClaimCommand : IRequest<IResult>
 	{
 		public int Id { get; set; }
 		public string Alias { get; set; }

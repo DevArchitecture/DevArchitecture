@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Text;
-
-namespace Core.Utilities.MessageBrokers.RabbitMq
+﻿namespace Core.Utilities.MessageBrokers.RabbitMq
 {
+    using System;
+    using System.Text;
+    using Microsoft.Extensions.Configuration;
+    using RabbitMQ.Client;
+    using RabbitMQ.Client.Events;
+
     public class MqConsumerHelper : IMessageConsumer
     {
         private readonly IConfiguration _configuration;
@@ -26,7 +26,8 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "DArchQueue",
+                channel.QueueDeclare(
+                                                         queue: "DArchQueue",
                                                          durable: false,
                                                          exclusive: false,
                                                          autoDelete: false,
@@ -42,7 +43,8 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                     Console.WriteLine($"Message: {message}");
                 };
 
-                channel.BasicConsume(queue: "DArchQueue",
+                channel.BasicConsume(
+                                                      queue: "DArchQueue",
                                                       autoAck: true,
                                                       consumer: consumer);
                 Console.ReadKey();

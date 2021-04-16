@@ -1,11 +1,16 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Core.Entities.Concrete
+﻿namespace Core.Entities.Concrete
 {
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
-	public class User : IEntity
+    public class User : IEntity
 	{
+		public User()
+		{
+			UpdateContactDate = RecordDate = DateTime.Now;
+			Status = true;
+		}
+
 		public int UserId { get; set; }
 		public long CitizenId { get; set; }
 		public string FullName { get; set; }
@@ -24,22 +29,18 @@ namespace Core.Entities.Concrete
 		/// </summary>
 		[NotMapped]
 		public string AuthenticationProviderType { get; set; } = "Person";
-		public byte[] PasswordSalt { get; set; }		
+		public byte[] PasswordSalt { get; set; }
 		public byte[] PasswordHash { get; set; }
-		public User()
-		{
-			UpdateContactDate = RecordDate = DateTime.Now;
-			Status = true;
-		}
+
 		public bool UpdateMobilePhone(string mobilePhone)
 		{
-			if (mobilePhone != MobilePhones)
-			{
-				MobilePhones = mobilePhone;
-				return true;
-			}
-			else
-				return false;
+			if (mobilePhone == MobilePhones)
+            {
+                return false;
+            }
+
+			MobilePhones = mobilePhone;
+			return true;
 		}
 
 	}

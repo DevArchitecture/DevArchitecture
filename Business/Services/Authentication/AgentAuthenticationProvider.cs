@@ -1,10 +1,10 @@
-﻿using Business.Services.Authentication.Model;
-using Core.Utilities.Results;
-using System;
-using System.Threading.Tasks;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
+    using System;
+    using System.Threading.Tasks;
+    using Business.Services.Authentication.Model;
+    using Core.Utilities.Results;
+
     public class AgentAuthenticationProvider : IAuthenticationProvider
     {
         public Task<LoginUserResult> Login(LoginUserCommand command)

@@ -1,13 +1,14 @@
-﻿using Core.DataAccess.EntityFramework;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using Core.Entities.Concrete;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
-	public class MobileLoginRepository : EfEntityRepositoryBase<MobileLogin, ProjectDbContext>, IMobileLoginRepository
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+
+    public class MobileLoginRepository : EfEntityRepositoryBase<MobileLogin, ProjectDbContext>, IMobileLoginRepository
 	{
-		public MobileLoginRepository(ProjectDbContext context) : base(context)
+		public MobileLoginRepository(ProjectDbContext context)
+			: base(context)
 		{
 		}
 	}

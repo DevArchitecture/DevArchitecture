@@ -1,17 +1,16 @@
-﻿using Business.Handlers.Authorizations.Commands;
-using Business.Handlers.Authorizations.Queries;
-using Business.Handlers.Users.Commands;
-using Business.Services.Authentication.Model;
-using Core.Utilities.Security.Jwt;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
-using Core.Utilities.Results;
-using Microsoft.AspNetCore.Http;
-
-namespace WebAPI.Controllers
+﻿namespace WebAPI.Controllers
 {
+    using System.Threading.Tasks;
+    using Business.Handlers.Authorizations.Commands;
+    using Business.Handlers.Authorizations.Queries;
+    using Business.Handlers.Users.Commands;
+    using Core.Utilities.Results;
+    using Core.Utilities.Security.Jwt;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+
     /// <summary>
     /// Make it Authorization operations
     /// </summary>
@@ -34,7 +33,7 @@ namespace WebAPI.Controllers
         /// Make it User Login operations
         /// </summary>
         /// <param name="loginModel"></param>
-        /// <returns></returns>  
+        /// <returns></returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -57,7 +56,7 @@ namespace WebAPI.Controllers
         ///  Make it User Register operations
         /// </summary>
         /// <param name="createUser"></param>
-        /// <returns></returns>        
+        /// <returns></returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -81,7 +80,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>tckimlikno</remarks>
         /// <return></return>
-        /// <response code="200"></response>   
+        /// <response code="200"></response>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -126,7 +125,7 @@ namespace WebAPI.Controllers
         /// Mobile Login
         /// </summary>
         /// <param name="verifyCid"></param>
-        /// <returns></returns>        
+        /// <returns></returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

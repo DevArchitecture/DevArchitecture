@@ -1,13 +1,14 @@
-﻿using Core.DataAccess.EntityFramework;
-using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Abstract;
-using Core.Entities.Concrete;
-
-namespace DataAccess.Concrete.EntityFramework
+﻿namespace DataAccess.Concrete.EntityFramework
 {
-	public class LogRepository : EfEntityRepositoryBase<Log, ProjectDbContext>, ILogRepository
+    using Core.DataAccess.EntityFramework;
+    using Core.Entities.Concrete;
+    using DataAccess.Abstract;
+    using DataAccess.Concrete.EntityFramework.Contexts;
+
+    public class LogRepository : EfEntityRepositoryBase<Log, ProjectDbContext>, ILogRepository
 	{
-		public LogRepository(ProjectDbContext context) : base(context)
+		public LogRepository(ProjectDbContext context)
+			: base(context)
 		{
 		}
 	}

@@ -1,22 +1,19 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.Handlers.Languages.ValidationRules;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.OperationClaims.Commands
+﻿namespace Business.Handlers.OperationClaims.Commands
 {
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
 
-	public class CreateOperationClaimCommand : IRequest<IResult>
+    public class CreateOperationClaimCommand : IRequest<IResult>
 	{
 		public string ClaimName { get; set; }
 
@@ -28,13 +25,15 @@ namespace Business.Handlers.OperationClaims.Commands
 			{
 				_operationClaimRepository = operationClaimRepository;
 			}
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
 			{
 				if (IsClaimExists(request.ClaimName))
-					return new ErrorResult(Messages.OperationClaimExists);
+                {
+                    return new ErrorResult(Messages.OperationClaimExists);
+                }
 
 				var operationClaim = new OperationClaim
 				{

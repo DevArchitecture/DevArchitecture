@@ -1,28 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using System;
-
-namespace WebAPI.EntityBaseOverride
+﻿namespace WebAPI.EntityBaseOverride
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Design;
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class OverrideBase : CSharpEntityTypeGenerator
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="annotationCodeGenerator"></param>
         /// <param name="cSharpHelper"></param>
-        public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper)
-            : base(annotationCodeGenerator, cSharpHelper)
+        public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper CSharpHelper)
+            : base(annotationCodeGenerator, CSharpHelper)
         {
 
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entityType"></param>
         /// <param name="namespace"></param>

@@ -1,16 +1,16 @@
-﻿using Core.Utilities.Results;
-using DataAccess.Abstract;
-using Core.Entities.Dtos;
-using MediatR;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Caching;
-
-namespace Business.Handlers.Groups.Queries
+﻿namespace Business.Handlers.Groups.Queries
 {
-	public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Entities.Dtos;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
+
+    public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
 	{
 		public class GetGroupSelectListQueryHandler : IRequestHandler<GetGroupLookupQuery, IDataResult<IEnumerable<SelectionItem>>>
 		{
@@ -19,7 +19,7 @@ namespace Business.Handlers.Groups.Queries
 			{
 				_groupRepository = groupRepository;
 			}
-            [CacheAspect(10)]
+			[CacheAspect(10)]
 			public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request, CancellationToken cancellationToken)
 			{
 				var list = await _groupRepository.GetListAsync();

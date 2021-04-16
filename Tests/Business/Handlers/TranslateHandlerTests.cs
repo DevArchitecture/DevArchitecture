@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Business.Constants;
-using Business.Handlers.Translates.Commands;
-using Business.Handlers.Translates.Queries;
-using Core.Entities.Concrete;
-using DataAccess.Abstract;
-using FluentAssertions;
-using MediatR;
-using Moq;
-using NUnit.Framework;
-using static Business.Handlers.Translates.Queries.GetTranslateQuery;
-using static Business.Handlers.Translates.Queries.GetTranslatesQuery;
-using static Business.Handlers.Translates.Commands.CreateTranslateCommand;
-using static Business.Handlers.Translates.Commands.UpdateTranslateCommand;
-using static Business.Handlers.Translates.Commands.DeleteTranslateCommand;
-
-namespace Tests.Business.Handlers
+﻿namespace Tests.Business.Handlers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using global::Business.Constants;
+    using global::Business.Handlers.Translates.Commands;
+    using global::Business.Handlers.Translates.Queries;
+    using global::Core.Entities.Concrete;
+    using MediatR;
+    using Moq;
+    using NUnit.Framework;
+    using static global::Business.Handlers.Translates.Commands.CreateTranslateCommand;
+    using static global::Business.Handlers.Translates.Commands.DeleteTranslateCommand;
+    using static global::Business.Handlers.Translates.Commands.UpdateTranslateCommand;
+    using static global::Business.Handlers.Translates.Queries.GetTranslateQuery;
+    using static global::Business.Handlers.Translates.Queries.GetTranslatesQuery;
+
     [TestFixture]
     public class TranslateHandlerTests
     {
@@ -41,7 +41,7 @@ namespace Tests.Business.Handlers
             _translateRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Translate, bool>>>()))
                         .ReturnsAsync(new Translate());
 // propertyler buraya yazılacak
-// {																		
+// {
 // TranslateId = 1,
 // TranslateName = "Test"
 // }
@@ -106,7 +106,7 @@ namespace Tests.Business.Handlers
         {
             // Arrange
             var command = new CreateTranslateCommand();
-            // propertyler buraya yazılacak 
+            // propertyler buraya yazılacak
             // command.TranslateName = "test";
 
             _translateRepository.Setup(x => x.Query())

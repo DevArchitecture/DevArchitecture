@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Business.Constants;
-using Business.Handlers.Authorizations.Commands;
-using Business.Handlers.Authorizations.Queries;
-using Core.CrossCuttingConcerns.Caching;
-using Core.Entities.Concrete;
-using Core.Utilities.Security.Hashing;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using FluentAssertions;
-using MediatR;
-using Moq;
-using NUnit.Framework;
-using Tests.Helpers;
-using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
-using static Business.Handlers.Authorizations.Queries.LoginUserQuery;
-using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
-
-namespace Tests.Business.Handlers
+﻿namespace Tests.Business.Handlers
 {
-	[TestFixture]
-	public class AuthorizationsTests
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using DataAccess.Abstract;
+    using FluentAssertions;
+    using global::Business.Constants;
+    using global::Business.Handlers.Authorizations.Commands;
+    using global::Business.Handlers.Authorizations.Queries;
+    using global::Core.CrossCuttingConcerns.Caching;
+    using global::Core.Entities.Concrete;
+    using global::Core.Utilities.Security.Hashing;
+    using global::Core.Utilities.Security.Jwt;
+    using MediatR;
+    using Moq;
+    using NUnit.Framework;
+    using Tests.Helpers;
+    using static global::Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
+    using static global::Business.Handlers.Authorizations.Commands.RegisterUserCommand;
+    using static global::Business.Handlers.Authorizations.Queries.LoginUserQuery;
+
+    [TestFixture]
+    public class AuthorizationsTests
 	{
         private Mock<IUserRepository> _userRepository;
         private Mock<ITokenHelper> _tokenHelper;
@@ -36,21 +36,21 @@ namespace Tests.Business.Handlers
         private ForgotPasswordCommandHandler _forgotPasswordCommandHandler;
         private ForgotPasswordCommand _forgotPasswordCommand;
 
-		[SetUp]
-		public void Setup()
+        [SetUp]
+        public void Setup()
 		{
 			_userRepository = new Mock<IUserRepository>();
 			_tokenHelper = new Mock<ITokenHelper>();
 			_mediator = new Mock<IMediator>();
-            _cacheManager = new Mock<ICacheManager>();
+			_cacheManager = new Mock<ICacheManager>();
 
 			_loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _mediator.Object, _cacheManager.Object);
 			_registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
 			_forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
 		}
-		
-		[Test]
-		public async Task Handler_Login()
+
+        [Test]
+        public async Task Handler_Login()
 		{
 			var user = DataHelper.GetUser("test");
 			HashingHelper.CreatePasswordHash("123456", out var passwordSalt, out var passwordHash);
@@ -74,8 +74,8 @@ namespace Tests.Business.Handlers
 
 		}
 
-		[Test]
-		public async Task Handler_Register()
+        [Test]
+        public async Task Handler_Register()
 		{
 			var registerUser = new User { Email = "test@test.com", FullName = "test test" };
 			_command = new RegisterUserCommand
@@ -84,13 +84,13 @@ namespace Tests.Business.Handlers
 				FullName = registerUser.FullName,
 				Password = "123456"
 			};
-			var result = await _registerUserCommandHandler.Handle(_command, new System.Threading.CancellationToken());
+			var result = await _registerUserCommandHandler.Handle(_command, System.Threading.CancellationToken.None);
 
 			result.Message.Should().Be(Messages.Added);
 		}
-		
-		[Test]
-		public async Task Handler_ForgotPassword()
+
+        [Test]
+        public async Task Handler_ForgotPassword()
 		{
 			var user = DataHelper.GetUser("test");
 			_userRepository.
@@ -101,7 +101,7 @@ namespace Tests.Business.Handlers
 				TcKimlikNo = Convert.ToString(user.CitizenId)
 			};
 			var result = await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand, new System.Threading.CancellationToken());
-            result.Success.Should().BeTrue();
+			result.Success.Should().BeTrue();
 		}
 	}
 }

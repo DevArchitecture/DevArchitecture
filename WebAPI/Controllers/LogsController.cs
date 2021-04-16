@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using Business.Handlers.Logs.Queries;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-
-
-namespace WebAPI.Controllers
+﻿namespace WebAPI.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Business.Handlers.Logs.Queries;
+    using Core.Entities.Concrete;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
@@ -20,7 +19,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Logs</remarks>
         /// <return>Logs List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

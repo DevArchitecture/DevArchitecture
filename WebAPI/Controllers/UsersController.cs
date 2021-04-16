@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using Business.Handlers.Users.Commands;
-using Business.Handlers.Users.Queries;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Core.Entities.Dtos;
-using Microsoft.AspNetCore.Http;
-
-namespace WebAPI.Controllers
+﻿namespace WebAPI.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Business.Handlers.Users.Commands;
+    using Business.Handlers.Users.Queries;
+    using Core.Entities.Dtos;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
@@ -16,11 +16,11 @@ namespace WebAPI.Controllers
     public class UsersController : BaseApiController
     {
         /// <summary>
-        /// List Users 
+        /// List Users
         /// </summary>
         /// <remarks>bla bla bla Users</remarks>
         /// <return>Users List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <remarks>bla bla bla Users</remarks>
         /// <return>Users List</return>
-        /// <response code="200"></response>  
+        /// <response code="200"></response>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

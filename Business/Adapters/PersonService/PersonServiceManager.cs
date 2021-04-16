@@ -1,10 +1,10 @@
-﻿using System.Globalization;
-using System.Threading.Tasks;
-using wsKPSPublic;
-using Entities.Dtos;
-
-namespace Business.Adapters.PersonService
+﻿namespace Business.Adapters.PersonService
 {
+    using System.Globalization;
+    using System.Threading.Tasks;
+    using Entities.Dtos;
+    using wsKPSPublic;
+
     public class PersonServiceManager : IPersonService
     {
         public async Task<bool> VerifyCid(Citizen citizen)

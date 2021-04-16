@@ -1,14 +1,13 @@
-﻿using Business.Services.Authentication;
-using Business.Services.Authentication.Model;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Results;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Business.Handlers.Authorizations.Queries
+﻿namespace Business.Handlers.Authorizations.Queries
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.Services.Authentication;
+    using Business.Services.Authentication.Model;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using MediatR;
 
     public class VerifyOtpHandler : IRequestHandler<VerifyOtpCommand, IDataResult<DArchToken>>
     {
@@ -25,7 +24,7 @@ namespace Business.Handlers.Authorizations.Queries
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [LogAspect(typeof(FileLogger))]
+        [LogAspect(typeof(FileLogger))]
         public async Task<IDataResult<DArchToken>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
             var provider = _coordinator.SelectProvider(request.Provider);

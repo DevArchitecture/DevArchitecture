@@ -1,18 +1,17 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
-namespace Business.Handlers.Groups.Commands
+﻿namespace Business.Handlers.Groups.Commands
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Business.BusinessAspects;
+    using Business.Constants;
+    using Core.Aspects.Autofac.Caching;
+    using Core.Aspects.Autofac.Logging;
+    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using MediatR;
 
-	public class DeleteGroupCommand : IRequest<IResult>
+    public class DeleteGroupCommand : IRequest<IResult>
 	{
 		public int Id { get; set; }
 		public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
@@ -24,9 +23,9 @@ namespace Business.Handlers.Groups.Commands
 				_groupRepository = groupRepository;
 			}
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+			[SecuredOperation(Priority = 1)]
+			[CacheRemoveAspect("Get")]
+			[LogAspect(typeof(FileLogger))]
 			public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
 			{
 				var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);

@@ -1,25 +1,24 @@
-﻿
-using Business.Services.Authentication.Model;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Adapters.SmsService;
-using Business.Constants;
-using Core.Entities.Concrete;
-
-namespace Business.Services.Authentication
+﻿namespace Business.Services.Authentication
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Business.Adapters.SmsService;
+    using Business.Constants;
+    using Business.Services.Authentication.Model;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Security.Jwt;
+    using DataAccess.Abstract;
+    using Microsoft.EntityFrameworkCore;
+
   /// <summary>
   /// Provider that logs in using the DevArchitecture database.
   /// </summary>
-  public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
+    public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
     {
         private readonly IUserRepository _users;
 
         private readonly ITokenHelper _tokenHelper;
-        public AuthenticationProviderType ProviderType { get; }
+
         public PersonAuthenticationProvider(AuthenticationProviderType providerType, IUserRepository users, IMobileLoginRepository mobileLogins, ITokenHelper tokenHelper, ISmsService smsService)
                         : base(mobileLogins, smsService)
         {
@@ -27,6 +26,8 @@ namespace Business.Services.Authentication
             ProviderType = providerType;
             _tokenHelper = tokenHelper;
         }
+
+        public AuthenticationProviderType ProviderType { get; }
 
         public override async Task<LoginUserResult> Login(LoginUserCommand command)
         {
@@ -38,15 +39,17 @@ namespace Business.Services.Authentication
 
 
             if (command.IsPhoneValid)
+            {
                 return await PrepareOneTimePassword(AuthenticationProviderType.Person, user.MobilePhones, user.CitizenId.ToString());
-            else
-                return new LoginUserResult
-                {
-                    Message = Messages.TrueButCellPhone,
-                  
-                    Status = LoginUserResult.LoginStatus.PhoneNumberRequired,
-                    MobilePhones = new string[] { user.MobilePhones }
-                };
+            }
+
+            return new LoginUserResult
+            {
+                Message = Messages.TrueButCellPhone,
+
+                Status = LoginUserResult.LoginStatus.PhoneNumberRequired,
+                MobilePhones = new string[] { user.MobilePhones }
+            };
         }
 
         public override async Task<DArchToken> CreateToken(VerifyOtpCommand command)
