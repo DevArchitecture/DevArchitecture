@@ -18,9 +18,14 @@
 					.Get<MsSqlConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
 			var sinkOpts = new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true };
 
+			var columnOpts = new ColumnOptions();
+			columnOpts.Store.Remove(StandardColumn.Message);
+			columnOpts.Store.Remove(StandardColumn.Properties);
+			
 			var seriLogConfig = new LoggerConfiguration()
-										.WriteTo.MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOpts)
-										.CreateLogger();
+					.WriteTo.MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOpts ,columnOptions : columnOpts)
+					.CreateLogger();
+					
 			Logger = seriLogConfig;
 		}
 	}
