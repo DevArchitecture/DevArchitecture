@@ -21,11 +21,11 @@
 			var columnOpts = new ColumnOptions();
 			columnOpts.Store.Remove(StandardColumn.Message);
 			columnOpts.Store.Remove(StandardColumn.Properties);
-			
+
 			var seriLogConfig = new LoggerConfiguration()
-					.WriteTo.MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOpts ,columnOptions : columnOpts)
+					.WriteTo.MSSqlServer(connectionString: logConfig.ConnectionString, sinkOptions: sinkOpts, columnOptions: columnOpts)
 					.CreateLogger();
-					
+
 			Logger = seriLogConfig;
 		}
 	}

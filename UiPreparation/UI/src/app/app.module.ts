@@ -16,7 +16,7 @@ import { LocalStorageService } from './core/services/local-storage.service';
 import { LoginGuard } from './core/guards/login-guard';
 import { AuthInterceptorService } from './core/interceptors/auth-interceptor.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { TranslationService } from './core/services/translation.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
