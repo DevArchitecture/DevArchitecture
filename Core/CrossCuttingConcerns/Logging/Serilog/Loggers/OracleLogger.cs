@@ -16,16 +16,17 @@
 
 			var logConfig = configuration.GetSection("SeriLogConfigurations:OracleConfiguration")
 					.Get<OracleConfiguration>() ?? throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
+			// TODO: Not yet supported by netstandard 2.1
 
-		// var seriLogConfig = new LoggerConfiguration()
-		// .MinimumLevel.Verbose()
-		// .WriteTo.Oracle(cfg =>
-		// cfg.WithSettings(connectionString: logConfig.ConnectionString, "Logs")
-		// .UseBurstBatch()
-		// .CreateSink())
-		// .CreateLogger();
+			// var seriLogConfig = new LoggerConfiguration()
+			// .MinimumLevel.Verbose()
+			// .WriteTo.Oracle(cfg =>
+			// cfg.WithSettings(connectionString: logConfig.ConnectionString, "Logs")
+			// .UseBurstBatch()
+			// .CreateSink())
+			// .CreateLogger();
 
-		// Logger = seriLogConfig;
+			// Logger = seriLogConfig;
 		}
 	}
 }
