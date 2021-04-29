@@ -32,14 +32,14 @@
             }
 
             [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
+            [ValidationAspect(typeof(UpdateLanguageValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)
             {
                 var isThereLanguageRecord = await _languageRepository.GetAsync(u => u.Id == request.Id);
 
-                isThereLanguageRecord.Id = request.Id;
+                //isThereLanguageRecord.Id = request.Id;
                 isThereLanguageRecord.Name = request.Name;
                 isThereLanguageRecord.Code = request.Code;
 
