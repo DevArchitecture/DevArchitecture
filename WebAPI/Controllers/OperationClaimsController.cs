@@ -30,12 +30,7 @@
         public async Task<IActionResult> GetList()
         {
             var result = await Mediator.Send(new GetOperationClaimsQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -51,12 +46,7 @@
         public async Task<IActionResult> GetByid(int id)
         {
             var result = await Mediator.Send(new GetOperationClaimQuery() { Id = id });
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -72,12 +62,7 @@
         public async Task<IActionResult> GetOperationClaimLookup()
         {
             var result = await Mediator.Send(new GetOperationClaimLookupQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -93,12 +78,7 @@
         public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaim)
         {
             var result = await Mediator.Send(updateOperationClaim);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -114,15 +94,7 @@
         public async Task<IActionResult> GetUserClaimsFromCache()
         {
             var result = await Mediator.Send(new GetUserClaimsFromCacheQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
-
-
-
     }
 }

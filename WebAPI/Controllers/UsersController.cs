@@ -28,12 +28,7 @@
         public async Task<IActionResult> GetList()
         {
             var result = await Mediator.Send(new GetUsersQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -49,12 +44,7 @@
         public async Task<IActionResult> GetUserLookup()
         {
             var result = await Mediator.Send(new GetUserLookupQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -70,12 +60,7 @@
         public async Task<IActionResult> GetById(int userId)
         {
             var result = await Mediator.Send(new GetUserQuery { UserId = userId });
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -91,12 +76,7 @@
         public async Task<IActionResult> Add([FromBody] CreateUserCommand createUser)
         {
             var result = await Mediator.Send(createUser);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -112,12 +92,7 @@
         public async Task<IActionResult> Update([FromBody] UpdateUserCommand updateUser)
         {
             var result = await Mediator.Send(updateUser);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -133,12 +108,7 @@
         public async Task<IActionResult> Delete([FromBody] DeleteUserCommand deleteUser)
         {
             var result = await Mediator.Send(deleteUser);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
     }
 }

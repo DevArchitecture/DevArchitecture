@@ -27,12 +27,7 @@
         public async Task<IActionResult> GetList()
         {
             var result = await Mediator.Send(new GetLogDtoQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
     }
 }
