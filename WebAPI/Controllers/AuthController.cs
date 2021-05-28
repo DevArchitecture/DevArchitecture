@@ -43,13 +43,7 @@
         public async Task<IActionResult> Login([FromBody] LoginUserQuery loginModel)
         {
             var result = await Mediator.Send(loginModel);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return Unauthorized(result.Message);
+            return result.Success ? Ok(result) : Unauthorized(result.Message);
         }
 
         /// <summary>
@@ -66,13 +60,7 @@
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
             var result = await Mediator.Send(createUser);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         /// <summary>
@@ -90,13 +78,7 @@
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
         {
             var result = await Mediator.Send(forgotPassword);
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         /// <summary>
@@ -112,13 +94,7 @@
         public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command)
         {
             var result = await Mediator.Send(command);
-
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -135,13 +111,7 @@
         public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid)
         {
             var result = await Mediator.Send(verifyCid);
-
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>

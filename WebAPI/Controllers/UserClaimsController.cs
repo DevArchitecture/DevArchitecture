@@ -30,12 +30,7 @@
         public async Task<IActionResult> GetList()
         {
             var result = await Mediator.Send(new GetUserClaimsQuery());
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -51,12 +46,7 @@
         public async Task<IActionResult> GetByUserId(int userid)
         {
             var result = await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid });
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -72,12 +62,7 @@
         public async Task<IActionResult> GetOperationClaimByUserId(int id)
         {
             var result = await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id });
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -93,12 +78,7 @@
         public async Task<IActionResult> Add([FromBody] CreateUserClaimCommand createUserClaim)
         {
             var result = await Mediator.Send(createUserClaim);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -114,12 +94,7 @@
         public async Task<IActionResult> Update([FromBody] UpdateUserClaimCommand updateUserClaim)
         {
             var result = await Mediator.Send(updateUserClaim);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
 
         /// <summary>
@@ -135,12 +110,7 @@
         public async Task<IActionResult> Delete([FromBody] DeleteUserClaimCommand deleteUserClaim)
         {
             var result = await Mediator.Send(deleteUserClaim);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-
-            return BadRequest(result.Message);
+            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
     }
 }
