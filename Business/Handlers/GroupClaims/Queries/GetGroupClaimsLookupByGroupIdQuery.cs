@@ -29,7 +29,6 @@
 			{
 				var data = await _groupClaimRepository.GetGroupClaimsSelectedList(request.GroupId);
 				return new SuccessDataResult<IEnumerable<SelectionItem>>(data);
-
 			}
 		}
 	}

@@ -30,8 +30,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetUserGroupsQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupsQuery()));
         }
 
         /// <summary>
@@ -46,8 +45,7 @@
         [AllowAnonymous]
         public async Task<IActionResult> GetByUserId(int userId)
         {
-            var result = await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
         }
 
         /// <summary>
@@ -62,8 +60,7 @@
         [HttpGet("getusergroupbyuserid")]
         public async Task<IActionResult> GetGroupClaimsByUserId(int id)
         {
-            var result = await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id }));
         }
 
         /// <summary>
@@ -78,8 +75,7 @@
         [HttpGet("getusersingroupbygroupid")]
         public async Task<IActionResult> GetUsersInGroupByGroupid(int id)
         {
-            var result = await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery { GroupId = id });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery { GroupId = id }));
         }
 
         /// <summary>
@@ -94,8 +90,7 @@
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateUserGroupCommand createUserGroup)
         {
-            var result = await Mediator.Send(createUserGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createUserGroup));
         }
 
         /// <summary>
@@ -110,6 +105,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUserGroupCommand updateUserGroup)
         {
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));
             var result = await Mediator.Send(updateUserGroup);
             return result.Success ? Ok(result.Message) : BadRequest(result.Message);
         }
@@ -126,8 +122,7 @@
         [HttpPut("updatebygroupid")]
         public async Task<IActionResult> UpdateByGroupId([FromBody] UpdateUserGroupByGroupIdCommand updateUserGroup)
         {
-            var result = await Mediator.Send(updateUserGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));
         }
 
         /// <summary>
@@ -142,8 +137,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteUserGroupCommand deleteUserGroup)
         {
-            var result = await Mediator.Send(deleteUserGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteUserGroup));
         }
     }
 }

@@ -30,8 +30,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetGroupClaimsQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimsQuery()));
         }
 
         /// <summary>
@@ -46,8 +45,7 @@
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await Mediator.Send(new GetGroupClaimQuery { Id = id });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
         }
 
         /// <summary>
@@ -62,8 +60,7 @@
         [HttpGet("getgroupclaimsbygroupid")]
         public async Task<IActionResult> GetGroupClaimsByGroupId(int id)
         {
-            var result = await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
         }
 
         /// <summary>
@@ -78,8 +75,7 @@
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateGroupClaimCommand createGroupClaim)
         {
-            var result = await Mediator.Send(createGroupClaim);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createGroupClaim));
         }
 
         /// <summary>
@@ -94,8 +90,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateGroupClaimCommand updateGroupClaim)
         {
-            var result = await Mediator.Send(updateGroupClaim);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateGroupClaim));
         }
 
         /// <summary>
@@ -110,8 +105,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteGroupClaimCommand deleteGroupClaim)
         {
-            var result = await Mediator.Send(deleteGroupClaim);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteGroupClaim));
         }
     }
 }

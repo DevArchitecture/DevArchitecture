@@ -29,8 +29,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetOperationClaimsQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimsQuery()));
         }
 
         /// <summary>
@@ -45,8 +44,7 @@
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetByid(int id)
         {
-            var result = await Mediator.Send(new GetOperationClaimQuery() { Id = id });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimQuery() { Id = id }));
         }
 
         /// <summary>
@@ -61,8 +59,7 @@
         [HttpGet("getoperationclaimlookup")]
         public async Task<IActionResult> GetOperationClaimLookup()
         {
-            var result = await Mediator.Send(new GetOperationClaimLookupQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimLookupQuery()));
         }
 
         /// <summary>
@@ -77,8 +74,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaim)
         {
-            var result = await Mediator.Send(updateOperationClaim);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateOperationClaim));
         }
 
         /// <summary>
@@ -93,8 +89,7 @@
         [HttpGet("getuserclaimsfromcache")]
         public async Task<IActionResult> GetUserClaimsFromCache()
         {
-            var result = await Mediator.Send(new GetUserClaimsFromCacheQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsFromCacheQuery()));
         }
     }
 }

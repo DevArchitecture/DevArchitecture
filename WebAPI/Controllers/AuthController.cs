@@ -71,8 +71,7 @@
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
-            var result = await Mediator.Send(createUser);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResult(await Mediator.Send(createUser));
         }
 
         /// <summary>
@@ -89,8 +88,7 @@
         [HttpPut("forgotpassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
         {
-            var result = await Mediator.Send(forgotPassword);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResult(await Mediator.Send(forgotPassword));
         }
 
         /// <summary>
@@ -105,8 +103,7 @@
         [HttpPut("changeuserpassword")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command)
         {
-            var result = await Mediator.Send(command);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(command));
         }
 
         /// <summary>
@@ -122,8 +119,7 @@
         [HttpPost("verify")]
         public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid)
         {
-            var result = await Mediator.Send(verifyCid);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(verifyCid));
         }
 
         /// <summary>

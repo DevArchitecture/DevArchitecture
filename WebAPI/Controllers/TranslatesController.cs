@@ -28,8 +28,7 @@
         [HttpGet("gettranslatesbylang")]
         public async Task<IActionResult> GetTranslatesByLang(string lang)
         {
-            var result = await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang });
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
         }
 
         /// <summary>
@@ -44,10 +43,8 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetTranslatesQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesQuery()));
         }
-
 
         /// <summary>
         /// List Dto Translate
@@ -61,8 +58,7 @@
         [HttpGet("gettranslatelistdto")]
         public async Task<IActionResult> GetTranslateListDto()
         {
-            var result = await Mediator.Send(new GetTranslateListDtoQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateListDtoQuery()));
         }
 
         /// <summary>
@@ -77,8 +73,7 @@
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int translateId)
         {
-            var result = await Mediator.Send(new GetTranslateQuery { Id = translateId });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateQuery { Id = translateId }));
         }
 
         /// <summary>
@@ -93,8 +88,7 @@
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateTranslateCommand createTranslate)
         {
-            var result = await Mediator.Send(createTranslate);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createTranslate));
         }
 
         /// <summary>
@@ -109,8 +103,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateTranslateCommand updateTranslate)
         {
-            var result = await Mediator.Send(updateTranslate);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateTranslate));
         }
 
         /// <summary>
@@ -125,8 +118,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteTranslateCommand deleteTranslate)
         {
-            var result = await Mediator.Send(deleteTranslate);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteTranslate));
         }
     }
 }

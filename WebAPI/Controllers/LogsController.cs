@@ -26,8 +26,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetLogDtoQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetLogDtoQuery()));
         }
     }
 }
