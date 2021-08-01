@@ -46,6 +46,18 @@
             return result.Success ? Ok(result) : Unauthorized(result.Message);
         }
 
+        [AllowAnonymous]
+        [Consumes("application/json")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+        [HttpPost("loginwithrefreshtoken")]
+        public async Task<IActionResult> LoginWithRefreshToken([FromBody] LoginWithRefreshTokenQuery command)
+        {
+            var result = await Mediator.Send(command);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
+
         /// <summary>
         ///  Make it User Register operations
         /// </summary>
@@ -59,8 +71,7 @@
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
-            var result = await Mediator.Send(createUser);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResult(await Mediator.Send(createUser));
         }
 
         /// <summary>
@@ -77,8 +88,7 @@
         [HttpPut("forgotpassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
         {
-            var result = await Mediator.Send(forgotPassword);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResult(await Mediator.Send(forgotPassword));
         }
 
         /// <summary>
@@ -93,8 +103,7 @@
         [HttpPut("changeuserpassword")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command)
         {
-            var result = await Mediator.Send(command);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(command));
         }
 
         /// <summary>
@@ -110,8 +119,7 @@
         [HttpPost("verify")]
         public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid)
         {
-            var result = await Mediator.Send(verifyCid);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(verifyCid));
         }
 
         /// <summary>

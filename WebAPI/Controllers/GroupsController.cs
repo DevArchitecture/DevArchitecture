@@ -30,8 +30,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetGroupsQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupsQuery()));
         }
 
         /// <summary>
@@ -46,8 +45,7 @@
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int groupId)
         {
-            var result = await Mediator.Send(new GetGroupQuery { GroupId = groupId });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = groupId }));
         }
 
         /// <summary>
@@ -62,8 +60,7 @@
         [HttpGet("getgrouplookup")]
         public async Task<IActionResult> Getselectedlist()
         {
-            var result = await Mediator.Send(new GetGroupLookupQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupLookupQuery()));
         }
 
         /// <summary>
@@ -78,8 +75,7 @@
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateGroupCommand createGroup)
         {
-            var result = await Mediator.Send(createGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createGroup));
         }
 
         /// <summary>
@@ -94,8 +90,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateGroupCommand updateGroup)
         {
-            var result = await Mediator.Send(updateGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateGroup));
         }
 
         /// <summary>
@@ -110,8 +105,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteGroupCommand deleteGroup)
         {
-            var result = await Mediator.Send(deleteGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteGroup));
         }
     }
 }

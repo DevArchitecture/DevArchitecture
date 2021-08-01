@@ -27,8 +27,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetUsersQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery()));
         }
 
         /// <summary>
@@ -43,8 +42,7 @@
         [HttpGet("getuserlookup")]
         public async Task<IActionResult> GetUserLookup()
         {
-            var result = await Mediator.Send(new GetUserLookupQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserLookupQuery()));
         }
 
         /// <summary>
@@ -59,8 +57,7 @@
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int userId)
         {
-            var result = await Mediator.Send(new GetUserQuery { UserId = userId });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = userId }));
         }
 
         /// <summary>
@@ -75,8 +72,7 @@
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateUserCommand createUser)
         {
-            var result = await Mediator.Send(createUser);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createUser));
         }
 
         /// <summary>
@@ -91,8 +87,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUserCommand updateUser)
         {
-            var result = await Mediator.Send(updateUser);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateUser));
         }
 
         /// <summary>
@@ -107,8 +102,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteUserCommand deleteUser)
         {
-            var result = await Mediator.Send(deleteUser);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteUser));
         }
     }
 }

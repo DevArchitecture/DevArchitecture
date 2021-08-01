@@ -1,5 +1,6 @@
 ﻿namespace Business.Handlers.Authorizations.Queries
 {
+    using System;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -48,6 +49,11 @@
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
                 }
 
+                user.RefreshToken = Guid.NewGuid().ToString();
+
+                _userRepository.Update(user);
+                await _userRepository.SaveChangesAsync();
+
                 var claims = _userRepository.GetClaims(user.UserId);
 
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
@@ -57,8 +63,6 @@
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }
-
-
         }
     }
 }

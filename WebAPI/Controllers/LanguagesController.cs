@@ -30,8 +30,7 @@
         [HttpGet("getlookupwithcode")]
         public async Task<IActionResult> GetLookupListWithCode()
         {
-            var result = await Mediator.Send(new GetLanguagesLookUpWithCodeQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpWithCodeQuery()));
         }
 
         /// <summary>
@@ -46,8 +45,7 @@
         [HttpGet("getlookup")]
         public async Task<IActionResult> GetLookupList()
         {
-            var result = await Mediator.Send(new GetLanguagesLookUpQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpQuery()));
         }
 
         /// <summary>
@@ -62,8 +60,7 @@
         [HttpGet("getall")]
         public async Task<IActionResult> GetList()
         {
-            var result = await Mediator.Send(new GetLanguagesQuery());
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesQuery()));
         }
 
         /// <summary>
@@ -78,8 +75,7 @@
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int languageId)
         {
-            var result = await Mediator.Send(new GetLanguageQuery { Id = languageId });
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = languageId }));
         }
 
         /// <summary>
@@ -94,8 +90,7 @@
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguage)
         {
-            var result = await Mediator.Send(createLanguage);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createLanguage));
         }
 
         /// <summary>
@@ -110,8 +105,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguage)
         {
-            var result = await Mediator.Send(updateLanguage);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateLanguage));
         }
 
         /// <summary>
@@ -126,8 +120,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguage)
         {
-            var result = await Mediator.Send(deleteLanguage);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteLanguage)); 
         }
     }
 }

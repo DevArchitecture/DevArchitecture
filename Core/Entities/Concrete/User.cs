@@ -15,6 +15,7 @@
 		public long CitizenId { get; set; }
 		public string FullName { get; set; }
 		public string Email { get; set; }
+		public string RefreshToken { get; set; }
 		public string MobilePhones { get; set; }
 		public bool Status { get; set; }
 		public DateTime BirthDate { get; set; }
