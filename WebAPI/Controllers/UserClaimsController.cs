@@ -89,7 +89,7 @@
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUserClaimCommand updateUserClaim)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserClaim)); 
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserClaim));
         }
 
         /// <summary>
@@ -104,7 +104,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteUserClaimCommand deleteUserClaim)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteUserClaim)); 
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteUserClaim));
         }
     }
 }

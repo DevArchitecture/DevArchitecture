@@ -120,7 +120,7 @@
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguage)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteLanguage)); 
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteLanguage));
         }
     }
 }

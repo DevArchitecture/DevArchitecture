@@ -13,5 +13,6 @@ namespace Core.Entities.Dtos
 		public int Gender { get; set; }
 		public string Password { get; set; }
 		public bool Status { get; set; }
+		public string RefreshToken { get; set; }
 	}
 }
