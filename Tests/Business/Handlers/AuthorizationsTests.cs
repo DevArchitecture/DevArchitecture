@@ -94,13 +94,15 @@ namespace Tests.Business.Handlers
             };
 
             _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>())).ReturnsAsync(DataHelper.GetUser("test"));
+            _userRepository.Setup(x => x.GetClaims(It.IsAny<int>())).Returns(new List<OperationClaim> { new OperationClaim { } });
             _userRepository.Setup(x => x.Update(It.IsAny<User>())).Returns(new User());
             _tokenHelper.Setup(x => x.CreateToken<AccessToken>(It.IsAny<User>())).Returns(new AccessToken());
 
-            var handler = new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object);
+            var handler = new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
+            _userRepository.Verify(x => x.GetClaims(It.IsAny<int>()), Times.Once);
             _userRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
             _userRepository.Verify(x => x.SaveChangesAsync(), Times.Once);
             _tokenHelper.Verify(x => x.CreateToken<AccessToken>(It.IsAny<User>()), Times.Once);
@@ -120,7 +122,7 @@ namespace Tests.Business.Handlers
 
             _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>())).ReturnsAsync(rt);
 
-            var handler = new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object);
+            var handler = new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
             var x = await handler.Handle(command, new System.Threading.CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
