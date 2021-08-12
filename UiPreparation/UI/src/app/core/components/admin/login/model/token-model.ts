@@ -10,5 +10,5 @@ export class Data {
     expiration:string;
     token:string;
     claims:string[];
-
+    refreshToken:string;
 }

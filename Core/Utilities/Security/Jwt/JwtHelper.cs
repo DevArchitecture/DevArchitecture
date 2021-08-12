@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
+    using System.Security.Cryptography;
     using Core.Entities.Concrete;
     using Core.Extensions;
     using Core.Utilities.Security.Encyption;
@@ -47,7 +48,8 @@
             return new TAccessToken()
             {
                 Token = token,
-                Expiration = _accessTokenExpiration
+                Expiration = _accessTokenExpiration,
+                RefreshToken = GenerateRefreshToken()
             };
         }
 
@@ -65,7 +67,15 @@
                 signingCredentials: signingCredentials);
             return jwt;
         }
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
 
+            using var generator = new RNGCryptoServiceProvider();
+            generator.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+        }
         private IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();

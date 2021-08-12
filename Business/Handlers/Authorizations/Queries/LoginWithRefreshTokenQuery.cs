@@ -40,15 +40,13 @@
 					return new ErrorDataResult<User>(Messages.UserNotFound);
 				}
 
-				userToCheck.RefreshToken = Guid.NewGuid().ToString();
-				_userRepository.Update(userToCheck);
 				var claims = _userRepository.GetClaims(userToCheck.UserId);
-				await _userRepository.SaveChangesAsync();
 				_cacheManager.Remove($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}");
 				_cacheManager.Add($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}", claims.Select(x => x.Name));
-
-
 				var accessToken = _tokenHelper.CreateToken<AccessToken>(userToCheck);
+				userToCheck.RefreshToken = accessToken.RefreshToken;
+				_userRepository.Update(userToCheck);
+				await _userRepository.SaveChangesAsync();
 				return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
 			}
 		}

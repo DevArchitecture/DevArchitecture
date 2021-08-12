@@ -23,7 +23,8 @@ export class AuthService {
   jwtHelper: JwtHelperService = new JwtHelperService();
   claims: string[];
 
-  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, private router: Router, private alertifyService: AlertifyService,private sharedService:SharedService) {
+  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, 
+    private router: Router, private alertifyService:AlertifyService,private sharedService:SharedService) {
 
     this.setClaims();
   }
@@ -39,6 +40,7 @@ export class AuthService {
       if (data.success) {
 
         this.storageService.setToken(data.data.token);
+        this.storageService.setItem("refreshToken",data.data.refreshToken)
         this.claims=data.data.claims;
 
 
@@ -58,7 +60,6 @@ export class AuthService {
     }
     );
   }
-
   getUserName(): string {
     return this.userName;
   }
@@ -83,12 +84,13 @@ export class AuthService {
   logOut() {
     this.storageService.removeToken();
     this.storageService.removeItem("lang")
+    this.storageService.removeItem("refreshToken");
     this.claims = [];
   }
 
   loggedIn(): boolean {
 
-    let isExpired = this.jwtHelper.isTokenExpired(this.storageService.getToken());
+    let isExpired = this.jwtHelper.isTokenExpired(this.storageService.getToken(),-120);
     return !isExpired;
   }
 
@@ -98,7 +100,7 @@ export class AuthService {
 
   claimGuard(claim: string): boolean {
     if(!this.loggedIn())
-    this.router.navigate(["/login"]);
+     this.router.navigate(["/login"]);
     
     var check = this.claims.some(function (item) {
       return item == claim;
