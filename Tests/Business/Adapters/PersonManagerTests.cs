@@ -33,10 +33,10 @@ namespace Tests.Business.Adapters
             // Arrange
             var citizen = CreateCitizen();
 
-            _personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
+            _personService?.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
             // Act
-            var result = _personServiceHelper.VerifyId(citizen);
+            var result = _personServiceHelper?.VerifyId(citizen);
 
             // Assert
             result.Should().BeFalse();
@@ -48,10 +48,10 @@ namespace Tests.Business.Adapters
             // Arrange
             var citizen = CreateCitizen();
 
-            _personService.Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
+            _personService?.Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
 
             // Act
-            var result = _personServiceHelper.VerifyId(citizen);
+            var result = _personServiceHelper?.VerifyId(citizen);
 
             // Assert
             result.Should().BeTrue();
