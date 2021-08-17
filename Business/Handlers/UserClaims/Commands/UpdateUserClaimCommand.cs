@@ -1,52 +1,51 @@
-﻿namespace Business.Handlers.UserClaims.Commands
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
+
+namespace Business.Handlers.UserClaims.Commands
 {
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Business.BusinessAspects;
-    using Business.Constants;
-    using Core.Aspects.Autofac.Caching;
-    using Core.Aspects.Autofac.Logging;
-    using Core.CrossCuttingConcerns.Caching;
-    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-    using Core.Entities.Concrete;
-    using Core.Utilities.Results;
-    using DataAccess.Abstract;
-    using MediatR;
-
     public class UpdateUserClaimCommand : IRequest<IResult>
-	{
-		public int Id { get; set; }
-		public int UserId { get; set; }
-		public int[] ClaimId { get; set; }
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int[] ClaimId { get; set; }
 
 
-		public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
-		{
-			private readonly IUserClaimRepository _userClaimRepository;
-			private readonly ICacheManager _cacheManager;
+        public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
+        {
+            private readonly IUserClaimRepository _userClaimRepository;
+            private readonly ICacheManager _cacheManager;
 
-			public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
-			{
-				_userClaimRepository = userClaimRepository;
-				_cacheManager = cacheManager;
-			}
+            public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
+            {
+                _userClaimRepository = userClaimRepository;
+                _cacheManager = cacheManager;
+            }
 
-			[SecuredOperation(Priority = 1)]
-			[CacheRemoveAspect("Get")]
-			[LogAspect(typeof(FileLogger))]
-			public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
-			{
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+            public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
+            {
+                var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });
 
-				var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });
+                await _userClaimRepository.BulkInsert(request.UserId, userList);
+                await _userClaimRepository.SaveChangesAsync();
 
-				await _userClaimRepository.BulkInsert(request.UserId, userList);
-				await _userClaimRepository.SaveChangesAsync();
+                _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
 
-				_cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
-
-				return new SuccessResult(Messages.Updated);
-			}
-		}
-	}
+                return new SuccessResult(Messages.Updated);
+            }
+        }
+    }
 }

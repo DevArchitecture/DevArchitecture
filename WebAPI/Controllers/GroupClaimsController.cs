@@ -1,14 +1,14 @@
-﻿namespace WebAPI.Controllers
-{
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Business.Handlers.GroupClaims.Commands;
-    using Business.Handlers.GroupClaims.Queries;
-    using Core.Entities.Concrete;
-    using Core.Entities.Dtos;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Business.Handlers.GroupClaims.Commands;
+using Business.Handlers.GroupClaims.Queries;
+using Core.Entities.Concrete;
+using Core.Entities.Dtos;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
+namespace WebAPI.Controllers
+{
     /// <summary>
     ///
     /// </summary>
@@ -60,7 +60,8 @@
         [HttpGet("getgroupclaimsbygroupid")]
         public async Task<IActionResult> GetGroupClaimsByGroupId(int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
+            return GetResponseOnlyResultData(
+                await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
         }
 
         /// <summary>

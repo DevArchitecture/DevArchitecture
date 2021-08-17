@@ -1,26 +1,27 @@
-﻿namespace UiPreparation
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+
+namespace UiPreparation
 {
-    using System;
-    using System.IO;
-    using System.Text;
-
     internal static class Program
-	{
-		private static void Main()
-		{
-			var path = Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.IndexOf("bin"));
-			var exePath = Path.Combine(path, "UI");
-			var deletePath = exePath + @"\node_modules\selenium-webdriver\lib\test\data";
-			var bld = new StringBuilder();
+    {
+        private static void Main()
+        {
+            var path = Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.IndexOf("bin"));
+            var exePath = Path.Combine(path, "UI");
+            var deletePath = exePath + @"\node_modules\selenium-webdriver\lib\test\data";
+            var bld = new StringBuilder();
 
-			bld.Append("npm install -g @angular/cli@latest&");
-			bld.Append("npm install&");
-			bld.Append("npm install popper.js --save&");
-			bld.Append("code .&");
-			bld.Append($"RD /S /Q {deletePath} &");
-			bld.Append("npm run start&");
+            bld.Append("npm install -g @angular/cli@latest&");
+            bld.Append("npm install&");
+            bld.Append("npm install popper.js --save&");
+            bld.Append("code .&");
+            bld.Append($"RD /S /Q {deletePath} &");
+            bld.Append("npm run start&");
 
-			var cmd = new System.Diagnostics.Process
+            var cmd = new Process
             {
                 StartInfo =
                 {
@@ -30,10 +31,9 @@
                     Arguments = @"/c " + bld
                 }
             };
-			cmd.Start();
-			Console.ReadLine();
-			cmd.WaitForExit();
-		}
-	}
-
+            cmd.Start();
+            Console.ReadLine();
+            cmd.WaitForExit();
+        }
+    }
 }

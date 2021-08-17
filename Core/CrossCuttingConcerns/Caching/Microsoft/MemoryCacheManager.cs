@@ -1,28 +1,31 @@
-﻿namespace Core.CrossCuttingConcerns.Caching.Microsoft
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text.RegularExpressions;
-    using Core.Utilities.IoC;
-    using global::Microsoft.Extensions.Caching.Memory;
-    using global::Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using Core.Utilities.IoC;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 
+namespace Core.CrossCuttingConcerns.Caching.Microsoft
+{
     /// <summary>
     /// Microsoft MemoryCacheManager
     /// </summary>
     public class MemoryCacheManager : ICacheManager
     {
         private readonly IMemoryCache _cache;
+
         public MemoryCacheManager()
             : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
         }
+
         public MemoryCacheManager(IMemoryCache cache)
         {
             _cache = cache;
         }
+
         public void Add(string key, object data, int duration)
         {
             _cache.Set(key, data, TimeSpan.FromMinutes(duration));
@@ -69,7 +72,8 @@
             }
 
             var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d.Key.ToString())).Select(d => d.Key).ToList();
+            var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d.Key.ToString())).Select(d => d.Key)
+                .ToList();
             foreach (var key in keysToRemove)
             {
                 _cache.Remove(key);

@@ -1,20 +1,22 @@
-﻿namespace Core.Utilities.MessageBrokers.RabbitMq
-{
-    using System;
-    using System.Text;
-    using Microsoft.Extensions.Configuration;
-    using RabbitMQ.Client;
-    using RabbitMQ.Client.Events;
+﻿using System;
+using System.Text;
+using Microsoft.Extensions.Configuration;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
+namespace Core.Utilities.MessageBrokers.RabbitMq
+{
     public class MqConsumerHelper : IMessageConsumer
     {
         private readonly IConfiguration _configuration;
         private readonly MessageBrokerOptions _brokerOptions;
+
         public MqConsumerHelper(IConfiguration configuration)
         {
             _configuration = configuration;
             _brokerOptions = _configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
         }
+
         public void GetQueue()
         {
             var factory = new ConnectionFactory()
@@ -27,11 +29,11 @@
             using (var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(
-                                                         queue: "DArchQueue",
-                                                         durable: false,
-                                                         exclusive: false,
-                                                         autoDelete: false,
-                                                         arguments: null);
+                    queue: "DArchQueue",
+                    durable: false,
+                    exclusive: false,
+                    autoDelete: false,
+                    arguments: null);
 
                 var consumer = new EventingBasicConsumer(channel);
 
@@ -44,13 +46,11 @@
                 };
 
                 channel.BasicConsume(
-                                                      queue: "DArchQueue",
-                                                      autoAck: true,
-                                                      consumer: consumer);
+                    queue: "DArchQueue",
+                    autoAck: true,
+                    consumer: consumer);
                 Console.ReadKey();
-
             }
-
         }
     }
 }

@@ -1,21 +1,20 @@
-﻿namespace Business.Handlers.Users.Commands
-{
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Business.BusinessAspects;
-    using Business.Constants;
-    using Core.Aspects.Autofac.Caching;
-    using Core.Aspects.Autofac.Logging;
-    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-    using Core.Entities.Concrete;
-    using Core.Utilities.Results;
-    using DataAccess.Abstract;
-    using MediatR;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
 
+namespace Business.Handlers.Users.Commands
+{
     public class CreateUserCommand : IRequest<IResult>
     {
-
         public int UserId { get; set; }
         public long CitizenId { get; set; }
         public string FullName { get; set; }

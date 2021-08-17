@@ -1,29 +1,29 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.Constants;
+using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Authorizations.Queries;
+using Business.Services.Authentication;
+using Core.CrossCuttingConcerns.Caching;
+using Core.Entities.Concrete;
+using Core.Utilities.Security.Hashing;
+using Core.Utilities.Security.Jwt;
+using DataAccess.Abstract;
+using FluentAssertions;
+using MediatR;
+using Moq;
+using NUnit.Framework;
+using Tests.Helpers;
 
 namespace Tests.Business.Handlers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using DataAccess.Abstract;
-    using FluentAssertions;
-    using global::Business.Constants;
-    using global::Business.Handlers.Authorizations.Commands;
-    using global::Business.Handlers.Authorizations.Queries;
-    using global::Business.Services.Authentication;
-    using global::Core.CrossCuttingConcerns.Caching;
-    using global::Core.Entities.Concrete;
-    using global::Core.Utilities.Security.Hashing;
-    using global::Core.Utilities.Security.Jwt;
-    using MediatR;
-    using Moq;
-    using NUnit.Framework;
-    using Tests.Helpers;
-    using static global::Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
-    using static global::Business.Handlers.Authorizations.Commands.RegisterUserCommand;
-    using static global::Business.Handlers.Authorizations.Queries.LoginUserQuery;
-    using static global::Business.Handlers.Authorizations.Queries.LoginWithRefreshTokenQuery;
+    using static ForgotPasswordCommand;
+    using static RegisterUserCommand;
+    using static LoginUserQuery;
+    using static LoginWithRefreshTokenQuery;
 
     [TestFixture]
     public class AuthorizationsTests
@@ -48,7 +48,8 @@ namespace Tests.Business.Handlers
             _mediator = new Mock<IMediator>();
             _cacheManager = new Mock<ICacheManager>();
 
-            _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _mediator.Object, _cacheManager.Object);
+            _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,
+                _mediator.Object, _cacheManager.Object);
             _registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
             _forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
         }
@@ -60,8 +61,8 @@ namespace Tests.Business.Handlers
             HashingHelper.CreatePasswordHash("123456", out var passwordSalt, out var passwordHash);
             user.PasswordSalt = passwordSalt;
             user.PasswordHash = passwordHash;
-            _userRepository.
-                            Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
+            _userRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(() => Task.FromResult(user));
 
 
             _tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).Returns(new DArchToken()
@@ -72,17 +73,16 @@ namespace Tests.Business.Handlers
             });
 
             _userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-                            .Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
+                .Returns(new List<OperationClaim>() { new OperationClaim() { Id = 1, Name = "test" } });
             _loginUserQuery = new LoginUserQuery
             {
                 Email = user.Email,
                 Password = "123456"
             };
 
-            var result = await _loginUserQueryHandler.Handle(_loginUserQuery, new System.Threading.CancellationToken());
+            var result = await _loginUserQueryHandler.Handle(_loginUserQuery, new CancellationToken());
 
             result.Success.Should().BeTrue();
-
         }
 
         [Test]
@@ -93,13 +93,17 @@ namespace Tests.Business.Handlers
                 RefreshToken = Guid.NewGuid().ToString()
             };
 
-            _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>())).ReturnsAsync(DataHelper.GetUser("test"));
-            _userRepository.Setup(x => x.GetClaims(It.IsAny<int>())).Returns(new List<OperationClaim> { new OperationClaim { } });
+            _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>()))
+                .ReturnsAsync(DataHelper.GetUser("test"));
+            _userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
+                .Returns(new List<OperationClaim> { new OperationClaim { } });
             _userRepository.Setup(x => x.Update(It.IsAny<User>())).Returns(new User());
             _tokenHelper.Setup(x => x.CreateToken<AccessToken>(It.IsAny<User>())).Returns(new AccessToken());
 
-            var handler = new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var handler =
+                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object,
+                    _cacheManager.Object);
+            var x = await handler.Handle(command, new CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
             _userRepository.Verify(x => x.GetClaims(It.IsAny<int>()), Times.Once);
@@ -122,8 +126,10 @@ namespace Tests.Business.Handlers
 
             _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>())).ReturnsAsync(rt);
 
-            var handler = new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var handler =
+                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object,
+                    _cacheManager.Object);
+            var x = await handler.Handle(command, new CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
             _userRepository.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
@@ -143,7 +149,7 @@ namespace Tests.Business.Handlers
                 FullName = registerUser.FullName,
                 Password = "123456"
             };
-            var result = await _registerUserCommandHandler.Handle(_command, System.Threading.CancellationToken.None);
+            var result = await _registerUserCommandHandler.Handle(_command, CancellationToken.None);
 
             result.Message.Should().Be(Messages.Added);
         }
@@ -152,14 +158,16 @@ namespace Tests.Business.Handlers
         public async Task Handler_ForgotPassword()
         {
             var user = DataHelper.GetUser("test");
-            _userRepository.
-                                    Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>())).Returns(() => Task.FromResult(user));
+            _userRepository.Setup(x => x.GetAsync(It.IsAny<Expression<Func<User, bool>>>()))
+                .Returns(() => Task.FromResult(user));
             _forgotPasswordCommand = new ForgotPasswordCommand
             {
                 Email = user.Email,
                 TcKimlikNo = Convert.ToString(user.CitizenId)
             };
-            var result = await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand, new System.Threading.CancellationToken());
+            var result =
+                await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand,
+                    new CancellationToken());
             result.Success.Should().BeTrue();
         }
     }

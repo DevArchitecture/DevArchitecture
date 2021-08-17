@@ -1,8 +1,8 @@
-﻿namespace Business.Services.Authentication
-{
-    using System;
-    using Core.Entities.Concrete;
+﻿using System;
+using Core.Entities.Concrete;
 
+namespace Business.Services.Authentication
+{
     /// <summary>
     ///
     /// </summary>
@@ -16,16 +16,16 @@
         }
 
 
-
         public IAuthenticationProvider SelectProvider(AuthenticationProviderType type)
         {
             return type switch
             {
-                AuthenticationProviderType.Person => (IAuthenticationProvider)_serviceProvider.GetService(typeof(PersonAuthenticationProvider)),
-                AuthenticationProviderType.Agent => (IAuthenticationProvider)_serviceProvider.GetService(typeof(AgentAuthenticationProvider)),
+                AuthenticationProviderType.Person => (IAuthenticationProvider)_serviceProvider.GetService(
+                    typeof(PersonAuthenticationProvider)),
+                AuthenticationProviderType.Agent => (IAuthenticationProvider)_serviceProvider.GetService(
+                    typeof(AgentAuthenticationProvider)),
                 _ => throw new ApplicationException($"Authentication provider not found: {type}")
             };
         }
     }
-
 }

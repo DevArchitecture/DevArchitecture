@@ -1,48 +1,47 @@
-﻿namespace Business.Handlers.UserGroups.Commands
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
+
+namespace Business.Handlers.UserGroups.Commands
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Business.BusinessAspects;
-    using Business.Constants;
-    using Core.Aspects.Autofac.Caching;
-    using Core.Aspects.Autofac.Logging;
-    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-    using Core.Entities.Concrete;
-    using Core.Utilities.Results;
-    using DataAccess.Abstract;
-    using MediatR;
-
     public class CreateUserGroupCommand : IRequest<IResult>
-	{
+    {
+        public int GroupId { get; set; }
+        public int UserId { get; set; }
 
-		public int GroupId { get; set; }
-		public int UserId { get; set; }
+        public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupCommand, IResult>
+        {
+            private readonly IUserGroupRepository _userGroupRepository;
 
-		public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupCommand, IResult>
-		{
-			private readonly IUserGroupRepository _userGroupRepository;
+            public CreateUserGroupCommandHandler(IUserGroupRepository userGroupRepository)
+            {
+                _userGroupRepository = userGroupRepository;
+            }
 
-			public CreateUserGroupCommandHandler(IUserGroupRepository userGroupRepository)
-			{
-				_userGroupRepository = userGroupRepository;
-			}
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+            public async Task<IResult> Handle(CreateUserGroupCommand request, CancellationToken cancellationToken)
+            {
+                var userGroup = new UserGroup
+                {
+                    GroupId = request.GroupId,
+                    UserId = request.UserId
+                };
 
-			[SecuredOperation(Priority = 1)]
-			[CacheRemoveAspect("Get")]
-			[LogAspect(typeof(FileLogger))]
-			public async Task<IResult> Handle(CreateUserGroupCommand request, CancellationToken cancellationToken)
-			{
-				var userGroup = new UserGroup
-				{
-					GroupId = request.GroupId,
-					UserId = request.UserId
-				};
+                _userGroupRepository.Add(userGroup);
+                await _userGroupRepository.SaveChangesAsync();
 
-				_userGroupRepository.Add(userGroup);
-				await _userGroupRepository.SaveChangesAsync();
-
-				return new SuccessResult(Messages.Added);
-			}
-		}
-	}
+                return new SuccessResult(Messages.Added);
+            }
+        }
+    }
 }

@@ -1,44 +1,45 @@
-﻿namespace Business.Handlers.OperationClaims.Commands
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
+
+namespace Business.Handlers.OperationClaims.Commands
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Business.BusinessAspects;
-    using Business.Constants;
-    using Core.Aspects.Autofac.Caching;
-    using Core.Aspects.Autofac.Logging;
-    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-    using Core.Utilities.Results;
-    using DataAccess.Abstract;
-    using MediatR;
-
     public class UpdateOperationClaimCommand : IRequest<IResult>
-	{
-		public int Id { get; set; }
-		public string Alias { get; set; }
-		public string Description { get; set; }
-		public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
-		{
-			private readonly IOperationClaimRepository _operationClaimRepository;
+    {
+        public int Id { get; set; }
+        public string Alias { get; set; }
+        public string Description { get; set; }
 
-			public UpdateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-			{
-				_operationClaimRepository = operationClaimRepository;
-			}
+        public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
+        {
+            private readonly IOperationClaimRepository _operationClaimRepository;
 
-			[SecuredOperation(Priority = 1)]
-			[CacheRemoveAspect("Get")]
-			[LogAspect(typeof(FileLogger))]
-			public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
-			{
-				var isOperationClaimExists = await _operationClaimRepository.GetAsync(u => u.Id == request.Id);
-				isOperationClaimExists.Alias = request.Alias;
-				isOperationClaimExists.Description = request.Description;
+            public UpdateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
+            {
+                _operationClaimRepository = operationClaimRepository;
+            }
 
-				_operationClaimRepository.Update(isOperationClaimExists);
-				await _operationClaimRepository.SaveChangesAsync();
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+            public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
+            {
+                var isOperationClaimExists = await _operationClaimRepository.GetAsync(u => u.Id == request.Id);
+                isOperationClaimExists.Alias = request.Alias;
+                isOperationClaimExists.Description = request.Description;
 
-				return new SuccessResult(Messages.Updated);
-			}
-		}
-	}
+                _operationClaimRepository.Update(isOperationClaimExists);
+                await _operationClaimRepository.SaveChangesAsync();
+
+                return new SuccessResult(Messages.Updated);
+            }
+        }
+    }
 }

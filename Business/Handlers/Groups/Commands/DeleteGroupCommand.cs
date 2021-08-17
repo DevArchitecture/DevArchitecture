@@ -1,40 +1,41 @@
-﻿namespace Business.Handlers.Groups.Commands
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
+
+namespace Business.Handlers.Groups.Commands
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Business.BusinessAspects;
-    using Business.Constants;
-    using Core.Aspects.Autofac.Caching;
-    using Core.Aspects.Autofac.Logging;
-    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-    using Core.Utilities.Results;
-    using DataAccess.Abstract;
-    using MediatR;
-
     public class DeleteGroupCommand : IRequest<IResult>
-	{
-		public int Id { get; set; }
-		public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
-		{
-			private readonly IGroupRepository _groupRepository;
+    {
+        public int Id { get; set; }
 
-			public DeleteGroupCommandHandler(IGroupRepository groupRepository)
-			{
-				_groupRepository = groupRepository;
-			}
+        public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
+        {
+            private readonly IGroupRepository _groupRepository;
 
-			[SecuredOperation(Priority = 1)]
-			[CacheRemoveAspect("Get")]
-			[LogAspect(typeof(FileLogger))]
-			public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
-			{
-				var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);
+            public DeleteGroupCommandHandler(IGroupRepository groupRepository)
+            {
+                _groupRepository = groupRepository;
+            }
 
-				_groupRepository.Delete(groupToDelete);
-				await _groupRepository.SaveChangesAsync();
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
+            public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
+            {
+                var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);
 
-				return new SuccessResult(Messages.Deleted);
-			}
-		}
-	}
+                _groupRepository.Delete(groupToDelete);
+                await _groupRepository.SaveChangesAsync();
+
+                return new SuccessResult(Messages.Deleted);
+            }
+        }
+    }
 }

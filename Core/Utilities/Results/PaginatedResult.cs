@@ -1,6 +1,7 @@
-﻿namespace Core.Utilities.Results
+﻿using Core.Utilities.Messages;
+
+namespace Core.Utilities.Results
 {
-    using Core.Utilities.Messages;
     public class PaginatedResult<T> : IDataResult<T>
     {
         public PaginatedResult(T data, int pageNumber, int pageSize)
@@ -11,6 +12,7 @@
             Message = PaginationMessages.ListPaged;
             Success = true;
         }
+
         public bool Success { get; set; }
         public string Message { get; }
         public T Data { get; }

@@ -1,7 +1,7 @@
-﻿namespace Core.Utilities.ElasticSearch.Models
-{
-    using Nest;
+﻿using Nest;
 
+namespace Core.Utilities.ElasticSearch.Models
+{
     public class ElasticSearchModel
     {
         public Id ElasticId { get; set; }

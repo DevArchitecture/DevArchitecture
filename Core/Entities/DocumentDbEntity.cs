@@ -1,10 +1,10 @@
-﻿namespace Core.Entities
-{
-    using MongoDB.Bson;
+﻿using MongoDB.Bson;
 
+namespace Core.Entities
+{
     public abstract class DocumentDbEntity
-	{
-		public ObjectId Id { get; set; }
-		public string ObjectId => Id.ToString();
-	}
+    {
+        public ObjectId Id { get; set; }
+        public string ObjectId => Id.ToString();
+    }
 }

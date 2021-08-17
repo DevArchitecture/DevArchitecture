@@ -1,10 +1,10 @@
-﻿namespace Entities.Concrete
-{
-    using Core.Entities;
+﻿using Core.Entities;
 
+namespace Entities.Concrete
+{
     public class EntityExample : IEntity
-	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-	}
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

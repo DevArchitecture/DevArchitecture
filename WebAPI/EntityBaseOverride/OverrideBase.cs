@@ -1,10 +1,10 @@
-﻿namespace WebAPI.EntityBaseOverride
-{
-    using System;
-    using Microsoft.EntityFrameworkCore.Design;
-    using Microsoft.EntityFrameworkCore.Metadata;
-    using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 
+namespace WebAPI.EntityBaseOverride
+{
     /// <summary>
     ///
     /// </summary>
@@ -18,7 +18,6 @@
         public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper CSharpHelper)
             : base(annotationCodeGenerator, CSharpHelper)
         {
-
         }
 
         /// <summary>
@@ -30,11 +29,11 @@
         /// <returns></returns>
         public override string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations)
         {
-            var str = base.WriteCode(entityType, @namespace, useDataAnnotations).Replace("public partial class " + entityType.Name, "public class " + entityType.Name + " : IEntity");
+            var str = base.WriteCode(entityType, @namespace, useDataAnnotations).Replace(
+                "public partial class " + entityType.Name, "public class " + entityType.Name + " : IEntity");
             var oldValue = "using System;";
             var newValue = oldValue + Environment.NewLine + "using Core.Entities;";
             return str.Replace(oldValue, newValue);
         }
-
     }
 }

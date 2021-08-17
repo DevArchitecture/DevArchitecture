@@ -1,5 +1,4 @@
-﻿
-namespace Core.Entities.Dtos
+﻿namespace Core.Entities.Dtos
 {
     public class TranslateDto : IDto
     {

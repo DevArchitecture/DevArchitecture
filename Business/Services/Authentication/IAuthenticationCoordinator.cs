@@ -1,7 +1,7 @@
-﻿namespace Business.Services.Authentication
-{
-    using Core.Entities.Concrete;
+﻿using Core.Entities.Concrete;
 
+namespace Business.Services.Authentication
+{
     public interface IAuthenticationCoordinator
     {
         IAuthenticationProvider SelectProvider(AuthenticationProviderType type);

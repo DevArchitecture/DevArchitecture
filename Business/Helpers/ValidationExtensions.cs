@@ -1,7 +1,7 @@
-﻿namespace Business.Helpers
-{
-    using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
+namespace Business.Helpers
+{
     public static class ValidationExtensions
     {
         public static bool IsCidValid(this string citizenId)

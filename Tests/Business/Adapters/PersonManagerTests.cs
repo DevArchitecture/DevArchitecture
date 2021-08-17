@@ -1,13 +1,13 @@
-﻿namespace Tests.Business.Adapters
-{
-    using System.Net;
-    using Entities.Dtos;
-    using FluentAssertions;
-    using global::Business.Adapters.PersonService;
-    using Moq;
-    using NUnit.Framework;
-    using Tests.Helpers.Adapter;
+﻿using System.Net;
+using Business.Adapters.PersonService;
+using Entities.Dtos;
+using FluentAssertions;
+using Moq;
+using NUnit.Framework;
+using Tests.Helpers.Adapter;
 
+namespace Tests.Business.Adapters
+{
     [TestFixture]
     public class PersonManagerTests
     {
@@ -62,7 +62,7 @@
             string name = Name,
             long citizenId = CitizenId)
         {
-            return new ()
+            return new()
             {
                 BirthYear = birthYear,
                 Surname = surname,

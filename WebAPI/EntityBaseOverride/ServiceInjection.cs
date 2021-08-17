@@ -1,9 +1,9 @@
-﻿namespace WebAPI.EntityBaseOverride
-{
-    using Microsoft.EntityFrameworkCore.Design;
-    using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-    using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using Microsoft.Extensions.DependencyInjection;
 
+namespace WebAPI.EntityBaseOverride
+{
     /// <summary>
     ///
     /// </summary>
@@ -19,4 +19,3 @@
         }
     }
 }
-

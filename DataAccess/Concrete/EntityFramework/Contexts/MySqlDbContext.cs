@@ -1,8 +1,8 @@
-﻿namespace DataAccess.Concrete.EntityFramework.Contexts
-{
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
+namespace DataAccess.Concrete.EntityFramework.Contexts
+{
     public sealed class MySqlDbContext : ProjectDbContext
     {
         public MySqlDbContext(DbContextOptions<MySqlDbContext> options, IConfiguration configuration)

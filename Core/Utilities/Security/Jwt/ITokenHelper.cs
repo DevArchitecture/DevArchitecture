@@ -1,10 +1,10 @@
-﻿namespace Core.Utilities.Security.Jwt
-{
-    using Core.Entities.Concrete;
+﻿using Core.Entities.Concrete;
 
+namespace Core.Utilities.Security.Jwt
+{
     public interface ITokenHelper
     {
         TAccessToken CreateToken<TAccessToken>(User user)
-          where TAccessToken : IAccessToken, new();
+            where TAccessToken : IAccessToken, new();
     }
 }

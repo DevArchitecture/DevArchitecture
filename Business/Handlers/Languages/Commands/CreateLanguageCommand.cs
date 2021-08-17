@@ -1,28 +1,25 @@
-﻿
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Business.BusinessAspects;
+using Business.Constants;
+using Business.Handlers.Languages.ValidationRules;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using MediatR;
+
 namespace Business.Handlers.Languages.Commands
 {
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Business.BusinessAspects;
-    using Business.Constants;
-    using Business.Handlers.Languages.ValidationRules;
-    using Core.Aspects.Autofac.Caching;
-    using Core.Aspects.Autofac.Logging;
-    using Core.Aspects.Autofac.Validation;
-    using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-    using Core.Entities.Concrete;
-    using Core.Utilities.Results;
-    using DataAccess.Abstract;
-    using MediatR;
-
     /// <summary>
     ///
     /// </summary>
-
     public class CreateLanguageCommand : IRequest<IResult>
     {
-
         public string Name { get; set; }
         public string Code { get; set; }
 
@@ -31,6 +28,7 @@ namespace Business.Handlers.Languages.Commands
         {
             private readonly ILanguageRepository _languageRepository;
             private readonly IMediator _mediator;
+
             public CreateLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
             {
                 _languageRepository = languageRepository;
@@ -54,7 +52,6 @@ namespace Business.Handlers.Languages.Commands
                 {
                     Name = request.Name,
                     Code = request.Code,
-
                 };
 
                 _languageRepository.Add(addedLanguage);

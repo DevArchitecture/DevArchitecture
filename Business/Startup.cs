@@ -1,33 +1,34 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Security.Claims;
+using System.Security.Principal;
+using Autofac;
+using Business.Constants;
+using Business.DependencyResolvers;
+using Business.Fakes.DArch;
+using Business.Services.Authentication;
+using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.ElasticSearch;
+using Core.Utilities.IoC;
+using Core.Utilities.MessageBrokers.RabbitMq;
+using Core.Utilities.Security.Jwt;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.EntityFramework.Contexts;
+using DataAccess.Concrete.MongoDb.Context;
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 namespace Business
 {
-    using System;
-    using System.Reflection;
-    using System.Security.Claims;
-    using System.Security.Principal;
-    using Autofac;
-    using Business.Constants;
-    using Business.DependencyResolvers;
-    using Business.Fakes.DArch;
-    using Business.Services.Authentication;
-    using Core.CrossCuttingConcerns.Caching;
-    using Core.CrossCuttingConcerns.Caching.Microsoft;
-    using Core.DependencyResolvers;
-    using Core.Extensions;
-    using Core.Utilities.ElasticSearch;
-    using Core.Utilities.IoC;
-    using Core.Utilities.MessageBrokers.RabbitMq;
-    using Core.Utilities.Security.Jwt;
-    using DataAccess.Abstract;
-    using DataAccess.Concrete.EntityFramework;
-    using DataAccess.Concrete.EntityFramework.Contexts;
-    using DataAccess.Concrete.MongoDb.Context;
-    using FluentValidation;
-    using MediatR;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-
     public partial class BusinessStartup
     {
         public BusinessStartup(IConfiguration configuration, IHostEnvironment hostEnvironment)
@@ -78,7 +79,7 @@ namespace Business
 
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
             {
-                return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()
+                return memberInfo.GetCustomAttribute<DisplayAttribute>()
                     ?.GetName();
             };
         }

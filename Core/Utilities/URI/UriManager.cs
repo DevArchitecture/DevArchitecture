@@ -1,9 +1,9 @@
-﻿namespace Core.Utilities.Uri
-{
-    using Core.Entities.Concrete;
-    using Core.Utilities.URI;
-    using Microsoft.AspNetCore.WebUtilities;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.URI;
+using Microsoft.AspNetCore.WebUtilities;
 
+namespace Core.Utilities.Uri
+{
     /// <summary>
     /// URI manager
     /// </summary>

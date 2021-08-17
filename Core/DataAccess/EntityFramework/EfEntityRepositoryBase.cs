@@ -1,22 +1,22 @@
-﻿namespace Core.DataAccess.EntityFramework
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Core.Entities;
-    using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
+namespace Core.DataAccess.EntityFramework
+{
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TContext"></typeparam>
     public class EfEntityRepositoryBase<TEntity, TContext>
-            : IEntityRepository<TEntity>
-            where TEntity : class, IEntity
-            where TContext : DbContext
+        : IEntityRepository<TEntity>
+        where TEntity : class, IEntity
+        where TContext : DbContext
     {
         public EfEntityRepositoryBase(TContext context)
         {
@@ -53,13 +53,16 @@
 
         public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> expression = null)
         {
-            return expression == null ? Context.Set<TEntity>().AsNoTracking() : Context.Set<TEntity>().Where(expression).AsNoTracking();
+            return expression == null
+                ? Context.Set<TEntity>().AsNoTracking()
+                : Context.Set<TEntity>().Where(expression).AsNoTracking();
         }
 
         public async Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression = null)
         {
-            return expression == null ? await Context.Set<TEntity>().ToListAsync() :
-                 await Context.Set<TEntity>().Where(expression).ToListAsync();
+            return expression == null
+                ? await Context.Set<TEntity>().ToListAsync()
+                : await Context.Set<TEntity>().Where(expression).ToListAsync();
         }
 
         public int SaveChanges()
@@ -82,21 +85,20 @@
             return Context.Database.ExecuteSqlInterpolatedAsync(interpolatedQueryString);
         }
 
-    /// <summary>
-    /// Transactional operations is prohibited when working with InMemoryDb!
-    /// </summary>
-    /// <typeparam name="TResult"></typeparam>
-    /// <param name="action"></param>
-    /// <param name="successAction"></param>
-    /// <param name="exceptionAction"></param>
-    /// <returns></returns>
-        public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
+        /// <summary>
+        /// Transactional operations is prohibited when working with InMemoryDb!
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <param name="successAction"></param>
+        /// <param name="exceptionAction"></param>
+        /// <returns></returns>
+        public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null,
+            Action<Exception> exceptionAction = null)
         {
             var result = default(TResult);
             try
             {
-
-
                 if (Context.Database.ProviderName.EndsWith("InMemory"))
                 {
                     result = action();
@@ -131,6 +133,7 @@
 
                 exceptionAction(ex);
             }
+
             return result;
         }
 
@@ -150,6 +153,5 @@
         {
             return expression == null ? Context.Set<TEntity>().Count() : Context.Set<TEntity>().Count(expression);
         }
-
     }
 }

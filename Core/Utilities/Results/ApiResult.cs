@@ -1,7 +1,7 @@
-﻿namespace Core.Utilities.Results
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Core.Utilities.Results
+{
     public class ApiResult<T>
     {
         public bool Success { get; set; }
