@@ -9,7 +9,7 @@ namespace Tests.Helpers.Token
 {
     public static class MockJwtTokens
     {
-        private static readonly JwtSecurityTokenHandler STokenHandler = new();
+        private static readonly JwtSecurityTokenHandler STokenHandler = new ();
         private static string _keyString = "!z2x3C4v5B*_*!z2x3C4v5B*_*";
 
         static MockJwtTokens()
@@ -26,8 +26,7 @@ namespace Tests.Helpers.Token
 
         public static string GenerateJwtToken(IEnumerable<Claim> claims, double value = 5)
         {
-            return STokenHandler.WriteToken(new JwtSecurityToken(Issuer, Audience, claims, DateTime.UtcNow,
-                DateTime.UtcNow.AddSeconds(value), SigningCredentials));
+            return STokenHandler.WriteToken(new JwtSecurityToken(Issuer, Audience, claims, DateTime.UtcNow, DateTime.UtcNow.AddSeconds(value), SigningCredentials));
         }
     }
 }

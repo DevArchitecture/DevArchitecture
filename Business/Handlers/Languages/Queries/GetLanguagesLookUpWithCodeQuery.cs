@@ -25,8 +25,7 @@ namespace Business.Handlers.Languages.Queries
             }
 
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<SelectionItem>>(
                     await _languageRepository.GetLanguagesLookUpWithCode());

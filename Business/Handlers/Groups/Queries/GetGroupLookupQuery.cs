@@ -24,8 +24,7 @@ namespace Business.Handlers.Groups.Queries
             }
 
             [CacheAspect(10)]
-            public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request, CancellationToken cancellationToken)
             {
                 var list = await _groupRepository.GetListAsync();
                 var groupList = list.Select(x => new SelectionItem()

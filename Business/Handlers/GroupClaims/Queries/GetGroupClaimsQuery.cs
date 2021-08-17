@@ -27,8 +27,7 @@ namespace Business.Handlers.GroupClaims.Queries
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             [CacheAspect(10)]
-            public async Task<IDataResult<IEnumerable<GroupClaim>>> Handle(GetGroupClaimsQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<GroupClaim>>> Handle(GetGroupClaimsQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<GroupClaim>>(await _groupClaimRepository.GetListAsync());
             }

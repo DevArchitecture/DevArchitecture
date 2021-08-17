@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿#nullable enable
+using System.Net;
 using Business.Adapters.PersonService;
 using Entities.Dtos;
 using FluentAssertions;
@@ -62,7 +63,7 @@ namespace Tests.Business.Adapters
             string name = Name,
             long citizenId = CitizenId)
         {
-            return new()
+            return new ()
             {
                 BirthYear = birthYear,
                 Surname = surname,

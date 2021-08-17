@@ -21,9 +21,9 @@ using Tests.Helpers;
 namespace Tests.Business.Handlers
 {
     using static ForgotPasswordCommand;
-    using static RegisterUserCommand;
     using static LoginUserQuery;
     using static LoginWithRefreshTokenQuery;
+    using static RegisterUserCommand;
 
     [TestFixture]
     public class AuthorizationsTests
@@ -48,8 +48,7 @@ namespace Tests.Business.Handlers
             _mediator = new Mock<IMediator>();
             _cacheManager = new Mock<ICacheManager>();
 
-            _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object,
-                _mediator.Object, _cacheManager.Object);
+            _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _mediator.Object, _cacheManager.Object);
             _registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
             _forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
         }
@@ -101,8 +100,7 @@ namespace Tests.Business.Handlers
             _tokenHelper.Setup(x => x.CreateToken<AccessToken>(It.IsAny<User>())).Returns(new AccessToken());
 
             var handler =
-                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object,
-                    _cacheManager.Object);
+                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
@@ -127,8 +125,7 @@ namespace Tests.Business.Handlers
             _userRepository.Setup(x => x.GetByRefreshToken(It.IsAny<string>())).ReturnsAsync(rt);
 
             var handler =
-                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object,
-                    _cacheManager.Object);
+                new LoginWithRefreshTokenQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _userRepository.Verify(x => x.GetByRefreshToken(It.IsAny<string>()), Times.Once);
@@ -166,8 +163,7 @@ namespace Tests.Business.Handlers
                 TcKimlikNo = Convert.ToString(user.CitizenId)
             };
             var result =
-                await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand,
-                    new CancellationToken());
+                await _forgotPasswordCommandHandler.Handle(_forgotPasswordCommand, new CancellationToken());
             result.Success.Should().BeTrue();
         }
     }

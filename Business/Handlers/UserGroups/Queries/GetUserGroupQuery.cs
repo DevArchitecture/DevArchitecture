@@ -27,8 +27,7 @@ namespace Business.Handlers.UserGroups.Queries
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request, CancellationToken cancellationToken)
             {
                 var userGroup = await _userGroupRepository.GetAsync(p => p.UserId == request.UserId);
                 return new SuccessDataResult<UserGroup>(userGroup);

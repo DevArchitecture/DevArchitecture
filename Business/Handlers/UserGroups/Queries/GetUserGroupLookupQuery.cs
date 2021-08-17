@@ -30,8 +30,7 @@ namespace Business.Handlers.UserGroups.Queries
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request, CancellationToken cancellationToken)
             {
                 var data = await _userGroupRepository.GetUserGroupSelectedList(request.UserId);
                 return new SuccessDataResult<IEnumerable<SelectionItem>>(data);

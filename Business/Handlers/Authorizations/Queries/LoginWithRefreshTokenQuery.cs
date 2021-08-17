@@ -24,8 +24,7 @@ namespace Business.Handlers.Authorizations.Queries
             private readonly ITokenHelper _tokenHelper;
             private readonly ICacheManager _cacheManager;
 
-            public LoginWithRefreshTokenQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper,
-                ICacheManager cacheManager)
+            public LoginWithRefreshTokenQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager)
             {
                 _userRepository = userRepository;
                 _tokenHelper = tokenHelper;

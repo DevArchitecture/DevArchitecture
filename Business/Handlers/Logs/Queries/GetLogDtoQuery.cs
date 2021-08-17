@@ -31,8 +31,7 @@ namespace Business.Handlers.Logs.Queries
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<LogDto>>> Handle(GetLogDtoQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<LogDto>>> Handle(GetLogDtoQuery request, CancellationToken cancellationToken)
             {
                 var result = await _logRepository.GetListAsync();
                 var data = new List<LogDto>();

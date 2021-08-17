@@ -28,8 +28,7 @@ namespace Business.Handlers.Authorizations.Queries
         /// <returns></returns>
         [ValidationAspect(typeof(LoginUserValidator), Priority = 1)]
         [LogAspect(typeof(FileLogger))]
-        public async Task<IDataResult<LoginUserResult>> Handle(LoginUserCommand request,
-            CancellationToken cancellationToken)
+        public async Task<IDataResult<LoginUserResult>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             var provider = _coordinator.SelectProvider(request.Provider);
             return new SuccessDataResult<LoginUserResult>(await provider.Login(request));

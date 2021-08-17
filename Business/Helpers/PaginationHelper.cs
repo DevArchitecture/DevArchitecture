@@ -19,8 +19,7 @@ namespace Business.Helpers
         /// <param name="route"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns>Paginated result</returns>
-        public static PaginatedResult<IEnumerable<T>> CreatePaginatedResponse<T>(IEnumerable<T> data,
-            PaginationFilter paginationFilter, int totalRecords, IUriService uriService, string route)
+        public static PaginatedResult<IEnumerable<T>> CreatePaginatedResponse<T>(IEnumerable<T> data, PaginationFilter paginationFilter, int totalRecords, IUriService uriService, string route)
         {
             data = data.Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
                 .Take(paginationFilter.PageSize);
@@ -51,8 +50,7 @@ namespace Business.Helpers
             response.FirstPage =
                 uriService.GeneratePageRequestUri(new PaginationFilter(1, paginationFilter.PageSize), route);
             response.LastPage =
-                uriService.GeneratePageRequestUri(new PaginationFilter(roundedTotalPages, paginationFilter.PageSize),
-                    route);
+                uriService.GeneratePageRequestUri(new PaginationFilter(roundedTotalPages, paginationFilter.PageSize), route);
             response.TotalPages = roundedTotalPages;
             response.TotalRecords = totalRecords;
             return response;

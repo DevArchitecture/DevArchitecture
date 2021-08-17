@@ -5,8 +5,7 @@ namespace Business.Handlers.Authorizations.ValidationRules
 {
     public static class RuleBuilderExtensions
     {
-        public static IRuleBuilder<T, string> Password<T>(this IRuleBuilder<T, string> ruleBuilder,
-            int minimumLength = 8)
+        public static IRuleBuilder<T, string> Password<T>(this IRuleBuilder<T, string> ruleBuilder, int minimumLength = 8)
         {
             var options = ruleBuilder
                 .NotEmpty().WithMessage(Messages.PasswordEmpty)

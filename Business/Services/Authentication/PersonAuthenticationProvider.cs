@@ -19,8 +19,7 @@ namespace Business.Services.Authentication
 
         private readonly ITokenHelper _tokenHelper;
 
-        public PersonAuthenticationProvider(AuthenticationProviderType providerType, IUserRepository users,
-            IMobileLoginRepository mobileLogins, ITokenHelper tokenHelper, ISmsService smsService)
+        public PersonAuthenticationProvider(AuthenticationProviderType providerType, IUserRepository users, IMobileLoginRepository mobileLogins, ITokenHelper tokenHelper, ISmsService smsService)
             : base(mobileLogins, smsService)
         {
             _users = users;
@@ -40,8 +39,7 @@ namespace Business.Services.Authentication
 
             if (command.IsPhoneValid)
             {
-                return await PrepareOneTimePassword(AuthenticationProviderType.Person, user.MobilePhones,
-                    user.CitizenId.ToString());
+                return await PrepareOneTimePassword(AuthenticationProviderType.Person, user.MobilePhones, user.CitizenId.ToString());
             }
 
             return new LoginUserResult

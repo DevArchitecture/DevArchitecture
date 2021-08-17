@@ -30,8 +30,7 @@ namespace Business.Handlers.Languages.Queries
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<Language>>> Handle(GetLanguagesQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Language>>> Handle(GetLanguagesQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<Language>>(await _languageRepository.GetListAsync());
             }

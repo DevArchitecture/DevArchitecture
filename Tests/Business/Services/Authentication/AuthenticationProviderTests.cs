@@ -46,7 +46,7 @@ namespace Tests.Business.Services.Authentication
                 .Returns(() => Task.FromResult(user));
 
             _userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-                .Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
+                .Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });
 
             _tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).Returns(() => new DArchToken()
             {
@@ -85,7 +85,7 @@ namespace Tests.Business.Services.Authentication
                 .Returns(() => Task.FromResult(user));
 
             _userRepository.Setup(x => x.GetClaims(It.IsAny<int>()))
-                .Returns(new List<OperationClaim>() { new() { Id = 1, Name = "test" } });
+                .Returns(new List<OperationClaim>() { new () { Id = 1, Name = "test" } });
 
             _tokenHelper.Setup(x => x.CreateToken<DArchToken>(It.IsAny<User>())).Returns(() => new DArchToken()
             {

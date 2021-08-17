@@ -31,8 +31,7 @@ namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 
 
             var seriLogConfig = new LoggerConfiguration()
-                .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters,
-                    needAutoCreateTable: false)
+                .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: false)
                 .CreateLogger();
             Logger = seriLogConfig;
         }

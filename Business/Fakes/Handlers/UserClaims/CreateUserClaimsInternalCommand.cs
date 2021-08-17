@@ -27,8 +27,7 @@ namespace Business.Fakes.Handlers.UserClaims
                 _userClaimsRepository = userClaimsRepository;
             }
 
-            public async Task<IResult> Handle(CreateUserClaimsInternalCommand request,
-                CancellationToken cancellationToken)
+            public async Task<IResult> Handle(CreateUserClaimsInternalCommand request, CancellationToken cancellationToken)
             {
                 foreach (var claim in request.OperationClaims)
                 {

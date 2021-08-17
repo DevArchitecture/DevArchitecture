@@ -15,8 +15,8 @@ namespace Tests.Business.Handlers
 {
     using static CreateUserGroupCommand;
     using static DeleteUserGroupCommand;
-    using static UpdateUserGroupCommand;
     using static GetUserGroupsQuery;
+    using static UpdateUserGroupCommand;
 
     [TestFixture]
     public class UserGroupsTests

@@ -31,8 +31,7 @@ namespace Business.Handlers.Translates.Queries
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<Translate>>(await _translateRepository.GetListAsync());
             }

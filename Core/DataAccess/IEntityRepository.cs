@@ -22,8 +22,7 @@ namespace Core.DataAccess
         IQueryable<T> Query();
         Task<int> Execute(FormattableString interpolatedQueryString);
 
-        TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null,
-            Action<Exception> exceptionAction = null);
+        TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null);
 
         Task<int> GetCountAsync(Expression<Func<T, bool>> expression = null);
         int GetCount(Expression<Func<T, bool>> expression = null);

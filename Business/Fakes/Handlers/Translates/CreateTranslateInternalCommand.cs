@@ -36,8 +36,7 @@ namespace Business.Fakes.Handlers.Translates
 
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
-            public async Task<IResult> Handle(CreateTranslateInternalCommand request,
-                CancellationToken cancellationToken)
+            public async Task<IResult> Handle(CreateTranslateInternalCommand request, CancellationToken cancellationToken)
             {
                 var isThereTranslateRecord = _translateRepository.Query()
                     .Any(u => u.LangId == request.LangId && u.Code == request.Code);

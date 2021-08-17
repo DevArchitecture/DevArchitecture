@@ -27,8 +27,7 @@ namespace Business.Handlers.Authorizations.Queries
             private readonly IMediator _mediator;
             private readonly ICacheManager _cacheManager;
 
-            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IMediator mediator,
-                ICacheManager cacheManager)
+            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IMediator mediator, ICacheManager cacheManager)
             {
                 _userRepository = userRepository;
                 _tokenHelper = tokenHelper;
@@ -37,8 +36,7 @@ namespace Business.Handlers.Authorizations.Queries
             }
 
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.GetAsync(u => u.Email == request.Email && u.Status);
 

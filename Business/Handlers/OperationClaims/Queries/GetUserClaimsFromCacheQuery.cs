@@ -27,8 +27,7 @@ namespace Business.Handlers.OperationClaims.Queries
             private readonly ICacheManager _cacheManager;
             private readonly IHttpContextAccessor _contextAccessor;
 
-            public GetUserClaimsFromCacheQueryHandler(IOperationClaimRepository operationClaimRepository,
-                IMediator mediator, ICacheManager cacheManager, IHttpContextAccessor contextAccessor)
+            public GetUserClaimsFromCacheQueryHandler(IOperationClaimRepository operationClaimRepository, IMediator mediator, ICacheManager cacheManager, IHttpContextAccessor contextAccessor)
             {
                 _operationClaimRepository = operationClaimRepository;
                 _mediator = mediator;
@@ -40,8 +39,7 @@ namespace Business.Handlers.OperationClaims.Queries
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             // TODO:[SecuredOperation(Priority = 1)]
-            public async Task<IDataResult<IEnumerable<string>>> Handle(GetUserClaimsFromCacheQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<string>>> Handle(GetUserClaimsFromCacheQuery request, CancellationToken cancellationToken)
             {
                 var userId = _contextAccessor.HttpContext.User.Claims
                     .FirstOrDefault(x => x.Type.EndsWith("nameidentifier"))?.Value;

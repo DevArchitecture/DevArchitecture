@@ -29,8 +29,7 @@ namespace Business.Handlers.Groups.Queries
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             [CacheAspect(10)]
-            public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
             {
                 var list = await _groupRepository.GetListAsync();
                 return new SuccessDataResult<IEnumerable<Group>>(list.ToList());

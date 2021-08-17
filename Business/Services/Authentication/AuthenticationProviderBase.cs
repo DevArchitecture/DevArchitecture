@@ -56,8 +56,7 @@ namespace Business.Services.Authentication
 
         public abstract Task<DArchToken> CreateToken(VerifyOtpCommand command);
 
-        protected virtual async Task<LoginUserResult> PrepareOneTimePassword(AuthenticationProviderType providerType,
-            string cellPhone, string externalUserId)
+        protected virtual async Task<LoginUserResult> PrepareOneTimePassword(AuthenticationProviderType providerType, string cellPhone, string externalUserId)
         {
             var oneTimePassword = await _logins.Query()
                 .Where(m => m.Provider == providerType && m.ExternalUserId == externalUserId && m.IsUsed == false)

@@ -14,8 +14,7 @@ namespace Core.Extensions
             var deserializeSettings = new JsonSerializerSettings
                 { ObjectCreationHandling = ObjectCreationHandling.Replace };
             var serializeSettings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source, serializeSettings),
-                deserializeSettings);
+            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source, serializeSettings), deserializeSettings);
         }
     }
 }

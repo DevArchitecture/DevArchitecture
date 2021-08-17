@@ -20,8 +20,7 @@ namespace Business.Fakes.Handlers.OperationClaims
                 _operationClaimRepository = operationClaimRepository;
             }
 
-            public async Task<IDataResult<IEnumerable<OperationClaim>>> Handle(GetOperationClaimsInternalQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<OperationClaim>>> Handle(GetOperationClaimsInternalQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<OperationClaim>>(
                     await _operationClaimRepository.GetListAsync());

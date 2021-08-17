@@ -18,9 +18,9 @@ namespace Tests.Business.Handlers
 {
     using static CreateLanguageCommand;
     using static DeleteLanguageCommand;
-    using static UpdateLanguageCommand;
     using static GetLanguageQuery;
     using static GetLanguagesQuery;
+    using static UpdateLanguageCommand;
 
     [TestFixture]
     public class LanguageHandlerTests
@@ -69,8 +69,8 @@ namespace Tests.Business.Handlers
             _languageRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Language, bool>>>()))
                 .ReturnsAsync(new List<Language>
                 {
-                    new() { Id = 1, Code = "tr-TR", Name = "Türkçe" },
-                    new() { Id = 2, Code = "en-US", Name = "English" }
+                    new () { Id = 1, Code = "tr-TR", Name = "Türkçe" },
+                    new () { Id = 2, Code = "en-US", Name = "English" }
                 });
 
             var handler = new GetLanguagesQueryHandler(_languageRepository.Object, _mediator.Object);
@@ -116,7 +116,7 @@ namespace Tests.Business.Handlers
             _languageRepository.Setup(x => x.Query())
                 .Returns(new List<Language>
                 {
-                    new()
+                    new ()
                     {
                         /*TODO:propertyler buraya yazılacak LanguageId = 1, LanguageName = "test"*/
                     }

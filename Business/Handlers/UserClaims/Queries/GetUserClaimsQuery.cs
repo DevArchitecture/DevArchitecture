@@ -27,8 +27,7 @@ namespace Business.Handlers.UserClaims.Queries
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimsQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimsQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<UserClaim>>(await _userClaimRepository.GetListAsync());
             }

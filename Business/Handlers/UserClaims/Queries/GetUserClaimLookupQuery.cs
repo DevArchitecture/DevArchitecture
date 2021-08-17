@@ -30,8 +30,7 @@ namespace Business.Handlers.UserClaims.Queries
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimLookupQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimLookupQuery request, CancellationToken cancellationToken)
             {
                 var userClaims = await _userClaimRepository.GetListAsync(x => x.UserId == request.UserId);
 
