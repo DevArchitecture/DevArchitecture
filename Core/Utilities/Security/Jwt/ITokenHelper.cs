@@ -6,5 +6,7 @@
     {
         TAccessToken CreateToken<TAccessToken>(User user)
           where TAccessToken : IAccessToken, new();
+
+        string GenerateRefreshToken();
     }
 }
