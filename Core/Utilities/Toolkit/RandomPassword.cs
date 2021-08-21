@@ -1,15 +1,14 @@
-﻿namespace Core.Utilities.Toolkit
-{
-    using System;
+﻿using System;
 
-  /// <summary>
-  /// One time password generator for mobile login etc.
-  /// </summary>
+namespace Core.Utilities.Toolkit
+{
+    /// <summary>
+    /// One time password generator for mobile login etc.
+    /// </summary>
     public static class RandomPassword
     {
         public static string CreateRandomPassword(int length = 14)
         {
-
             var validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
             var random = new Random();
 
@@ -18,6 +17,7 @@
             {
                 chars[i] = validChars[random.Next(0, validChars.Length)];
             }
+
             return new string(chars);
         }
 

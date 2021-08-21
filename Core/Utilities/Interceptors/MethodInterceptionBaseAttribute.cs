@@ -1,12 +1,11 @@
-﻿
+﻿using System;
+using Castle.DynamicProxy;
+
 namespace Core.Utilities.Interceptors
 {
-    using System;
-    using Castle.DynamicProxy;
-
-  /// <summary>
-  /// The Priority property can be used to determine the order in which Aspects will work on methods.
-  /// </summary>
+    /// <summary>
+    /// The Priority property can be used to determine the order in which Aspects will work on methods.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Assembly, AllowMultiple = true, Inherited = true)]
     public abstract class MethodInterceptionBaseAttribute : Attribute, IInterceptor
     {

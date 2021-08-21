@@ -1,7 +1,7 @@
-﻿namespace Core.Utilities.Security.Jwt
-{
-    using System;
+﻿using System;
 
+namespace Core.Utilities.Security.Jwt
+{
     public interface IAccessToken
     {
         DateTime Expiration { get; set; }

@@ -1,12 +1,12 @@
-﻿namespace Tests.Helpers.Token
-{
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Net.Http;
-    using global::WebAPI;
-    using Microsoft.AspNetCore.Mvc.Testing;
-    using Microsoft.IdentityModel.Tokens;
-    using NUnit.Framework;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.IdentityModel.Tokens;
+using NUnit.Framework;
+using WebAPI;
 
+namespace Tests.Helpers.Token
+{
     [TestFixture]
     public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
     {

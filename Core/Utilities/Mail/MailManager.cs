@@ -1,20 +1,22 @@
-﻿namespace Core.Utilities.Mail
-{
-    using System;
-    using System.Linq;
-    using MailKit.Net.Smtp;
-    using Microsoft.Extensions.Configuration;
-    using MimeKit;
-    using MimeKit.Text;
+﻿using System;
+using System.Linq;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.Extensions.Configuration;
+using MimeKit;
+using MimeKit.Text;
 
+namespace Core.Utilities.Mail
+{
     public class MailManager : IMailService
     {
-
         private readonly IConfiguration _configuration;
+
         public MailManager(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         public void Send(EmailMessage emailMessage)
         {
             var message = new MimeMessage();
@@ -35,7 +37,7 @@
                 emailClient.Connect(
                     _configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
                     Convert.ToInt32(_configuration.GetSection("EmailConfiguration").GetSection("SmtpPort").Value),
-                    MailKit.Security.SecureSocketOptions.Auto);
+                    SecureSocketOptions.Auto);
                 emailClient.Send(message);
                 emailClient.Disconnect(true);
             }

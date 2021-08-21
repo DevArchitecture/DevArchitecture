@@ -1,9 +1,9 @@
-﻿namespace DataAccess.Abstract
-{
-    using Core.DataAccess;
-    using Core.Entities.Concrete;
+﻿using Core.DataAccess;
+using Core.Entities.Concrete;
 
+namespace DataAccess.Abstract
+{
     public interface IMobileLoginRepository : IEntityRepository<MobileLogin>
-	{
-	}
+    {
+    }
 }

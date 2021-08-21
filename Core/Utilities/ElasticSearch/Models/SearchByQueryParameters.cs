@@ -1,6 +1,4 @@
-﻿
-
-namespace Core.Utilities.ElasticSearch.Models
+﻿namespace Core.Utilities.ElasticSearch.Models
 {
     public class SearchByQueryParameters : SearchParameters
     {

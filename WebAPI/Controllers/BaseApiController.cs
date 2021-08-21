@@ -1,11 +1,11 @@
-﻿namespace WebAPI.Controllers
-{
-    using Core.Utilities.Results;
-    using MediatR;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
+﻿using Core.Utilities.Results;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
+namespace WebAPI.Controllers
+{
     /// <summary>
     /// Base controller
     /// </summary>

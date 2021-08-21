@@ -1,7 +1,7 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog
-{
-    using global::Serilog;
+﻿using Serilog;
 
+namespace Core.CrossCuttingConcerns.Logging.Serilog
+{
     public abstract class LoggerServiceBase
     {
         protected ILogger Logger { get; set; }

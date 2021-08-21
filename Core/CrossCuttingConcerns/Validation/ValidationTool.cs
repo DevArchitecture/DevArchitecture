@@ -1,7 +1,7 @@
-﻿namespace Core.CrossCuttingConcerns.Validation
-{
-    using FluentValidation;
+﻿using FluentValidation;
 
+namespace Core.CrossCuttingConcerns.Validation
+{
     public static class ValidationTool
     {
         public static void Validate(IValidator validator, object entity)

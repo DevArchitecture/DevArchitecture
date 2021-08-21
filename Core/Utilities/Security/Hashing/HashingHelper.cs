@@ -1,8 +1,8 @@
-﻿namespace Core.Utilities.Security.Hashing
-{
-    using System.Security.Cryptography;
-    using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 
+namespace Core.Utilities.Security.Hashing
+{
     public static class HashingHelper
     {
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

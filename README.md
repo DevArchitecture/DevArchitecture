@@ -13,3 +13,13 @@ For full documentation support [DevArchitecture](https://www.devarchitecture.net
 If you liked DevArchitecture Open Source Rapid Application Framework for .Net 5? 
 
 ## Please give a star to this repository ⭐
+
+# Build Project with Any Terminal
+
+``> dotnet build``
+
+``
+Build succeeded.
+0 Warning(s)
+0 Error(s)
+``

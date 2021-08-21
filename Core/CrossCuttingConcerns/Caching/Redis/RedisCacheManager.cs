@@ -1,8 +1,8 @@
-﻿namespace Core.CrossCuttingConcerns.Caching.Redis
-{
-    using System;
-    using ServiceStack.Redis;
+﻿using System;
+using ServiceStack.Redis;
 
+namespace Core.CrossCuttingConcerns.Caching.Redis
+{
     /// <summary>
     /// RedisCacheManager
     /// </summary>

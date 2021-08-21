@@ -1,13 +1,14 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
-{
-    using System;
-    using System.IO;
-    using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
-    using Core.Utilities.IoC;
-    using global::Serilog;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.IO;
+using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+using Core.Utilities.IoC;
+using Core.Utilities.Messages;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
+namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
+{
     public class FileLogger : LoggerServiceBase
     {
         public FileLogger()
@@ -16,7 +17,7 @@
 
             var logConfig = configuration.GetSection("SeriLogConfigurations:FileLogConfiguration")
                                 .Get<FileLogConfiguration>() ??
-                            throw new Exception(Utilities.Messages.SerilogMessages.NullOptionsMessage);
+                            throw new Exception(SerilogMessages.NullOptionsMessage);
 
             var logFilePath = string.Format("{0}{1}", Directory.GetCurrentDirectory() + logConfig.FolderPath, ".txt");
 

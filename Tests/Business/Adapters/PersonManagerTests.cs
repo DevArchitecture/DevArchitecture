@@ -1,13 +1,14 @@
-﻿namespace Tests.Business.Adapters
-{
-    using System.Net;
-    using Entities.Dtos;
-    using FluentAssertions;
-    using global::Business.Adapters.PersonService;
-    using Moq;
-    using NUnit.Framework;
-    using Tests.Helpers.Adapter;
+﻿#nullable enable
+using System.Net;
+using Business.Adapters.PersonService;
+using Entities.Dtos;
+using FluentAssertions;
+using Moq;
+using NUnit.Framework;
+using Tests.Helpers.Adapter;
 
+namespace Tests.Business.Adapters
+{
     [TestFixture]
     public class PersonManagerTests
     {
@@ -32,10 +33,10 @@
             // Arrange
             var citizen = CreateCitizen();
 
-            _personService.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
+            _personService?.Setup(x => x.VerifyCid(It.IsAny<Citizen>())).Throws<WebException>();
 
             // Act
-            var result = _personServiceHelper.VerifyId(citizen);
+            var result = _personServiceHelper?.VerifyId(citizen);
 
             // Assert
             result.Should().BeFalse();
@@ -47,10 +48,10 @@
             // Arrange
             var citizen = CreateCitizen();
 
-            _personService.Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
+            _personService?.Setup(x => x.VerifyCid(citizen)).ReturnsAsync(true);
 
             // Act
-            var result = _personServiceHelper.VerifyId(citizen);
+            var result = _personServiceHelper?.VerifyId(citizen);
 
             // Assert
             result.Should().BeTrue();

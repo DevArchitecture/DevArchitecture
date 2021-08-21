@@ -1,12 +1,12 @@
-﻿namespace Business.Helpers
-{
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-  /// <summary>
-  /// Since we cannot lock the async await binary with the classic C # lock () clause, we are referring to this solution.
-  /// </summary>
+namespace Business.Helpers
+{
+    /// <summary>
+    /// Since we cannot lock the async await binary with the classic C # lock () clause, we are referring to this solution.
+    /// </summary>
     public class AwaitableLock
     {
         private readonly SemaphoreSlim _toLock;
@@ -22,6 +22,7 @@
             {
                 return new LockReleaser(_toLock);
             }
+
             throw new TimeoutException();
         }
 
@@ -33,6 +34,7 @@
             {
                 _toRelease = toRelease;
             }
+
             public void Dispose()
             {
                 _toRelease.Release();

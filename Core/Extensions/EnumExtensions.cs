@@ -1,12 +1,12 @@
-﻿namespace Core.Extensions
-{
-    using System;
-    using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
+namespace Core.Extensions
+{
     public static class EnumExtensions
     {
         public static string GetDescription<T>(this T enumValue)
-          where T : struct, IConvertible
+            where T : struct, IConvertible
         {
             if (!typeof(T).IsEnum)
             {

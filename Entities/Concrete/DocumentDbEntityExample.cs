@@ -1,8 +1,8 @@
-﻿namespace Entities.Concrete
-{
-    using Core.Entities;
+﻿using Core.Entities;
 
+namespace Entities.Concrete
+{
     public class DocumentDbEntityExample : DocumentDbEntity
-	{
-	}
+    {
+    }
 }

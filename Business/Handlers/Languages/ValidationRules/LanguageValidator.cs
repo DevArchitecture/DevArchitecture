@@ -1,8 +1,8 @@
-﻿namespace Business.Handlers.Languages.ValidationRules
-{
-    using Business.Handlers.Languages.Commands;
-    using FluentValidation;
+﻿using Business.Handlers.Languages.Commands;
+using FluentValidation;
 
+namespace Business.Handlers.Languages.ValidationRules
+{
     public class CreateLanguageValidator : AbstractValidator<CreateLanguageCommand>
     {
         public CreateLanguageValidator()
@@ -11,6 +11,7 @@
             RuleFor(x => x.Code).NotEmpty();
         }
     }
+
     public class UpdateLanguageValidator : AbstractValidator<UpdateLanguageCommand>
     {
         public UpdateLanguageValidator()

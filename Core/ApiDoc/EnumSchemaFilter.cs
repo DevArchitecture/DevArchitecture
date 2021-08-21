@@ -1,14 +1,14 @@
-﻿namespace Core.ApiDoc
-{
-    using System;
-    using System.Linq;
-    using Microsoft.OpenApi.Any;
-    using Microsoft.OpenApi.Models;
-    using Swashbuckle.AspNetCore.SwaggerGen;
+﻿using System;
+using System.Linq;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
-  /// <summary>
-  /// Plugin made to send Enum values and names correctly in APIs.
-  /// </summary>
+namespace Core.ApiDoc
+{
+    /// <summary>
+    /// Plugin made to send Enum values and names correctly in APIs.
+    /// </summary>
     internal class EnumSchemaFilter : ISchemaFilter
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)

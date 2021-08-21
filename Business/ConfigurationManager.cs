@@ -1,9 +1,9 @@
-﻿namespace Business
-{
-    using System;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Hosting;
+﻿using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
+namespace Business
+{
     public enum ApplicationMode
     {
         Development,

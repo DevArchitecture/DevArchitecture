@@ -1,18 +1,18 @@
-﻿namespace Business.Services.Authentication
-{
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Business.Adapters.SmsService;
-    using Business.Constants;
-    using Business.Services.Authentication.Model;
-    using Core.Entities.Concrete;
-    using Core.Utilities.Security.Jwt;
-    using DataAccess.Abstract;
-    using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Business.Adapters.SmsService;
+using Business.Constants;
+using Business.Services.Authentication.Model;
+using Core.Entities.Concrete;
+using Core.Utilities.Security.Jwt;
+using DataAccess.Abstract;
+using Microsoft.EntityFrameworkCore;
 
-  /// <summary>
-  /// Provider that logs in using the DevArchitecture database.
-  /// </summary>
+namespace Business.Services.Authentication
+{
+    /// <summary>
+    /// Provider that logs in using the DevArchitecture database.
+    /// </summary>
     public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
     {
         private readonly IUserRepository _users;
@@ -20,7 +20,7 @@
         private readonly ITokenHelper _tokenHelper;
 
         public PersonAuthenticationProvider(AuthenticationProviderType providerType, IUserRepository users, IMobileLoginRepository mobileLogins, ITokenHelper tokenHelper, ISmsService smsService)
-                        : base(mobileLogins, smsService)
+            : base(mobileLogins, smsService)
         {
             _users = users;
             ProviderType = providerType;
@@ -33,9 +33,8 @@
         {
             var citizenId = command.AsCitizenId();
             var user = await _users.Query()
-                            .Where(u => u.CitizenId == citizenId)
-                            .FirstOrDefaultAsync();
-
+                .Where(u => u.CitizenId == citizenId)
+                .FirstOrDefaultAsync();
 
 
             if (command.IsPhoneValid)

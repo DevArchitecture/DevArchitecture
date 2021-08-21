@@ -1,8 +1,8 @@
-﻿namespace Business.Handlers.Authorizations.ValidationRules
-{
-    using Business.Constants;
-    using FluentValidation;
+﻿using Business.Constants;
+using FluentValidation;
 
+namespace Business.Handlers.Authorizations.ValidationRules
+{
     public static class RuleBuilderExtensions
     {
         public static IRuleBuilder<T, string> Password<T>(this IRuleBuilder<T, string> ruleBuilder, int minimumLength = 8)
