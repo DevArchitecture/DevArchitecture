@@ -50,15 +50,14 @@ namespace Business.Handlers.Authorizations.Queries
                     return new ErrorDataResult<AccessToken>(Messages.PasswordError);
                 }
 
-                user.RefreshToken = Guid.NewGuid().ToString();
-
-                _userRepository.Update(user);
-                await _userRepository.SaveChangesAsync();
-
                 var claims = _userRepository.GetClaims(user.UserId);
 
                 var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
                 accessToken.Claims = claims.Select(x => x.Name).ToList();
+
+                user.RefreshToken = accessToken.RefreshToken;
+                _userRepository.Update(user);
+                await _userRepository.SaveChangesAsync();
 
                 _cacheManager.Add($"{CacheKeys.UserIdForClaim}={user.UserId}", claims.Select(x => x.Name));
 

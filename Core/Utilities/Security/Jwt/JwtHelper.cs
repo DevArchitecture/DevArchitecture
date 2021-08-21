@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,6 +7,7 @@ using Core.Extensions;
 using Core.Utilities.Security.Encyption;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+
 
 namespace Core.Utilities.Security.Jwt
 {
@@ -47,7 +48,8 @@ namespace Core.Utilities.Security.Jwt
             return new TAccessToken()
             {
                 Token = token,
-                Expiration = _accessTokenExpiration
+                Expiration = _accessTokenExpiration,
+                RefreshToken = GenerateRefreshToken()
             };
         }
 
@@ -65,7 +67,15 @@ namespace Core.Utilities.Security.Jwt
                 signingCredentials: signingCredentials);
             return jwt;
         }
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
 
+            using var generator = new RNGCryptoServiceProvider();
+            generator.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+        }
         private IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();

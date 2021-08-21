@@ -41,8 +41,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         public async Task<User> GetByRefreshToken(string refreshToken)
         {
-            var query = Context.Users.AsNoTracking().Where(u => u.RefreshToken == refreshToken && u.Status);
-            return await query.FirstOrDefaultAsync();
+            return await Context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken && u.Status);
         }
     }
 }
