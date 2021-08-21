@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using Core.Entities.Concrete;
 using Core.Extensions;
 using Core.Utilities.Security.Encyption;
