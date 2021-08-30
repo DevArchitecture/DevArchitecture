@@ -15,10 +15,10 @@ namespace Core.DataAccess.MongoDb.Concrete
         where T : DocumentDbEntity
     {
         private readonly IMongoCollection<T> _collection;
-
+        protected string CollectionName { get; set; }
         protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
         {
-            collectionName = collectionName;
+            CollectionName = collectionName;
 
             ConnectionSettingControl(mongoConnectionSetting);
 
@@ -31,8 +31,6 @@ namespace Core.DataAccess.MongoDb.Concrete
             var database = client.GetDatabase(mongoConnectionSetting.DatabaseName);
             _collection = database.GetCollection<T>(collectionName);
         }
-
-        protected string CollectionName { get; set; }
 
         public bool Any(Expression<Func<T, bool>> predicate = null)
         {
