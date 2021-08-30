@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace WebAPI
 {
@@ -126,7 +127,10 @@ namespace WebAPI
             app.UseDbOperationClaimCreator();
             app.UseSwagger();
 
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture"); });
+            app.UseSwaggerUI(c => {
+              c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture"); 
+              c.DocExpansion(DocExpansion.None); 
+            });
             app.UseCors("AllowOrigin");
 
             app.UseHttpsRedirection();
