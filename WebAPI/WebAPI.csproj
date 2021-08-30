@@ -1,59 +1,56 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>1.0.0</Version>
-    <UserSecretsId>41c001a8-4c94-4c16-8f1a-ddd6e630a542</UserSecretsId>
-  </PropertyGroup>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Properties\PublishProfiles\**" />
-    <Content Remove="Properties\PublishProfiles\**" />
-    <EmbeddedResource Remove="Properties\PublishProfiles\**" />
-    <None Remove="Properties\PublishProfiles\**" />
-    <_WebToolingArtifacts Remove="Properties\PublishProfiles\**" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Version>1.0.0</Version>
+		<UserSecretsId>41c001a8-4c94-4c16-8f1a-ddd6e630a542</UserSecretsId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Properties\PublishProfiles\**" />
+		<Content Remove="Properties\PublishProfiles\**" />
+		<EmbeddedResource Remove="Properties\PublishProfiles\**" />
+		<None Remove="Properties\PublishProfiles\**" />
+		<_WebToolingArtifacts Remove="Properties\PublishProfiles\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="SwaggerMessages.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="SwaggerMessages.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="log4net.config" />
-    <Content Remove="nlog.config" />
-    <Content Remove="nlog.development.config" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="log4net.config" />
+		<Content Remove="nlog.config" />
+		<Content Remove="nlog.development.config" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
-      <PrivateAssets>all</PrivateAssets>
-      <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
+			<IncludeAssets>all</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj" />
-    <ProjectReference Include="..\Entities\Entities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Business\Business.csproj" />
+		<ProjectReference Include="..\Entities\Entities.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="logs\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="logs\" />
+	</ItemGroup>
 
 </Project>
