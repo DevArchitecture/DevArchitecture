@@ -24,4 +24,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/build .
 ENV ASPNETCORE_URLS="https://*:44375"
+ENV ASPNETCORE_ENVIRONMENT Docker
 ENTRYPOINT ["dotnet", "WebAPI.dll"]
