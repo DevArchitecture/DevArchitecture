@@ -1,19 +1,26 @@
 ﻿using Core.Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Collections.Generic;
 
 namespace DataAccess.Concrete.Configurations
 {
-    public class TranslateEntityConfiguration : IEntityTypeConfiguration<Translate>
+    public class TranslateEntityConfiguration : BaseConfiguration<Translate>
     {
-        public void Configure(EntityTypeBuilder<Translate> builder)
+        public override void Configure(EntityTypeBuilder<Translate> builder)
         {
-            builder.HasKey(x => x.Id);
             builder.Property(x => x.LangId).IsRequired();
             builder.Property(x => x.Code).HasMaxLength(50).IsRequired();
             builder.Property(x => x.Value).HasMaxLength(500).IsRequired();
-            builder.HasData(
-                new Translate { Id = 1, LangId = 1, Code = "Login", Value = "Giriş" },
+            builder.HasData(GetTranslates());
+
+            base.Configure(builder);
+        }
+
+        private List<Translate> GetTranslates()
+        {
+            return new List<Translate>()
+            {
+               new Translate { Id = 1, LangId = 1, Code = "Login", Value = "Giriş" },
                 new Translate { Id = 2, LangId = 1, Code = "Email", Value = "E posta" },
                 new Translate { Id = 3, LangId = 1, Code = "Password", Value = "Parola" },
                 new Translate { Id = 4, LangId = 1, Code = "Update", Value = "Güncelle" },
@@ -50,86 +57,119 @@ namespace DataAccess.Concrete.Configurations
                 new Translate { Id = 35, LangId = 1, Code = "Deleted", Value = "Başarıyla Silindi." },
                 new Translate { Id = 36, LangId = 2, Code = "Deleted", Value = "Successfully Deleted." },
                 new Translate
-                    { Id = 37, LangId = 1, Code = "OperationClaimExists", Value = "Bu operasyon izni zaten mevcut." },
+                { Id = 37, LangId = 1, Code = "OperationClaimExists", Value = "Bu operasyon izni zaten mevcut." },
                 new Translate
                 {
-                    Id = 38, LangId = 2, Code = "OperationClaimExists", Value = "This operation permit already exists."
+                    Id = 38,
+                    LangId = 2,
+                    Code = "OperationClaimExists",
+                    Value = "This operation permit already exists."
                 },
                 new Translate
                 {
-                    Id = 39, LangId = 1, Code = "StringLengthMustBeGreaterThanThree",
+                    Id = 39,
+                    LangId = 1,
+                    Code = "StringLengthMustBeGreaterThanThree",
                     Value = "Lütfen En Az 3 Karakterden Oluşan Bir İfade Girin."
                 },
                 new Translate
                 {
-                    Id = 40, LangId = 2, Code = "StringLengthMustBeGreaterThanThree",
+                    Id = 40,
+                    LangId = 2,
+                    Code = "StringLengthMustBeGreaterThanThree",
                     Value = "Please Enter A Phrase Of At Least 3 Characters."
                 },
                 new Translate { Id = 41, LangId = 1, Code = "CouldNotBeVerifyCid", Value = "Kimlik No Doğrulanamadı." },
                 new Translate
-                    { Id = 42, LangId = 2, Code = "CouldNotBeVerifyCid", Value = "Could not be verify Citizen Id" },
+                { Id = 42, LangId = 2, Code = "CouldNotBeVerifyCid", Value = "Could not be verify Citizen Id" },
                 new Translate { Id = 43, LangId = 1, Code = "VerifyCid", Value = "Kimlik No Doğrulandı." },
                 new Translate { Id = 44, LangId = 2, Code = "VerifyCid", Value = "Verify Citizen Id" },
                 new Translate
                 {
-                    Id = 45, LangId = 1, Code = "AuthorizationsDenied",
+                    Id = 45,
+                    LangId = 1,
+                    Code = "AuthorizationsDenied",
                     Value = "Yetkiniz olmayan bir alana girmeye çalıştığınız tespit edildi."
                 },
                 new Translate
                 {
-                    Id = 46, LangId = 2, Code = "AuthorizationsDenied",
+                    Id = 46,
+                    LangId = 2,
+                    Code = "AuthorizationsDenied",
                     Value =
                         "It has been detected that you are trying to enter an area that you do not have authorization."
                 },
                 new Translate
                 {
-                    Id = 47, LangId = 1, Code = "UserNotFound",
+                    Id = 47,
+                    LangId = 1,
+                    Code = "UserNotFound",
                     Value = "Kimlik Bilgileri Doğrulanamadı. Lütfen Yeni Kayıt Ekranını kullanın."
                 },
                 new Translate
                 {
-                    Id = 48, LangId = 2, Code = "UserNotFound",
+                    Id = 48,
+                    LangId = 2,
+                    Code = "UserNotFound",
                     Value = "Credentials Could Not Verify. Please use the New Registration Screen."
                 },
                 new Translate
                 {
-                    Id = 49, LangId = 1, Code = "PasswordError",
+                    Id = 49,
+                    LangId = 1,
+                    Code = "PasswordError",
                     Value = "Kimlik Bilgileri Doğrulanamadı, Kullanıcı adı ve/veya parola hatalı."
                 },
                 new Translate
                 {
-                    Id = 50, LangId = 2, Code = "PasswordError",
+                    Id = 50,
+                    LangId = 2,
+                    Code = "PasswordError",
                     Value = "Credentials Failed to Authenticate, Username and / or password incorrect."
                 },
                 new Translate { Id = 51, LangId = 1, Code = "SuccessfulLogin", Value = "Sisteme giriş başarılı." },
                 new Translate
-                    { Id = 52, LangId = 2, Code = "SuccessfulLogin", Value = "Login to the system is successful." },
+                { Id = 52, LangId = 2, Code = "SuccessfulLogin", Value = "Login to the system is successful." },
                 new Translate
                 {
-                    Id = 53, LangId = 1, Code = "SendMobileCode",
+                    Id = 53,
+                    LangId = 1,
+                    Code = "SendMobileCode",
                     Value = "Lütfen Size SMS Olarak Gönderilen Kodu Girin!"
                 },
                 new Translate
                 {
-                    Id = 54, LangId = 2, Code = "SendMobileCode", Value = "Please Enter The Code Sent To You By SMS!"
+                    Id = 54,
+                    LangId = 2,
+                    Code = "SendMobileCode",
+                    Value = "Please Enter The Code Sent To You By SMS!"
                 },
                 new Translate
                 {
-                    Id = 55, LangId = 1, Code = "NameAlreadyExist", Value = "Oluşturmaya Çalıştığınız Nesne Zaten Var."
+                    Id = 55,
+                    LangId = 1,
+                    Code = "NameAlreadyExist",
+                    Value = "Oluşturmaya Çalıştığınız Nesne Zaten Var."
                 },
                 new Translate
                 {
-                    Id = 56, LangId = 2, Code = "NameAlreadyExist",
+                    Id = 56,
+                    LangId = 2,
+                    Code = "NameAlreadyExist",
                     Value = "The Object You Are Trying To Create Already Exists."
                 },
                 new Translate
                 {
-                    Id = 57, LangId = 1, Code = "WrongCID",
+                    Id = 57,
+                    LangId = 1,
+                    Code = "WrongCID",
                     Value = "Vatandaşlık No Sistemimizde Bulunamadı. Lütfen Yeni Kayıt Oluşturun!"
                 },
                 new Translate
                 {
-                    Id = 58, LangId = 2, Code = "WrongCID",
+                    Id = 58,
+                    LangId = 2,
+                    Code = "WrongCID",
                     Value = "Citizenship Number Not Found In Our System. Please Create New Registration!"
                 },
                 new Translate { Id = 59, LangId = 1, Code = "CID", Value = "Vatandaşlık No" },
@@ -138,65 +178,91 @@ namespace DataAccess.Concrete.Configurations
                 new Translate { Id = 62, LangId = 2, Code = "PasswordEmpty", Value = "Password can not be empty!" },
                 new Translate
                 {
-                    Id = 63, LangId = 1, Code = "PasswordLength", Value = "Minimum 8 Karakter Uzunluğunda Olmalıdır!"
+                    Id = 63,
+                    LangId = 1,
+                    Code = "PasswordLength",
+                    Value = "Minimum 8 Karakter Uzunluğunda Olmalıdır!"
                 },
                 new Translate
-                    { Id = 64, LangId = 2, Code = "PasswordLength", Value = "Must be at least 8 characters long! " },
+                { Id = 64, LangId = 2, Code = "PasswordLength", Value = "Must be at least 8 characters long! " },
                 new Translate
                 {
-                    Id = 65, LangId = 1, Code = "PasswordUppercaseLetter", Value = "En Az 1 Büyük Harf İçermelidir!"
+                    Id = 65,
+                    LangId = 1,
+                    Code = "PasswordUppercaseLetter",
+                    Value = "En Az 1 Büyük Harf İçermelidir!"
                 },
                 new Translate
                 {
-                    Id = 66, LangId = 2, Code = "PasswordUppercaseLetter",
+                    Id = 66,
+                    LangId = 2,
+                    Code = "PasswordUppercaseLetter",
                     Value = "Must Contain At Least 1 Capital Letter!"
                 },
                 new Translate
                 {
-                    Id = 67, LangId = 1, Code = "PasswordLowercaseLetter", Value = "En Az 1 Küçük Harf İçermelidir!"
+                    Id = 67,
+                    LangId = 1,
+                    Code = "PasswordLowercaseLetter",
+                    Value = "En Az 1 Küçük Harf İçermelidir!"
                 },
                 new Translate
                 {
-                    Id = 68, LangId = 2, Code = "PasswordLowercaseLetter",
+                    Id = 68,
+                    LangId = 2,
+                    Code = "PasswordLowercaseLetter",
                     Value = "Must Contain At Least 1 Lowercase Letter!"
                 },
                 new Translate { Id = 69, LangId = 1, Code = "PasswordDigit", Value = "En Az 1 Rakam İçermelidir!" },
                 new Translate
-                    { Id = 70, LangId = 2, Code = "PasswordDigit", Value = "It Must Contain At Least 1 Digit!" },
+                { Id = 70, LangId = 2, Code = "PasswordDigit", Value = "It Must Contain At Least 1 Digit!" },
                 new Translate
-                    { Id = 71, LangId = 1, Code = "PasswordSpecialCharacter", Value = "En Az 1 Simge İçermelidir!" },
+                { Id = 71, LangId = 1, Code = "PasswordSpecialCharacter", Value = "En Az 1 Simge İçermelidir!" },
                 new Translate
                 {
-                    Id = 72, LangId = 2, Code = "PasswordSpecialCharacter", Value = "Must Contain At Least 1 Symbol!"
+                    Id = 72,
+                    LangId = 2,
+                    Code = "PasswordSpecialCharacter",
+                    Value = "Must Contain At Least 1 Symbol!"
                 },
                 new Translate
                 {
-                    Id = 73, LangId = 1, Code = "SendPassword", Value = "Yeni Parolanız E-Posta Adresinize Gönderildi."
+                    Id = 73,
+                    LangId = 1,
+                    Code = "SendPassword",
+                    Value = "Yeni Parolanız E-Posta Adresinize Gönderildi."
                 },
                 new Translate
                 {
-                    Id = 74, LangId = 2, Code = "SendPassword",
+                    Id = 74,
+                    LangId = 2,
+                    Code = "SendPassword",
                     Value = "Your new password has been sent to your e-mail address."
                 },
                 new Translate { Id = 75, LangId = 1, Code = "InvalidCode", Value = "Geçersiz Bir Kod Girdiniz!" },
                 new Translate { Id = 76, LangId = 2, Code = "InvalidCode", Value = "You Entered An Invalid Code!" },
                 new Translate
-                    { Id = 77, LangId = 1, Code = "SmsServiceNotFound", Value = "SMS Servisine Ulaşılamıyor." },
+                { Id = 77, LangId = 1, Code = "SmsServiceNotFound", Value = "SMS Servisine Ulaşılamıyor." },
                 new Translate
-                    { Id = 78, LangId = 2, Code = "SmsServiceNotFound", Value = "Unable to Reach SMS Service." },
+                { Id = 78, LangId = 2, Code = "SmsServiceNotFound", Value = "Unable to Reach SMS Service." },
                 new Translate
                 {
-                    Id = 79, LangId = 1, Code = "TrueButCellPhone", Value = "Bilgiler doğru. Cep telefonu gerekiyor."
+                    Id = 79,
+                    LangId = 1,
+                    Code = "TrueButCellPhone",
+                    Value = "Bilgiler doğru. Cep telefonu gerekiyor."
                 },
                 new Translate
                 {
-                    Id = 80, LangId = 2, Code = "TrueButCellPhone",
+                    Id = 80,
+                    LangId = 2,
+                    Code = "TrueButCellPhone",
                     Value = "The information is correct. Cell phone is required."
                 },
                 new Translate
-                    { Id = 81, LangId = 1, Code = "TokenProviderException", Value = "Token Provider boş olamaz!" },
+                { Id = 81, LangId = 1, Code = "TokenProviderException", Value = "Token Provider boş olamaz!" },
                 new Translate
-                    { Id = 82, LangId = 2, Code = "TokenProviderException", Value = "Token Provider cannot be empty!" },
+                { Id = 82, LangId = 2, Code = "TokenProviderException", Value = "Token Provider cannot be empty!" },
                 new Translate { Id = 83, LangId = 1, Code = "Unknown", Value = "Bilinmiyor!" },
                 new Translate { Id = 84, LangId = 2, Code = "Unknown", Value = "Unknown!" },
                 new Translate { Id = 85, LangId = 1, Code = "NewPassword", Value = "Yeni Parola:" },
@@ -252,7 +318,8 @@ namespace DataAccess.Concrete.Configurations
                 new Translate { Id = 135, LangId = 1, Code = "LogList", Value = "İşlem Kütüğü" },
                 new Translate { Id = 136, LangId = 2, Code = "LogList", Value = "LogList" },
                 new Translate { Id = 137, LangId = 1, Code = "DeleteConfirm", Value = "Emin misiniz?" },
-                new Translate { Id = 138, LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" });
+                new Translate { Id = 138, LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" }
+            };
         }
     }
 }
