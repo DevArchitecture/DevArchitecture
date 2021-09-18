@@ -2,9 +2,8 @@
 
 namespace Core.Entities.Concrete
 {
-    public class MobileLogin : IEntity
+    public class MobileLogin : BaseEntity
     {
-        public int Id { get; set; }
         public AuthenticationProviderType Provider { get; set; }
         public string ExternalUserId { get; set; }
         public int Code { get; set; }
