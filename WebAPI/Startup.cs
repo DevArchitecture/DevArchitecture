@@ -27,7 +27,7 @@ namespace WebAPI
     public partial class Startup : BusinessStartup
     {
         /// <summary>
-        ///
+        /// Constructor of <c>Startup</c>
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="hostEnvironment"></param>
