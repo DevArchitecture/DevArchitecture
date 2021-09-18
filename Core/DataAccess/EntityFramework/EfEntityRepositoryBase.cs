@@ -4,6 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Enums;
+using Core.Extensions;
+using Core.Utilities.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.DataAccess.EntityFramework
@@ -64,6 +67,27 @@ namespace Core.DataAccess.EntityFramework
                 ? await Context.Set<TEntity>().ToListAsync()
                 : await Context.Set<TEntity>().Where(expression).ToListAsync();
         }
+
+        //sources: https://www.nuget.org/packages/Apsiyon  |||  https://github.com/vmutlu/ApsiyonFramework
+        public PagingResult<TEntity> GetListForPaging(int page, string propertyName, bool asc, Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includeEntities)
+        {
+            var list = Context.Set<TEntity>().AsQueryable();
+
+            if (includeEntities.Length > 0)
+                list = list.IncludeMultiple(includeEntities);
+
+            if (filter != null)
+                list = list.Where(filter).AsQueryable();
+
+            list = asc ? list.AscOrDescOrder(ESort.ASC, propertyName) : list.AscOrDescOrder(ESort.DESC, propertyName);
+            int totalCount = list.Count();
+
+            var start = (page - 1) * 10;
+            list = list.Skip(start).Take(10);
+
+            return new PagingResult<TEntity>(list.ToList(), totalCount, true, $"{totalCount} records listed.");
+        }
+
 
         public int SaveChanges()
         {
