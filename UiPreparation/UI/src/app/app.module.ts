@@ -7,13 +7,14 @@ import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ComponentsModule } from './core/modules/components.module';
 import { AdminLayoutComponent } from './core/components/app/layouts/admin-layout/admin-layout.component';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslationService } from './core/services/translation.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { LoginGuard } from './core/guards/login-guard';
 import { AuthInterceptorService } from './core/interceptors/auth-interceptor.service';
+import { HttpEntityRepositoryService } from './core/services/http-entity-repository.service';
 
 
 // i18 kullanıclak ise aşağıdaki metod aktif edilecek
@@ -64,7 +65,8 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true,
-    }
+    },    
+    HttpEntityRepositoryService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
