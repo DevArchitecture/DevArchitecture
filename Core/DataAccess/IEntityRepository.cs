@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Core.Entities;
+using Core.Utilities.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Core.Entities;
 
 namespace Core.DataAccess
 {
@@ -15,6 +16,7 @@ namespace Core.DataAccess
         void Delete(T entity);
         IEnumerable<T> GetList(Expression<Func<T, bool>> expression = null);
         Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> expression = null);
+        PagingResult<T> GetListForPaging(int page, string propertyName, bool asc, Expression<Func<T, bool>> expression = null, params Expression<Func<T, object>>[] includeEntities);
         T Get(Expression<Func<T, bool>> expression);
         Task<T> GetAsync(Expression<Func<T, bool>> expression);
         int SaveChanges();

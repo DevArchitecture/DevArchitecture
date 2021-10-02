@@ -18,7 +18,7 @@ namespace Core.DataAccess.MongoDb.Concrete
 
         protected MongoDbRepositoryBase(MongoConnectionSettings mongoConnectionSetting, string collectionName)
         {
-            collectionName = collectionName;
+            CollectionName = collectionName;
 
             ConnectionSettingControl(mongoConnectionSetting);
 
