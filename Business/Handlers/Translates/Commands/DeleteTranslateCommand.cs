@@ -27,7 +27,7 @@ namespace Business.Handlers.Translates.Commands
             }
 
             [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
+            [CacheRemoveAspect()]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(DeleteTranslateCommand request, CancellationToken cancellationToken)
             {

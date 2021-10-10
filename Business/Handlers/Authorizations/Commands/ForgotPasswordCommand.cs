@@ -34,7 +34,7 @@ namespace Business.Handlers.Authorizations.Commands
             /// <param name="cancellationToken"></param>
             /// <returns></returns>
             [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
+            [CacheRemoveAspect()]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
             {
