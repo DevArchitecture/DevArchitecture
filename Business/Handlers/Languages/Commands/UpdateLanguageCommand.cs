@@ -32,7 +32,7 @@ namespace Business.Handlers.Languages.Commands
 
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(UpdateLanguageValidator), Priority = 2)]
-            [CacheRemoveAspect("Get")]
+            [CacheRemoveAspect()]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)
             {

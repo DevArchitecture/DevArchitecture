@@ -26,7 +26,7 @@ namespace Business.Handlers.Languages.Commands
                 _mediator = mediator;
             }
 
-            [CacheRemoveAspect("Get")]
+            [CacheRemoveAspect()]
             [LogAspect(typeof(FileLogger))]
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
