@@ -23,9 +23,9 @@ namespace Tests.WebAPI
             // Arrange
             var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authenticationScheme, token);
-            var cache = new MemoryCacheManager();
+            var cache = new MemoryCacheProvider();
 
-            cache.Add($"{CacheKeys.UserIdForClaim}=1", new List<string>() { "GetUsersQuery" });
+            await cache.SetAsync($"{CacheKeys.UserIdForClaim}=1", "GetUsersQuery", System.TimeSpan.FromMinutes(10));
 
             // Act
             var response = await HttpClient.GetAsync(requestUri);

@@ -2,7 +2,9 @@
 using System.Reflection;
 using Core.ApiDoc;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.CrossCuttingConcerns.Caching.Redis;
 using Core.Utilities.IoC;
 using Core.Utilities.Mail;
 using Core.Utilities.Messages;
@@ -16,53 +18,59 @@ using Microsoft.OpenApi.Models;
 
 namespace Core.DependencyResolvers
 {
-    public class CoreModule : ICoreModule
-    {
-        public void Load(IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddMemoryCache();
-            services.AddSingleton<ICacheManager, MemoryCacheManager>();
-            services.AddSingleton<IMailService, MailManager>();
-            services.AddSingleton<IEmailConfiguration, EmailConfiguration>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<Stopwatch>();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddSingleton<IUriService>(o =>
-            {
-                var accessor = o.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext?.Request;
-                var uri = string.Concat(request?.Scheme, "://", request?.Host.ToUriComponent(), request?.PathBase);
-                return new UriManager(uri);
-            });
+	public class CoreModule : ICoreModule
+	{
+		public void Load(IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddMemoryCache();
+			//var provider = new RedisCacheProvider(new RedisConnection(new RedisConfig()
+			//{
+			//	Connection = "127.0.0.1:6379",
+			//	Database = 2
+			//}));
+			//services.AddSingleton<ICacheManager>(new CacheManager(provider));
+			services.AddSingleton<ICacheManager>(new CacheManager(new MemoryCacheProvider()));
+			services.AddSingleton<IMailService, MailManager>();
+			services.AddSingleton<IEmailConfiguration, EmailConfiguration>();
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddSingleton<Stopwatch>();
+			services.AddMediatR(Assembly.GetExecutingAssembly());
+			services.AddSingleton<IUriService>(o =>
+			{
+				var accessor = o.GetRequiredService<IHttpContextAccessor>();
+				var request = accessor.HttpContext?.Request;
+				var uri = string.Concat(request?.Scheme, "://", request?.Host.ToUriComponent(), request?.PathBase);
+				return new UriManager(uri);
+			});
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc(SwaggerMessages.Version, new OpenApiInfo
-                {
-                    Version = SwaggerMessages.Version,
-                    Title = SwaggerMessages.Title,
-                    Description = SwaggerMessages.Description
-                    // TermsOfService = new Uri(SwaggerMessages.TermsOfService),
-                    // Contact = new OpenApiContact
-                    // {
-                    //    Name = SwaggerMessages.ContactName,
-                    // },
-                    // License = new OpenApiLicense
-                    // {
-                    //    Name = SwaggerMessages.LicenceName,
-                    // },
-                });
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc(SwaggerMessages.Version, new OpenApiInfo
+				{
+					Version = SwaggerMessages.Version,
+					Title = SwaggerMessages.Title,
+					Description = SwaggerMessages.Description
+								// TermsOfService = new Uri(SwaggerMessages.TermsOfService),
+								// Contact = new OpenApiContact
+								// {
+								//    Name = SwaggerMessages.ContactName,
+								// },
+								// License = new OpenApiLicense
+								// {
+								//    Name = SwaggerMessages.LicenceName,
+								// },
+							});
 
-                c.OperationFilter<AddAuthHeaderOperationFilter>();
-                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
-                {
-                    Description = "`Token only!!!` - without `Bearer_` prefix",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Scheme = "bearer"
-                });
-            });
-        }
-    }
+				c.OperationFilter<AddAuthHeaderOperationFilter>();
+				c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+				{
+					Description = "`Token only!!!` - without `Bearer_` prefix",
+					Type = SecuritySchemeType.Http,
+					BearerFormat = "JWT",
+					In = ParameterLocation.Header,
+					Scheme = "bearer"
+				});
+			});
+		}
+	}
 }

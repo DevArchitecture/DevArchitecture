@@ -4,6 +4,7 @@ using System.Security;
 using Business.Constants;
 using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +39,7 @@ namespace Business.BusinessAspects
                 throw new SecurityException(Messages.AuthorizationsDenied);
             }
 
-            var oprClaims = _cacheManager.Get<IEnumerable<string>>($"{CacheKeys.UserIdForClaim}={userId}");
+            var oprClaims = _cacheManager.GetAsync<IEnumerable<string>>($"{CacheKeys.UserIdForClaim}={userId}").Result;
 
             var operationName = invocation.TargetType.ReflectedType.Name;
             if (oprClaims.Contains(operationName))
