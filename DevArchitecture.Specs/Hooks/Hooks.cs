@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Reflection;
 using TechTalk.SpecFlow;
 using WebAPI;
 
@@ -19,15 +22,17 @@ namespace DevArchitecture.Specs.Hooks
         [BeforeFeature]
         public static void BeforeFeature()
         {
+            var rootPath = AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("DevArchitecture.Specs"));
+
             var configuration = new ConfigurationBuilder()
-              .SetBasePath(@"C:\Users\HUS\source\repos\DevArchitecture\WebAPI")
+              .SetBasePath(rootPath + "WebAPI")
               .AddEnvironmentVariables()
               .AddJsonFile("appsettings.json", optional: true)
               .AddJsonFile("appsettings.Development.json", optional: true)
               .Build();
 
             _host = new HostBuilder()
-            .UseContentRoot(@"C:\Users\HUS\source\repos\DevArchitecture\WebAPI")
+            .UseContentRoot(rootPath + "WebAPI")
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .UseEnvironment("Development")
             .ConfigureServices((hostContext, services) =>
