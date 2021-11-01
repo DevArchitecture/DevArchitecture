@@ -23,6 +23,7 @@ namespace DevArchitecture.Specs.Api
 
             _client = new RestClient("https://localhost:5001/");
             _client.Timeout = -1;
+            _client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             _client.Authenticator = new JwtAuthenticator(Token());
         }
         private static string Token()
