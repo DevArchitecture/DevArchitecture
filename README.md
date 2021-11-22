@@ -23,3 +23,7 @@ Build succeeded.
 0 Warning(s)
 0 Error(s)
 ``
+
+# Run Api Project with Any Terminal
+
+``> dotnet run -p WebAPI``
