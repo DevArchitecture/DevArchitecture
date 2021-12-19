@@ -42,14 +42,17 @@ namespace Business.Helpers
 
         private static IEnumerable<string> GetOperationNames()
         {
-            var assemblyNames = Assembly.GetExecutingAssembly().GetTypes()
+            var assemblies = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(x =>
                     // runtime generated anonmous type'larin assemblysi olmadigi icin null cek yap
                     x.Namespace != null && x.Namespace.StartsWith("Business.Handlers") &&
-                    (x.Name.EndsWith("Command") || x.Name.EndsWith("Query")) &&
-                    x.CustomAttributes.All(a => a.AttributeType == typeof(SecuredOperation)))
-                .Select(x => x.Name);
-            return assemblyNames;
+                    (x.Name.EndsWith("Command") || x.Name.EndsWith("Query")));
+
+            return (from assembly in assemblies
+                    from nestedType in assembly.GetNestedTypes()
+                    from method in nestedType.GetMethods()
+                    where method.CustomAttributes.Any(u => u.AttributeType == typeof(SecuredOperation))
+                    select assembly.Name).ToList();
         }
     }
 }
