@@ -21,8 +21,9 @@
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "IIS_Development": {
-      "commandName": "IISExpress",
+    "Dev_Development": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
@@ -30,8 +31,9 @@
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
-    "IIS_Staging": {
-      "commandName": "IISExpress",
+    "Dev_Staging": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
@@ -39,8 +41,8 @@
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
-    "IIS_Production": {
-      "commandName": "IISExpress",
+    "Dev_Production": {
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
