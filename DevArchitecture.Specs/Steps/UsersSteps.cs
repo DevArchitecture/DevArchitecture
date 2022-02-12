@@ -1,4 +1,5 @@
-﻿using Core.Entities.Dtos;
+﻿using Core.CrossCuttingConcerns.Caching.CacheManager;
+using Core.Entities.Dtos;
 using DevArchitecture.Specs.Api;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -21,7 +22,7 @@ namespace DevArchitecture.Specs.Steps
         public UsersSteps(UsersApi api)
         {
             _api = api;
-            _api._cacheManager = new Core.CrossCuttingConcerns.Caching.Microsoft.MemoryCacheManager();
+           
         }
 
         [Given(@"add ""(.*)"" to base url")]

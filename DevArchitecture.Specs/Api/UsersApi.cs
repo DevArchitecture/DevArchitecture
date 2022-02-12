@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Core.CrossCuttingConcerns.Caching;
 using Newtonsoft.Json;
+using Core.CrossCuttingConcerns.Caching.CacheManager;
 
 namespace DevArchitecture.Specs.Api
 {
@@ -40,7 +41,7 @@ namespace DevArchitecture.Specs.Api
             list.Add("CreateUserCommand");
             list.Add("UpdateUserCommand");
             list.Add("DeleteUserCommand");
-            _cacheManager.Add("UserIdForClaim=1", list);
+            _cacheManager.SetAsync("UserIdForClaim=1", list);
         }
         public async Task<IEnumerable<UserDto>> GetAllUserAsync()
         {

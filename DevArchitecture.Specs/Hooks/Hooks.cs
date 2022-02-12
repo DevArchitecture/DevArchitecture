@@ -1,6 +1,8 @@
 ﻿
 using Autofac.Extensions.DependencyInjection;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.CacheManager;
+using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +40,7 @@ namespace DevArchitecture.Specs.Hooks
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddMemoryCache();
-                services.AddSingleton<ICacheManager, Core.CrossCuttingConcerns.Caching.Microsoft.MemoryCacheManager>();
+                services.AddSingleton<ICacheManager, CacheManager>();
             })
             .ConfigureAppConfiguration(builder =>
             {
