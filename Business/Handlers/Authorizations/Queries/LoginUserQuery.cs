@@ -6,7 +6,6 @@ using Business.Constants;
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -60,7 +59,7 @@ namespace Business.Handlers.Authorizations.Queries
                 _userRepository.Update(user);
                 await _userRepository.SaveChangesAsync();
 
-                await _cacheManager.SetAsync($"{CacheKeys.UserIdForClaim}={user.UserId}", claims.Select(x => x.Name));
+                _cacheManager.Add($"{CacheKeys.UserIdForClaim}={user.UserId}", claims.Select(x => x.Name));
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }

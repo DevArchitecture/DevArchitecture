@@ -1,6 +1,5 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +34,7 @@ namespace Core.Aspects.Autofac.Caching
                 targetTypeName = targetTypeName.Replace(delete, string.Empty);
                 _pattern = get + targetTypeName;
             }
-            _cacheManager.RemoveByPatternAsync(_pattern);
+            _cacheManager.RemoveByPattern(_pattern);
         }
     }
 }

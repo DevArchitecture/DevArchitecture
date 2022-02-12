@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Business.Constants;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -43,8 +42,8 @@ namespace Business.Handlers.Authorizations.Queries
 
 
 				var claims = _userRepository.GetClaims(userToCheck.UserId);
-				await _cacheManager.RemoveAsync($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}");
-        await _cacheManager.SetAsync($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}", claims.Select(x => x.Name));
+				_cacheManager.Remove($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}");
+				_cacheManager.Add($"{CacheKeys.UserIdForClaim}={userToCheck.UserId}", claims.Select(x => x.Name));
 				var accessToken = _tokenHelper.CreateToken<AccessToken>(userToCheck);
 				userToCheck.RefreshToken = accessToken.RefreshToken;
 				_userRepository.Update(userToCheck);

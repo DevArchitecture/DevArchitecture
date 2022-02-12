@@ -5,7 +5,6 @@ using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -43,7 +42,7 @@ namespace Business.Handlers.UserClaims.Commands
                 _userClaimRepository.Add(userClaim);
                 await _userClaimRepository.SaveChangesAsync();
 
-                await _cacheManager.RemoveAsync($"{CacheKeys.UserIdForClaim}={request.UserId}");
+                _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
 
                 return new SuccessResult(Messages.Added);
             }

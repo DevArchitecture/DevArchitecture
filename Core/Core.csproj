@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -7,13 +7,6 @@
     <PropertyGroup>
         <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
-    <ItemGroup>
-      <Compile Remove="CrossCuttingConcerns\Caching\ICacheManager.cs" />
-      <Compile Remove="CrossCuttingConcerns\Caching\Microsoft\MemoryCacheManager.cs" />
-      <Compile Remove="CrossCuttingConcerns\Caching\Microsoft\PackagesExtensions.cs" />
-      <Compile Remove="CrossCuttingConcerns\Caching\Redis\PackagesExtensions.cs" />
-      <Compile Remove="CrossCuttingConcerns\Caching\Redis\RedisCacheManager.cs" />
-    </ItemGroup>
  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
@@ -47,7 +40,6 @@
     <PackageReference Include="Serilog.Sinks.MongoDB" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
     <PackageReference Include="ServiceStack.Redis.Core" Version="5.12.0" />
-    <PackageReference Include="StackExchange.Redis" Version="2.2.79" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />  
   </ItemGroup>

@@ -7,7 +7,7 @@ using Business.Constants;
 using Business.Handlers.Authorizations.Commands;
 using Business.Handlers.Authorizations.Queries;
 using Business.Services.Authentication;
-using Core.CrossCuttingConcerns.Caching.CacheManager;
+using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;

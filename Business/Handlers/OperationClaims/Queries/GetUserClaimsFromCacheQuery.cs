@@ -8,7 +8,6 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.CacheManager;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -50,7 +49,7 @@ namespace Business.Handlers.OperationClaims.Queries
                     throw new SecurityException(Messages.AuthorizationsDenied);
                 }
 
-                var oprClaims = _cacheManager.GetAsync<IEnumerable<string>>($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>;
+                var oprClaims = _cacheManager.Get($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>;
 
                 return new SuccessDataResult<IEnumerable<string>>(oprClaims);
             }
