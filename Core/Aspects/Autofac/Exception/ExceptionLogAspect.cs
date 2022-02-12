@@ -25,9 +25,8 @@ namespace Core.Aspects.Autofac.Exception
             if (loggerService.BaseType != typeof(LoggerServiceBase))
             {
                 throw new ArgumentException(AspectMessages.WrongLoggerType);
-            }
-
-            _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
+            }            
+            _loggerServiceBase = (LoggerServiceBase)ServiceTool.ServiceProvider.GetService(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
 
@@ -35,7 +34,7 @@ namespace Core.Aspects.Autofac.Exception
         {
             var logDetailWithException = GetLogDetail(invocation);
 
-            logDetailWithException.ExceptionMessage = e is AggregateException
+            logDetailWithException.ExceptionMessage = e is System.Exception
                 ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message))
                 : e.Message;
             _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));

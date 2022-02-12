@@ -57,6 +57,11 @@ namespace Core.Extensions
                 message = e.Message;
                 httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
             }
+            else if (e.GetType() == typeof(NotSupportedException))
+            {
+                message = e.Message;
+                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            }
             else
             {
                 message = ExceptionMessage.InternalServerError;
