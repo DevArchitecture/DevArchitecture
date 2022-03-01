@@ -5,7 +5,7 @@ import { LookUpService } from 'app/core/services/lookUp.service';
 import { AuthService } from 'app/core/components/admin/login/services/auth.service';
 import { LogDto } from './models/LogDto';
 import { LogDtoService } from './services/LogDto.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Rx';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
