@@ -106,9 +106,7 @@ namespace WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUserGroupCommand updateUserGroup)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));
-            var result = await Mediator.Send(updateUserGroup);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));        
         }
 
         /// <summary>
