@@ -1,8 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Security.Claims;
-using System.Security.Principal;
 using Autofac;
 using Business.Constants;
 using Business.DependencyResolvers;
@@ -26,6 +21,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Business
 {
@@ -50,11 +50,11 @@ namespace Business
         /// <param name="services"></param>
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            Func<IServiceProvider, ClaimsPrincipal> getPrincipal = (sp) =>
-                sp.GetService<IHttpContextAccessor>().HttpContext?.User ??
+            ClaimsPrincipal GetPrincipal(IServiceProvider sp) =>
+                sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ??
                 new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
 
-            services.AddScoped<IPrincipal>(getPrincipal);
+            services.AddScoped<IPrincipal>(GetPrincipal);
             services.AddMemoryCache();
 
             var coreModule = new CoreModule();
