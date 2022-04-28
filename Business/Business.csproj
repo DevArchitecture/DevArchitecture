@@ -1,39 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-		<PropertyGroup>
-			<TargetFramework>netstandard2.1</TargetFramework>
-			<LangVersion>8.0</LangVersion>
-			<Version>1.0.0</Version>
-		</PropertyGroup>
-    <PropertyGroup>
-        <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-		<ItemGroup>
-		  <Compile Remove="Helpers\EnumerableExtensions.cs" />
-		</ItemGroup>
-
-<ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="FluentValidation" Version="10.3.3" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.3" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Refit" Version="6.0.94" />
-    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.1" />
-    <PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
-    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.1" />
-    <PackageReference Include="System.ServiceModel.Security" Version="4.8.1" />    
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\Entities\Entities.csproj" />
-  </ItemGroup>
- <ItemGroup>
-   <WCFMetadata Include="Connected Services" />
- </ItemGroup> 
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
+	<PropertyGroup>
+		<CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Helpers\EnumerableExtensions.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="11.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="FluentValidation" Version="10.4.0" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+		<PackageReference Include="MediatR" Version="10.0.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Refit" Version="6.3.2" />
+		<PackageReference Include="System.ServiceModel.Duplex" Version="4.9.0" />
+		<PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />
+		<PackageReference Include="System.ServiceModel.NetTcp" Version="4.9.0" />
+		<PackageReference Include="System.ServiceModel.Security" Version="4.9.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+		<ProjectReference Include="..\Entities\Entities.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<WCFMetadata Include="Connected Services" />
+	</ItemGroup>
 </Project>

@@ -1,13 +1,12 @@
-﻿namespace Core.Utilities.Mail
+﻿namespace Core.Utilities.Mail;
+
+public class EmailConfiguration : IEmailConfiguration
 {
-    public class EmailConfiguration : IEmailConfiguration
-    {
-        public string SmtpServer { get; set; }
+    public string SmtpServer { get; set; }
 
-        public int SmtpPort { get; set; }
+    public int SmtpPort { get; set; }
 
-        public string SmtpUserName { get; set; }
+    public string SmtpUserName { get; set; }
 
-        public string Password { get; set; }
-    }
+    public string Password { get; set; }
 }

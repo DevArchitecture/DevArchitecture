@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -11,34 +8,33 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 
-namespace Business.Handlers.UserGroups.Commands
+namespace Business.Handlers.UserGroups.Commands;
+
+public class UpdateUserGroupByGroupIdCommand : IRequest<IResult>
 {
-    public class UpdateUserGroupByGroupIdCommand : IRequest<IResult>
+    public int Id { get; set; }
+    public int GroupId { get; set; }
+    public int[] UserIds { get; set; }
+
+    public class UpdateUserGroupByGroupIdCommandHandler : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
     {
-        public int Id { get; set; }
-        public int GroupId { get; set; }
-        public int[] UserIds { get; set; }
+        private readonly IUserGroupRepository _userGroupRepository;
 
-        public class UpdateUserGroupByGroupIdCommandHandler : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
+        public UpdateUserGroupByGroupIdCommandHandler(IUserGroupRepository userGroupRepository)
         {
-            private readonly IUserGroupRepository _userGroupRepository;
+            _userGroupRepository = userGroupRepository;
+        }
 
-            public UpdateUserGroupByGroupIdCommandHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+        [SecuredOperation(Priority = 1)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(UpdateUserGroupByGroupIdCommand request, CancellationToken cancellationToken)
+        {
+            var list = request.UserIds.Select(x => new UserGroup() { GroupId = request.GroupId, UserId = x });
+            await _userGroupRepository.BulkInsertByGroupId(request.GroupId, list);
+            await _userGroupRepository.SaveChangesAsync();
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(UpdateUserGroupByGroupIdCommand request, CancellationToken cancellationToken)
-            {
-                var list = request.UserIds.Select(x => new UserGroup() { GroupId = request.GroupId, UserId = x });
-                await _userGroupRepository.BulkInsertByGroupId(request.GroupId, list);
-                await _userGroupRepository.SaveChangesAsync();
-
-                return new SuccessResult(Messages.Updated);
-            }
+            return new SuccessResult(Messages.Updated);
         }
     }
 }

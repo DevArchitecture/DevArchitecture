@@ -1,9 +1,8 @@
-﻿namespace Core.Utilities.ElasticSearch.Models
+﻿namespace Core.Utilities.ElasticSearch.Models;
+
+public class SearchByQueryParameters : SearchParameters
 {
-    public class SearchByQueryParameters : SearchParameters
-    {
-        public string QueryName { get; set; }
-        public string Query { get; set; }
-        public string[] Fields { get; set; }
-    }
+    public string QueryName { get; set; }
+    public string Query { get; set; }
+    public string[] Fields { get; set; }
 }

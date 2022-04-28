@@ -1,13 +1,12 @@
-﻿using System.Text;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace Core.Utilities.Security.Encyption
+namespace Core.Utilities.Security.Encyption;
+
+public static class SecurityKeyHelper
 {
-    public static class SecurityKeyHelper
+    public static SecurityKey CreateSecurityKey(string securityKey)
     {
-        public static SecurityKey CreateSecurityKey(string securityKey)
-        {
-            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
-        }
+        return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
     }
 }

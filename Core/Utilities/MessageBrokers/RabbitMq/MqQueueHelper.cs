@@ -1,45 +1,42 @@
-﻿using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System.Text;
 
-namespace Core.Utilities.MessageBrokers.RabbitMq
+namespace Core.Utilities.MessageBrokers.RabbitMq;
+
+public class MqQueueHelper : IMessageBrokerHelper
 {
-    public class MqQueueHelper : IMessageBrokerHelper
+    private readonly MessageBrokerOptions _brokerOptions;
+
+    public MqQueueHelper(IConfiguration configuration)
     {
-        private readonly MessageBrokerOptions _brokerOptions;
+        Configuration = configuration;
+        _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
+    }
 
-        public MqQueueHelper(IConfiguration configuration)
+    public IConfiguration Configuration { get; }
+
+    public void QueueMessage(string messageText)
+    {
+        var factory = new ConnectionFactory
         {
-            Configuration = configuration;
-            _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
-        }
+            HostName = _brokerOptions.HostName,
+            UserName = _brokerOptions.UserName,
+            Password = _brokerOptions.Password
+        };
+        using var connection = factory.CreateConnection();
+        using var channel = connection.CreateModel();
+        channel.QueueDeclare(
+            queue: "DArchQueue",
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
 
-        public IConfiguration Configuration { get; }
+        var message = JsonConvert.SerializeObject(messageText);
+        var body = Encoding.UTF8.GetBytes(message);
 
-        public void QueueMessage(string messageText)
-        {
-            var factory = new ConnectionFactory
-            {
-                HostName = _brokerOptions.HostName,
-                UserName = _brokerOptions.UserName,
-                Password = _brokerOptions.Password
-            };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(
-                    queue: "DArchQueue",
-                    durable: false,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
-
-                var message = JsonConvert.SerializeObject(messageText);
-                var body = Encoding.UTF8.GetBytes(message);
-
-                channel.BasicPublish(exchange: string.Empty, routingKey: "DArchQueue", basicProperties: null, body: body);
-            }
-        }
+        channel.BasicPublish(exchange: string.Empty, routingKey: "DArchQueue", basicProperties: null, body: body);
     }
 }

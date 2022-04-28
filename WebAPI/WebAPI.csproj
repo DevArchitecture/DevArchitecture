@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Version>1.0.0</Version>
 		<UserSecretsId>41c001a8-4c94-4c16-8f1a-ddd6e630a542</UserSecretsId>
 	</PropertyGroup>
@@ -17,40 +17,34 @@
 		<None Remove="Properties\PublishProfiles\**" />
 		<_WebToolingArtifacts Remove="Properties\PublishProfiles\**" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Compile Remove="SwaggerMessages.cs" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Content Remove="log4net.config" />
 		<Content Remove="nlog.config" />
 		<Content Remove="nlog.development.config" />
 	</ItemGroup>
-
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
 			<IncludeAssets>all</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\Business\Business.csproj" />
 		<ProjectReference Include="..\Entities\Entities.csproj" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Folder Include="logs\" />
 	</ItemGroup>
-
 </Project>

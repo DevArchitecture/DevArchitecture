@@ -1,7 +1,6 @@
-﻿namespace Core.Utilities.Messages
+﻿namespace Core.Utilities.Messages;
+
+public static class ExceptionMessage
 {
-    public static class ExceptionMessage
-    {
-        public static string InternalServerError => "Something went wrong. Please try again.";
-    }
+    public static string InternalServerError => "Something went wrong. Please try again.";
 }

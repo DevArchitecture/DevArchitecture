@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿namespace Business.Fakes;
 
-namespace Business.Fakes
+public interface IFakeStore
 {
-    public interface IFakeStore
-    {
-        List<TEntity> Set<TEntity>();
-    }
+    List<TEntity> Set<TEntity>();
 }

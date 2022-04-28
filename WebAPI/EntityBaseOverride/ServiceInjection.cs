@@ -1,21 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace WebAPI.EntityBaseOverride
+namespace WebAPI.EntityBaseOverride;
+
+/// <summary>
+///
+/// </summary>
+public class ServiceInjection : IDesignTimeServices
 {
     /// <summary>
     ///
     /// </summary>
-    public class ServiceInjection : IDesignTimeServices
+    /// <param name="serviceCollection"></param>
+    public void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddSingleton<ICSharpEntityTypeGenerator, OverrideBase>();
-        }
+        serviceCollection.AddSingleton<ICSharpEntityTypeGenerator, OverrideBase>();
     }
 }

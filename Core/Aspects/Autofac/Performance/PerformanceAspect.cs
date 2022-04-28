@@ -1,39 +1,38 @@
-﻿using System.Diagnostics;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
-namespace Core.Aspects.Autofac.Performance
+namespace Core.Aspects.Autofac.Performance;
+
+/// <summary>
+/// PerformanceAspect
+/// </summary>
+public class PerformanceAspect : MethodInterception
 {
-    /// <summary>
-    /// PerformanceAspect
-    /// </summary>
-    public class PerformanceAspect : MethodInterception
+    private readonly int _interval;
+    private readonly Stopwatch _stopwatch;
+
+    public PerformanceAspect(int interval)
     {
-        private readonly int _interval;
-        private readonly Stopwatch _stopwatch;
+        _interval = interval;
+        _stopwatch = ServiceTool.ServiceProvider.GetService<Stopwatch>();
+    }
 
-        public PerformanceAspect(int interval)
+    protected override void OnBefore(IInvocation invocation)
+    {
+        _stopwatch.Start();
+    }
+
+    protected override void OnAfter(IInvocation invocation)
+    {
+        if (_stopwatch.Elapsed.TotalSeconds > _interval)
         {
-            _interval = interval;
-            _stopwatch = ServiceTool.ServiceProvider.GetService<Stopwatch>();
+            Debug.WriteLine(
+                $"Performance: {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}-->{_stopwatch.Elapsed.TotalSeconds}");
         }
 
-        protected override void OnBefore(IInvocation invocation)
-        {
-            _stopwatch.Start();
-        }
-
-        protected override void OnAfter(IInvocation invocation)
-        {
-            if (_stopwatch.Elapsed.TotalSeconds > _interval)
-            {
-                Debug.WriteLine(
-                    $"Performance: {invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}-->{_stopwatch.Elapsed.TotalSeconds}");
-            }
-
-            _stopwatch.Reset();
-        }
+        _stopwatch.Reset();
     }
 }

@@ -357,5 +357,9 @@
         <Rule Id="RS1029" Action="None"/> <!-- Do not use reserved diagnostic IDs -->
         <Rule Id="RS2008" Action="None"/> <!-- Enable analyzer release tracking -->
     </Rules>
+	
+	<Rules AnalyzerId="System.Diagnostics.CodeAnalysis" RuleNamespace="System.Diagnostics.CodeAnalysis">
+        <Rule Id="EF1001" Action="None"/>
+    </Rules>
 </RuleSet>
 

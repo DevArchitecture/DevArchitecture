@@ -1,7 +1,6 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+
+public class MsTeamsConfiguration
 {
-    public class MsTeamsConfiguration
-    {
-        public string ChannelHookAddress { get; set; }
-    }
+    public string ChannelHookAddress { get; set; }
 }

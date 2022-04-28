@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Enums
-{
-    public enum ESort
-    {
-        [Display(Name = "OrderBy")]
-        ASC = 1,
+namespace Core.Enums;
 
-        [Display(Name = "OrderByDescending")]
-        DESC = 2
-    }
+public enum ESort
+{
+    [Display(Name = "OrderBy")]
+    ASC = 1,
+
+    [Display(Name = "OrderByDescending")]
+    DESC = 2
 }

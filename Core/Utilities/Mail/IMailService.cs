@@ -1,7 +1,6 @@
-﻿namespace Core.Utilities.Mail
+﻿namespace Core.Utilities.Mail;
+
+public interface IMailService
 {
-    public interface IMailService
-    {
-        void Send(EmailMessage emailMessage);
-    }
+    void Send(EmailMessage emailMessage);
 }

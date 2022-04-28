@@ -1,9 +1,8 @@
-﻿namespace Core.Entities.Concrete
+﻿namespace Core.Entities.Concrete;
+
+public class Translate : BaseEntity
 {
-    public class Translate : BaseEntity
-    {
-        public int LangId { get; set; }
-        public string Code { get; set; }
-        public string Value { get; set; }
-    }
+    public int LangId { get; set; }
+    public string Code { get; set; }
+    public string Value { get; set; }
 }

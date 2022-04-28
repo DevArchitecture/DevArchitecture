@@ -1,36 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup> 
-    <TargetFramework>net5.0</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-
-    <Version>2.0.0</Version>
-
-    <PackageReleaseNotes>core 5 updated</PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Autofac.Extras.Moq" Version="6.0.0" />
-    <PackageReference Include="FluentAssertions" Version="6.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.9" />
-    <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="nunit" Version="3.13.2" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj" />
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\WebAPI\WebAPI.csproj" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<IsPackable>false</IsPackable>
+		<Version>2.0.0</Version>
+		<PackageReleaseNotes>core 6 updated</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extras.Moq" Version="6.1.0" />
+		<PackageReference Include="FluentAssertions" Version="6.6.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.4" />
+		<PackageReference Include="Moq" Version="4.17.2" />
+		<PackageReference Include="nunit" Version="3.13.3" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Business\Business.csproj" />
+		<ProjectReference Include="..\Core\Core.csproj" />
+		<ProjectReference Include="..\WebAPI\WebAPI.csproj" />
+	</ItemGroup>
 </Project>

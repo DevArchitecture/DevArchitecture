@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
-namespace Tests.Helpers
+namespace Tests.Helpers;
+
+public static class ClaimsData
 {
-    public static class ClaimsData
+    public static List<Claim> GetClaims()
     {
-        public static List<Claim> GetClaims()
+        return new()
         {
-            return new ()
-            {
-                new Claim("username", "deneme"),
-                new Claim("email", "test@test.com"),
-                new Claim("nameidentifier", "1")
-            };
-        }
+            new Claim("username", "deneme"),
+            new Claim("email", "test@test.com"),
+            new Claim("nameidentifier", "1")
+        };
     }
 }

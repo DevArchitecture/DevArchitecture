@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -11,41 +8,40 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 
-namespace Business.Handlers.Groups.Commands
+namespace Business.Handlers.Groups.Commands;
+
+public class CreateGroupCommand : IRequest<IResult>
 {
-    public class CreateGroupCommand : IRequest<IResult>
+    public string GroupName { get; set; }
+
+    public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, IResult>
     {
-        public string GroupName { get; set; }
+        private readonly IGroupRepository _groupRepository;
 
-        public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, IResult>
+
+        public CreateGroupCommandHandler(IGroupRepository groupRepository)
         {
-            private readonly IGroupRepository _groupRepository;
+            _groupRepository = groupRepository;
+        }
 
-
-            public CreateGroupCommandHandler(IGroupRepository groupRepository)
+        [SecuredOperation(Priority = 1)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
+        {
+            try
             {
-                _groupRepository = groupRepository;
+                var group = new Group
+                {
+                    GroupName = request.GroupName
+                };
+                _groupRepository.Add(group);
+                await _groupRepository.SaveChangesAsync();
+                return new SuccessResult(Messages.Added);
             }
-
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
+            catch (Exception ex)
             {
-                try
-                {
-                    var group = new Group
-                    {
-                        GroupName = request.GroupName
-                    };
-                    _groupRepository.Add(group);
-                    await _groupRepository.SaveChangesAsync();
-                    return new SuccessResult(Messages.Added);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                throw ex;
             }
         }
     }

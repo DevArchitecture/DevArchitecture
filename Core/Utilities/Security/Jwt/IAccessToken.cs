@@ -1,11 +1,8 @@
-﻿using System;
+﻿namespace Core.Utilities.Security.Jwt;
 
-namespace Core.Utilities.Security.Jwt
+public interface IAccessToken
 {
-    public interface IAccessToken
-    {
-        DateTime Expiration { get; set; }
-        string Token { get; set; }
-        public string RefreshToken { get; set; }
-    }
+    DateTime Expiration { get; set; }
+    string Token { get; set; }
+    public string RefreshToken { get; set; }
 }

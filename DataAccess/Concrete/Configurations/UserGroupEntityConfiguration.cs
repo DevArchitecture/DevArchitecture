@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataAccess.Concrete.Configurations
+namespace DataAccess.Concrete.Configurations;
+
+public class UserGroupEntityConfiguration : IEntityTypeConfiguration<UserGroup>
 {
-    public class UserGroupEntityConfiguration : IEntityTypeConfiguration<UserGroup>
+    public void Configure(EntityTypeBuilder<UserGroup> builder)
     {
-        public void Configure(EntityTypeBuilder<UserGroup> builder)
-        {
-            builder.HasKey(x => new { x.UserId, x.GroupId });
-        }
+        builder.HasKey(x => new { x.UserId, x.GroupId });
     }
 }

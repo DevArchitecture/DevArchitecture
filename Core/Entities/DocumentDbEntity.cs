@@ -1,10 +1,9 @@
 ﻿using MongoDB.Bson;
 
-namespace Core.Entities
+namespace Core.Entities;
+
+public abstract class DocumentDbEntity
 {
-    public abstract class DocumentDbEntity
-    {
-        public ObjectId Id { get; set; }
-        public string ObjectId => Id.ToString();
-    }
+    public ObjectId Id { get; set; }
+    public string ObjectId => Id.ToString();
 }

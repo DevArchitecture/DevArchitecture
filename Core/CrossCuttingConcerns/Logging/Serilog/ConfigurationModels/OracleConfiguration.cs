@@ -1,7 +1,6 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+
+public class OracleConfiguration
 {
-    public class OracleConfiguration
-    {
-        public string ConnectionString { get; set; }
-    }
+    public string ConnectionString { get; set; }
 }

@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
+﻿namespace Core.Utilities.Results;
 
-namespace Core.Utilities.Results
+public interface IPagingResult<T> : IResult
 {
-    public interface IPagingResult<T> : IResult
-    {
-        /// <summary>
-        /// data list
-        /// </summary>
-        List<T> Data { get; }
+    /// <summary>
+    /// data list
+    /// </summary>
+    List<T> Data { get; }
 
-        /// <summary>
-        /// total number of records
-        /// </summary>
-        int TotalItemCount { get; }
-    }
+    /// <summary>
+    /// total number of records
+    /// </summary>
+    int TotalItemCount { get; }
 }

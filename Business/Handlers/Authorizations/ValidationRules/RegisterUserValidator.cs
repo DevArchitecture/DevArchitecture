@@ -1,13 +1,12 @@
 ﻿using Business.Handlers.Authorizations.Commands;
 using FluentValidation;
 
-namespace Business.Handlers.Authorizations.ValidationRules
+namespace Business.Handlers.Authorizations.ValidationRules;
+
+public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
 {
-    public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
+    public RegisterUserValidator()
     {
-        public RegisterUserValidator()
-        {
-            RuleFor(p => p.Password).Password();
-        }
+        RuleFor(p => p.Password).Password();
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Business.Handlers.Languages.ValidationRules;
 using Core.Aspects.Autofac.Caching;
@@ -13,51 +10,48 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 
-namespace Business.Handlers.Languages.Commands
+namespace Business.Handlers.Languages.Commands;
+
+/// <summary>
+///
+/// </summary>
+public class CreateLanguageCommand : IRequest<IResult>
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public class CreateLanguageCommand : IRequest<IResult>
+    public string Name { get; set; }
+    public string Code { get; set; }
+
+
+    public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, IResult>
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
+        private readonly ILanguageRepository _languageRepository;
 
-
-        public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, IResult>
+        public CreateLanguageCommandHandler(ILanguageRepository languageRepository)
         {
-            private readonly ILanguageRepository _languageRepository;
-            private readonly IMediator _mediator;
+            _languageRepository = languageRepository;
+        }
 
-            public CreateLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
+        [SecuredOperation(Priority = 1)]
+        [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)
+        {
+            var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);
+
+            if (isThereLanguageRecord)
             {
-                _languageRepository = languageRepository;
-                _mediator = mediator;
+                return new ErrorResult(Messages.NameAlreadyExist);
             }
 
-            [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)
+            var addedLanguage = new Language
             {
-                var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);
+                Name = request.Name,
+                Code = request.Code,
+            };
 
-                if (isThereLanguageRecord)
-                {
-                    return new ErrorResult(Messages.NameAlreadyExist);
-                }
-
-                var addedLanguage = new Language
-                {
-                    Name = request.Name,
-                    Code = request.Code,
-                };
-
-                _languageRepository.Add(addedLanguage);
-                await _languageRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Added);
-            }
+            _languageRepository.Add(addedLanguage);
+            await _languageRepository.SaveChangesAsync();
+            return new SuccessResult(Messages.Added);
         }
     }
 }

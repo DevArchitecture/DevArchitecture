@@ -1,9 +1,8 @@
-﻿namespace Core.Entities
+﻿namespace Core.Entities;
+
+public interface IPagingFilter
 {
-    public interface IPagingFilter
-    {
-        int Page { get; set; }
-        string PropertyName { get; set; }
-        bool Asc { get; set; }
-    }
+    int Page { get; set; }
+    string PropertyName { get; set; }
+    bool Asc { get; set; }
 }

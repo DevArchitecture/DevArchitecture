@@ -1,6 +1,5 @@
-﻿namespace DataAccess.Concrete.MongoDb.Collections
+﻿namespace DataAccess.Concrete.MongoDb.Collections;
+
+public static class Collections
 {
-    public static class Collections
-    {
-    }
 }

@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Business.Handlers.Translates.ValidationRules;
 using Core.Aspects.Autofac.Caching;
@@ -13,54 +10,51 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 
-namespace Business.Handlers.Translates.Commands
+namespace Business.Handlers.Translates.Commands;
+
+/// <summary>
+///
+/// </summary>
+public class CreateTranslateCommand : IRequest<IResult>
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public class CreateTranslateCommand : IRequest<IResult>
+    public int LangId { get; set; }
+    public string Value { get; set; }
+    public string Code { get; set; }
+
+
+    public class CreateTranslateCommandHandler : IRequestHandler<CreateTranslateCommand, IResult>
     {
-        public int LangId { get; set; }
-        public string Value { get; set; }
-        public string Code { get; set; }
+        private readonly ITranslateRepository _translateRepository;
 
-
-        public class CreateTranslateCommandHandler : IRequestHandler<CreateTranslateCommand, IResult>
+        public CreateTranslateCommandHandler(ITranslateRepository translateRepository)
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
+            _translateRepository = translateRepository;
+        }
 
-            public CreateTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
+        [SecuredOperation(Priority = 1)]
+        [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
+        {
+            var isThereTranslateRecord = _translateRepository.Query()
+                .Any(u => u.LangId == request.LangId && u.Code == request.Code);
+
+            if (isThereTranslateRecord == true)
             {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
+                return new ErrorResult(Messages.NameAlreadyExist);
             }
 
-            [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
+            var addedTranslate = new Translate
             {
-                var isThereTranslateRecord = _translateRepository.Query()
-                    .Any(u => u.LangId == request.LangId && u.Code == request.Code);
+                LangId = request.LangId,
+                Value = request.Value,
+                Code = request.Code,
+            };
 
-                if (isThereTranslateRecord == true)
-                {
-                    return new ErrorResult(Messages.NameAlreadyExist);
-                }
-
-                var addedTranslate = new Translate
-                {
-                    LangId = request.LangId,
-                    Value = request.Value,
-                    Code = request.Code,
-                };
-
-                _translateRepository.Add(addedTranslate);
-                await _translateRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Added);
-            }
+            _translateRepository.Add(addedTranslate);
+            await _translateRepository.SaveChangesAsync();
+            return new SuccessResult(Messages.Added);
         }
     }
 }

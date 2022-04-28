@@ -1,28 +1,27 @@
-﻿using System.Net;
-using Business.Adapters.PersonService;
+﻿using Business.Adapters.PersonService;
 using Entities.Dtos;
+using System.Net;
 
-namespace Tests.Helpers.Adapter
+namespace Tests.Helpers.Adapter;
+
+public class PersonServiceHelper
 {
-    public class PersonServiceHelper
+    private readonly IPersonService _personService;
+
+    public PersonServiceHelper(IPersonService personService)
     {
-        private readonly IPersonService _personService;
+        _personService = personService;
+    }
 
-        public PersonServiceHelper(IPersonService personService)
+    public bool VerifyId(Citizen citizen)
+    {
+        try
         {
-            _personService = personService;
+            return _personService.VerifyCid(citizen).Result;
         }
-
-        public bool VerifyId(Citizen citizen)
+        catch (WebException)
         {
-            try
-            {
-                return _personService.VerifyCid(citizen).Result;
-            }
-            catch (WebException)
-            {
-                return false;
-            }
+            return false;
         }
     }
 }
