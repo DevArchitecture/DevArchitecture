@@ -1,9 +1,8 @@
 ﻿using Core.Entities.Concrete;
 
-namespace Core.Utilities.URI
+namespace Core.Utilities.URI;
+
+public interface IUriService
 {
-    public interface IUriService
-    {
-        System.Uri GeneratePageRequestUri(PaginationFilter filter, string route);
-    }
+    System.Uri GeneratePageRequestUri(PaginationFilter filter, string route);
 }

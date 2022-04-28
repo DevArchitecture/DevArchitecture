@@ -1,8 +1,7 @@
 ﻿using Core.Entities;
 
-namespace Entities.Concrete
+namespace Entities.Concrete;
+
+public class DocumentDbEntityExample : DocumentDbEntity
 {
-    public class DocumentDbEntityExample : DocumentDbEntity
-    {
-    }
 }

@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -10,37 +8,36 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 
-namespace Business.Handlers.Groups.Commands
+namespace Business.Handlers.Groups.Commands;
+
+public class UpdateGroupCommand : IRequest<IResult>
 {
-    public class UpdateGroupCommand : IRequest<IResult>
+    public int Id { get; set; }
+    public string GroupName { get; set; }
+
+    public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, IResult>
     {
-        public int Id { get; set; }
-        public string GroupName { get; set; }
+        private readonly IGroupRepository _groupRepository;
 
-        public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, IResult>
+        public UpdateGroupCommandHandler(IGroupRepository groupRepository)
         {
-            private readonly IGroupRepository _groupRepository;
+            _groupRepository = groupRepository;
+        }
 
-            public UpdateGroupCommandHandler(IGroupRepository groupRepository)
+        [SecuredOperation(Priority = 1)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
+        {
+            var groupToUpdate = new Group
             {
-                _groupRepository = groupRepository;
-            }
+                Id = request.Id,
+                GroupName = request.GroupName
+            };
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
-            {
-                var groupToUpdate = new Group
-                {
-                    Id = request.Id,
-                    GroupName = request.GroupName
-                };
-
-                _groupRepository.Update(groupToUpdate);
-                await _groupRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Updated);
-            }
+            _groupRepository.Update(groupToUpdate);
+            await _groupRepository.SaveChangesAsync();
+            return new SuccessResult(Messages.Updated);
         }
     }
 }

@@ -1,44 +1,39 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿namespace Business.Helpers;
 
-namespace Business.Helpers
+/// <summary>
+/// Since we cannot lock the async await binary with the classic C # lock () clause, we are referring to this solution.
+/// </summary>
+public class AwaitableLock
 {
-    /// <summary>
-    /// Since we cannot lock the async await binary with the classic C # lock () clause, we are referring to this solution.
-    /// </summary>
-    public class AwaitableLock
+    private readonly SemaphoreSlim _toLock;
+
+    public AwaitableLock()
     {
-        private readonly SemaphoreSlim _toLock;
+        _toLock = new SemaphoreSlim(1, 1);
+    }
 
-        public AwaitableLock()
+    public async Task<LockReleaser> Lock(TimeSpan timeout)
+    {
+        if (await _toLock.WaitAsync(timeout))
         {
-            _toLock = new SemaphoreSlim(1, 1);
+            return new LockReleaser(_toLock);
         }
 
-        public async Task<LockReleaser> Lock(TimeSpan timeout)
-        {
-            if (await _toLock.WaitAsync(timeout))
-            {
-                return new LockReleaser(_toLock);
-            }
+        throw new TimeoutException();
+    }
 
-            throw new TimeoutException();
+    public struct LockReleaser : IDisposable
+    {
+        private readonly SemaphoreSlim _toRelease;
+
+        public LockReleaser(SemaphoreSlim toRelease)
+        {
+            _toRelease = toRelease;
         }
 
-        public struct LockReleaser : IDisposable
+        public void Dispose()
         {
-            private readonly SemaphoreSlim _toRelease;
-
-            public LockReleaser(SemaphoreSlim toRelease)
-            {
-                _toRelease = toRelease;
-            }
-
-            public void Dispose()
-            {
-                _toRelease.Release();
-            }
+            _toRelease.Release();
         }
     }
 }

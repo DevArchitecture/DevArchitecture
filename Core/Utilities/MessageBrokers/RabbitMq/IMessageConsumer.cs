@@ -1,7 +1,6 @@
-﻿namespace Core.Utilities.MessageBrokers.RabbitMq
+﻿namespace Core.Utilities.MessageBrokers.RabbitMq;
+
+public interface IMessageConsumer
 {
-    public interface IMessageConsumer
-    {
-        void GetQueue();
-    }
+    void GetQueue();
 }

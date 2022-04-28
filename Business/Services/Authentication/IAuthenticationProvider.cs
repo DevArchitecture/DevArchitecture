@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Business.Services.Authentication.Model;
+﻿using Business.Services.Authentication.Model;
 using Core.Utilities.Results;
 
-namespace Business.Services.Authentication
+namespace Business.Services.Authentication;
+
+public interface IAuthenticationProvider
 {
-    public interface IAuthenticationProvider
-    {
-        Task<LoginUserResult> Login(LoginUserCommand command);
-        Task<IDataResult<DArchToken>> Verify(VerifyOtpCommand command);
-    }
+    Task<LoginUserResult> Login(LoginUserCommand command);
+    Task<IDataResult<DArchToken>> Verify(VerifyOtpCommand command);
 }

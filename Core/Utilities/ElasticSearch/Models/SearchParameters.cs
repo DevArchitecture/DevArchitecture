@@ -1,9 +1,8 @@
-﻿namespace Core.Utilities.ElasticSearch.Models
+﻿namespace Core.Utilities.ElasticSearch.Models;
+
+public class SearchParameters
 {
-    public class SearchParameters
-    {
-        public string IndexName { get; set; }
-        public int From { get; set; } = 0;
-        public int Size { get; set; } = 10;
-    }
+    public string IndexName { get; set; }
+    public int From { get; set; } = 0;
+    public int Size { get; set; } = 10;
 }

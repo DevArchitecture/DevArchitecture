@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataAccess.Concrete.Configurations
+namespace DataAccess.Concrete.Configurations;
+
+public class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : BaseEntity, IEntity
 {
-    public class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : BaseEntity, IEntity
+    public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
-        public virtual void Configure(EntityTypeBuilder<TEntity> builder)
-        {
-            builder.HasKey(x => x.Id);
-        }
+        builder.HasKey(x => x.Id);
     }
 }

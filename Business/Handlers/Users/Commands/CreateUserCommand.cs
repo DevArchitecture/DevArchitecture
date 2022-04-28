@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Business.BusinessAspects;
+﻿using Business.BusinessAspects;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -11,63 +8,62 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
 
-namespace Business.Handlers.Users.Commands
+namespace Business.Handlers.Users.Commands;
+
+public class CreateUserCommand : IRequest<IResult>
 {
-    public class CreateUserCommand : IRequest<IResult>
+    public int UserId { get; set; }
+    public long CitizenId { get; set; }
+    public string FullName { get; set; }
+    public string Email { get; set; }
+    public string MobilePhones { get; set; }
+    public bool Status { get; set; }
+    public DateTime BirthDate { get; set; }
+    public int Gender { get; set; }
+    public DateTime RecordDate { get; set; }
+    public string Address { get; set; }
+    public string Notes { get; set; }
+    public DateTime UpdateContactDate { get; set; }
+    public string Password { get; set; }
+
+
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IResult>
     {
-        public int UserId { get; set; }
-        public long CitizenId { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string MobilePhones { get; set; }
-        public bool Status { get; set; }
-        public DateTime BirthDate { get; set; }
-        public int Gender { get; set; }
-        public DateTime RecordDate { get; set; }
-        public string Address { get; set; }
-        public string Notes { get; set; }
-        public DateTime UpdateContactDate { get; set; }
-        public string Password { get; set; }
+        private readonly IUserRepository _userRepository;
 
-
-        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IResult>
+        public CreateUserCommandHandler(IUserRepository userRepository)
         {
-            private readonly IUserRepository _userRepository;
+            _userRepository = userRepository;
+        }
 
-            public CreateUserCommandHandler(IUserRepository userRepository)
+        [SecuredOperation(Priority = 1)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
+
+            if (isThereAnyUser != null)
             {
-                _userRepository = userRepository;
+                return new ErrorResult(Messages.NameAlreadyExist);
             }
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+            var user = new User
             {
-                var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
+                Email = request.Email,
+                FullName = request.FullName,
+                Status = true,
+                Address = request.Address,
+                BirthDate = request.BirthDate,
+                CitizenId = request.CitizenId,
+                Gender = request.Gender,
+                Notes = request.Notes,
+                MobilePhones = request.MobilePhones
+            };
 
-                if (isThereAnyUser != null)
-                {
-                    return new ErrorResult(Messages.NameAlreadyExist);
-                }
-
-                var user = new User
-                {
-                    Email = request.Email,
-                    FullName = request.FullName,
-                    Status = true,
-                    Address = request.Address,
-                    BirthDate = request.BirthDate,
-                    CitizenId = request.CitizenId,
-                    Gender = request.Gender,
-                    Notes = request.Notes,
-                    MobilePhones = request.MobilePhones
-                };
-
-                _userRepository.Add(user);
-                await _userRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Added);
-            }
+            _userRepository.Add(user);
+            await _userRepository.SaveChangesAsync();
+            return new SuccessResult(Messages.Added);
         }
     }
 }

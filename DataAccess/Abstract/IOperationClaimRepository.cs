@@ -1,9 +1,8 @@
 ﻿using Core.DataAccess;
 using Core.Entities.Concrete;
 
-namespace DataAccess.Abstract
+namespace DataAccess.Abstract;
+
+public interface IOperationClaimRepository : IEntityRepository<OperationClaim>
 {
-    public interface IOperationClaimRepository : IEntityRepository<OperationClaim>
-    {
-    }
 }

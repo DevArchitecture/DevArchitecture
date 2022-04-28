@@ -1,7 +1,6 @@
-﻿namespace Core.Entities.Concrete
+﻿namespace Core.Entities.Concrete;
+
+public class Group : BaseEntity
 {
-    public class Group : BaseEntity
-    {
-        public string GroupName { get; set; }
-    }
+    public string GroupName { get; set; }
 }

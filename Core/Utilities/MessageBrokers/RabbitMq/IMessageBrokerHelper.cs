@@ -1,7 +1,6 @@
-﻿namespace Core.Utilities.MessageBrokers.RabbitMq
+﻿namespace Core.Utilities.MessageBrokers.RabbitMq;
+
+public interface IMessageBrokerHelper
 {
-    public interface IMessageBrokerHelper
-    {
-        void QueueMessage(string messageText);
-    }
+    void QueueMessage(string messageText);
 }

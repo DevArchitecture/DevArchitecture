@@ -1,7 +1,6 @@
-﻿namespace Business.Constants
+﻿namespace Business.Constants;
+
+public static partial class Messages
 {
-    public static partial class Messages
-    {
-        public static string UserNotFound => "UserNotFound";
-    }
+    public static string UserNotFound => "UserNotFound";
 }

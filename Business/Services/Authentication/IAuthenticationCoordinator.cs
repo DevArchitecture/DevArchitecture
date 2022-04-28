@@ -1,9 +1,8 @@
 ﻿using Core.Entities.Concrete;
 
-namespace Business.Services.Authentication
+namespace Business.Services.Authentication;
+
+public interface IAuthenticationCoordinator
 {
-    public interface IAuthenticationCoordinator
-    {
-        IAuthenticationProvider SelectProvider(AuthenticationProviderType type);
-    }
+    IAuthenticationProvider SelectProvider(AuthenticationProviderType type);
 }

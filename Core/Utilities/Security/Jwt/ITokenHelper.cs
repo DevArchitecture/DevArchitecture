@@ -1,13 +1,12 @@
 ﻿using Core.Entities.Concrete;
 
-namespace Core.Utilities.Security.Jwt
+namespace Core.Utilities.Security.Jwt;
+
+public interface ITokenHelper
 {
-    public interface ITokenHelper
-    {
-        TAccessToken CreateToken<TAccessToken>(User user)
+    TAccessToken CreateToken<TAccessToken>(User user)
 
-          where TAccessToken : IAccessToken, new();
+      where TAccessToken : IAccessToken, new();
 
-        string GenerateRefreshToken();
-    }
+    string GenerateRefreshToken();
 }

@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using Entities.Dtos;
+﻿using Entities.Dtos;
 
-namespace Business.Adapters.PersonService
+namespace Business.Adapters.PersonService;
+
+public interface IPersonService
 {
-    public interface IPersonService
-    {
-        Task<bool> VerifyCid(Citizen citizen);
-    }
+    Task<bool> VerifyCid(Citizen citizen);
 }

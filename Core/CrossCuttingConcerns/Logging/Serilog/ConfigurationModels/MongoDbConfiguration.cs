@@ -1,8 +1,7 @@
-﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels
+﻿namespace Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
+
+public class MongoDbConfiguration
 {
-    public class MongoDbConfiguration
-    {
-        public string ConnectionString { get; set; }
-        public string Collection { get; set; }
-    }
+    public string ConnectionString { get; set; }
+    public string Collection { get; set; }
 }

@@ -4,20 +4,19 @@ using FluentAssertions;
 using NUnit.Framework;
 using Tests.Helpers;
 
-namespace Tests.Core.Extensions
+namespace Tests.Core.Extensions;
+
+[TestFixture]
+public class CloneExtensionServiceTests
 {
-    [TestFixture]
-    public class CloneExtensionServiceTests
+    [Test]
+    public void CloneServiceExtensionTest()
     {
-        [Test]
-        public void CloneServiceExtensionTest()
-        {
-            var user = DataHelper.GetUser("murat");
+        var user = DataHelper.GetUser("murat");
 
-            var cloneUser = user.Clone();
+        var cloneUser = user.Clone();
 
-            cloneUser.Should().BeOfType<User>();
-            cloneUser.FullName.Should().Be(user.FullName);
-        }
+        cloneUser.Should().BeOfType<User>();
+        cloneUser.FullName.Should().Be(user.FullName);
     }
 }

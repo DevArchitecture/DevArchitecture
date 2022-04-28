@@ -1,10 +1,9 @@
 ﻿using Nest;
 
-namespace Core.Utilities.ElasticSearch.Models
+namespace Core.Utilities.ElasticSearch.Models;
+
+public class ElasticSearchModel
 {
-    public class ElasticSearchModel
-    {
-        public Id ElasticId { get; set; }
-        public string IndexName { get; set; }
-    }
+    public Id ElasticId { get; set; }
+    public string IndexName { get; set; }
 }
