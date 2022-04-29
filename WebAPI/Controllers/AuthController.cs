@@ -33,7 +33,7 @@ public class AuthController : BaseApiController
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-    [HttpPost("Login")]
+    [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserQuery loginModel)
     {
         var result = await Mediator.Send(loginModel);
@@ -45,7 +45,7 @@ public class AuthController : BaseApiController
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-    [HttpPost("RefreshToken")]
+    [HttpPost("refreshToken")]
     public async Task<IActionResult> LoginWithRefreshToken([FromBody] LoginWithRefreshTokenQuery command)
     {
         var result = await Mediator.Send(command);
