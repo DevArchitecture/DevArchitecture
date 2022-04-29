@@ -22,10 +22,8 @@ public class UsersController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getall")]
-    public async Task<IActionResult> GetList()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery()));
-    }
+    public async Task<IActionResult> GetList() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery()));
 
     /// <summary>
     /// User Lookup
@@ -37,10 +35,8 @@ public class UsersController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getuserlookup")]
-    public async Task<IActionResult> GetUserLookup()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetUserLookupQuery()));
-    }
+    public async Task<IActionResult> GetUserLookup() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetUserLookupQuery()));
 
     /// <summary>
     /// It brings the details according to its id.
@@ -52,10 +48,8 @@ public class UsersController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getbyid")]
-    public async Task<IActionResult> GetById(int userId)
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = userId }));
-    }
+    public async Task<IActionResult> GetById(int userId) 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = userId }));
 
     /// <summary>
     /// Add User.
@@ -67,10 +61,8 @@ public class UsersController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateUserCommand createUser)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(createUser));
-    }
+    public async Task<IActionResult> Add([FromBody] CreateUserCommand createUser) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(createUser));
 
     /// <summary>
     /// Update User.
@@ -82,10 +74,8 @@ public class UsersController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateUserCommand updateUser)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(updateUser));
-    }
+    public async Task<IActionResult> Update([FromBody] UpdateUserCommand updateUser) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(updateUser));
 
     /// <summary>
     /// Delete User.
@@ -97,8 +87,6 @@ public class UsersController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteUserCommand deleteUser)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(deleteUser));
-    }
+    public async Task<IActionResult> Delete([FromBody] DeleteUserCommand deleteUser) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(deleteUser));
 }

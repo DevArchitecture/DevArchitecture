@@ -25,10 +25,8 @@ public class GroupsController : BaseApiController
     // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
     // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getall")]
-    public async Task<IActionResult> GetList()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetGroupsQuery()));
-    }
+    public async Task<IActionResult> GetList() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetGroupsQuery()));
 
     /// <summary>
     /// It brings the details according to its id.
@@ -40,10 +38,8 @@ public class GroupsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getbyid")]
-    public async Task<IActionResult> GetById(int groupId)
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = groupId }));
-    }
+    public async Task<IActionResult> GetById(int groupId) 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = groupId }));
 
     /// <summary>
     /// Group Lookup
@@ -55,10 +51,8 @@ public class GroupsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getgrouplookup")]
-    public async Task<IActionResult> Getselectedlist()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetGroupLookupQuery()));
-    }
+    public async Task<IActionResult> Getselectedlist() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetGroupLookupQuery()));
 
     /// <summary>
     /// Add Group .
@@ -70,10 +64,8 @@ public class GroupsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateGroupCommand createGroup)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(createGroup));
-    }
+    public async Task<IActionResult> Add([FromBody] CreateGroupCommand createGroup) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(createGroup));
 
     /// <summary>
     /// Update Group.
@@ -85,10 +77,8 @@ public class GroupsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateGroupCommand updateGroup)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(updateGroup));
-    }
+    public async Task<IActionResult> Update([FromBody] UpdateGroupCommand updateGroup) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(updateGroup));
 
     /// <summary>
     /// Delete Group.
@@ -100,8 +90,6 @@ public class GroupsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteGroupCommand deleteGroup)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(deleteGroup));
-    }
+    public async Task<IActionResult> Delete([FromBody] DeleteGroupCommand deleteGroup) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(deleteGroup));
 }

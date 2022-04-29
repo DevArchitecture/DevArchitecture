@@ -25,10 +25,8 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getlookupwithcode")]
-    public async Task<IActionResult> GetLookupListWithCode()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpWithCodeQuery()));
-    }
+    public async Task<IActionResult> GetLookupListWithCode() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpWithCodeQuery()));
 
     /// <summary>
     /// LanguageLookUp
@@ -40,10 +38,8 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getlookup")]
-    public async Task<IActionResult> GetLookupList()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpQuery()));
-    }
+    public async Task<IActionResult> GetLookupList() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpQuery()));
 
     /// <summary>
     /// List languages
@@ -55,10 +51,8 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getall")]
-    public async Task<IActionResult> GetList()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesQuery()));
-    }
+    public async Task<IActionResult> GetList() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesQuery()));
 
     /// <summary>
     /// It brings the details according to its id.
@@ -70,10 +64,8 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getbyid")]
-    public async Task<IActionResult> GetById(int languageId)
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = languageId }));
-    }
+    public async Task<IActionResult> GetById(int languageId) 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = languageId }));
 
     /// <summary>
     /// Add Language.
@@ -85,10 +77,8 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguage)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(createLanguage));
-    }
+    public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguage) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(createLanguage));
 
     /// <summary>
     /// Update Language.
@@ -100,10 +90,8 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguage)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(updateLanguage));
-    }
+    public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguage) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(updateLanguage));
 
     /// <summary>
     /// Delete Language.
@@ -115,8 +103,6 @@ public class LanguagesController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguage)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(deleteLanguage));
-    }
+    public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguage) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(deleteLanguage));
 }

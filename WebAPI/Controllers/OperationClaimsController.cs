@@ -24,10 +24,8 @@ public class OperationClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getall")]
-    public async Task<IActionResult> GetList()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimsQuery()));
-    }
+    public async Task<IActionResult> GetList() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimsQuery()));
 
     /// <summary>
     /// It brings the details according to its id.
@@ -39,10 +37,8 @@ public class OperationClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationClaim))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getbyid")]
-    public async Task<IActionResult> GetByid(int id)
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimQuery() { Id = id }));
-    }
+    public async Task<IActionResult> GetByid(int id) 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimQuery() { Id = id }));
 
     /// <summary>
     /// List OperationClaims
@@ -54,10 +50,8 @@ public class OperationClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getoperationclaimlookup")]
-    public async Task<IActionResult> GetOperationClaimLookup()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimLookupQuery()));
-    }
+    public async Task<IActionResult> GetOperationClaimLookup() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimLookupQuery()));
 
     /// <summary>
     /// Update OperationClaim .
@@ -69,10 +63,8 @@ public class OperationClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaim)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(updateOperationClaim));
-    }
+    public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaim) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(updateOperationClaim));
 
     /// <summary>
     /// List OperationClaims
@@ -84,8 +76,6 @@ public class OperationClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getuserclaimsfromcache")]
-    public async Task<IActionResult> GetUserClaimsFromCache()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsFromCacheQuery()));
-    }
+    public async Task<IActionResult> GetUserClaimsFromCache() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsFromCacheQuery()));
 }

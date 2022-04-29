@@ -25,10 +25,8 @@ public class GroupClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GroupClaim>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getall")]
-    public async Task<IActionResult> GetList()
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimsQuery()));
-    }
+    public async Task<IActionResult> GetList() 
+        => GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimsQuery()));
 
     /// <summary>
     /// It brings the details according to its id.
@@ -40,10 +38,8 @@ public class GroupClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupClaim))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getbyid")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
-    }
+    public async Task<IActionResult> GetById(int id) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
 
     /// <summary>
     /// Brings up Claims by Group Id.
@@ -55,11 +51,8 @@ public class GroupClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getgroupclaimsbygroupid")]
-    public async Task<IActionResult> GetGroupClaimsByGroupId(int id)
-    {
-        return GetResponseOnlyResultData(
-            await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
-    }
+    public async Task<IActionResult> GetGroupClaimsByGroupId(int id) 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
 
     /// <summary>
     /// Addded GroupClaim .
@@ -71,10 +64,8 @@ public class GroupClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateGroupClaimCommand createGroupClaim)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(createGroupClaim));
-    }
+    public async Task<IActionResult> Add([FromBody] CreateGroupClaimCommand createGroupClaim) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(createGroupClaim));
 
     /// <summary>
     /// Update GroupClaim.
@@ -86,10 +77,8 @@ public class GroupClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateGroupClaimCommand updateGroupClaim)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(updateGroupClaim));
-    }
+    public async Task<IActionResult> Update([FromBody] UpdateGroupClaimCommand updateGroupClaim) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(updateGroupClaim));
 
     /// <summary>
     /// Delete GroupClaim.
@@ -101,8 +90,6 @@ public class GroupClaimsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteGroupClaimCommand deleteGroupClaim)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(deleteGroupClaim));
-    }
+    public async Task<IActionResult> Delete([FromBody] DeleteGroupClaimCommand deleteGroupClaim) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(deleteGroupClaim));
 }
