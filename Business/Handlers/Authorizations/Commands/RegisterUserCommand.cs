@@ -31,8 +31,7 @@ public class RegisterUserCommand : IRequest<IResult>
         }
 
 
-        [SecuredOperation(Priority = 1)]
-        [ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]
+        [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
         [CacheRemoveAspect()]
         [LogAspect(typeof(FileLogger))]
         public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
