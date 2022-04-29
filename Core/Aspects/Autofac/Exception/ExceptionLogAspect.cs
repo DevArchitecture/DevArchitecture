@@ -28,12 +28,12 @@ public class ExceptionLogAspect : MethodInterception
         _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
     }
 
-    protected override void OnException(IInvocation invocation, System.Exception e)
+    protected override void OnException(IInvocation invocation, AggregateException e)
     {
         var logDetailWithException = GetLogDetail(invocation);
 
         logDetailWithException.ExceptionMessage = e is not null
-            ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message))
+            ? string.Join(Environment.NewLine, e.InnerExceptions.Select(x => x.Message))
             : e.Message;
         _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
     }
