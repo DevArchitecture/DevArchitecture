@@ -14,7 +14,7 @@ public abstract class MethodInterception : MethodInterceptionBaseAttribute
             var result = invocation.ReturnValue as Task;
             result?.Wait();
         }
-        catch (AggregateException e)
+        catch (Exception e)
         {
             isSuccess = false;
             OnException(invocation, e);
@@ -39,7 +39,7 @@ public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
     }
 
-    protected virtual void OnException(IInvocation invocation, AggregateException e)
+    protected virtual void OnException(IInvocation invocation, Exception e)
     {
     }
 
