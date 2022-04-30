@@ -32,7 +32,7 @@ public class ExceptionLogAspect : MethodInterception
     {
         var logDetailWithException = GetLogDetail(invocation);
 
-        logDetailWithException.ExceptionMessage = e is not null
+        logDetailWithException.ExceptionMessage = e.InnerException is not null
             ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message))
             : e.Message;
         _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
