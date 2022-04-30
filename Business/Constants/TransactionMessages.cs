@@ -5,12 +5,12 @@
 /// </summary>
 public static partial class Messages
 {
-    public static string OperationClaimExists => "OperationClaimExists";
-    public static string AuthorizationsDenied => "AuthorizationsDenied";
-    public static string Added => "Added";
-    public static string Deleted => "Deleted";
-    public static string Updated => "Updated";
-    public static string NameAlreadyExist => "NameAlreadyExist";
-    public static string TokenProviderException => "TokenProviderException";
-    public static string Unknown => "Unknown";
+    public const string OperationClaimExists = "OperationClaimExists";
+    public const string AuthorizationsDenied = "AuthorizationsDenied";
+    public const string Added = "Added";
+    public const string Deleted = "Deleted";
+    public const string Updated = "Updated";
+    public const string NameAlreadyExist = "NameAlreadyExist";
+    public const string TokenProviderException = "TokenProviderException";
+    public const string Unknown = "Unknown";
 }

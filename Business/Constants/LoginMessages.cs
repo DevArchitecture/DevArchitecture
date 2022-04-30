@@ -2,6 +2,6 @@
 
 public static partial class Messages
 {
-    public static string PasswordError => "PasswordError";
-    public static string SuccessfulLogin => "SuccessfulLogin";
+    public const string PasswordError = "PasswordError";
+    public const string SuccessfulLogin = "SuccessfulLogin";
 }

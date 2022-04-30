@@ -2,7 +2,7 @@
 
 public static partial class Messages
 {
-    public static string SmsServiceNotFound => "SmsServiceNotFound";
-    public static string TrueButCellPhone => "TrueButCellPhone";
-    public static string SendMobileCode => "SendMobileCode";
+    public const string SmsServiceNotFound = "SmsServiceNotFound";
+    public const string TrueButCellPhone = "TrueButCellPhone";
+    public const string SendMobileCode = "SendMobileCode";
 }

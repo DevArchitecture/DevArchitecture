@@ -2,5 +2,5 @@
 
 public static partial class Messages
 {
-    public static string UserNotFound => "UserNotFound";
+    public const string UserNotFound = "UserNotFound";
 }

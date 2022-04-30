@@ -2,8 +2,8 @@
 
 public static partial class Messages
 {
-    public static string CouldNotBeVerifyCid => "CouldNotBeVerifyCid";
-    public static string VerifyCid => "VerifyCid";
-    public static string WrongCitizenId => "WrongCID";
-    public static string CitizenNumber => "CID";
+    public const string CouldNotBeVerifyCid = "CouldNotBeVerifyCid";
+    public const string VerifyCid = "VerifyCid";
+    public const string WrongCitizenId = "WrongCID";
+    public const string CitizenNumber = "CID";
 }
