@@ -29,7 +29,7 @@ public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
             _cacheManager = cacheManager;
         }
 
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(u => u.Email == request.Email && u.Status);

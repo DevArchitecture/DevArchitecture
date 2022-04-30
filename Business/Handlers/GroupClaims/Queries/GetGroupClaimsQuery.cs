@@ -22,7 +22,7 @@ public class GetGroupClaimsQuery : IRequest<IDataResult<IEnumerable<GroupClaim>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         [CacheAspect(10)]
         public async Task<IDataResult<IEnumerable<GroupClaim>>> Handle(GetGroupClaimsQuery request, CancellationToken cancellationToken)
         {

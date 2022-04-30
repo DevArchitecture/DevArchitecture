@@ -25,7 +25,7 @@ public class GetUserQuery : IRequest<IDataResult<UserDto>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(p => p.UserId == request.UserId);

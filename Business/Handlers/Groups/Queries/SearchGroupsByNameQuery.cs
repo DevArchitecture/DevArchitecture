@@ -25,7 +25,7 @@ public class SearchGroupsByNameQuery : IRequest<IDataResult<IEnumerable<Group>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(SearchGroupsByNameQuery request, CancellationToken cancellationToken)
         {
             var result = BusinessRules.Run(StringLengthMustBeGreaterThanThree(request.GroupName));

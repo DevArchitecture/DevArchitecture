@@ -32,7 +32,7 @@ public class ForgotPasswordCommand : IRequest<IResult>
         /// <returns></returns>
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TcKimlikNo));

@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Core.Utilities.Messages;
@@ -17,6 +18,11 @@ public class LogAspect : MethodInterception
 {
     private readonly LoggerServiceBase _loggerServiceBase;
     private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public LogAspect() : this(LogSettings.Logger)
+    {
+        
+    }
 
     public LogAspect(Type loggerService)
     {

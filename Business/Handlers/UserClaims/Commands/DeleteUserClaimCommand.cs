@@ -24,7 +24,7 @@ public class DeleteUserClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(DeleteUserClaimCommand request, CancellationToken cancellationToken)
         {
             var entityToDelete = await _userClaimRepository.GetAsync(x => x.UserId == request.Id);

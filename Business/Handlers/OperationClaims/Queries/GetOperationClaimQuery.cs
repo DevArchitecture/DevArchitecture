@@ -23,7 +23,7 @@ public class GetOperationClaimQuery : IRequest<IDataResult<OperationClaim>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<OperationClaim>> Handle(GetOperationClaimQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<OperationClaim>(

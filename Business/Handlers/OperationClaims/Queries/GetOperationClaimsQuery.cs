@@ -24,7 +24,7 @@ public class GetOperationClaimsQuery : IRequest<IDataResult<IEnumerable<Operatio
 
         [SecuredOperation(Priority = 1)]
         [CacheAspect(10)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<OperationClaim>>> Handle(GetOperationClaimsQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<OperationClaim>>(

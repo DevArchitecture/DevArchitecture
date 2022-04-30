@@ -21,13 +21,11 @@ using static UpdateLanguageCommand;
 public class LanguageHandlerTests
 {
     private Mock<ILanguageRepository> _languageRepository;
-    private Mock<IMediator> _mediator;
 
     [SetUp]
     public void Setup()
     {
         _languageRepository = new Mock<ILanguageRepository>();
-        _mediator = new Mock<IMediator>();
     }
 
     [Test]
@@ -141,7 +139,7 @@ public class LanguageHandlerTests
 
         _languageRepository.Setup(x => x.Update(It.IsAny<Language>())).Returns(new Language());
 
-        var handler = new UpdateLanguageCommandHandler(_languageRepository.Object, _mediator.Object);
+        var handler = new UpdateLanguageCommandHandler(_languageRepository.Object);
         var x = await handler.Handle(command, new CancellationToken());
 
         _languageRepository.Verify(x => x.SaveChangesAsync());

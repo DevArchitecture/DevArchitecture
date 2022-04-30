@@ -20,18 +20,16 @@ public class UpdateLanguageCommand : IRequest<IResult>
     public class UpdateLanguageCommandHandler : IRequestHandler<UpdateLanguageCommand, IResult>
     {
         private readonly ILanguageRepository _languageRepository;
-        private readonly IMediator _mediator;
 
-        public UpdateLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
+        public UpdateLanguageCommandHandler(ILanguageRepository languageRepository)
         {
             _languageRepository = languageRepository;
-            _mediator = mediator;
         }
 
         [SecuredOperation(Priority = 1)]
         [ValidationAspect(typeof(UpdateLanguageValidator), Priority = 2)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)
         {
             var isThereLanguageRecord = await _languageRepository.GetAsync(u => u.Id == request.Id);

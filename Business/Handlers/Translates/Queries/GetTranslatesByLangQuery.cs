@@ -22,7 +22,7 @@ public class GetTranslatesByLangQuery : IRequest<IDataResult<Dictionary<string, 
         }
 
 
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<Dictionary<string, string>>(

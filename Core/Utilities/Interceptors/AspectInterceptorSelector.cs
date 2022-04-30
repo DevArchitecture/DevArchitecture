@@ -17,7 +17,7 @@ public class AspectInterceptorSelector : IInterceptorSelector
             classAttributes.AddRange(methodAttributes);
         }
 
-        classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger)));
+        classAttributes.Add(new ExceptionLogAspect());
         return classAttributes.OrderBy(x => x.Priority).ToArray();
     }
 }

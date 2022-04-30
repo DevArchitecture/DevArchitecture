@@ -23,7 +23,7 @@ public class GetUserClaimLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserClaimLookupByUserIdQuery request, CancellationToken cancellationToken)
         {
             var data = await _userClaimRepository.GetUserClaimSelectedList(request.Id);

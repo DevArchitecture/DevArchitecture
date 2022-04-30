@@ -26,7 +26,7 @@ public class CreateGroupCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
             try

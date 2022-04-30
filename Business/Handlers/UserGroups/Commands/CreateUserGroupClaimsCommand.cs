@@ -26,7 +26,7 @@ public class CreateUserGroupClaimsCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(CreateUserGroupClaimsCommand request, CancellationToken cancellationToken)
         {
             foreach (var claim in request.UserGroups)

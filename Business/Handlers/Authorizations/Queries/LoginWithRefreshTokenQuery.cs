@@ -27,7 +27,7 @@ public class LoginWithRefreshTokenQuery : IRequest<IResult>
             _cacheManager = cacheManager;
         }
 
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)
         {
             var userToCheck = await _userRepository.GetByRefreshToken(request.RefreshToken);

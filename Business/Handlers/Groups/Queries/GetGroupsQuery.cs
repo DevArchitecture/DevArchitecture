@@ -23,7 +23,7 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         [CacheAspect(10)]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
         {
