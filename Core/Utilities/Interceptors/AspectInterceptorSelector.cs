@@ -1,6 +1,5 @@
 ﻿using Castle.DynamicProxy;
 using Core.Aspects.Autofac.Exception;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using System.Reflection;
 
 namespace Core.Utilities.Interceptors;

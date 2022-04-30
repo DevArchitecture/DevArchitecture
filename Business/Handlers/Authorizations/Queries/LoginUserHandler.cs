@@ -3,7 +3,6 @@ using Business.Services.Authentication;
 using Business.Services.Authentication.Model;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using MediatR;
 

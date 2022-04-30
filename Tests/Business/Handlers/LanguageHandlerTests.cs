@@ -4,7 +4,6 @@ using Business.Handlers.Languages.Queries;
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using FluentAssertions;
-using MediatR;
 using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;
