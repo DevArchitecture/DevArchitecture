@@ -2,7 +2,6 @@
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
@@ -26,7 +25,7 @@ public class UpdateOperationClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
         {
             var isOperationClaimExists = await _operationClaimRepository.GetAsync(u => u.Id == request.Id);

@@ -2,7 +2,6 @@
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
@@ -30,7 +29,7 @@ public class UpdateUserCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);

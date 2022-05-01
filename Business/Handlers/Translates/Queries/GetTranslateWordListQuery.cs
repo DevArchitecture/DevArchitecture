@@ -2,7 +2,6 @@
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
@@ -26,7 +25,7 @@ public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string,
         [SecuredOperation(Priority = 1)]
         [PerformanceAspect(5)]
         [CacheAspect(10)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslateWordListQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<Dictionary<string, string>>(

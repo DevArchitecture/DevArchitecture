@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Core.Utilities.Messages;
@@ -18,6 +19,11 @@ public class ExceptionLogAspect : MethodInterception
     private readonly LoggerServiceBase _loggerServiceBase;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
+    public ExceptionLogAspect() : this(ExceptionLogSettings.Logger)
+    {
+
+    }
+
     public ExceptionLogAspect(Type loggerService)
     {
         if (loggerService.BaseType != typeof(LoggerServiceBase))
@@ -32,7 +38,7 @@ public class ExceptionLogAspect : MethodInterception
     {
         var logDetailWithException = GetLogDetail(invocation);
 
-        logDetailWithException.ExceptionMessage = e is not null
+        logDetailWithException.ExceptionMessage = e.InnerException is not null
             ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message))
             : e.Message;
         _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));

@@ -4,7 +4,6 @@ using Business.Handlers.Translates.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -34,7 +33,7 @@ public class CreateTranslateCommand : IRequest<IResult>
         [SecuredOperation(Priority = 1)]
         [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
         {
             var isThereTranslateRecord = _translateRepository.Query()

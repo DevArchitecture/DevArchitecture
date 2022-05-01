@@ -1,6 +1,5 @@
 ﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -22,7 +21,7 @@ public class GetGroupClaimQuery : IRequest<IDataResult<GroupClaim>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<GroupClaim>> Handle(GetGroupClaimQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<GroupClaim>(

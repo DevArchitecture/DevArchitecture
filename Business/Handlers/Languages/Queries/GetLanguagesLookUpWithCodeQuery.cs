@@ -1,5 +1,4 @@
 ﻿using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,7 +18,7 @@ public class GetLanguagesLookUpWithCodeQuery : IRequest<IDataResult<IEnumerable<
             _languageRepository = languageRepository;
         }
 
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<SelectionItem>>(

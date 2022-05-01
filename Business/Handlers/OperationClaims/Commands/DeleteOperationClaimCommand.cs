@@ -2,7 +2,6 @@
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
@@ -24,7 +23,7 @@ public class DeleteOperationClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
         {
             var claimToDelete = await _operationClaimRepository.GetAsync(x => x.Id == request.Id);

@@ -1,6 +1,5 @@
 ﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -22,7 +21,7 @@ public class GetLanguageQuery : IRequest<IDataResult<Language>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<Language>> Handle(GetLanguageQuery request, CancellationToken cancellationToken)
         {
             var language = await _languageRepository.GetAsync(p => p.Id == request.Id);

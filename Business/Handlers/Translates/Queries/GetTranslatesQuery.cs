@@ -2,7 +2,6 @@
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -25,7 +24,7 @@ public class GetTranslatesQuery : IRequest<IDataResult<IEnumerable<Translate>>>
         [SecuredOperation(Priority = 1)]
         [PerformanceAspect(5)]
         [CacheAspect(10)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<Translate>>(await _translateRepository.GetListAsync());

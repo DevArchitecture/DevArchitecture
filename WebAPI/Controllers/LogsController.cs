@@ -21,8 +21,6 @@ public class LogsController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpGet("getall")]
-    public async Task<IActionResult> GetList()
-    {
-        return GetResponseOnlyResultData(await Mediator.Send(new GetLogDtoQuery()));
-    }
+    public async Task<IActionResult> GetList() 
+        => GetResponseOnlyResultData(await Mediator.Send(new GetLogDtoQuery()));
 }

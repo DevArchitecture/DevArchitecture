@@ -1,7 +1,6 @@
 ﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -25,7 +24,7 @@ public class GetUserClaimLookupQuery : IRequest<IDataResult<IEnumerable<UserClai
 
         [SecuredOperation(Priority = 1)]
         [CacheAspect(10)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimLookupQuery request, CancellationToken cancellationToken)
         {
             var userClaims = await _userClaimRepository.GetListAsync(x => x.UserId == request.UserId);

@@ -1,6 +1,5 @@
 ﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -23,7 +22,7 @@ public class GetGroupClaimsLookupByGroupIdQuery : IRequest<IDataResult<IEnumerab
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(
             GetGroupClaimsLookupByGroupIdQuery request, CancellationToken cancellationToken)
         {

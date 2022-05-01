@@ -51,8 +51,8 @@ public partial class BusinessStartup
     {
         static ClaimsPrincipal GetPrincipal(IServiceProvider sp)
         {
-            return sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ??
-new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
+            return sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ?? 
+                new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
         }
 
         services.AddScoped<IPrincipal>(GetPrincipal);

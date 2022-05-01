@@ -3,7 +3,6 @@ using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -31,7 +30,7 @@ public class UpdateUserClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
         {
             var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });

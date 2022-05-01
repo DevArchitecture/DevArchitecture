@@ -3,7 +3,6 @@ using Business.Services.Authentication;
 using Business.Services.Authentication.Model;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using MediatR;
 
@@ -25,7 +24,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, IDataResult<Lo
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [ValidationAspect(typeof(LoginUserValidator), Priority = 1)]
-    [LogAspect(typeof(FileLogger))]
+    [LogAspect()]
     public async Task<IDataResult<LoginUserResult>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         var provider = _coordinator.SelectProvider(request.Provider);

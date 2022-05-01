@@ -1,7 +1,6 @@
 ﻿using Business.BusinessAspects;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,7 +23,7 @@ public class GetUserGroupQuery : IRequest<IDataResult<UserGroup>>
 
         [SecuredOperation(Priority = 1)]
         [CacheAspect(10)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect()]
         public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request, CancellationToken cancellationToken)
         {
             var userGroup = await _userGroupRepository.GetAsync(p => p.UserId == request.UserId);

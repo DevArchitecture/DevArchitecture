@@ -33,7 +33,7 @@ public class AuthController : BaseApiController
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-    [HttpPost("Login")]
+    [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserQuery loginModel)
     {
         var result = await Mediator.Send(loginModel);
@@ -45,7 +45,7 @@ public class AuthController : BaseApiController
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
-    [HttpPost("RefreshToken")]
+    [HttpPost("refreshToken")]
     public async Task<IActionResult> LoginWithRefreshToken([FromBody] LoginWithRefreshTokenQuery command)
     {
         var result = await Mediator.Send(command);
@@ -63,10 +63,8 @@ public class AuthController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
-    {
-        return GetResponseOnlyResult(await Mediator.Send(createUser));
-    }
+    public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser) 
+        => GetResponseOnlyResult(await Mediator.Send(createUser));
 
     /// <summary>
     /// Make it Forgot Password operations
@@ -80,10 +78,8 @@ public class AuthController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
     [HttpPut("forgotpassword")]
-    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
-    {
-        return GetResponseOnlyResult(await Mediator.Send(forgotPassword));
-    }
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword) 
+        => GetResponseOnlyResult(await Mediator.Send(forgotPassword));
 
     /// <summary>
     /// Make it Change Password operation
@@ -95,10 +91,8 @@ public class AuthController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPut("changeuserpassword")]
-    public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(command));
-    }
+    public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(command));
 
     /// <summary>
     /// Mobile Login
@@ -111,10 +105,8 @@ public class AuthController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost("verify")]
-    public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid)
-    {
-        return GetResponseOnlyResultMessage(await Mediator.Send(verifyCid));
-    }
+    public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid) 
+        => GetResponseOnlyResultMessage(await Mediator.Send(verifyCid));
 
     /// <summary>
     /// Token decode test

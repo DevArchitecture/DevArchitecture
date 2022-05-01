@@ -8,7 +8,6 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using FluentAssertions;
-using MediatR;
 using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;

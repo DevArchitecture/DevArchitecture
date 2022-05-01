@@ -2,6 +2,6 @@
 
 public static partial class Messages
 {
-    public static string InvalidCode => "InvalidCode";
-    public static string StringLengthMustBeGreaterThanThree => "StringLengthMustBeGreaterThanThree";
+    public const string InvalidCode = "InvalidCode";
+    public const string StringLengthMustBeGreaterThanThree = "StringLengthMustBeGreaterThanThree";
 }
