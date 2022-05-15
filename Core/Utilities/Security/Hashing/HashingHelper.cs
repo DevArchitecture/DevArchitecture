@@ -14,6 +14,10 @@ public static class HashingHelper
 
     public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
     {
+        if (passwordHash == null)
+        {
+            return false;
+        }
         using (var hmac = new HMACSHA512(passwordSalt))
         {
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));

@@ -41,6 +41,14 @@ public class AuthController : BaseApiController
     }
 
     [AllowAnonymous]
+    [HttpPost("externallogin")]
+    public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginUserCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
+    [AllowAnonymous]
     [Consumes("application/json")]
     [Produces("application/json", "text/plain")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]

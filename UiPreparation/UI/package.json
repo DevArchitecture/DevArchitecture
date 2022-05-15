@@ -38,6 +38,7 @@
     "@sweetalert2/ngx-sweetalert2": "^9.0.0",
     "ajv": "6.12.5",
     "alertifyjs": "^1.13.1",
+    "angularx-social-login": "^3.5.7",
     "arrive": "2.4.1",
     "bootstrap": "4.5.2",
     "bootstrap-material-design": "4.1.3",

@@ -13,4 +13,5 @@ public static partial class Messages
     public const string NameAlreadyExist = "NameAlreadyExist";
     public const string TokenProviderException = "TokenProviderException";
     public const string Unknown = "Unknown";
+    public const string InvalidExternalAuthentication = "Invalid External Authentication.";
 }

@@ -5,9 +5,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { LocalStorageService } from 'app/core/services/local-storage.service';
 import { environment } from 'environments/environment';
-import { LoginUser } from '../model/login-user';
+import { ExternalLoginUser, LoginUser } from '../model/login-user';
 import { TokenModel } from '../model/token-model';
 import { SharedService } from 'app/core/services/shared.service';
+import { SocialAuthService, GoogleLoginProvider, SocialUser, FacebookLoginProvider } from "angularx-social-login";
 
 
 @Injectable({
@@ -24,7 +25,8 @@ export class AuthService {
   claims: string[];
 
   constructor(private httpClient: HttpClient, private storageService: LocalStorageService, 
-    private router: Router, private alertifyService:AlertifyService,private sharedService:SharedService) {
+    private router: Router, private alertifyService:AlertifyService, private sharedService: SharedService,
+    private externalAuthService: SocialAuthService,) {
 
     this.setClaims();
   }
@@ -35,31 +37,66 @@ export class AuthService {
     headers = headers.append("Content-Type", "application/json")
 
     this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/login", loginUser, { headers: headers }).subscribe(data => {
-
-
-      if (data.success) {
-
-        this.storageService.setToken(data.data.token);
-        this.storageService.setItem("refreshToken",data.data.refreshToken)
-        this.claims=data.data.claims;
-
-
-         var decode = this.jwtHelper.decodeToken(this.storageService.getToken());
-
-
-        var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
-        this.userName = decode[propUserName];
-        this.sharedService.sendChangeUserNameEvent();
-
-        this.router.navigateByUrl("/dashboard");
-      }
-      else {
-        this.alertifyService.warning(data.message);
-      }
-
-    }
-    );
+      this.setToken(data);
+    });
   }
+
+  googleLogin() {
+    this.externalAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
+      .then(res => {
+        const user: SocialUser = { ...res };
+        const externalAuth: ExternalLoginUser = {
+          provider: user.provider,
+          token: user.idToken
+        };
+        let headers = new HttpHeaders();
+        headers = headers.append("Content-Type", "application/json")
+
+        this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/externallogin", externalAuth, { headers: headers }).subscribe(data => {
+          this.setToken(data);
+        });
+    });
+  }
+
+  facebookLogin() {
+    this.externalAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
+      .then(res => {
+        const user: SocialUser = { ...res };
+        const externalAuth: ExternalLoginUser = {
+          provider: user.provider,
+          token: user.authToken
+        };
+        let headers = new HttpHeaders();
+        headers = headers.append("Content-Type", "application/json")
+
+        this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/externallogin", externalAuth, { headers: headers }).subscribe(data => {
+          this.setToken(data);
+        });
+    });
+  }
+
+  setToken(data: TokenModel) {
+    if (data.success) {
+
+      this.storageService.setToken(data.data.token);
+      this.storageService.setItem("refreshToken",data.data.refreshToken)
+      this.claims=data.data.claims;
+
+
+       var decode = this.jwtHelper.decodeToken(this.storageService.getToken());
+
+
+      var propUserName = Object.keys(decode).filter(x => x.endsWith("/name"))[0];
+      this.userName = decode[propUserName];
+      this.sharedService.sendChangeUserNameEvent();
+
+      this.router.navigateByUrl("/dashboard");
+    }
+    else {
+      this.alertifyService.warning(data.message);
+    }
+  }
+
   getUserName(): string {
     return this.userName;
   }
