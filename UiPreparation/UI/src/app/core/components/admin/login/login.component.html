@@ -34,6 +34,13 @@
               <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Login'| translate}}</button>
               <div class="clearfix"></div>
             </form>
+            <hr>
+            <div>
+              <button class="btn btn-social google" (click)="googleLogin()"><span class="fab fa-google"></span> {{'GoogleLogin'| translate}}</button>
+            </div>
+            <div>
+              <button class="btn btn-social facebook" (click)="facebookLogin()"><span class="fab fa-facebook"></span> {{'FacebookLogin'| translate}}</button>
+            </div>
           </div>
         </div>
       </div>

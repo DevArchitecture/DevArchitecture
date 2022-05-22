@@ -44,6 +44,14 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.loginUser);
   }
 
+  googleLogin(){
+    this.auth.googleLogin();
+  }
+
+  facebookLogin(){
+    this.auth.facebookLogin();
+  }
+
   logOut(){
       this.storageService.removeToken();
       this.storageService.removeItem("lang");

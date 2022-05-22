@@ -40,6 +40,23 @@ public class AuthController : BaseApiController
         return result.Success ? Ok(result) : Unauthorized(result.Message);
     }
 
+    /// <summary>
+    /// Make it User External Login operations
+    /// </summary>
+    /// <param name="externalLoginModel"></param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    [Consumes("application/json")]
+    [Produces("application/json", "text/plain")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
+    [HttpPost("externallogin")]
+    public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginUserCommand externalLoginModel)
+    {
+        var result = await Mediator.Send(externalLoginModel);
+        return result.Success ? Ok(result) : BadRequest(result);
+    }
+
     [AllowAnonymous]
     [Consumes("application/json")]
     [Produces("application/json", "text/plain")]

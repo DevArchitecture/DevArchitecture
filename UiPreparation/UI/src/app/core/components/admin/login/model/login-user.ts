@@ -4,3 +4,8 @@ export class LoginUser
     password:string;
     lang:string
 }
+
+export class ExternalLoginUser {
+    provider: string;
+    token: string;
+}

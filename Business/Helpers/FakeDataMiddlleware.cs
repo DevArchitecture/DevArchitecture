@@ -310,5 +310,13 @@ public static class FakeDataMiddlleware
         { LangId = 1, Code = "DeleteConfirm", Value = "Emin misiniz?" });
         await mediator.Send(new CreateTranslateInternalCommand
         { LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" });
+        await mediator.Send(new CreateTranslateInternalCommand
+        { LangId = 1, Code = "GoogleLogin", Value = "Google ile giriş yap" });
+        await mediator.Send(new CreateTranslateInternalCommand
+        { LangId = 2, Code = "GoogleLogin", Value = "Sign in with Google" });
+        await mediator.Send(new CreateTranslateInternalCommand
+        { LangId = 1, Code = "FacebookLogin", Value = "Facebook ile giriş yap" });
+        await mediator.Send(new CreateTranslateInternalCommand
+        { LangId = 2, Code = "FacebookLogin", Value = "Sign in with Facebook" });
     }
 }
