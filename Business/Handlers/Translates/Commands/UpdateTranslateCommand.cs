@@ -19,36 +19,35 @@ namespace Business.Handlers.Translates.Commands
         public int LangId { get; set; }
         public string Value { get; set; }
         public string Code { get; set; }
+    }
+    public class UpdateTranslateCommandHandler : IRequestHandler<UpdateTranslateCommand, IResult>
+    {
+        private readonly ITranslateRepository _translateRepository;
+        private readonly IMediator _mediator;
 
-        public class UpdateTranslateCommandHandler : IRequestHandler<UpdateTranslateCommand, IResult>
+        public UpdateTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
+            _translateRepository = translateRepository;
+            _mediator = mediator;
+        }
 
-            public UpdateTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+        [SecuredOperation(Priority = 1)]
+        [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
+        [CacheRemoveAspect()]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IResult> Handle(UpdateTranslateCommand request, CancellationToken cancellationToken)
+        {
+            var isThereTranslateRecord = await _translateRepository.GetAsync(u => u.Id == request.Id);
 
-            [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
-            [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
-            public async Task<IResult> Handle(UpdateTranslateCommand request, CancellationToken cancellationToken)
-            {
-                var isThereTranslateRecord = await _translateRepository.GetAsync(u => u.Id == request.Id);
-
-                isThereTranslateRecord.Id = request.Id;
-                isThereTranslateRecord.LangId = request.LangId;
-                isThereTranslateRecord.Value = request.Value;
-                isThereTranslateRecord.Code = request.Code;
+            isThereTranslateRecord.Id = request.Id;
+            isThereTranslateRecord.LangId = request.LangId;
+            isThereTranslateRecord.Value = request.Value;
+            isThereTranslateRecord.Code = request.Code;
 
 
-                _translateRepository.Update(isThereTranslateRecord);
-                await _translateRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Updated);
-            }
+            _translateRepository.Update(isThereTranslateRecord);
+            await _translateRepository.SaveChangesAsync();
+            return new SuccessResult(Messages.Updated);
         }
     }
 }

@@ -18,8 +18,9 @@ namespace Business.Handlers.GroupClaims.Commands
         public int Id { get; set; }
         public int GroupId { get; set; }
         public int[] ClaimIds { get; set; }
+    }
 
-        public class UpdateGroupClaimCommandHandler : IRequestHandler<UpdateGroupClaimCommand, IResult>
+    public class UpdateGroupClaimCommandHandler : IRequestHandler<UpdateGroupClaimCommand, IResult>
         {
             private readonly IGroupClaimRepository _groupClaimRepository;
 
@@ -41,5 +42,4 @@ namespace Business.Handlers.GroupClaims.Commands
                 return new SuccessResult(Messages.Updated);
             }
         }
-    }
 }

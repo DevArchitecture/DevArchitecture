@@ -14,8 +14,9 @@ namespace Business.Handlers.Languages.Commands
     public class DeleteLanguageCommand : IRequest<IResult>
     {
         public int Id { get; set; }
+    }
 
-        public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, IResult>
+    public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, IResult>
         {
             private readonly ILanguageRepository _languageRepository;
             private readonly IMediator _mediator;
@@ -38,5 +39,4 @@ namespace Business.Handlers.Languages.Commands
                 return new SuccessResult(Messages.Deleted);
             }
         }
-    }
 }
