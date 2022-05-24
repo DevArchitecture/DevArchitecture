@@ -14,20 +14,20 @@ export class LookUpService {
 
   getGroupLookUp(): Observable<LookUp[]> {
 
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Groups/getgrouplookup")
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Groups/lookups")
   }
 
   getOperationClaimLookUp(): Observable<LookUp[]> {
 
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/OperationClaims/getoperationclaimlookup")
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/OperationClaims/lookups")
   }
 
   getUserLookUp():Observable<LookUp[]>{
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Users/getuserlookup")
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Users/lookups")
   }
 
   getLanguageLookup():Observable<LookUp[]>{
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Languages/getlookup")
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/Languages/lookups")
   }
 
 }

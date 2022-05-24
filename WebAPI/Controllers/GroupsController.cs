@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         // [Produces("application/json","text/plain")]
         // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
         // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupsQuery()));
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int groupId)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = groupId }));
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getgrouplookup")]
+        [HttpGet("lookups")]
         public async Task<IActionResult> Getselectedlist()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupLookupQuery()));
@@ -87,10 +87,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateGroupCommand updateGroup)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateGroupDto updateGroupDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateGroup));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupCommand{ Id = id, GroupName = updateGroupDto.GroupName }));
         }
 
         /// <summary>
@@ -102,10 +102,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteGroupCommand deleteGroup)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteGroup));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteGroupCommand{ Id = id }));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupsQuery()));
@@ -41,9 +41,9 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyuserid")]
+        [HttpGet("users/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByUserId(int userId)
+        public async Task<IActionResult> GetByUserId([FromRoute]int userId)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
         }
@@ -57,23 +57,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getusergroupbyuserid")]
-        public async Task<IActionResult> GetGroupClaimsByUserId(int id)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id }));
-        }
-
-        /// <summary>
-        /// It brings the details according to its id.
-        /// </summary>
-        /// <remarks>bla bla bla </remarks>
-        /// <return>UserGroups List</return>
-        /// <response code="200"></response>
-        [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getusersingroupbygroupid")]
-        public async Task<IActionResult> GetUsersInGroupByGroupid(int id)
+        [HttpGet("groups/{id}/users")]
+        public async Task<IActionResult> GetUsersInGroupByGroupid([FromRoute]int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery
                 { GroupId = id }));
@@ -118,10 +103,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut("updatebygroupid")]
-        public async Task<IActionResult> UpdateByGroupId([FromBody] UpdateUserGroupByGroupIdCommand updateUserGroup)
+        [HttpPut("groups/{id}")]
+        public async Task<IActionResult> UpdateByGroupId([FromRoute] int id,[FromBody] UpdateUserGroupByGroupIdDto updateUserGroupByGroupIdDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserGroupByGroupIdCommand{Id = id, GroupId = updateUserGroupByGroupIdDto.GroupId, UserIds = updateUserGroupByGroupIdDto.UserIds}));
         }
 
         /// <summary>
@@ -134,9 +119,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteUserGroupCommand deleteUserGroup)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteUserGroup));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserGroupCommand{Id = id}));
         }
     }
 }

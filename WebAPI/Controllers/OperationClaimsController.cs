@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimsQuery()));
@@ -41,8 +41,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetByid(int id)
+        [HttpGet("{id}}")]
+        public async Task<IActionResult> GetByid([FromRoute]int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimQuery() { Id = id }));
         }
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getoperationclaimlookup")]
+        [HttpGet("lookups")]
         public async Task<IActionResult> GetOperationClaimLookup()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimLookupQuery()));
@@ -71,10 +71,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaim)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateOperationClaimDto updateOperationClaimDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateOperationClaim));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateOperationClaimCommand{Id = id, Alias = updateOperationClaimDto.Alias, Description = updateOperationClaimDto.Description}));
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getuserclaimsfromcache")]
+        [HttpGet("cache")]
         public async Task<IActionResult> GetUserClaimsFromCache()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsFromCacheQuery()));

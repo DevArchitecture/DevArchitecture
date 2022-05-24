@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getlookupwithcode")]
+        [HttpGet("codes")]
         public async Task<IActionResult> GetLookupListWithCode()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpWithCodeQuery()));
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getlookup")]
+        [HttpGet("lookups")]
         public async Task<IActionResult> GetLookupList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpQuery()));
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesQuery()));
@@ -72,8 +72,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int languageId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute]int languageId)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = languageId }));
         }
@@ -102,10 +102,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguage)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateLanguageDto updateLanguageDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateLanguage));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateLanguageCommand{Id = id, Name = updateLanguageDto.Name, Code = updateLanguageDto.Code}));
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteLanguageCommand deleteLanguage)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteLanguage));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteLanguageCommand{}));
         }
     }
 }
