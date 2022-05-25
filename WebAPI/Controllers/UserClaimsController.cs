@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {

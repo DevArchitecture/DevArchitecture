@@ -5,6 +5,7 @@ using Business.Handlers.Users.Queries;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {
