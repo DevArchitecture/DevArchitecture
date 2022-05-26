@@ -103,7 +103,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserCommand{Id = id}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserCommand{ UserId = id }));
         }
     }
 }
