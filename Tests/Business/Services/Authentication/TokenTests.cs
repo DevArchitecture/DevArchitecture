@@ -15,7 +15,7 @@ namespace Tests.Business.Services.Authentication
     public class TokenTests : BaseIntegrationTest
     {
         private const string AuthenticationScheme = "Bearer";
-        private const string RequestUri = "api/users/";
+        private const string RequestUri = "api/users";
 
         [Test]
         public async Task TokenAuthorizeTest()
