@@ -51,7 +51,7 @@ public class AuthController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
     [HttpPost("externallogin")]
-    public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginUserCommand externalLoginModel)
+    public async Task<IActionResult> ExternalLogin([FromBody] ExternalLoginUserQuery externalLoginModel)
     {
         var result = await Mediator.Send(externalLoginModel);
         return result.Success ? Ok(result) : BadRequest(result);

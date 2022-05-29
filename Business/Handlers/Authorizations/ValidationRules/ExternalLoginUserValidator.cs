@@ -1,8 +1,8 @@
-﻿using Business.Handlers.Authorizations.Commands;
+﻿using Business.Handlers.Authorizations.Queries;
 using FluentValidation;
 
 namespace Business.Handlers.Authorizations.ValidationRules;
-internal class ExternalLoginUserValidator : AbstractValidator<ExternalLoginUserCommand>
+internal class ExternalLoginUserValidator : AbstractValidator<ExternalLoginUserQuery>
 {
     public ExternalLoginUserValidator()
     {
