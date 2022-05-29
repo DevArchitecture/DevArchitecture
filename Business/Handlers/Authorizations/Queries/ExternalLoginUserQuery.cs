@@ -14,19 +14,19 @@ using Core.Entities.Dtos;
 using Core.Aspects.Autofac.Validation;
 using Business.Handlers.Authorizations.ValidationRules;
 
-namespace Business.Handlers.Authorizations.Commands;
-public class ExternalLoginUserCommand : IRequest<IResult>
+namespace Business.Handlers.Authorizations.Queries;
+public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
 {
     public string Provider { get; set; }
     public string Token { get; set; }
 
-    public class ExternalLoginUserCommandHandler : IRequestHandler<ExternalLoginUserCommand, IResult>
+    public class ExternalLoginUserQueryHandler : IRequestHandler<ExternalLoginUserQuery, IDataResult<AccessToken>>
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenHelper _tokenHelper;
         private readonly ICacheManager _cacheManager;
 
-        public ExternalLoginUserCommandHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager)
+        public ExternalLoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager)
         {
             _userRepository = userRepository;
             _tokenHelper = tokenHelper;
@@ -35,7 +35,7 @@ public class ExternalLoginUserCommand : IRequest<IResult>
 
         [ValidationAspect(typeof(ExternalLoginUserValidator), Priority = 1)]
         [LogAspect()]
-        public async Task<IResult> Handle(ExternalLoginUserCommand request, CancellationToken cancellationToken)
+        public async Task<IDataResult<AccessToken>> Handle(ExternalLoginUserQuery request, CancellationToken cancellationToken)
         {
             IDataResult<User> verifyResult;
 
@@ -48,12 +48,12 @@ public class ExternalLoginUserCommand : IRequest<IResult>
                     verifyResult = await VerifyGoogleToken(request.Token);
                     break;
                 default:
-                    return new ErrorResult(Messages.InvalidExternalAuthentication);
+                    return new ErrorDataResult<AccessToken>(Messages.InvalidExternalAuthentication);
             }
 
             if (!verifyResult.Success)
             {
-                return new ErrorResult(verifyResult.Message);
+                return new ErrorDataResult<AccessToken>(verifyResult.Message);
             }
 
             var userData = verifyResult.Data;
@@ -112,7 +112,7 @@ public class ExternalLoginUserCommand : IRequest<IResult>
             catch
             {
                 return new ErrorDataResult<User>(Messages.InvalidExternalAuthentication);
-            }   
+            }
         }
 
         private static async Task<IDataResult<User>> VerifyFacebookToken(string token)

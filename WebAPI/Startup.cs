@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Globalization;
 using System.Text.Json.Serialization;
+using WebAPI.GraphQL.Mutations;
+using WebAPI.GraphQL.Queries;
 using ConfigurationManager = Business.ConfigurationManager;
 
 namespace WebAPI;
@@ -76,8 +78,12 @@ public partial class Startup : BusinessStartup
             });
         services.AddSwaggerGen(c =>
         {
-            c.IncludeXmlComments(Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml"));
+            c.IncludeXmlComments(System.IO.Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml"));
         });
+
+        services.AddGraphQLServer()
+            .AddQueryType<Query>()
+            .AddMutationType<Mutation>();
 
         services.AddTransient<FileLogger>();
         services.AddTransient<PostgreSqlLogger>();
@@ -153,6 +159,10 @@ public partial class Startup : BusinessStartup
 
         app.UseStaticFiles();
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        app.UseEndpoints(endpoints => 
+        {
+            endpoints.MapControllers();
+            endpoints.MapGraphQL();
+        });
     }
 }

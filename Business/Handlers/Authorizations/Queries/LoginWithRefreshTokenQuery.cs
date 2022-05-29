@@ -9,11 +9,11 @@ using MediatR;
 
 namespace Business.Handlers.Authorizations.Queries;
 
-public class LoginWithRefreshTokenQuery : IRequest<IResult>
+public class LoginWithRefreshTokenQuery : IRequest<IDataResult<AccessToken>>
 {
     public string RefreshToken { get; set; }
 
-    public class LoginWithRefreshTokenQueryHandler : IRequestHandler<LoginWithRefreshTokenQuery, IResult>
+    public class LoginWithRefreshTokenQueryHandler : IRequestHandler<LoginWithRefreshTokenQuery, IDataResult<AccessToken>>
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenHelper _tokenHelper;
@@ -27,12 +27,12 @@ public class LoginWithRefreshTokenQuery : IRequest<IResult>
         }
 
         [LogAspect()]
-        public async Task<IResult> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)
+        public async Task<IDataResult<AccessToken>> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)
         {
             var userToCheck = await _userRepository.GetByRefreshToken(request.RefreshToken);
             if (userToCheck == null)
             {
-                return new ErrorDataResult<User>(Messages.UserNotFound);
+                return new ErrorDataResult<AccessToken>(Messages.UserNotFound);
             }
 
 

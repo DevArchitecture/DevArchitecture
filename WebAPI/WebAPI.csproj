@@ -26,6 +26,7 @@
 		<Content Remove="nlog.development.config" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="HotChocolate.AspNetCore" Version="12.9.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
 			<IncludeAssets>all</IncludeAssets>
