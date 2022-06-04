@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
     ///
-    [Route("api/[controller]")]
+    [Route("api/operation-claims")]
     [ApiController]
     public class OperationClaimsController : BaseApiController
     {
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("{id}}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetByid([FromRoute]int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimQuery() { Id = id }));

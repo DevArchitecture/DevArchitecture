@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
     ///
-    [Route("api/[controller]")]
+    [Route("api/user-groups")]
     [ApiController]
     public class UserGroupsController : BaseApiController
     {
@@ -48,6 +48,22 @@ namespace WebAPI.Controllers
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
         }
+
+        /// <summary>
+        /// It brings the details according to its id.
+        /// </summary>
+        /// <remarks>bla bla bla </remarks>
+        /// <return>UserGroups List</return>
+        /// <response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("users/{id}/groups")]
+        public async Task<IActionResult> GetGroupClaimsByUserId([FromRoute]int id)
+        {
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id }));
+        }
+
 
         /// <summary>
         /// It brings the details according to its id.

@@ -10,49 +10,46 @@ import { LookUp } from 'app/core/models/lookUp';
 })
 export class GroupService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
   getGroupList(): Observable<Group[]> {
 
-    return this.httpClient.get<Group[]>(environment.getApiUrl + "/Groups/getall")
+    return this._httpClient.get<Group[]>(environment.getApiUrl + "/groups/")
   }
 
   getGroupById(id: number): Observable<Group> {
-    return this.httpClient.get<Group>(environment.getApiUrl + "/Groups/getbyid?groupId=" + id);
+    return this._httpClient.get<Group>(environment.getApiUrl + `/groups/${id}`);
   }
 
   getGroupClaims(id: number): Observable<LookUp[]> {
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/GroupClaims/getgroupclaimsbygroupid?id=" + id); 
+    return this._httpClient.get<LookUp[]>(environment.getApiUrl + `/group-claims/groups/${id}`);
   }
 
-  getGroupUsers(id:number):Observable<LookUp[]>{
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/UserGroups/getusersingroupbygroupid?id=" + id);  
+  getGroupUsers(id: number): Observable<LookUp[]> {
+    return this._httpClient.get<LookUp[]>(environment.getApiUrl + `/user-groups/groups/${id}/users`);
   }
 
-  addGroup(group:Group):Observable<any>{
-
-    var result = this.httpClient.post(environment.getApiUrl + "/groups/", group, { responseType: 'text' });
+  addGroup(group: Group): Observable<any> {
+    var result = this._httpClient.post(environment.getApiUrl + "/groups/", group, { responseType: 'text' });
     return result;
   }
 
-  updateGroup(group:Group):Observable<any> {
-    var result = this.httpClient.put(environment.getApiUrl + "/groups/", group, { responseType: 'text' });
-    return result; 
-  }
-
-  deleteGroup(id:number){
-    return this.httpClient.request('delete', environment.getApiUrl + "/groups/", { body: {Id:id} });
-  }
-
-  saveGroupClaims(groupId:number,claims:number[] ):Observable<any> {
-    var result = this.httpClient.put(environment.getApiUrl + "/GroupClaims/", {GroupId:groupId, ClaimIds:claims }, { responseType: 'text' });
+  updateGroup(group: Group): Observable<any> {
+    var result = this._httpClient.put(environment.getApiUrl + `/groups/${group.id}`, group, { responseType: 'text' });
     return result;
   }
 
-  saveGroupUsers(groupId:number,userIds:number[] ):Observable<any> {
-    var result = this.httpClient.put(environment.getApiUrl + "/UserGroups/updatebygroupid", {GroupId:groupId, UserIds:userIds }, { responseType: 'text' });
+  deleteGroup(id: number) {
+    return this._httpClient.request('delete', environment.getApiUrl + `/groups/${id}`);
+  }
+
+  saveGroupClaims(groupId: number, claims: number[]): Observable<any> {
+    var result = this._httpClient.put(environment.getApiUrl + `/group-claims/${groupId}`, { ClaimIds: claims }, { responseType: 'text' });
     return result;
   }
 
-
+  saveGroupUsers(groupId: number, userIds: number[]): Observable<any> {
+    var result = this._httpClient.put(environment.getApiUrl + `/user-groups/groups/${groupId}`, { UserIds: userIds }, { responseType: 'text' });
+    return result;
+  }
 }

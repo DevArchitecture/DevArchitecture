@@ -84,7 +84,6 @@ namespace WebAPI
             services.AddSwaggerGen(c =>
             {
                 c.IncludeXmlComments(Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml"));
-                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             services.AddTransient<FileLogger>();

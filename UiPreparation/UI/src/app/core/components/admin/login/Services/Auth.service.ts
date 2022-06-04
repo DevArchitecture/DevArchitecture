@@ -68,7 +68,7 @@ export class AuthService {
 
     if ((this.claims == undefined || this.claims.length == 0) && this.storageService.getToken() != null && this.loggedIn() ) {
 
-      this.httpClient.get<string[]>(environment.getApiUrl + "/OperationClaims/getuserclaimsfromcache").subscribe(data => {
+      this.httpClient.get<string[]>(environment.getApiUrl + "/operation-claims/cache").subscribe(data => {
         this.claims =data;
       })
 
