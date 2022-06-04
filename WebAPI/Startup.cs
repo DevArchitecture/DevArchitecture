@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Business;
 using Business.Helpers;
@@ -83,6 +84,7 @@ namespace WebAPI
             services.AddSwaggerGen(c =>
             {
                 c.IncludeXmlComments(Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml"));
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             services.AddTransient<FileLogger>();
@@ -129,7 +131,7 @@ namespace WebAPI
 
             app.UseSwaggerUI(c => {
               c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture"); 
-              c.DocExpansion(DocExpansion.None); 
+              c.DocExpansion(DocExpansion.None);
             });
             app.UseCors("AllowOrigin");
 
