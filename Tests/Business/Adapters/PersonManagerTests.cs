@@ -67,8 +67,8 @@ namespace Tests.Business.Adapters
             {
                 _birthYear = birthYear,
                 _surname = surname,
-                Name = _name,
-                CitizenId = _citizenId
+                _name = name,
+                _citizenId = citizenId
             };
         }
     }
