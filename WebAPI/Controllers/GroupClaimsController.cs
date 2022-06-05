@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     ///
     /// </summary>
     ///
-    [Route("api/group-claims")]
+    [Route("api/v{version:apiVersion}/group-claims")]
     [ApiController]
     public class GroupClaimsController : BaseApiController
     {
