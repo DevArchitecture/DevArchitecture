@@ -65,10 +65,10 @@ namespace Tests.Business.Adapters
         {
             return new ()
             {
-                _birthYear = birthYear,
-                _surname = surname,
-                _name = name,
-                _citizenId = citizenId
+                BirthYear = birthYear,
+                Surname = surname,
+                Name = name,
+                CitizenId = citizenId
             };
         }
     }
