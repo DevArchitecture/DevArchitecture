@@ -10,7 +10,7 @@ namespace Tests.Helpers.Token
     [TestFixture]
     public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
     {
-        private static readonly JwtSecurityTokenHandler _sTokenHandler = new ();
+        private static readonly JwtSecurityTokenHandler s_TokenHandler = new ();
 
         public string Issuer { get; } = "www.devarchitecture.com";
         public string Audience { get; } = "www.devarchitecture.com";
