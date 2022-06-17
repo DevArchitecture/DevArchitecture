@@ -1,4 +1,5 @@
 ﻿using ServiceStack.Redis;
+using ServiceStack.Text;
 
 namespace Core.CrossCuttingConcerns.Caching.Redis;
 
@@ -27,6 +28,16 @@ public class RedisCacheManager : ICacheManager
         RedisInvoker(x => { result = x.Get<object>(key); });
         return result;
     }
+    public object Get(string key, Type type)
+    {
+        var json = Get<string>(key);
+        var result = JsonSerializer.DeserializeFromString(json, type);
+
+        return typeof(Task)
+            .GetMethod(nameof(Task.FromResult))
+            .MakeGenericMethod(type)
+            .Invoke(this, new object[] { result });
+    }
 
     public void Add(string key, object data, int duration)
     {
@@ -36,6 +47,17 @@ public class RedisCacheManager : ICacheManager
     public void Add(string key, object data)
     {
         RedisInvoker(x => x.Add(key, data));
+    }
+    public void Add(string key, dynamic data, int duration, Type type)
+    {
+        var json = JsonSerializer.SerializeToString(data.Result, type);
+        Add(key, json, duration);
+    }
+
+    public void Add(string key, dynamic data, Type type)
+    {
+        var json = JsonSerializer.SerializeToString(data.Result, type);
+        Add(key, json);
     }
 
     public bool IsAdd(string key)
@@ -52,7 +74,7 @@ public class RedisCacheManager : ICacheManager
 
     public void RemoveByPattern(string pattern)
     {
-        RedisInvoker(x => x.RemoveByPattern(pattern));
+        RedisInvoker(x => x.RemoveByPattern($"*{pattern}*"));
     }
 
     public void Clear()

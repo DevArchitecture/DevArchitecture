@@ -14,5 +14,5 @@ public class DataResult<T> : Result, IDataResult<T>
         Data = data;
     }
 
-    public T Data { get; }
+    public T Data { get; set; }
 }
