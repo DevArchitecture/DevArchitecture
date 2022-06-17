@@ -16,13 +16,13 @@ export class UserService {
 
   getUserList(): Observable<User[]> {
 
-    return this.httpClient.get<User[]>(environment.getApiUrl + "/users/getall");
+    return this.httpClient.get<User[]>(environment.getApiUrl + "/users/");
 
   }
 
   getUserById(id: number): Observable<User> {
 
-    return this.httpClient.get<User>(environment.getApiUrl + "/users/getbyid?userId=" + id);
+    return this.httpClient.get<User>(environment.getApiUrl + `/users/${id}`);
   }
 
 
@@ -34,37 +34,37 @@ export class UserService {
 
   updateUser(user:User):Observable<any> {
 
-    var result = this.httpClient.put(environment.getApiUrl + "/users/", user, { responseType: 'text' });
+    var result = this.httpClient.put(environment.getApiUrl + `/users/${user.userId}`, user, { responseType: 'text' });
     return result;
   }
 
   deleteUser(id: number) {
-    return this.httpClient.request('delete', environment.getApiUrl + "/users/", { body: {userId:id} });
+    return this.httpClient.request('delete', environment.getApiUrl + `/users/${id}`);
   }
 
   getUserGroupPermissions(userId:number):Observable<LookUp[]>{
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/UserGroups/getusergroupbyuserid?id=" + userId);
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-groups/users/${userId}/groups`);
   }
 
   getUserClaims(userId:number){
-     return this.httpClient.get<LookUp[]>(environment.getApiUrl + "/UserClaims/getoperationclaimbyuserid?id=" + userId);
+     return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-claims/users${userId}`);
   }
 
   saveUserClaims(userId:number,claims:number[] ):Observable<any> {
 
-    var result = this.httpClient.put(environment.getApiUrl + "/UserClaims/", {UserId:userId, ClaimId:claims }, { responseType: 'text' });
+    var result = this.httpClient.put(environment.getApiUrl + `/user-claims/${userId}`, { ClaimId:claims }, { responseType: 'text' });
     return result;
 
   }
 
   saveUserGroupPermissions(userId:number, groups:number[]):Observable<any> {
-    var result = this.httpClient.put(environment.getApiUrl + "/UserGroups/", {UserId:userId, GroupId:groups }, { responseType: 'text' });
+    var result = this.httpClient.put(environment.getApiUrl + `/user-groups/${userId}`, { GroupId:groups }, { responseType: 'text' });
     return result;
 
   }
 
   saveUserPassword(command:PasswordDto):Observable<any>{
-    var result = this.httpClient.put(environment.getApiUrl + "/Auth/changeuserpassword", command, { responseType: 'text' });
+    var result = this.httpClient.put(environment.getApiUrl + "/Auth/user-password", command, { responseType: 'text' });
     return result;
   }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Business;
 using Business.Helpers;
@@ -13,6 +14,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -55,6 +58,13 @@ namespace WebAPI
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
+            services.AddApiVersioning(v =>
+            {
+                v.DefaultApiVersion = new ApiVersion(1, 0);
+                v.AssumeDefaultVersionWhenUnspecified = true;
+                v.ReportApiVersions = true;
+                v.ApiVersionReader = new HeaderApiVersionReader("x-dev-arch-version");
+            });
 
             services.AddCors(options =>
             {
@@ -130,7 +140,7 @@ namespace WebAPI
 
             app.UseSwaggerUI(c => {
               c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture"); 
-              c.DocExpansion(DocExpansion.None); 
+              c.DocExpansion(DocExpansion.None);
             });
             app.UseCors("AllowOrigin");
 

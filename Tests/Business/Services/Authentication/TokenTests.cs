@@ -14,8 +14,10 @@ namespace Tests.Business.Services.Authentication
     [TestFixture]
     public class TokenTests : BaseIntegrationTest
     {
+
         private const string _authenticationScheme = "Bearer";
-        private const string _requestUri = "api/users/getall";
+        private const string _requestUri = "api/v1/users";
+
 
         [Test]
         public async Task TokenAuthorizeTest()

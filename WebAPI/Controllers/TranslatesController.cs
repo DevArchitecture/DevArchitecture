@@ -6,13 +6,14 @@ using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {
     /// <summary>
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class TranslatesController : BaseApiController
     {
@@ -25,8 +26,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("gettranslatesbylang")]
-        public async Task<IActionResult> GetTranslatesByLang(string lang)
+        [HttpGet("languages/{lang}")]
+        public async Task<IActionResult> GetTranslatesByLang([FromRoute] string lang)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
         }
@@ -40,7 +41,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesQuery()));
@@ -55,7 +56,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("gettranslatelistdto")]
+        [HttpGet("dtos")]
         public async Task<IActionResult> GetTranslateListDto()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateListDtoQuery()));
@@ -70,8 +71,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Translate))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int translateId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute]int translateId)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateQuery { Id = translateId }));
         }
@@ -100,10 +101,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateTranslateCommand updateTranslate)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateTranslateDto updateTranslateDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateTranslate));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateTranslateCommand{Id = id, LangId = updateTranslateDto.LangId, Value = updateTranslateDto.Value,Code = updateTranslateDto.Code }));
         }
 
         /// <summary>
@@ -115,10 +116,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteTranslateCommand deleteTranslate)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteTranslate));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteTranslateCommand{Id = id}));
         }
     }
 }

@@ -10,12 +10,12 @@ import { environment } from 'environments/environment';
 })
 export class LogDtoService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
 
   getLogDtoList(): Observable<LogDto[]> {
 
-    return this.httpClient.get<LogDto[]>(environment.getApiUrl + '/logs/getall')
+    return this._httpClient.get<LogDto[]>(environment.getApiUrl + '/logs/')
   }
 
 }

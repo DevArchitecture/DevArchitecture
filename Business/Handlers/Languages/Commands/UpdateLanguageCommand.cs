@@ -18,8 +18,9 @@ namespace Business.Handlers.Languages.Commands
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+    }
 
-        public class UpdateLanguageCommandHandler : IRequestHandler<UpdateLanguageCommand, IResult>
+    public class UpdateLanguageCommandHandler : IRequestHandler<UpdateLanguageCommand, IResult>
         {
             private readonly ILanguageRepository _languageRepository;
             private readonly IMediator _mediator;
@@ -48,5 +49,4 @@ namespace Business.Handlers.Languages.Commands
                 return new SuccessResult(Messages.Updated);
             }
         }
-    }
 }

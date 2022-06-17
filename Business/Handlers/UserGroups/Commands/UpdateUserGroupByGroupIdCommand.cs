@@ -18,8 +18,9 @@ namespace Business.Handlers.UserGroups.Commands
         public int Id { get; set; }
         public int GroupId { get; set; }
         public int[] UserIds { get; set; }
+    }
 
-        public class UpdateUserGroupByGroupIdCommandHandler : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
+    public class UpdateUserGroupByGroupIdCommandHandler : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
         {
             private readonly IUserGroupRepository _userGroupRepository;
 
@@ -40,5 +41,4 @@ namespace Business.Handlers.UserGroups.Commands
                 return new SuccessResult(Messages.Updated);
             }
         }
-    }
 }

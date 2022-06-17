@@ -16,8 +16,9 @@ namespace Business.Handlers.OperationClaims.Commands
         public int Id { get; set; }
         public string Alias { get; set; }
         public string Description { get; set; }
+    }
 
-        public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
+    public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
         {
             private readonly IOperationClaimRepository _operationClaimRepository;
 
@@ -41,5 +42,4 @@ namespace Business.Handlers.OperationClaims.Commands
                 return new SuccessResult(Messages.Updated);
             }
         }
-    }
 }

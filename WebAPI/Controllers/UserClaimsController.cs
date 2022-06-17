@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebAPI.Controllers
     /// If controller methods will not be Authorize, [AllowAnonymous] is used.
     /// </summary>
     ///
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/user-claims")]
     [ApiController]
     public class UserClaimsController : BaseApiController
     {
@@ -26,7 +27,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsQuery()));
@@ -41,8 +42,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getbyuserid")]
-        public async Task<IActionResult> GetByUserId(int userid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByUserId([FromRoute]int userid)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid }));
         }
@@ -56,8 +57,8 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("getoperationclaimbyuserid")]
-        public async Task<IActionResult> GetOperationClaimByUserId(int id)
+        [HttpGet("users/{id}")]
+        public async Task<IActionResult> GetOperationClaimByUserId([FromRoute]int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id }));
         }
@@ -86,10 +87,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateUserClaimCommand updateUserClaim)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateUserClaimDto updateUserClaimDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserClaim));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new  UpdateUserClaimCommand{Id = id, UserId = updateUserClaimDto.UserId, ClaimId = updateUserClaimDto.ClaimIds}));
         }
 
         /// <summary>
@@ -101,10 +102,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteUserClaimCommand deleteUserClaim)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteUserClaim));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserClaimCommand{Id = id}));
         }
     }
 }
