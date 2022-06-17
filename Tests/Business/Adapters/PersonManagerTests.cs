@@ -12,10 +12,10 @@ namespace Tests.Business.Adapters
     [TestFixture]
     public class PersonManagerTests
     {
-        private const int BirthYear = 1987;
-        private const string Surname = "Test1";
-        private const string Name = "Test1";
-        private const long CitizenId = 11111111111;
+        private const int _birthYear = 1987;
+        private const string _surname = "Test1";
+        private const string _name = "Test1";
+        private const long _citizenId = 11111111111;
 
         private Mock<IPersonService>? _personService;
         private PersonServiceHelper? _personServiceHelper;
@@ -58,10 +58,10 @@ namespace Tests.Business.Adapters
         }
 
         private static Citizen CreateCitizen(
-            int birthYear = BirthYear,
-            string surname = Surname,
-            string name = Name,
-            long citizenId = CitizenId)
+            int birthYear = _birthYear,
+            string surname = _surname,
+            string name = _name,
+            long citizenId = _citizenId)
         {
             return new ()
             {
