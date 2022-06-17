@@ -4,6 +4,7 @@ import { HttpEntityRepositoryService } from 'app/core/services/http-entity-repos
 import { Observable } from 'rxjs';
 import { Language } from '../Models/Language';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 
 @Injectable({
@@ -15,19 +16,19 @@ export class LanguageService {
     private readonly _httpClient: HttpClient) { }
 
   getLanguageList(): Observable<Language[]> {
-    return this._httpClient.getAll('/languages/');
+    return this._httpClient.get<Language[]>(environment.getApiUrl +'/languages/');
   }
 
   getLanguage(id: number): Observable<Language> {
-    return this._httpClient.get(`/languages/${id}`);
+    return this._httpClient.get<Language>(environment.getApiUrl +`/languages/${id}`);
   }
 
   addLanguage(language: Language): Observable<any> {
-    return this._httpClient.add('/languages/', language);
+    return this._httpClient.post(environment.getApiUrl +'/languages/', language);
   }
 
   updateLanguage(language: Language): Observable<any> {
-    return this._httpClient.update(`/languages/${language.id}`, language);
+    return this._httpClient.put(environment.getApiUrl +`/languages/${language.id}`, language);
   }
 
   deleteLanguage(id: number) {

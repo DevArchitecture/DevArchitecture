@@ -15,8 +15,7 @@ namespace Business.Handlers.Languages.Queries
 {
     public class GetLanguagesLookUpQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
     {
-        public class
-            GetLanguagesLookUpQueryHandler : IRequestHandler<GetLanguagesLookUpQuery,
+        public class GetLanguagesLookUpQueryHandler : IRequestHandler<GetLanguagesLookUpQuery,
                 IDataResult<IEnumerable<SelectionItem>>>
         {
             private readonly ILanguageRepository _languageRepository;

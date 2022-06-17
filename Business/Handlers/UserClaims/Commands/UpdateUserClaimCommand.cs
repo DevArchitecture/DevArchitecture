@@ -19,9 +19,9 @@ namespace Business.Handlers.UserClaims.Commands
         public int Id { get; set; }
         public int UserId { get; set; }
         public int[] ClaimId { get; set; }
-        
-    }
-    public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
+
+
+        public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
         {
             private readonly IUserClaimRepository _userClaimRepository;
             private readonly ICacheManager _cacheManager;
@@ -47,4 +47,5 @@ namespace Business.Handlers.UserClaims.Commands
                 return new SuccessResult(Messages.Updated);
             }
         }
+    }
 }

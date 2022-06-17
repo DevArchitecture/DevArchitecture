@@ -14,9 +14,9 @@ namespace Business.Handlers.Groups.Commands
     public class DeleteGroupCommand : IRequest<IResult>
     {
         public int Id { get; set; }
-    }
 
-    public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
+
+        public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
         {
             private readonly IGroupRepository _groupRepository;
 
@@ -38,4 +38,5 @@ namespace Business.Handlers.Groups.Commands
                 return new SuccessResult(Messages.Deleted);
             }
         }
+    }
 }

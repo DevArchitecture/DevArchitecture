@@ -12,9 +12,7 @@ namespace Business.Handlers.Groups.Queries
 {
     public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
     {
-        public class
-            GetGroupSelectListQueryHandler : IRequestHandler<GetGroupLookupQuery,
-                IDataResult<IEnumerable<SelectionItem>>>
+        public class GetGroupSelectListQueryHandler : IRequestHandler<GetGroupLookupQuery, IDataResult<IEnumerable<SelectionItem>>>
         {
             private readonly IGroupRepository _groupRepository;
 

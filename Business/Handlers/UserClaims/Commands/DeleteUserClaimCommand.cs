@@ -14,9 +14,9 @@ namespace Business.Handlers.UserClaims.Commands
     public class DeleteUserClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
-       
-    }
-     public class DeleteUserClaimCommandHandler : IRequestHandler<DeleteUserClaimCommand, IResult>
+
+
+        public class DeleteUserClaimCommandHandler : IRequestHandler<DeleteUserClaimCommand, IResult>
         {
             private readonly IUserClaimRepository _userClaimRepository;
 
@@ -38,4 +38,5 @@ namespace Business.Handlers.UserClaims.Commands
                 return new SuccessResult(Messages.Deleted);
             }
         }
+    }
 }

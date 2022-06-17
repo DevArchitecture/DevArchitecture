@@ -14,8 +14,7 @@ namespace Business.Handlers.GroupClaims.Queries
 {
     public class GetGroupClaimsQuery : IRequest<IDataResult<IEnumerable<GroupClaim>>>
     {
-        public class
-            GetGroupClaimsQueryHandler : IRequestHandler<GetGroupClaimsQuery, IDataResult<IEnumerable<GroupClaim>>>
+        public class  GetGroupClaimsQueryHandler : IRequestHandler<GetGroupClaimsQuery, IDataResult<IEnumerable<GroupClaim>>>
         {
             private readonly IGroupClaimRepository _groupClaimRepository;
 

@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.username=this.auth.userName;
-
-    this.httpClient.get<LookUp[]>(environment.getApiUrl +"/languages/getlookupwithcode").subscribe(data=>{
+    this.httpClient.get<LookUp[]>(environment.getApiUrl +"/languages/codes").subscribe(data=>{
       this.langugelookUp=data;
     })
     

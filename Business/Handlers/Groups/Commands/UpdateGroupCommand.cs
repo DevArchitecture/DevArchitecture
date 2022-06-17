@@ -16,8 +16,8 @@ namespace Business.Handlers.Groups.Commands
     {
         public int Id { get; set; }
         public string GroupName { get; set; }
-    }
-    public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, IResult>
+
+        public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, IResult>
         {
             private readonly IGroupRepository _groupRepository;
 
@@ -42,4 +42,5 @@ namespace Business.Handlers.Groups.Commands
                 return new SuccessResult(Messages.Updated);
             }
         }
+    }
 }

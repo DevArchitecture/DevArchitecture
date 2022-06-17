@@ -14,9 +14,9 @@ namespace Business.Handlers.OperationClaims.Commands
     public class DeleteOperationClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
-    }
 
-    public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
+
+        public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
         {
             private readonly IOperationClaimRepository _operationClaimRepository;
 
@@ -37,4 +37,5 @@ namespace Business.Handlers.OperationClaims.Commands
                 return new SuccessResult(Messages.Deleted);
             }
         }
+    }
 }

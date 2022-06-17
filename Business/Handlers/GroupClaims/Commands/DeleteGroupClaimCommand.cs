@@ -14,28 +14,29 @@ namespace Business.Handlers.GroupClaims.Commands
     public class DeleteGroupClaimCommand : IRequest<IResult>
     {
         public int Id { get; set; }
-    }
 
-    public class DeleteGroupClaimCommandHandler : IRequestHandler<DeleteGroupClaimCommand, IResult>
-    {
-        private readonly IGroupClaimRepository _groupClaimRepository;
 
-        public DeleteGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
+        public class DeleteGroupClaimCommandHandler : IRequestHandler<DeleteGroupClaimCommand, IResult>
         {
-            _groupClaimRepository = groupClaimRepository;
-        }
+            private readonly IGroupClaimRepository _groupClaimRepository;
 
-        [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect(typeof(FileLogger))]
-        public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)
-        {
-            var groupClaimToDelete = await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id);
+            public DeleteGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
+            {
+                _groupClaimRepository = groupClaimRepository;
+            }
 
-            _groupClaimRepository.Delete(groupClaimToDelete);
-            await _groupClaimRepository.SaveChangesAsync();
+            [SecuredOperation(Priority = 1)]
+            [CacheRemoveAspect()]
+            [LogAspect(typeof(FileLogger))]
+            public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)
+            {
+                var groupClaimToDelete = await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id);
 
-            return new SuccessResult(Messages.Deleted);
+                _groupClaimRepository.Delete(groupClaimToDelete);
+                await _groupClaimRepository.SaveChangesAsync();
+
+                return new SuccessResult(Messages.Deleted);
+            }
         }
     }
 }

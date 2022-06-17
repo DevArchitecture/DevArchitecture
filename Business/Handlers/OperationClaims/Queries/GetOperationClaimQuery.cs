@@ -14,8 +14,7 @@ namespace Business.Handlers.OperationClaims.Queries
     {
         public int Id { get; set; }
 
-        public class
-            GetOperationClaimQueryHandler : IRequestHandler<GetOperationClaimQuery, IDataResult<OperationClaim>>
+        public class GetOperationClaimQueryHandler : IRequestHandler<GetOperationClaimQuery, IDataResult<OperationClaim>>
         {
             private readonly IOperationClaimRepository _operationClaimRepository;
 
