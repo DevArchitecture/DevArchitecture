@@ -3,8 +3,6 @@ using Business.Constants;
 using Business.DependencyResolvers;
 using Business.Fakes.DArch;
 using Business.Services.Authentication;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.ElasticSearch;
@@ -72,7 +70,6 @@ public partial class BusinessStartup
 
         services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
         services.AddTransient<IMessageConsumer, MqConsumerHelper>();
-        services.AddSingleton<ICacheManager, MemoryCacheManager>();
 
         services.AddAutoMapper(typeof(ConfigurationManager));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
