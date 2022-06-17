@@ -7,7 +7,10 @@ namespace Core.Entities.Concrete
     {
         public User()
         {
-            UpdateContactDate = RecordDate = DateTime.Now;
+            if(UserId==0){
+              RecordDate = DateTime.Now;
+            }
+            UpdateContactDate = DateTime.Now;
             Status = true;
         }
 
