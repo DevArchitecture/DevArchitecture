@@ -1,6 +1,7 @@
 ﻿using Core.ApiDoc;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.CrossCuttingConcerns.Caching.Redis;
 using Core.Utilities.IoC;
 using Core.Utilities.Mail;
 using Core.Utilities.Messages;
@@ -21,7 +22,7 @@ public class CoreModule : ICoreModule
     public void Load(IServiceCollection services, IConfiguration configuration)
     {
         services.AddMemoryCache();
-        services.AddSingleton<ICacheManager, MemoryCacheManager>();
+        services.AddSingleton<ICacheManager, RedisCacheManager>();
         services.AddSingleton<IMailService, MailManager>();
         services.AddSingleton<IEmailConfiguration, EmailConfiguration>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

@@ -9,20 +9,20 @@ import { OperationClaim } from '../Models/OperationClaim';
 })
 export class OperationClaimService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
 
   getOperationClaimList(): Observable<OperationClaim[]> {
 
-    return this.httpClient.get<OperationClaim[]>(environment.getApiUrl + '/operationClaims/getall')
+    return this._httpClient.get<OperationClaim[]>(environment.getApiUrl + '/operation-claims/')
   }
 
   getOperationClaim(id: number): Observable<OperationClaim> {
-    return this.httpClient.get<OperationClaim>(environment.getApiUrl  + '/operationClaims/getbyid?id='+id)
+    return this._httpClient.get<OperationClaim>(environment.getApiUrl  + `/operation-claims/${id}`)
   }
 
   updateOperationClaim(operationClaim: OperationClaim): Observable<any> {
-    return this.httpClient.put(environment.getApiUrl  + '/operationClaims/', operationClaim, { responseType: 'text' });
+    return this._httpClient.put(environment.getApiUrl  + `/operation-claims/${operationClaim.id}`, operationClaim, { responseType: 'text' });
 
   }
 

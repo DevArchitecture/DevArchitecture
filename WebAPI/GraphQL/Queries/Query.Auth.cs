@@ -1,4 +1,5 @@
-﻿using Business.Handlers.Authorizations.Queries;
+﻿using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Authorizations.Queries;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
 using MediatR;

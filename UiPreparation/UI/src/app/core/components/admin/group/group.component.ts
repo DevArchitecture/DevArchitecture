@@ -166,7 +166,7 @@ export class GroupComponent implements AfterViewInit, OnInit {
   }
 
   saveGroupClaims(){
-
+debugger;
     if(this.isClaimChange){
 
       var ids=this.claimSelectedItems.map(function(x){ return x.id as number});

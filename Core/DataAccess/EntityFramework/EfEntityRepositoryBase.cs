@@ -1,10 +1,11 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using Core.Enums;
 using Core.Extensions;
 using Core.Utilities.Results;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-
+using ServiceStack;
 namespace Core.DataAccess.EntityFramework;
 
 /// <summary>
@@ -88,6 +89,58 @@ public class EfEntityRepositoryBase<TEntity, TContext>
         return new PagingResult<TEntity>(list.ToList(), totalCount, true, $"{totalCount} records listed.");
     }
 
+    public async Task<PagingResult<TEntity>> GetListForTableSearch(TableGlobalFilter globalFilter)
+    {
+        if (globalFilter == null)
+        {
+            var count = Context.Set<TEntity>().Count();
+            return new PagingResult<TEntity>(await Context.Set<TEntity>().ToListAsync(), count, true,
+                $"{count} records listed.");
+        }
+
+        var parameterOfExpression = Expression.Parameter(typeof(TEntity), "x");
+
+        var toLowerMethod = typeof(string).GetMethod("ToLower", new Type[] { });
+
+
+        if (globalFilter.PropertyField.Count > 0)
+        {
+            var containMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+
+            var searchedValue = Expression.Constant(globalFilter.SearchText.ToLower(), typeof(string));
+
+            var globalFilterPropertyField = Expression.PropertyOrField(parameterOfExpression, globalFilter.PropertyField[0]);
+
+            Expression finalExpression = Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod), containMethod, searchedValue);
+
+            for (int i = 1; i < globalFilter.PropertyField.Count; i++)
+            {
+                var propertyName = globalFilter.PropertyField[i];
+
+                globalFilterPropertyField = Expression.PropertyOrField(parameterOfExpression, propertyName);
+                var globalFilterConstant = Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod), containMethod, searchedValue);
+
+                finalExpression = Expression.Or(finalExpression, globalFilterConstant);
+            }
+
+            var list = Context.Set<TEntity>()
+                .Where(Expression.Lambda<Func<TEntity, bool>>(finalExpression, parameterOfExpression));
+
+            list = list.AscOrDescOrder(globalFilter.SortOrder == 1 ? ESort.ASC : ESort.DESC,
+                globalFilter.SortField).Skip(globalFilter.First).Take(globalFilter.Rows);
+
+            var totalCountForFilter = list.Count();
+
+            return new PagingResult<TEntity>(list.ToList(), totalCountForFilter, true,
+                $"{totalCountForFilter} records listed.");
+        }
+
+        //Is no have search text
+        var totalCount = await Context.Set<TEntity>().CountAsync();
+
+        return new PagingResult<TEntity>(await Context.Set<TEntity>().Skip(globalFilter.First).Take(globalFilter.Rows).ToListAsync(), totalCount, true,
+            $"{totalCount} records listed.");
+    }
 
     public int SaveChanges()
     {
