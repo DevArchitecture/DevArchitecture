@@ -11,8 +11,8 @@ public partial class Query
     public async Task<DataResult<IEnumerable<Group>>> GetGroupList()
         => GetResponseWithResult(await Mediator.Send(new GetGroupsQuery()));
 
-    public async Task<DataResult<Group>> GetGroupById(int groupId)
-        => GetResponseWithResult(await Mediator.Send(new GetGroupQuery { GroupId = groupId }));
+    public async Task<DataResult<Group>> GetGroupById(GetGroupQuery getGroupQuery)
+        => GetResponseWithResult(await Mediator.Send(getGroupQuery));
 
     public async Task<DataResult<IEnumerable<SelectionItem>>> GetGroupLookupList()
         => GetResponseWithResult(await Mediator.Send(new GetGroupLookupQuery()));
