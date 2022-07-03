@@ -43,7 +43,9 @@ public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
                 {
                     Id = item.Id,
                     Level = item.Level,
-                    TimeStamp = item.TimeStamp,
+                    TimeStamp = item.TimeStamp.Kind == DateTimeKind.Utc 
+                        ? item.TimeStamp.ToLocalTime() 
+                        : item.TimeStamp,
                     Type = msg.Parameters[0].Type,
                     User = jsonMessage.User,
                     Value = valueList,
