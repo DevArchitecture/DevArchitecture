@@ -81,7 +81,7 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
             return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
         }
 
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         private async Task RegisterUserAsync(User user)
         {
             var registerUser = new User

@@ -24,7 +24,7 @@ public class UpdateGroupCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
         {

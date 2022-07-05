@@ -30,7 +30,7 @@ public class CreateTranslateInternalCommand : IRequest<IResult>
 
 
         [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         public async Task<IResult> Handle(CreateTranslateInternalCommand request, CancellationToken cancellationToken)
         {
             var isThereTranslateRecord = _translateRepository.Query()

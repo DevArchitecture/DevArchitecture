@@ -21,7 +21,7 @@ public class DeleteLanguageCommand : IRequest<IResult>
             _languageRepository = languageRepository;
         }
 
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         [SecuredOperation(Priority = 1)]
         public async Task<IResult> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)

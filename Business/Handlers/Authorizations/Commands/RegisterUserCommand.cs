@@ -30,7 +30,7 @@ public class RegisterUserCommand : IRequest<IResult>
 
 
         [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {

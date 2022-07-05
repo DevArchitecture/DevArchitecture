@@ -31,7 +31,7 @@ public class CreateLanguageCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)
         {

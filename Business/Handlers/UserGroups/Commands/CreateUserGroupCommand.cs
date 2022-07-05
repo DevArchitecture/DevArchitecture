@@ -24,7 +24,7 @@ public class CreateUserGroupCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(CreateUserGroupCommand request, CancellationToken cancellationToken)
         {

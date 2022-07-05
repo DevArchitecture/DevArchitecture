@@ -28,7 +28,7 @@ public class UpdateTranslateCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(UpdateTranslateCommand request, CancellationToken cancellationToken)
         {

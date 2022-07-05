@@ -22,7 +22,7 @@ public class DeleteGroupClaimCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)
         {

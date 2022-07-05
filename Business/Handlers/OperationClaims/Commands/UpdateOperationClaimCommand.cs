@@ -24,7 +24,7 @@ public class UpdateOperationClaimCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
         {

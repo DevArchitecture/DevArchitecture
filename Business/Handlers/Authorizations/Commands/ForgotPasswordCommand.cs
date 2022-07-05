@@ -30,7 +30,7 @@ public class ForgotPasswordCommand : IRequest<IResult>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {

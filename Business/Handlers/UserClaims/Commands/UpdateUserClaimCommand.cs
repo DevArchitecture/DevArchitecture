@@ -29,7 +29,7 @@ public class UpdateUserClaimCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
         {
