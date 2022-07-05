@@ -23,7 +23,7 @@ public class GetUsersInGroupLookupByGroupIdQuery : IRequest<IDataResult<IEnumera
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(
             GetUsersInGroupLookupByGroupIdQuery request, CancellationToken cancellationToken)

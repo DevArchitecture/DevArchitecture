@@ -22,7 +22,7 @@ public class GetUserGroupQuery : IRequest<IDataResult<UserGroup>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request, CancellationToken cancellationToken)
         {

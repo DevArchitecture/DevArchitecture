@@ -21,7 +21,7 @@ public class GetUserClaimsQuery : IRequest<IDataResult<IEnumerable<UserClaim>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimsQuery request, CancellationToken cancellationToken)
         {

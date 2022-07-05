@@ -24,7 +24,7 @@ public class GetUserGroupLookupQuery : IRequest<IDataResult<IEnumerable<Selectio
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request, CancellationToken cancellationToken)
         {

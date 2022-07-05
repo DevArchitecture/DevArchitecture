@@ -22,7 +22,7 @@ public class GetLanguagesQuery : IRequest<IDataResult<IEnumerable<Language>>>
 
         [SecuredOperation(Priority = 1)]
         [PerformanceAspect]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<Language>>> Handle(GetLanguagesQuery request, CancellationToken cancellationToken)
         {

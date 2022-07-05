@@ -23,7 +23,7 @@ public class GetTranslatesQuery : IRequest<IDataResult<IEnumerable<Translate>>>
 
         [SecuredOperation(Priority = 1)]
         [PerformanceAspect]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken)
         {

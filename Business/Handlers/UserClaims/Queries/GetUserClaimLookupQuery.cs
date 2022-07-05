@@ -23,7 +23,7 @@ public class GetUserClaimLookupQuery : IRequest<IDataResult<IEnumerable<UserClai
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimLookupQuery request, CancellationToken cancellationToken)
         {
