@@ -23,7 +23,7 @@ public class DeleteGroupCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
         {
             var groupToDelete = await _groupRepository.GetAsync(x => x.Id == request.Id);

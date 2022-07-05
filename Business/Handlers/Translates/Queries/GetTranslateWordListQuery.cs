@@ -25,7 +25,7 @@ public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string,
         [SecuredOperation(Priority = 1)]
         [PerformanceAspect(5)]
         [CacheAspect(10)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslateWordListQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<Dictionary<string, string>>(

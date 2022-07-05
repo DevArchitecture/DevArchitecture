@@ -30,7 +30,7 @@ public class UpdateUserClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
         {
             var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });

@@ -24,7 +24,7 @@ public class CreateOperationClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
         {
             if (IsClaimExists(request.ClaimName))

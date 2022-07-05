@@ -34,7 +34,7 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
         }
 
         [ValidationAspect(typeof(ExternalLoginUserValidator), Priority = 1)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(ExternalLoginUserQuery request, CancellationToken cancellationToken)
         {
             IDataResult<User> verifyResult;

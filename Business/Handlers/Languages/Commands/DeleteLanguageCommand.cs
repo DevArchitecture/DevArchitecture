@@ -22,7 +22,7 @@ public class DeleteLanguageCommand : IRequest<IResult>
         }
 
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         [SecuredOperation(Priority = 1)]
         public async Task<IResult> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
         {

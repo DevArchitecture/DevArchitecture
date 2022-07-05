@@ -26,7 +26,7 @@ public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
         [SecuredOperation(Priority = 1)]
         [PerformanceAspect(5)]
         [CacheAspect(10)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             var userList = await _userRepository.GetListAsync();

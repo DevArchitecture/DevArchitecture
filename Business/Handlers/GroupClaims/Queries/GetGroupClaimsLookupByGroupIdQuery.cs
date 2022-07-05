@@ -22,7 +22,7 @@ public class GetGroupClaimsLookupByGroupIdQuery : IRequest<IDataResult<IEnumerab
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(
             GetGroupClaimsLookupByGroupIdQuery request, CancellationToken cancellationToken)
         {

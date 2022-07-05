@@ -29,7 +29,7 @@ public class UpdateUserCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);

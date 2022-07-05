@@ -23,7 +23,7 @@ public class DeleteOperationClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
         {
             var claimToDelete = await _operationClaimRepository.GetAsync(x => x.Id == request.Id);

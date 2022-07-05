@@ -31,7 +31,7 @@ public class RegisterUserCommand : IRequest<IResult>
 
         [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);

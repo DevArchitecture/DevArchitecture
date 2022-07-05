@@ -26,7 +26,7 @@ public class UpdateUserGroupByGroupIdCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(UpdateUserGroupByGroupIdCommand request, CancellationToken cancellationToken)
         {
             var list = request.UserIds.Select(x => new UserGroup() { GroupId = request.GroupId, UserId = x });

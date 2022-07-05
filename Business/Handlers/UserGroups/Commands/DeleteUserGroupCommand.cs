@@ -23,7 +23,7 @@ public class DeleteUserGroupCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(DeleteUserGroupCommand request, CancellationToken cancellationToken)
         {
             var entityToDelete = await _userGroupRepository.GetAsync(x => x.UserId == request.Id);

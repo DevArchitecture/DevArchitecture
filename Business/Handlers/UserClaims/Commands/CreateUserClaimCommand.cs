@@ -28,7 +28,7 @@ public class CreateUserClaimCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [CacheRemoveAspect()]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(CreateUserClaimCommand request, CancellationToken cancellationToken)
         {
             var userClaim = new UserClaim
