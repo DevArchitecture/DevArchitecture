@@ -24,7 +24,7 @@ public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [PerformanceAspect(5)]
+        [PerformanceAspect]
         [CacheAspect(10)]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<LogDto>>> Handle(GetLogDtoQuery request, CancellationToken cancellationToken)

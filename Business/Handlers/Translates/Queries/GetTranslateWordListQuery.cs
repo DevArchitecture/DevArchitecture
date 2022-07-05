@@ -23,7 +23,7 @@ public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string,
         }
 
         [SecuredOperation(Priority = 1)]
-        [PerformanceAspect(5)]
+        [PerformanceAspect]
         [CacheAspect(10)]
         [LogAspect]
         public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslateWordListQuery request, CancellationToken cancellationToken)

@@ -24,7 +24,7 @@ public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [PerformanceAspect(5)]
+        [PerformanceAspect]
         [CacheAspect(10)]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)

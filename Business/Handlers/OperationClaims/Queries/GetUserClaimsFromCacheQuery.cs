@@ -24,7 +24,7 @@ public class GetUserClaimsFromCacheQuery : IRequest<IDataResult<IEnumerable<stri
             _contextAccessor = contextAccessor;
         }
 
-        [PerformanceAspect(5)]
+        [PerformanceAspect]
         [CacheAspect(10)]
         [LogAspect]
         // TODO:[SecuredOperation(Priority = 1)]
