@@ -9,31 +9,29 @@ import { Translate } from '../Models/Translate';
 })
 export class TranslateService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
 
   getTranslateList(): Observable<Translate[]> {
 
-    return this.httpClient.get<Translate[]>(environment.getApiUrl + '/translates/gettranslatelistdto')
+    return this._httpClient.get<Translate[]>(environment.getApiUrl + '/translates/dtos')
   }
 
   getTranslate(id: number): Observable<Translate> {
-    return this.httpClient.get<Translate>(environment.getApiUrl + '/translates/getbyid?translateId='+id)
+    return this._httpClient.get<Translate>(environment.getApiUrl + `/translates/${id}`)
   }
 
   addTranslate(translate: Translate): Observable<any> {
 
-    return this.httpClient.post(environment.getApiUrl + '/translates/', translate, { responseType: 'text' });
+    return this._httpClient.post(environment.getApiUrl + '/translates/', translate, { responseType: 'text' });
   }
 
   updateTranslate(translate: Translate): Observable<any> {
-    return this.httpClient.put(environment.getApiUrl + '/translates/', translate, { responseType: 'text' });
+    return this._httpClient.put(environment.getApiUrl + '/translates/', translate, { responseType: 'text' });
 
   }
 
   deleteTranslate(id: number) {
-    return this.httpClient.request('delete', environment.getApiUrl + '/translates/', { body: { Id: id } });
+    return this._httpClient.request('delete', environment.getApiUrl + `/translates/${id}`);
   }
-
-
 }

@@ -13,7 +13,7 @@ namespace Tests.Business.Services.Authentication;
 public class TokenTests : BaseIntegrationTest
 {
     private const string AuthenticationScheme = "Bearer";
-    private const string RequestUri = "api/users/getall";
+    private const string RequestUri = "api/v1/users";
 
     [Test]
     public async Task TokenAuthorizeTest()

@@ -47,7 +47,9 @@ public class RegisterUserInternalCommand : IRequest<IResult>
                 FullName = request.FullName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = true,
+                TenantId = 1,
+                CompanyId = 1
             };
 
             _userRepository.Add(user);

@@ -23,7 +23,7 @@ export class LogDtoComponent implements AfterViewInit, OnInit {
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	displayedColumns: string[] = ['id', 'level', 'exceptionMessage','timeStamp','user','value','type'];	
+	displayedColumns: string[] = ['id','tenantId', 'level', 'exceptionMessage','timeStamp','user','value','type'];	
 
 
 	logDtoList: LogDto[];

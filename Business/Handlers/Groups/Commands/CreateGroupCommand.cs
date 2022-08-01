@@ -1,5 +1,6 @@
 ﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Helpers;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
@@ -16,11 +17,12 @@ public class CreateGroupCommand : IRequest<IResult>
     public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, IResult>
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IMediator _mediator;
 
-
-        public CreateGroupCommandHandler(IGroupRepository groupRepository)
+        public CreateGroupCommandHandler(IGroupRepository groupRepository, IMediator mediator)
         {
             _groupRepository = groupRepository;
+            _mediator = mediator;
         }
 
         [SecuredOperation(Priority = 1)]
@@ -28,10 +30,12 @@ public class CreateGroupCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
+            var tenant = await _mediator.Send(new GetTenantQuery());
             try
             {
                 var group = new Group
                 {
+                    TenantId = tenant.Data.TenantId,
                     GroupName = request.GroupName
                 };
                 _groupRepository.Add(group);

@@ -21,25 +21,22 @@
 		<Compile Remove="SwaggerMessages.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Remove="log4net.config" />
-		<Content Remove="nlog.config" />
-		<Content Remove="nlog.development.config" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="HotChocolate.AspNetCore" Version="12.9.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
+		<PackageReference Include="HotChocolate.AspNetCore" Version="12.11.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
 			<IncludeAssets>all</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="6.3.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Business\Business.csproj" />

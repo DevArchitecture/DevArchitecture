@@ -1,0 +1,236 @@
+﻿<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">{{'CompanyList'| translate}}</h4>
+            <a *ngIf="checkClaim('CreateCompanyCommand')" class="pull-right" data-toggle="modal" data-target="#company"> <i style="color:white"  title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              
+              <div class="col-md-4 pull-right">
+                <mat-form-field>
+                  <mat-label>Filter</mat-label>
+                  <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+                </mat-form-field>
+              </div>
+							<table mat-table [dataSource]="dataSource" matSort>
+
+
+								
+                   <ng-container matColumnDef="id">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Id'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.id}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="tenantId">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'TenantId'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.tenantId}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="name">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Name'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.name}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="firmName">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'FirmName'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.firmName}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="address">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Address'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.address}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="phone">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Phone'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.phone}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="phone2">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Phone2'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.phone2}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="email">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Email'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.email}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="taxNo">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'TaxNo'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.taxNo}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="webSite">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'WebSite'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.webSite}}</td>
+				   </ng-container>
+	
+                   <ng-container matColumnDef="users">
+                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Users'|translate}}</th>
+                     <td mat-cell *matCellDef="let element">{{element.users}}</td>
+				   </ng-container>
+
+
+
+
+								<ng-container matColumnDef="update" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('UpdateCompanyCommand')" data-toggle="modal" data-target="#company"  (click)="getCompanyById(element.id)">
+                      <i title="{{'Update'| translate}}" style="color:#ff5722;" class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete" >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td  style="width: 25px;" mat-cell
+                    *matCellDef="let element">
+                    <a *ngIf="checkClaim('DeleteCompanyCommand')" (confirm)="deleteCompany(element.id)" [swal]="deleteSwal"><i title="{{'Delete'| translate}}" style="color: #D9534E;"class="fas fa-trash-alt"></i></a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow style="text-align: center;">
+                  <td class="mat-cell" colspan="4">{{'NoRecordsFound' |translate}} "{{input.value}}"</td>
+                </tr>
+							</table>
+							<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+							</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal modal-angular fade" id="company" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="clearFormGroup(companyAddForm)"><span aria-hidden="true">&times;</span></button>
+        <h4 class="margin-top">
+           {{'CompanyForm'| translate}}
+        </h4>
+        <div class="separator"></div>
+        <form *ngIf="companyAddForm" [formGroup]="companyAddForm" (ngSubmit)="save()">
+<!--           
+					<div class="row">
+						<div class="col-md-12">
+							<select class="browser-default custom-select" formControlName="tenantId">
+								<option *ngFor="let item of companylookUp" [value]="item.id"> {{item.label}}</option>
+							</select>
+						</div>
+					</div> -->
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="name" type="text" id="name" name="name"
+                       formControlName="name" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('name')!.hasError('name') && companyAddForm.get('name')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="firmName" type="text" id="firmName" name="firmName"
+                       formControlName="firmName" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('firmName')!.hasError('firmName') && companyAddForm.get('firmName')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="address" type="text" id="address" name="address"
+                       formControlName="address" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('address')!.hasError('address') && companyAddForm.get('address')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="phone" type="text" id="phone" name="phone"
+                       formControlName="phone" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('phone')!.hasError('phone') && companyAddForm.get('phone')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="phone2" type="text" id="phone2" name="phone2"
+                       formControlName="phone2" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('phone2')!.hasError('phone2') && companyAddForm.get('phone2')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="email" type="text" id="email" name="email"
+                       formControlName="email" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('email')!.hasError('email') && companyAddForm.get('email')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="taxNo" type="text" id="taxNo" name="taxNo"
+                       formControlName="taxNo" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('taxNo')!.hasError('taxNo') && companyAddForm.get('taxNo')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+					<div class="row">
+            <div class="col col-md-12">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="webSite" type="text" id="webSite" name="webSite"
+                       formControlName="webSite" />
+                <div class="alert alert-danger"
+                     *ngIf="companyAddForm.get('webSite')!.hasError('webSite') && companyAddForm.get('webSite')!.dirty">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+                   
+          <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #deleteSwal title="{{'DeleteConfirm' | translate}}" icon = "error" [showCancelButton]="true"
+	[confirmButtonText] = "'OK'"[cancelButtonText] = "'Cancel'" >
+</swal>
+

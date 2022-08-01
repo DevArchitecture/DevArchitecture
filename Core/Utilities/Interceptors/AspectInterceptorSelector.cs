@@ -10,7 +10,7 @@ public class AspectInterceptorSelector : IInterceptorSelector
     {
         var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>(true).ToList();
         var methodAttributes =
-            type.GetMethod(method.Name)?.GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
+            type.GetMethods()?.Where(p => p.Name == method.Name).FirstOrDefault().GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
         if (methodAttributes != null)
         {
             classAttributes.AddRange(methodAttributes);

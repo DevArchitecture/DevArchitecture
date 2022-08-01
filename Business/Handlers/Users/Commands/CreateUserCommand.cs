@@ -1,5 +1,6 @@
 ﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Helpers;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
@@ -29,10 +30,11 @@ public class CreateUserCommand : IRequest<IResult>
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IResult>
     {
         private readonly IUserRepository _userRepository;
-
-        public CreateUserCommandHandler(IUserRepository userRepository)
+        private readonly IMediator _mediator;
+        public CreateUserCommandHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
         [SecuredOperation(Priority = 1)]
@@ -40,6 +42,7 @@ public class CreateUserCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            var tenant = await _mediator.Send(new GetTenantQuery());
             var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
 
             if (isThereAnyUser != null)
@@ -57,7 +60,9 @@ public class CreateUserCommand : IRequest<IResult>
                 CitizenId = request.CitizenId,
                 Gender = request.Gender,
                 Notes = request.Notes,
-                MobilePhones = request.MobilePhones
+                MobilePhones = request.MobilePhones,
+                TenantId = tenant.Data.TenantId,
+                CompanyId = tenant.Data.TenantId
             };
 
             _userRepository.Add(user);

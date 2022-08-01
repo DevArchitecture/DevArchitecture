@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using System.Linq.Expressions;
 
@@ -13,6 +14,7 @@ public interface IEntityRepository<T>
     IEnumerable<T> GetList(Expression<Func<T, bool>> expression = null);
     Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> expression = null);
     PagingResult<T> GetListForPaging(int page, string propertyName, bool asc, Expression<Func<T, bool>> expression = null, params Expression<Func<T, object>>[] includeEntities);
+    Task<PagingResult<T>> GetListForTableSearch(TableGlobalFilter globalFilter);
     T Get(Expression<Func<T, bool>> expression);
     Task<T> GetAsync(Expression<Func<T, bool>> expression);
     int SaveChanges();

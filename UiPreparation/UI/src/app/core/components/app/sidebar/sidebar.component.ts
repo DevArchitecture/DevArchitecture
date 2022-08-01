@@ -14,6 +14,7 @@ declare interface RouteInfo {
     claim:string;
 }
 export const ADMINROUTES: RouteInfo[] = [
+  { path: '/company', title: 'Companies', icon: 'apartment', class: '', claim:"GetCompaniesQuery" },
   { path: '/user', title: 'Users', icon: 'how_to_reg', class: '', claim:"GetUsersQuery" },
   { path: '/group', title: 'Groups', icon:'groups', class: '',claim:"GetGroupsQuery" },
   { path: '/operationclaim', title: 'OperationClaim', icon:'local_police', class: '', claim:"GetOperationClaimsQuery"},

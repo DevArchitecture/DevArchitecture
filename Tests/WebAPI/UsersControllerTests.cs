@@ -16,7 +16,7 @@ public class UsersControllerTests : BaseIntegrationTest
     public async Task GetAll()
     {
         const string authenticationScheme = "Bearer";
-        const string requestUri = "api/users/getall";
+        const string requestUri = "api/v1/users";
 
         // Arrange
         var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());

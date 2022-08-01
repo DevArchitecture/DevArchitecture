@@ -78,7 +78,7 @@ export class GroupComponent implements AfterViewInit, OnInit {
   }
 
   save(){
-
+    debugger;
     if (this.groupAddForm.valid) {
       this.group = Object.assign({}, this.groupAddForm.value)
 
@@ -104,8 +104,7 @@ export class GroupComponent implements AfterViewInit, OnInit {
 
   }
 
-  updateGroup(){
-
+  updateGroup(){  
     this.groupService.updateGroup(this.group).subscribe(data => {
 
       var index=this.groupList.findIndex(x=>x.id==this.group.id);
@@ -166,9 +165,7 @@ export class GroupComponent implements AfterViewInit, OnInit {
   }
 
   saveGroupClaims(){
-
     if(this.isClaimChange){
-
       var ids=this.claimSelectedItems.map(function(x){ return x.id as number});
       this.groupService.saveGroupClaims(this.groupId, ids).subscribe(x=>{
         jQuery("#groupClaims").modal("hide");
