@@ -42,7 +42,6 @@ export class AuthService {
   }
 
   googleLogin() {
-    debugger;
     this.externalAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then(res => {
         const user: SocialUser = { ...res };
@@ -139,7 +138,6 @@ export class AuthService {
   claimGuard(claim: string): boolean {
     if(!this.loggedIn())
      this.router.navigate(["/login"]);
-    
     var check = this.claims.some(function (item) {
       return item == claim;
     })

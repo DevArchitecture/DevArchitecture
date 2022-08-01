@@ -1,5 +1,6 @@
 ﻿using Business.BusinessAspects;
 using Business.Constants;
+using Business.Helpers;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
@@ -20,10 +21,11 @@ public class UpdateUserCommand : IRequest<IResult>
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
     {
         private readonly IUserRepository _userRepository;
-
-        public UpdateUserCommandHandler(IUserRepository userRepository)
+        private readonly IMediator _mediator;
+        public UpdateUserCommandHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
 
@@ -32,6 +34,7 @@ public class UpdateUserCommand : IRequest<IResult>
         [LogAspect()]
         public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            var tenant = await _mediator.Send(new GetTenantQuery());
             var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 
             isThereAnyUser.FullName = request.FullName;

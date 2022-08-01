@@ -3,5 +3,5 @@
 namespace Core.Settings;
 public class LogSettings
 {
-    public static Type Logger => LogConsts.FileLogger;
+    public static Type Logger => LogConsts.MsSqlLogger;
 }

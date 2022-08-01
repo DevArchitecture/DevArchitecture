@@ -57,7 +57,6 @@ export class GroupService {
   }
 
   saveGroupClaims(groupId: number, claims: number[]): Observable<any> {
-    debugger;
     var result = this._httpClient.put(
       environment.getApiUrl + `/group-claims/${groupId}`,
       { ClaimIds: claims },

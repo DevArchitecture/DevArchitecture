@@ -46,6 +46,8 @@ public class ExceptionLogAspect : MethodInterception
 
     private LogDetailWithException GetLogDetail(IInvocation invocation)
     {
+        var tenantId = _httpContextAccessor.HttpContext?.User.Claims
+             .FirstOrDefault(x => x.Type.EndsWith("tenantId"))?.Value;
         var logParameters = invocation.Arguments.Select((t, i) => new LogParameter
         {
             Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
@@ -60,7 +62,11 @@ public class ExceptionLogAspect : MethodInterception
             User = (_httpContextAccessor.HttpContext == null ||
                     _httpContextAccessor.HttpContext.User.Identity.Name == null)
                 ? "?"
-                : _httpContextAccessor.HttpContext.User.Identity.Name
+                : _httpContextAccessor.HttpContext.User.Identity.Name,
+            TenantId= (_httpContextAccessor.HttpContext == null ||
+                    tenantId == null)
+                ? "?"
+                : tenantId,
         };
         return logDetailWithException;
     }

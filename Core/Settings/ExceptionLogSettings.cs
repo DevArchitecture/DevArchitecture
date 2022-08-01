@@ -3,5 +3,5 @@
 namespace Core.Settings;
 public class ExceptionLogSettings
 {
-    public static Type Logger => LogConsts.FileLogger;
+    public static Type Logger => LogConsts.MsSqlLogger;
 }

@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByUserId([FromRoute] int userid)
+        public async Task<IActionResult> GetByUserId([FromRoute] int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = id }));
         }
 
         /// <summary>

@@ -37,16 +37,15 @@ namespace WebAPI.Controllers
         /// <summary>
         /// It brings the details according to its id.
         /// </summary>
-        /// <param name="userId"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("users/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
+        public async Task<IActionResult> GetByUserId([FromRoute] int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = id }));
         }
 
         /// <summary>

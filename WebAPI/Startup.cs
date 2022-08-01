@@ -111,7 +111,7 @@ public partial class Startup : BusinessStartup
         // VERY IMPORTANT. Since we removed the build from AddDependencyResolvers, let's set the Service provider manually.
         // By the way, we can construct with DI by taking type to avoid calling static methods in aspects.
         ServiceTool.ServiceProvider = app.ApplicationServices;
-
+       
 
         var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
         switch (configurationManager.Mode)
@@ -140,6 +140,11 @@ public partial class Startup : BusinessStartup
             {
                 c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
                 c.DocExpansion(DocExpansion.None);
+            });
+            app.UseReDoc(options =>
+            {
+                options.DocumentTitle = "ReDoc Sample Project";
+                options.SpecUrl = "/swagger/v1/swagger.json";
             });
         }
 

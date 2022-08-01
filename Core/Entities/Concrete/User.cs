@@ -14,8 +14,8 @@ public class User : IEntity,ITenancy
         UpdateContactDate = DateTime.Now;
     }    
     public int UserId { get; set; }
-    public int TenantId { get; set; }
-    public Company Company { get; set; }
+    public int CompanyId { get; set; }
+    public int TenantId { get; set; }    
     public long CitizenId { get; set; }
     public string FullName { get; set; }
     public string Email { get; set; }

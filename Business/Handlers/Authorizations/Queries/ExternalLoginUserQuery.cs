@@ -86,6 +86,8 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
         {
             var registerUser = new User
             {
+                TenantId = 1,
+                CompanyId = 1,
                 Email = user.Email,
                 FullName = user.FullName,
                 Status = true
@@ -103,6 +105,8 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
 
                 var user = new User
                 {
+                    TenantId = 1,
+                    CompanyId = 1,
                     Email = payload.Email,
                     FullName = payload.Name
                 };
@@ -134,6 +138,8 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
 
             var user = new User
             {
+                TenantId=1,
+                CompanyId=1,
                 Email = payload.Email,
                 FullName = payload.Name
             };

@@ -23,6 +23,8 @@ public class ProjectDbContext : DbContext
         : base(options)
     {
         Configuration = configuration;
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
     }
 
     /// <summary>
@@ -46,11 +48,12 @@ public class ProjectDbContext : DbContext
     public DbSet<MobileLogin> MobileLogins { get; set; }
     public DbSet<Language> Languages { get; set; }
     public DbSet<Translate> Translates { get; set; }
+    public DbSet<Company> Companies { get; set; }
 
     protected IConfiguration Configuration { get; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    {  
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 

@@ -72,6 +72,7 @@ public class MemoryCacheManager : ICacheManager
         return _cache.TryGetValue(key, out _);
     }
 
+
     public void Remove(string key)
     {
         _cache.Remove(key);

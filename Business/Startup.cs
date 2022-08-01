@@ -89,6 +89,7 @@ public partial class BusinessStartup
     public void ConfigureDevelopmentServices(IServiceCollection services)
     {
         ConfigureServices(services);
+        services.AddTransient<ICompanyRepository, CompanyRepository>();
         services.AddTransient<ILogRepository, LogRepository>();
         services.AddTransient<ITranslateRepository, TranslateRepository>();
         services.AddTransient<ILanguageRepository, LanguageRepository>();
@@ -112,6 +113,7 @@ public partial class BusinessStartup
     public void ConfigureStagingServices(IServiceCollection services)
     {
         ConfigureServices(services);
+        services.AddTransient<ICompanyRepository, CompanyRepository>();
         services.AddTransient<ILogRepository, LogRepository>();
         services.AddTransient<ITranslateRepository, TranslateRepository>();
         services.AddTransient<ILanguageRepository, LanguageRepository>();
@@ -134,6 +136,7 @@ public partial class BusinessStartup
     public void ConfigureProductionServices(IServiceCollection services)
     {
         ConfigureServices(services);
+        services.AddTransient<ICompanyRepository, CompanyRepository>();
         services.AddTransient<ILogRepository, LogRepository>();
         services.AddTransient<ITranslateRepository, TranslateRepository>();
         services.AddTransient<ILanguageRepository, LanguageRepository>();

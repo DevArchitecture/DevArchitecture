@@ -42,6 +42,8 @@ public class LogAspect : MethodInterception
 
     private string GetLogDetail(IInvocation invocation)
     {
+        var tenantId = _httpContextAccessor.HttpContext?.User.Claims
+             .FirstOrDefault(x => x.Type.EndsWith("tenantId"))?.Value;
         var logParameters = new List<LogParameter>();
         for (var i = 0; i < invocation.Arguments.Length; i++)
         {
@@ -60,7 +62,11 @@ public class LogAspect : MethodInterception
             User = (_httpContextAccessor.HttpContext == null ||
                     _httpContextAccessor.HttpContext.User.Identity.Name == null)
                 ? "?"
-                : _httpContextAccessor.HttpContext.User.Identity.Name
+                : _httpContextAccessor.HttpContext.User.Identity.Name,
+            TenantId = (_httpContextAccessor.HttpContext == null ||
+                    tenantId == null)
+                ? "?"
+                : tenantId,
         };
         return JsonConvert.SerializeObject(logDetail);
     }

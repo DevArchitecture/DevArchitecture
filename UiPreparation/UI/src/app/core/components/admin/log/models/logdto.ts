@@ -1,5 +1,6 @@
 ﻿export class LogDto {
 	id?: number;
+	tenantId?:string;
 	level?: string;
 	exceptionMessage?: string;
 	timeStamp?: Date
