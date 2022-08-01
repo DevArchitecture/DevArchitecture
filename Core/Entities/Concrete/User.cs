@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.Concrete;
 
@@ -18,6 +19,7 @@ public class User : IEntity,ITenancy
     public long CitizenId { get; set; }
     public string FullName { get; set; }
     public string Email { get; set; }
+    [JsonIgnore]
     public string RefreshToken { get; set; }
     public string MobilePhones { get; set; }
     public bool Status { get; set; }
