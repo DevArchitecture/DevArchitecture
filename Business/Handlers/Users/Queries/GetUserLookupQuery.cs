@@ -21,8 +21,8 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserLookupQuery request, CancellationToken cancellationToken)
         {
             var list = await _userRepository.GetListAsync(x => x.Status);

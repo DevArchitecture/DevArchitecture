@@ -19,7 +19,7 @@ public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionIte
             _groupRepository = groupRepository;
         }
 
-        [CacheAspect(10)]
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request, CancellationToken cancellationToken)
         {
             var list = await _groupRepository.GetListAsync();

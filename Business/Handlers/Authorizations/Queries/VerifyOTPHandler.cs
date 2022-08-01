@@ -21,7 +21,7 @@ public class VerifyOtpHandler : IRequestHandler<VerifyOtpCommand, IDataResult<DA
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [LogAspect()]
+    [LogAspect]
     public async Task<IDataResult<DArchToken>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
     {
         var provider = _coordinator.SelectProvider(request.Provider);

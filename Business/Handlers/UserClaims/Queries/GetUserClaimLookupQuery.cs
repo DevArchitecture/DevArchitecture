@@ -23,8 +23,8 @@ public class GetUserClaimLookupQuery : IRequest<IDataResult<IEnumerable<UserClai
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimLookupQuery request, CancellationToken cancellationToken)
         {
             var userClaims = await _userClaimRepository.GetListAsync(x => x.UserId == request.UserId);

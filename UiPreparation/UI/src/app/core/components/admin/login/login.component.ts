@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
 
     this.httpClient.get<LookUp[]>(environment.getApiUrl +"/languages/getlookupwithcode").subscribe(data=>{
       this.langugelookUp=data;
-    })
+      this.loginUser.lang = this.langugelookUp[0].id;
+    }) 
     
   }
 

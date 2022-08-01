@@ -36,8 +36,8 @@ public class CreateUserCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);

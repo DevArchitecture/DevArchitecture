@@ -32,8 +32,8 @@ public class CreateTranslateCommand : IRequest<IResult>
 
         [SecuredOperation(Priority = 1)]
         [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
         {
             var isThereTranslateRecord = _translateRepository.Query()

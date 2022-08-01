@@ -22,8 +22,8 @@ public class DeleteTranslateCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(DeleteTranslateCommand request, CancellationToken cancellationToken)
         {
             var translateToDelete = _translateRepository.Get(p => p.Id == request.Id);

@@ -30,8 +30,8 @@ public class ForgotPasswordCommand : IRequest<IResult>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetAsync(u => u.CitizenId == Convert.ToInt64(request.TcKimlikNo));

@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,11 @@ public class CacheAspect : MethodInterception
     private readonly int _duration;
     private readonly ICacheManager _cacheManager;
 
-    public CacheAspect(int duration = 60)
+    public CacheAspect() : this(CacheAspectSettings.Duration)
+    {
+
+    }
+    public CacheAspect(int duration)
     {
         _duration = duration;
         _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();

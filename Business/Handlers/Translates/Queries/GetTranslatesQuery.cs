@@ -22,9 +22,9 @@ public class GetTranslatesQuery : IRequest<IDataResult<IEnumerable<Translate>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [PerformanceAspect(5)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [PerformanceAspect]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<Translate>>(await _translateRepository.GetListAsync());

@@ -26,7 +26,7 @@ public class LoginWithRefreshTokenQuery : IRequest<IDataResult<AccessToken>>
             _cacheManager = cacheManager;
         }
 
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)
         {
             var userToCheck = await _userRepository.GetByRefreshToken(request.RefreshToken);

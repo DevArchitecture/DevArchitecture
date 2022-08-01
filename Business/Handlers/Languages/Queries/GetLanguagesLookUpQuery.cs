@@ -23,9 +23,9 @@ public class GetLanguagesLookUpQuery : IRequest<IDataResult<IEnumerable<Selectio
         }
 
         [SecuredOperation(Priority = 1)]
-        [PerformanceAspect(5)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [PerformanceAspect]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<SelectionItem>>(

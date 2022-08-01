@@ -23,7 +23,7 @@ public class UserChangePasswordCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IResult> Handle(UserChangePasswordCommand request, CancellationToken cancellationToken)
         {
             var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);

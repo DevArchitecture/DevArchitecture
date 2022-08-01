@@ -22,8 +22,8 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect()]
-        [CacheAspect(10)]
+        [LogAspect]
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
         {
             var list = await _groupRepository.GetListAsync();
