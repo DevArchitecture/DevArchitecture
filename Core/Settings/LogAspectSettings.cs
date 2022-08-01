@@ -1,7 +1,7 @@
 ﻿using Core.Constants;
 
 namespace Core.Settings;
-public class ExceptionLogSettings
+public class LogAspectSettings
 {
     public static Type Logger => LogConsts.MsSqlLogger;
 }

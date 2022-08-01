@@ -11,12 +11,12 @@ public partial class Query
     public async Task<DataResult<IEnumerable<UserGroup>>> GetUserGroupList()
         => GetResponseWithResult(await Mediator.Send(new GetUserGroupsQuery()));
 
-    public async Task<DataResult<IEnumerable<SelectionItem>>> GetUserGroupListByUserId(int userId)
-        => GetResponseWithResult(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
+    public async Task<DataResult<IEnumerable<SelectionItem>>> GetUserGroupListByUserId(GetUserGroupLookupQuery getUserGroupLookupQuery)
+        => GetResponseWithResult(await Mediator.Send(getUserGroupLookupQuery));
 
-    public async Task<DataResult<IEnumerable<SelectionItem>>> GetGroupClaimListByUserId(int id)
-        => GetResponseWithResult(await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id }));
+    public async Task<DataResult<IEnumerable<SelectionItem>>> GetGroupClaimListByUserId(GetUserGroupLookupByUserIdQuery getUserGroupLookupByUserIdQuery)
+        => GetResponseWithResult(await Mediator.Send(getUserGroupLookupByUserIdQuery));
 
-    public async Task<DataResult<IEnumerable<SelectionItem>>> GetUserListInGroupByGroupId(int id)
-        => GetResponseWithResult(await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery { GroupId = id }));
+    public async Task<DataResult<IEnumerable<SelectionItem>>> GetUserListInGroupByGroupId(GetUsersInGroupLookupByGroupIdQuery getUsersInGroupLookupByGroupIdQuery)
+        => GetResponseWithResult(await Mediator.Send(getUsersInGroupLookupByGroupIdQuery));
 }

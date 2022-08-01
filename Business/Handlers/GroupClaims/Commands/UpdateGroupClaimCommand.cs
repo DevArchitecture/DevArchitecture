@@ -25,8 +25,8 @@ public class UpdateGroupClaimCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(UpdateGroupClaimCommand request, CancellationToken cancellationToken)
         {
             var list = request.ClaimIds.Select(x => new GroupClaim() { ClaimId = x, GroupId = request.Id });

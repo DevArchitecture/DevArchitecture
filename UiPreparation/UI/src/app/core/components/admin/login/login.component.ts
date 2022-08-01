@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
     this.username=this.auth.userName;
     this.httpClient.get<LookUp[]>(environment.getApiUrl +"/languages/codes").subscribe(data=>{
       this.langugelookUp=data;
-    })
+      this.loginUser.lang = this.langugelookUp[0].id;
+    }) 
     
   }
   googleLogin(){

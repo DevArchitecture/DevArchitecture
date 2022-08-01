@@ -23,8 +23,8 @@ public class CreateGroupClaimCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateGroupClaimCommand request, CancellationToken cancellationToken)
         {
             if (IsClaimExists(request.ClaimName))

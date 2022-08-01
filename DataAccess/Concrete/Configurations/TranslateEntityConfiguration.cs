@@ -317,7 +317,11 @@ public class TranslateEntityConfiguration : BaseConfiguration<Translate>
             new Translate { Id = 135, LangId = 1, Code = "LogList", Value = "İşlem Kütüğü" },
             new Translate { Id = 136, LangId = 2, Code = "LogList", Value = "LogList" },
             new Translate { Id = 137, LangId = 1, Code = "DeleteConfirm", Value = "Emin misiniz?" },
-            new Translate { Id = 138, LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" }
+            new Translate { Id = 138, LangId = 2, Code = "DeleteConfirm", Value = "Are you sure?" },
+            new Translate { Id = 140, LangId = 1, Code = "GoogleLogin", Value = "Google ile giriş yap" },
+            new Translate { Id = 139, LangId = 2, Code = "GoogleLogin", Value = "Sign in with Google" },
+            new Translate { Id = 142, LangId = 1, Code = "FacebookLogin", Value = "Facebook ile giriş yap" },
+            new Translate { Id = 141, LangId = 2, Code = "FacebookLogin", Value = "Sign in with Facebook" }
         };
     }
 }

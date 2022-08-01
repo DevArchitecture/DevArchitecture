@@ -23,8 +23,8 @@ public class GetUserGroupLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupByUserIdQuery request, CancellationToken cancellationToken)
         {
             var data = await _groupClaimRepository.GetUserGroupSelectedList(request.UserId);

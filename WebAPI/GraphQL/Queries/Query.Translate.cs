@@ -14,9 +14,9 @@ public partial class Query
     public async Task<DataResult<IEnumerable<TranslateDto>>> GetTranslateListDto()
         => GetResponseWithResult(await Mediator.Send(new GetTranslateListDtoQuery()));
 
-    public async Task<DataResult<Translate>> GetTranslateById(int translateId)
-        => GetResponseWithResult(await Mediator.Send(new GetTranslateQuery { Id = translateId }));
+    public async Task<DataResult<Translate>> GetTranslateById(GetTranslateQuery getTranslateQuery)
+        => GetResponseWithResult(await Mediator.Send(getTranslateQuery));
 
-    public async Task<DataResult<Dictionary<string, string>>> GetTranslateByLanguage(string language)
-        => GetResponseWithResult(await Mediator.Send(new GetTranslatesByLangQuery { Lang = language }));
+    public async Task<DataResult<Dictionary<string, string>>> GetTranslateByLanguage(GetTranslatesByLangQuery getTranslatesByLangQuery)
+        => GetResponseWithResult(await Mediator.Send(getTranslatesByLangQuery));
 }

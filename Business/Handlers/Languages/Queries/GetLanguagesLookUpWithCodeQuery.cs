@@ -18,7 +18,7 @@ public class GetLanguagesLookUpWithCodeQuery : IRequest<IDataResult<IEnumerable<
             _languageRepository = languageRepository;
         }
 
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<SelectionItem>>(

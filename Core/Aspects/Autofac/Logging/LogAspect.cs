@@ -19,7 +19,7 @@ public class LogAspect : MethodInterception
     private readonly LoggerServiceBase _loggerServiceBase;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LogAspect() : this(LogSettings.Logger)
+    public LogAspect() : this(LogAspectSettings.Logger)
     {
         
     }

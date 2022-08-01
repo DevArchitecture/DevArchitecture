@@ -21,7 +21,7 @@ public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionIte
             _mediator = mediator;
         }
 
-        [CacheAspect(10)]
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request, CancellationToken cancellationToken)
         {
             

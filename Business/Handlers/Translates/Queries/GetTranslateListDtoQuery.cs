@@ -23,9 +23,9 @@ public class GetTranslateListDtoQuery : IRequest<IDataResult<IEnumerable<Transla
         }
 
         [SecuredOperation(Priority = 1)]
-        [PerformanceAspect(5)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [PerformanceAspect]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<TranslateDto>>> Handle(GetTranslateListDtoQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<TranslateDto>>(await _translateRepository.GetTranslateDto());

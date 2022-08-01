@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,10 @@ public class PerformanceAspect : MethodInterception
     private readonly int _interval;
     private readonly Stopwatch _stopwatch;
 
+    public PerformanceAspect() : this(PerformanceAspectSettings.Interval)
+    {
+
+    }
     public PerformanceAspect(int interval)
     {
         _interval = interval;

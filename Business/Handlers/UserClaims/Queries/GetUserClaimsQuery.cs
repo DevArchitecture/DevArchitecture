@@ -21,8 +21,8 @@ public class GetUserClaimsQuery : IRequest<IDataResult<IEnumerable<UserClaim>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimsQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<UserClaim>>(await _userClaimRepository.GetListAsync());

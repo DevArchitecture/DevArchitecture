@@ -19,7 +19,7 @@ public class ExceptionLogAspect : MethodInterception
     private readonly LoggerServiceBase _loggerServiceBase;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ExceptionLogAspect() : this(ExceptionLogSettings.Logger)
+    public ExceptionLogAspect() : this(ExceptionLogAspectSettings.Logger)
     {
 
     }

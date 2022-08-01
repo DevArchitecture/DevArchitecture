@@ -11,8 +11,8 @@ public partial class Query
     public async Task<DataResult<IEnumerable<OperationClaim>>> GetOperationClaimList()
         => GetResponseWithResult(await Mediator.Send(new GetOperationClaimsQuery()));
 
-    public async Task<DataResult<OperationClaim>> GetOperationClaimById(int id)
-        => GetResponseWithResult(await Mediator.Send(new GetOperationClaimQuery { Id = id }));
+    public async Task<DataResult<OperationClaim>> GetOperationClaimById(GetOperationClaimQuery getOperationClaimQuery)
+        => GetResponseWithResult(await Mediator.Send(getOperationClaimQuery));
 
     public async Task<DataResult<IEnumerable<SelectionItem>>> GetOperationClaimLookUpList()
         => GetResponseWithResult(await Mediator.Send(new GetOperationClaimLookupQuery()));

@@ -38,8 +38,8 @@ public class CreateUserCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var tenant = await _mediator.Send(new GetTenantQuery());

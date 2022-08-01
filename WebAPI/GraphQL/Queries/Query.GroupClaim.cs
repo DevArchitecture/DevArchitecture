@@ -11,9 +11,9 @@ public partial class Query
     public async Task<DataResult<IEnumerable<GroupClaim>>> GetGroupClaimList()
         => GetResponseWithResult(await Mediator.Send(new GetGroupClaimsQuery()));
 
-    public async Task<DataResult<GroupClaim>> GetGroupClaimById(int id)
-        => GetResponseWithResult(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
+    public async Task<DataResult<GroupClaim>> GetGroupClaimById(GetGroupClaimQuery getGroupClaimQuery)
+        => GetResponseWithResult(await Mediator.Send(getGroupClaimQuery));
 
-    public async Task<DataResult<IEnumerable<SelectionItem>>> GetGroupClaimListByGroupId(int id)
-        => GetResponseWithResult(await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
+    public async Task<DataResult<IEnumerable<SelectionItem>>> GetGroupClaimListByGroupId(GetGroupClaimsLookupByGroupIdQuery getGroupClaimsLookupByGroupIdQuery)
+        => GetResponseWithResult(await Mediator.Send(getGroupClaimsLookupByGroupIdQuery));
 }

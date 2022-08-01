@@ -29,7 +29,7 @@ public class CreateLanguageInternalCommand : IRequest<IResult>
 
 
         [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         public async Task<IResult> Handle(CreateLanguageInternalCommand request, CancellationToken cancellationToken)
         {
             var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);

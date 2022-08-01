@@ -20,7 +20,7 @@ public class GetOperationClaimLookupQuery : IRequest<IDataResult<IEnumerable<Sel
         }
 
         [SecuredOperation(Priority = 1)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetOperationClaimLookupQuery request, CancellationToken cancellationToken)
         {
             var list = await _operationClaimRepository.GetListAsync();

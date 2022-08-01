@@ -34,7 +34,7 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
         }
 
         [ValidationAspect(typeof(ExternalLoginUserValidator), Priority = 1)]
-        [LogAspect()]
+        [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(ExternalLoginUserQuery request, CancellationToken cancellationToken)
         {
             IDataResult<User> verifyResult;
@@ -81,7 +81,7 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
             return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
         }
 
-        [CacheRemoveAspect()]
+        [CacheRemoveAspect]
         private async Task RegisterUserAsync(User user)
         {
             var registerUser = new User

@@ -22,8 +22,8 @@ public class DeleteUserCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             var userToDelete = _userRepository.Get(p => p.UserId == request.UserId);

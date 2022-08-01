@@ -21,8 +21,8 @@ public class GetUserGroupsQuery : IRequest<IDataResult<IEnumerable<UserGroup>>>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<UserGroup>>> Handle(GetUserGroupsQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<UserGroup>>(await _userGroupRepository.GetListAsync());

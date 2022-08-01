@@ -26,8 +26,8 @@ public class CreateGroupCommand : IRequest<IResult>
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect()]
-        [LogAspect()]
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
             var tenant = await _mediator.Send(new GetTenantQuery());

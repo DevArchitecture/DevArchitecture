@@ -23,8 +23,8 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
         }
 
         [SecuredOperation(Priority = 1)]
-        [CacheAspect(10)]
-        [LogAspect()]
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserLookupQuery request, CancellationToken cancellationToken)
         {
             var tenant = await _mediator.Send(new GetTenantQuery());
