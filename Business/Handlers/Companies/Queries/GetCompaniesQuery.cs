@@ -3,7 +3,6 @@ using Business.BusinessAspects;
 using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,6 +11,7 @@ using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Aspects.Autofac.Caching;
 using Business.Helpers;
+using Core.Entities.Concrete;
 
 namespace Business.Handlers.Companies.Queries
 {

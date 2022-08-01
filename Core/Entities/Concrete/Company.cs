@@ -1,12 +1,11 @@
 ﻿using Core.Entities;
-using Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Entities.Concrete
+namespace Core.Entities.Concrete
 {
     public class Company : IEntity
     {

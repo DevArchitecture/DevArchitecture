@@ -1,7 +1,7 @@
 ﻿using Business.Handlers.Users.Queries;
 using Core.Entities.Concrete;
+using Core.Entities.Dtos;
 using Core.Utilities.Results;
-using Entities.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;

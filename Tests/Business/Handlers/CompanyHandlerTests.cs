@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using static Business.Handlers.Companies.Queries.GetCompanyQuery;
-using Entities.Concrete;
 using static Business.Handlers.Companies.Queries.GetCompaniesQuery;
 using static Business.Handlers.Companies.Commands.CreateCompanyCommand;
 using Business.Handlers.Companies.Commands;
@@ -18,9 +17,10 @@ using static Business.Handlers.Companies.Commands.DeleteCompanyCommand;
 using MediatR;
 using System.Linq;
 using FluentAssertions;
+using Core.Entities.Concrete;
 
 
-namespace Tests.Business.HandlersTest
+namespace Tests.Business.Handlers
 {
     [TestFixture]
     public class CompanyHandlerTests
@@ -51,7 +51,7 @@ namespace Tests.Business.HandlersTest
             var handler = new GetCompanyQueryHandler(_companyRepository.Object, _mediator.Object);
 
             //Act
-            var x = await handler.Handle(query, new System.Threading.CancellationToken());
+            var x = await handler.Handle(query, new CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
@@ -66,12 +66,12 @@ namespace Tests.Business.HandlersTest
             var query = new GetCompaniesQuery();
 
             _companyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Company, bool>>>()))
-                        .ReturnsAsync(new List<Company> { new Company() { Id=1,Name="test" /*TODO:propertyler buraya yazılacak CompanyId = 1, CompanyName = "test"*/ } });
+                        .ReturnsAsync(new List<Company> { new Company() { Id = 1, Name = "test" /*TODO:propertyler buraya yazılacak CompanyId = 1, CompanyName = "test"*/ } });
 
             var handler = new GetCompaniesQueryHandler(_companyRepository.Object, _mediator.Object);
 
             //Act
-            var x = await handler.Handle(query, new System.Threading.CancellationToken());
+            var x = await handler.Handle(query, new CancellationToken());
 
             //Asset
             x.Success.Should().BeTrue();
@@ -94,7 +94,7 @@ namespace Tests.Business.HandlersTest
             _companyRepository.Setup(x => x.Add(It.IsAny<Company>())).Returns(new Company());
 
             var handler = new CreateCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
             _companyRepository.Verify(x => x.SaveChangesAsync());
             x.Success.Should().BeTrue();
@@ -115,7 +115,7 @@ namespace Tests.Business.HandlersTest
             _companyRepository.Setup(x => x.Add(It.IsAny<Company>())).Returns(new Company());
 
             var handler = new CreateCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
             x.Success.Should().BeFalse();
             x.Message.Should().Be(Messages.NameAlreadyExist);
@@ -134,7 +134,7 @@ namespace Tests.Business.HandlersTest
             _companyRepository.Setup(x => x.Update(It.IsAny<Company>())).Returns(new Company());
 
             var handler = new UpdateCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
             _companyRepository.Verify(x => x.SaveChangesAsync());
             x.Success.Should().BeTrue();
@@ -153,7 +153,7 @@ namespace Tests.Business.HandlersTest
             _companyRepository.Setup(x => x.Delete(It.IsAny<Company>()));
 
             var handler = new DeleteCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
-            var x = await handler.Handle(command, new System.Threading.CancellationToken());
+            var x = await handler.Handle(command, new CancellationToken());
 
             _companyRepository.Verify(x => x.SaveChangesAsync());
             x.Success.Should().BeTrue();

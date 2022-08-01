@@ -2,9 +2,10 @@
 using System;
 using System.Linq;
 using Core.DataAccess.EntityFramework;
-using Entities.Concrete;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using DataAccess.Abstract;
+using Core.Entities.Concrete;
+
 namespace DataAccess.Concrete.EntityFramework
 {
     public class CompanyRepository : EfEntityRepositoryBase<Company, ProjectDbContext>, ICompanyRepository

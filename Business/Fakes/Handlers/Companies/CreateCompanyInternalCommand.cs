@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.Companies.ValidationRules;
 
-namespace Business.Handlers.Companies.Commands
+namespace Business.Fakes.Handlers.Companies
 {
     /// <summary>
     /// 
@@ -30,7 +30,7 @@ namespace Business.Handlers.Companies.Commands
         public string Email { get; set; }
         public string TaxNo { get; set; }
         public string WebSite { get; set; }
-      
+
 
 
         public class CreateCompanyInternalCommandHandler : IRequestHandler<CreateCompanyInternalCommand, IResult>
@@ -63,7 +63,7 @@ namespace Business.Handlers.Companies.Commands
                     Phone2 = request.Phone2,
                     Email = request.Email,
                     TaxNo = request.TaxNo,
-                    WebSite = request.WebSite  
+                    WebSite = request.WebSite
                 };
 
                 _companyRepository.Add(addedCompany);
