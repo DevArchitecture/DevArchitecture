@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.Companies.ValidationRules;
+using Core.Entities.Concrete;
 
 namespace Business.Fakes.Handlers.Companies
 {

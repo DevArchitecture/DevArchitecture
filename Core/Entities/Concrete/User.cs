@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.Concrete;
 

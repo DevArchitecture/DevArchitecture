@@ -1,5 +1,6 @@
 ﻿using Business.BusinessAspects;
 using Business.Fakes.Handlers.Authorizations;
+using Business.Fakes.Handlers.Companies;
 using Business.Fakes.Handlers.OperationClaims;
 using Business.Fakes.Handlers.UserClaims;
 using Business.Handlers.Companies.Commands;
