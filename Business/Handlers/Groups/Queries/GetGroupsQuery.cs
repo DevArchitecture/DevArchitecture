@@ -1,4 +1,5 @@
 ﻿using Business.BusinessAspects;
+using Business.Helpers;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
@@ -15,10 +16,11 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
     public class GetGroupsQueryHandler : IRequestHandler<GetGroupsQuery, IDataResult<IEnumerable<Group>>>
     {
         private readonly IGroupRepository _groupRepository;
-
-        public GetGroupsQueryHandler(IGroupRepository groupRepository)
+        private readonly IMediator _mediator;
+        public GetGroupsQueryHandler(IGroupRepository groupRepository, IMediator mediator)
         {
             _groupRepository = groupRepository;
+            _mediator = mediator;
         }
 
         [SecuredOperation(Priority = 1)]
@@ -26,8 +28,12 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
         {
-            var list = await _groupRepository.GetListAsync();
-            return new SuccessDataResult<IEnumerable<Group>>(list.ToList());
+            var tenant = await _mediator.Send(new GetTenantQuery());
+            if (tenant != null && tenant.Data.UserId == 1)
+            {
+                return new SuccessDataResult<IEnumerable<Group>>(await _groupRepository.GetListAsync());
+            }
+            return new SuccessDataResult<IEnumerable<Group>>(await _groupRepository.GetListAsync(x => x.TenantId == tenant.Data.TenantId));
         }
     }
 }

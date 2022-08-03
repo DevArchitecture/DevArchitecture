@@ -1,7 +1,9 @@
 ﻿using Business.BusinessAspects;
 using Business.Fakes.Handlers.Authorizations;
+using Business.Fakes.Handlers.Companies;
 using Business.Fakes.Handlers.OperationClaims;
 using Business.Fakes.Handlers.UserClaims;
+using Business.Handlers.Companies.Commands;
 using Core.Utilities.IoC;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +17,17 @@ public static class OperationClaimCreatorMiddleware
     public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
     {
         var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
+        var companies = await mediator.Send(new CreateCompanyInternalCommand
+        {
+            FirmName = "DevArchitecture Inc.",
+            Email = "info@adminmail.com",
+            Address = "Orenda is Everywhere",
+            Name = "Orenda",
+            Phone = "03122123456",
+            Phone2 = "03122125678",
+            TaxNo = "12345678912",
+            WebSite = "www.devarchitecture.net"
+        });
         foreach (var operationName in GetOperationNames())
         {
             await mediator.Send(new CreateOperationClaimInternalCommand

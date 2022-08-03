@@ -29,9 +29,9 @@ public class UpdateGroupClaimCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(UpdateGroupClaimCommand request, CancellationToken cancellationToken)
         {
-            var list = request.ClaimIds.Select(x => new GroupClaim() { ClaimId = x, GroupId = request.GroupId });
+            var list = request.ClaimIds.Select(x => new GroupClaim() { ClaimId = x, GroupId = request.Id });
 
-            await _groupClaimRepository.BulkInsert(request.GroupId, list);
+            await _groupClaimRepository.BulkInsert(request.Id, list);
             await _groupClaimRepository.SaveChangesAsync();
 
             return new SuccessResult(Messages.Updated);

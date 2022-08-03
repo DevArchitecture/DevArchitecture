@@ -3,6 +3,7 @@ using Core.CrossCuttingConcerns.Caching;
 using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
@@ -24,13 +25,17 @@ public class CacheAspect : MethodInterception
     {
         _duration = duration;
         _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+        
     }
 
     public override void Intercept(IInvocation invocation)
     {
+        IHttpContextAccessor _httpContextAccessor=new HttpContextAccessor();
+        var tenantId = _httpContextAccessor.HttpContext?.User.Claims
+             .FirstOrDefault(x => x.Type.EndsWith("tenantId"))?.Value;
         var methodName = string.Format($"{invocation.Arguments[0]}.{invocation.Method.Name}");
         var arguments = invocation.Arguments;
-        var key = $"{methodName}({BuildKey(arguments)})";
+        var key = $"{tenantId}{methodName}({BuildKey(arguments)})";
         var returnType = invocation.Method.ReturnType.GenericTypeArguments.FirstOrDefault();
         if (_cacheManager.IsAdd(key))
         {

@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,5 +23,6 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(x => x.CitizenId);
         builder.HasIndex(x => x.MobilePhones);
+   
     }
 }

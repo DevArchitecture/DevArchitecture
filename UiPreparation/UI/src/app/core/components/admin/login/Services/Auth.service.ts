@@ -52,7 +52,7 @@ export class AuthService {
         let headers = new HttpHeaders();
         headers = headers.append("Content-Type", "application/json")
 
-        this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/externallogin", externalAuth, { headers: headers }).subscribe(data => {
+        this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/external-login", externalAuth, { headers: headers }).subscribe(data => {
           this.setToken(data);
         });
     });
@@ -69,7 +69,7 @@ export class AuthService {
         let headers = new HttpHeaders();
         headers = headers.append("Content-Type", "application/json")
 
-        this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/externallogin", externalAuth, { headers: headers }).subscribe(data => {
+        this.httpClient.post<TokenModel>(environment.getApiUrl + "/Auth/external-login", externalAuth, { headers: headers }).subscribe(data => {
           this.setToken(data);
         });
     });
@@ -105,7 +105,7 @@ export class AuthService {
 
     if ((this.claims == undefined || this.claims.length == 0) && this.storageService.getToken() != null && this.loggedIn() ) {
 
-      this.httpClient.get<string[]>(environment.getApiUrl + "/OperationClaims/getuserclaimsfromcache").subscribe(data => {
+      this.httpClient.get<string[]>(environment.getApiUrl + "/operation-claims/cache").subscribe(data => {
         this.claims =data;
       })
 
@@ -138,7 +138,6 @@ export class AuthService {
   claimGuard(claim: string): boolean {
     if(!this.loggedIn())
      this.router.navigate(["/login"]);
-    
     var check = this.claims.some(function (item) {
       return item == claim;
     })

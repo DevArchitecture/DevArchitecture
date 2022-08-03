@@ -12,7 +12,7 @@ public class RedisCacheManager : ICacheManager
 
     public RedisCacheManager()
     {
-        _redisEndpoint = new RedisEndpoint("localhost", 6379);
+        _redisEndpoint = new RedisEndpoint("localhost", 59461);
     }
 
     public T Get<T>(string key)

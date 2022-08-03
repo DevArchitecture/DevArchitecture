@@ -22,6 +22,11 @@
 									<td mat-cell *matCellDef="let element"> {{element.id}} </td>
 								</ng-container>
 
+								<ng-container matColumnDef="tenantId">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Tenant'|translate}} </th>
+									<td mat-cell *matCellDef="let element"> {{element.tenantId}} </td>
+								</ng-container>
+
 								<ng-container matColumnDef="level">
 									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{'Level'|translate}} </th>
 									<td mat-cell *matCellDef="let element"> {{element.level}} </td>

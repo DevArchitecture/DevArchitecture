@@ -115,7 +115,7 @@ export class UserComponent implements AfterViewInit, OnInit {
 
   }
 
-  saveUserClaimsPermission() {
+  saveUserClaims() {
 
     if (this.isClaimChange) {
 

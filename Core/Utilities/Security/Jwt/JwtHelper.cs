@@ -79,6 +79,7 @@ public class JwtHelper : ITokenHelper
     {
         var claims = new List<Claim>();
         claims.AddNameIdentifier(user.UserId.ToString());
+        claims.AddTenantId(user.TenantId.ToString());
         if (user.CitizenId > 0)
         {
             claims.AddNameUniqueIdentifier(user.CitizenId.ToString());

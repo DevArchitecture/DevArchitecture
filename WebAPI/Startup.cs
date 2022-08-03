@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using System.Globalization;
 using System.Text.Json.Serialization;
 using WebAPI.GraphQL.Mutations;
@@ -50,7 +52,13 @@ public partial class Startup : BusinessStartup
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
-
+        services.AddApiVersioning(v =>
+        {
+            v.DefaultApiVersion = new ApiVersion(1, 0);
+            v.AssumeDefaultVersionWhenUnspecified = true;
+            v.ReportApiVersions = true;
+            v.ApiVersionReader = new HeaderApiVersionReader("x-dev-arch-version");
+        });
 
         services.AddCors(options =>
         {
@@ -88,7 +96,7 @@ public partial class Startup : BusinessStartup
         services.AddTransient<FileLogger>();
         services.AddTransient<PostgreSqlLogger>();
         services.AddTransient<MsSqlLogger>();
-
+        services.AddScoped<IpControlAttribute>();
         base.ConfigureServices(services);
     }
 
@@ -103,7 +111,7 @@ public partial class Startup : BusinessStartup
         // VERY IMPORTANT. Since we removed the build from AddDependencyResolvers, let's set the Service provider manually.
         // By the way, we can construct with DI by taking type to avoid calling static methods in aspects.
         ServiceTool.ServiceProvider = app.ApplicationServices;
-
+       
 
         var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
         switch (configurationManager.Mode)
@@ -132,6 +140,11 @@ public partial class Startup : BusinessStartup
             {
                 c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
                 c.DocExpansion(DocExpansion.None);
+            });
+            app.UseReDoc(options =>
+            {
+                options.DocumentTitle = "ReDoc Sample Project";
+                options.SpecUrl = "/swagger/v1/swagger.json";
             });
         }
 

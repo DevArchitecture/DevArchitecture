@@ -14,7 +14,7 @@ public class UpdateUserClaimCommand : IRequest<IResult>
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public int[] ClaimId { get; set; }
+    public int[] ClaimIds { get; set; }
 
 
     public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
@@ -33,7 +33,7 @@ public class UpdateUserClaimCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(UpdateUserClaimCommand request, CancellationToken cancellationToken)
         {
-            var userList = request.ClaimId.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });
+            var userList = request.ClaimIds.Select(x => new UserClaim() { ClaimId = x, UserId = request.UserId });
 
             await _userClaimRepository.BulkInsert(request.UserId, userList);
             await _userClaimRepository.SaveChangesAsync();

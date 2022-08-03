@@ -1,19 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.Concrete;
 
-public class User : IEntity
+public class User : IEntity,ITenancy
 {
     public User()
     {
-        UpdateContactDate = RecordDate = DateTime.Now;
-        Status = true;
-    }
-
+        if (UserId == 0)
+        {
+            RecordDate = DateTime.Now;
+        }
+        UpdateContactDate = DateTime.Now;
+    }    
     public int UserId { get; set; }
+    public int CompanyId { get; set; }
+    public int TenantId { get; set; }    
     public long CitizenId { get; set; }
     public string FullName { get; set; }
     public string Email { get; set; }
+    [JsonIgnore]
     public string RefreshToken { get; set; }
     public string MobilePhones { get; set; }
     public bool Status { get; set; }

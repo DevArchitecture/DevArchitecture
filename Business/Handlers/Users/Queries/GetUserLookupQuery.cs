@@ -1,4 +1,5 @@
 ﻿using Business.BusinessAspects;
+using Business.Helpers;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Dtos;
@@ -14,10 +15,11 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
         GetUserLookupQueryHandler : IRequestHandler<GetUserLookupQuery, IDataResult<IEnumerable<SelectionItem>>>
     {
         private readonly IUserRepository _userRepository;
-
-        public GetUserLookupQueryHandler(IUserRepository userRepository)
+        private readonly IMediator _mediator;
+        public GetUserLookupQueryHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
         [SecuredOperation(Priority = 1)]
@@ -25,9 +27,16 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserLookupQuery request, CancellationToken cancellationToken)
         {
-            var list = await _userRepository.GetListAsync(x => x.Status);
+            var tenant = await _mediator.Send(new GetTenantQuery());
+            if (tenant != null && tenant.Data.UserId == 1)
+            {
+                var userLookups = await _userRepository.GetListAsync(x => x.Status);
+                var users = userLookups.Select(x => new SelectionItem() { Id = x.UserId.ToString(), Label = x.FullName });
+                return new SuccessDataResult<IEnumerable<SelectionItem>>(users);
+            }
+            var list = await _userRepository.GetListAsync(x => x.Status && x.TenantId == tenant.Data.TenantId);
             var userLookup = list.Select(x => new SelectionItem() { Id = x.UserId.ToString(), Label = x.FullName });
-            return new SuccessDataResult<IEnumerable<SelectionItem>>(userLookup);
+            return new SuccessDataResult<IEnumerable<SelectionItem>>(userLookup);          
         }
     }
 }

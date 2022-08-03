@@ -10,7 +10,8 @@ public static class ClaimsData
         {
             new Claim("username", "deneme"),
             new Claim("email", "test@test.com"),
-            new Claim("nameidentifier", "1")
+            new Claim("nameidentifier", "1"),
+            new Claim("tenantId","1")
         };
     }
 }
