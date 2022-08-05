@@ -30,7 +30,7 @@ public class CreateGroupCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             try
             {
                 var group = new Group

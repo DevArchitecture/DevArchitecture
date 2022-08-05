@@ -32,7 +32,7 @@ public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
         [LogAspect]
         public async Task<IDataResult<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             if (tenant != null && tenant.Data.UserId == 1)
             {
                 var users = await _userRepository.GetListAsync();

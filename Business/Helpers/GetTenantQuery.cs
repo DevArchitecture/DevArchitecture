@@ -1,15 +1,8 @@
 ﻿using Business.Handlers.Users.Queries;
-using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Business.Helpers
 {
@@ -31,7 +24,7 @@ namespace Business.Helpers
 
                 var userId = _httpContextAccessor.HttpContext?.User.Claims
                .FirstOrDefault(x => x.Type.EndsWith("nameidentifier"))?.Value;
-                var organizationId = await _mediator.Send(new GetUserQuery { UserId = Convert.ToInt32(userId) });
+                var organizationId = await _mediator.Send(new GetUserQuery { UserId = Convert.ToInt32(userId) }, cancellationToken);
                 var tenant = new TenantDto
                 {
                     TenantId = Convert.ToInt32(tenantId),

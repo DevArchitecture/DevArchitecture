@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Business.Handlers.UserGroups.Commands;
+﻿using Business.Handlers.UserGroups.Commands;
 using Business.Handlers.UserGroups.Queries;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {

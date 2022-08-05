@@ -3,14 +3,9 @@ using Business.Constants;
 using Business.BusinessAspects;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Linq;
 using Core.Aspects.Autofac.Validation;
 using Business.Handlers.Companies.ValidationRules;
 

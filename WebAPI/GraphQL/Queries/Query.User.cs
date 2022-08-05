@@ -1,7 +1,6 @@
 ﻿using Business.Handlers.Users.Queries;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
-using MediatR;
 
 namespace WebAPI.GraphQL.Queries;
 

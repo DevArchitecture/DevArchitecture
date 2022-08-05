@@ -42,7 +42,7 @@ public class CreateUserCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
 
             if (isThereAnyUser != null)

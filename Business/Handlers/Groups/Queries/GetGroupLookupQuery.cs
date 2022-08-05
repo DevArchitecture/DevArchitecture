@@ -27,7 +27,7 @@ public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionIte
             
 
 
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             if (tenant != null && tenant.Data.UserId == 1)
             {
                 var groupLookups = await _groupRepository.GetListAsync();

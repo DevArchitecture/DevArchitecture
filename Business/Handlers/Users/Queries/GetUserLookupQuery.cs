@@ -27,7 +27,7 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserLookupQuery request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             if (tenant != null && tenant.Data.UserId == 1)
             {
                 var userLookups = await _userRepository.GetListAsync(x => x.Status);

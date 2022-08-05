@@ -2,7 +2,6 @@
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
-using MediatR;
 
 namespace WebAPI.GraphQL.Queries;
 

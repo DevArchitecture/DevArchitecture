@@ -3,10 +3,7 @@ using Business.Handlers.Companies.Queries;
 using DataAccess.Abstract;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using static Business.Handlers.Companies.Queries.GetCompanyQuery;
 using static Business.Handlers.Companies.Queries.GetCompaniesQuery;
 using static Business.Handlers.Companies.Commands.CreateCompanyCommand;
@@ -15,7 +12,6 @@ using Business.Constants;
 using static Business.Handlers.Companies.Commands.UpdateCompanyCommand;
 using static Business.Handlers.Companies.Commands.DeleteCompanyCommand;
 using MediatR;
-using System.Linq;
 using FluentAssertions;
 using Core.Entities.Concrete;
 

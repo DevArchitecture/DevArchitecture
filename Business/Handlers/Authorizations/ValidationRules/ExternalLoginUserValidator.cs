@@ -1,5 +1,4 @@
-﻿using Business.Handlers.Authorizations.Commands;
-using Business.Handlers.Authorizations.Queries;
+﻿using Business.Handlers.Authorizations.Queries;
 using FluentValidation;
 
 namespace Business.Handlers.Authorizations.ValidationRules;

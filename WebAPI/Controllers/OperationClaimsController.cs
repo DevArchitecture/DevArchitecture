@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Business.Handlers.OperationClaims.Commands;
+﻿using Business.Handlers.OperationClaims.Commands;
 using Business.Handlers.OperationClaims.Queries;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Entities.Dtos;
 
 namespace WebAPI.Controllers
 {
