@@ -1,8 +1,8 @@
 ﻿using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using Core.Entities.Concrete;
 
 namespace Business.Fakes.Handlers.Companies
 {

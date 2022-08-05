@@ -1,13 +1,13 @@
 ﻿
 using Business.BusinessAspects;
+using Business.Helpers;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Caching;
-using Business.Helpers;
-using Core.Entities.Concrete;
 
 namespace Business.Handlers.Companies.Queries
 {

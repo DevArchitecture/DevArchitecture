@@ -22,6 +22,6 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(x => x.CitizenId);
         builder.HasIndex(x => x.MobilePhones);
-   
+
     }
 }

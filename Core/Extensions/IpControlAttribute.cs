@@ -1,6 +1,6 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Net;
 
 namespace Core.Extensions
 {
@@ -15,7 +15,7 @@ namespace Core.Extensions
 
             var ips = SpecialConfigurationExtensions.GetWhiteList();
 
-            if (!ips.Any(ip => IPAddress.Parse((string)ip).Equals(remoteIp)))
+            if (!ips.Any(ip => IPAddress.Parse(ip).Equals(remoteIp)))
             {
                 context.Result = new StatusCodeResult((int)HttpStatusCode.Forbidden);
                 return;

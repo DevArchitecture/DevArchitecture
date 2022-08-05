@@ -63,7 +63,7 @@ public class ExceptionLogAspect : MethodInterception
                     _httpContextAccessor.HttpContext.User.Identity.Name == null)
                 ? "?"
                 : _httpContextAccessor.HttpContext.User.Identity.Name,
-            TenantId= (_httpContextAccessor.HttpContext == null ||
+            TenantId = (_httpContextAccessor.HttpContext == null ||
                     tenantId == null)
                 ? "?"
                 : tenantId,

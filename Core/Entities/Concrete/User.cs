@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.Concrete;
 
-public class User : IEntity,ITenancy
+public class User : IEntity, ITenancy
 {
     public User()
     {
@@ -12,10 +12,10 @@ public class User : IEntity,ITenancy
             RecordDate = DateTime.Now;
         }
         UpdateContactDate = DateTime.Now;
-    }    
+    }
     public int UserId { get; set; }
     public int CompanyId { get; set; }
-    public int TenantId { get; set; }    
+    public int TenantId { get; set; }
     public long CitizenId { get; set; }
     public string FullName { get; set; }
     public string Email { get; set; }

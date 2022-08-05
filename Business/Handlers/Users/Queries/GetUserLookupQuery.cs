@@ -36,7 +36,7 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
             }
             var list = await _userRepository.GetListAsync(x => x.Status && x.TenantId == tenant.Data.TenantId);
             var userLookup = list.Select(x => new SelectionItem() { Id = x.UserId.ToString(), Label = x.FullName });
-            return new SuccessDataResult<IEnumerable<SelectionItem>>(userLookup);          
+            return new SuccessDataResult<IEnumerable<SelectionItem>>(userLookup);
         }
     }
 }

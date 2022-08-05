@@ -85,11 +85,11 @@ public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
                 data.Add(list);
             }
 
-            return new SuccessDataResult<IEnumerable<LogDto>>(data.Where(x=>x.TenantId==tenant.Data.TenantId.ToString()));
-        
+            return new SuccessDataResult<IEnumerable<LogDto>>(data.Where(x => x.TenantId == tenant.Data.TenantId.ToString()));
 
 
-            
+
+
         }
     }
 }

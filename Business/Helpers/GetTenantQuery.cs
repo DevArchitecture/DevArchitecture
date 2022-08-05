@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.Helpers
 {
-    public class GetTenantQuery: IRequest<IDataResult<TenantDto>>
+    public class GetTenantQuery : IRequest<IDataResult<TenantDto>>
     {
         public class GetTenantQueryHandler : IRequestHandler<GetTenantQuery, IDataResult<TenantDto>>
         {
@@ -29,12 +29,12 @@ namespace Business.Helpers
                 {
                     TenantId = Convert.ToInt32(tenantId),
                     UserId = Convert.ToInt32(userId),
-                    OrganizationId =organizationId.Data.OrganizationId
+                    OrganizationId = organizationId.Data.OrganizationId
                 };
                 return new SuccessDataResult<TenantDto>(tenant);
             }
 
-            
+
         }
     }
 }

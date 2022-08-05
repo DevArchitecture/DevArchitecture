@@ -1,9 +1,9 @@
 ﻿using Business.Handlers.Translates.Commands;
 using Business.Handlers.Translates.Queries;
 using Core.Entities.Concrete;
+using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Core.Entities.Dtos;
 
 namespace WebAPI.Controllers
 {

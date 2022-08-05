@@ -24,9 +24,6 @@ public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionIte
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request, CancellationToken cancellationToken)
         {
-            
-
-
             var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             if (tenant != null && tenant.Data.UserId == 1)
             {
@@ -45,7 +42,6 @@ public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionIte
                 Label = x.GroupName
             });
             return new SuccessDataResult<IEnumerable<SelectionItem>>(groupList);
-
         }
     }
 }

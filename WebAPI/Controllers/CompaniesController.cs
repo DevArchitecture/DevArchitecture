@@ -1,8 +1,8 @@
 ﻿
 using Business.Handlers.Companies.Commands;
 using Business.Handlers.Companies.Queries;
-using Microsoft.AspNetCore.Mvc;
 using Core.Entities.Concrete;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {

@@ -36,7 +36,7 @@ public class ProjectDbContext : DbContext
     {
         Configuration = configuration;
     }
-    
+
     public DbSet<OperationClaim> OperationClaims { get; set; }
     public DbSet<UserClaim> UserClaims { get; set; }
     public DbSet<Group> Groups { get; set; }
@@ -52,7 +52,7 @@ public class ProjectDbContext : DbContext
     protected IConfiguration Configuration { get; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {  
+    {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 

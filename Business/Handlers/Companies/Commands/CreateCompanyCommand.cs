@@ -1,14 +1,14 @@
 ﻿
 using Business.BusinessAspects;
 using Business.Constants;
+using Business.Handlers.Companies.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using Business.Handlers.Companies.ValidationRules;
-using Core.Entities.Concrete;
 
 namespace Business.Handlers.Companies.Commands
 {
@@ -26,7 +26,7 @@ namespace Business.Handlers.Companies.Commands
         public string Phone2 { get; set; }
         public string Email { get; set; }
         public string TaxNo { get; set; }
-        public string WebSite { get; set; }        
+        public string WebSite { get; set; }
 
 
         public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, IResult>
@@ -42,7 +42,7 @@ namespace Business.Handlers.Companies.Commands
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(CreateCompanyValidator), Priority = 2)]
             [CacheRemoveAspect("Get")]
-            [LogAspect()]            
+            [LogAspect()]
             public async Task<IResult> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
             {
                 var isThereCompanyRecord = _companyRepository.Query().Any(u => u.Name == request.Name);
@@ -61,7 +61,7 @@ namespace Business.Handlers.Companies.Commands
                     Email = request.Email,
                     TaxNo = request.TaxNo,
                     WebSite = request.WebSite,
-                    
+
 
                 };
 

@@ -1,19 +1,19 @@
 ﻿
+using Business.Constants;
+using Business.Handlers.Companies.Commands;
 using Business.Handlers.Companies.Queries;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
+using FluentAssertions;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;
-using static Business.Handlers.Companies.Queries.GetCompanyQuery;
-using static Business.Handlers.Companies.Queries.GetCompaniesQuery;
 using static Business.Handlers.Companies.Commands.CreateCompanyCommand;
-using Business.Handlers.Companies.Commands;
-using Business.Constants;
-using static Business.Handlers.Companies.Commands.UpdateCompanyCommand;
 using static Business.Handlers.Companies.Commands.DeleteCompanyCommand;
-using MediatR;
-using FluentAssertions;
-using Core.Entities.Concrete;
+using static Business.Handlers.Companies.Commands.UpdateCompanyCommand;
+using static Business.Handlers.Companies.Queries.GetCompaniesQuery;
+using static Business.Handlers.Companies.Queries.GetCompanyQuery;
 
 
 namespace Tests.Business.Handlers

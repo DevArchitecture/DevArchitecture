@@ -1,13 +1,13 @@
 ﻿
-using Business.Constants;
 using Business.BusinessAspects;
+using Business.Constants;
+using Business.Handlers.Companies.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.Companies.ValidationRules;
 
 
 namespace Business.Handlers.Companies.Commands
@@ -26,7 +26,7 @@ namespace Business.Handlers.Companies.Commands
         public string Email { get; set; }
         public string TaxNo { get; set; }
         public string WebSite { get; set; }
-       
+
 
         public class UpdateCompanyCommandHandler : IRequestHandler<UpdateCompanyCommand, IResult>
         {
@@ -57,7 +57,7 @@ namespace Business.Handlers.Companies.Commands
                 isThereCompanyRecord.Email = request.Email;
                 isThereCompanyRecord.TaxNo = request.TaxNo;
                 isThereCompanyRecord.WebSite = request.WebSite;
-              
+
 
 
                 _companyRepository.Update(isThereCompanyRecord);

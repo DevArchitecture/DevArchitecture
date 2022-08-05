@@ -9,7 +9,7 @@ namespace Business.Handlers.Companies.ValidationRules
     {
         public CreateCompanyValidator()
         {
-            
+
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.FirmName).NotEmpty();
             RuleFor(x => x.Address).NotEmpty();
@@ -18,7 +18,7 @@ namespace Business.Handlers.Companies.ValidationRules
             RuleFor(x => x.Email).NotEmpty();
             RuleFor(x => x.TaxNo).NotEmpty();
             RuleFor(x => x.WebSite).NotEmpty();
-            
+
 
         }
     }
@@ -26,7 +26,7 @@ namespace Business.Handlers.Companies.ValidationRules
     {
         public UpdateCompanyValidator()
         {
-           
+
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.FirmName).NotEmpty();
             RuleFor(x => x.Address).NotEmpty();
@@ -35,7 +35,7 @@ namespace Business.Handlers.Companies.ValidationRules
             RuleFor(x => x.Email).NotEmpty();
             RuleFor(x => x.TaxNo).NotEmpty();
             RuleFor(x => x.WebSite).NotEmpty();
-           
+
 
         }
     }

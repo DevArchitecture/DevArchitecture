@@ -1,18 +1,18 @@
 ﻿using Business.Constants;
+using Business.Handlers.Authorizations.ValidationRules;
 using Business.Services.Authentication;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
+using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
-using MediatR;
 using Google.Apis.Auth;
-using Core.Aspects.Autofac.Caching;
+using MediatR;
 using Newtonsoft.Json;
-using Core.Entities.Dtos;
-using Core.Aspects.Autofac.Validation;
-using Business.Handlers.Authorizations.ValidationRules;
 
 namespace Business.Handlers.Authorizations.Queries;
 public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
@@ -138,8 +138,8 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
 
             var user = new User
             {
-                TenantId=1,
-                CompanyId=1,
+                TenantId = 1,
+                CompanyId = 1,
                 Email = payload.Email,
                 FullName = payload.Name
             };
