@@ -66,7 +66,14 @@ namespace Tests.Business.Handlers
             var query = new GetCompaniesQuery();
 
             _companyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Company, bool>>>()))
-                        .ReturnsAsync(new List<Company> { new Company() { Id = 1, Name = "test" /*TODO:propertyler buraya yazılacak CompanyId = 1, CompanyName = "test"*/ } });
+                        .ReturnsAsync(new List<Company> {
+                            new Company() {
+                                Id = 1, Name = "test" /*TODO:propertyler buraya yazılacak CompanyId = 1, CompanyName = "test"*/ 
+                            },
+                            new Company() {
+                                Id = 2, Name = "test2"
+                            }
+                        });
 
             var handler = new GetCompaniesQueryHandler(_companyRepository.Object, _mediator.Object);
 
