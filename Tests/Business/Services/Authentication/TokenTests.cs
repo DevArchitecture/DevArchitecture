@@ -23,7 +23,7 @@ public class TokenTests : BaseIntegrationTest
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
         var cache = new MemoryCacheManager();
 
-        cache.Add($"{CacheKeys.UserIdForClaim}=1", new List<string>() { "GetUsersQuery" });
+        cache.Add($"{CacheKeys.UserIdForClaim}=1", new List<string>() { "GetUserQuery", "GetUsersQuery" });
         // Act
         var response = await HttpClient.GetAsync(RequestUri);
 

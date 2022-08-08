@@ -35,7 +35,7 @@ public class TranslateRepository : EfEntityRepositoryBase<Translate, ProjectDbCo
         var data = await (from trs in Context.Translates
                           join lng in Context.Languages on trs.LangId equals lng.Id
                           where lng.Code == langCode
-                          select trs).ToDictionaryAsync(x => (string)x.Code, x => (string)x.Value);
+                          select trs).ToDictionaryAsync(x => x.Code, x => x.Value);
 
         var str = JsonConvert.SerializeObject(data);
         return str;

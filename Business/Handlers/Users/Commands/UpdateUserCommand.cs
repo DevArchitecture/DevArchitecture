@@ -34,7 +34,7 @@ public class UpdateUserCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 
             isThereAnyUser.FullName = request.FullName;

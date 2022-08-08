@@ -22,7 +22,7 @@ public static class Program
     /// <param name="args"></param>
     /// <returns></returns>
     public static IHostBuilder CreateHostBuilder(string[] args)
-    {      
+    {
         return Host.CreateDefaultBuilder(args)
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })

@@ -1,6 +1,5 @@
 ﻿using Business.Handlers.Users.Commands;
 using Core.Utilities.Results;
-using MediatR;
 
 namespace WebAPI.GraphQL.Mutations;
 

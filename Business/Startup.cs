@@ -49,7 +49,7 @@ public partial class BusinessStartup
     {
         static ClaimsPrincipal GetPrincipal(IServiceProvider sp)
         {
-            return sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ?? 
+            return sp.GetService<IHttpContextAccessor>()?.HttpContext?.User ??
                 new ClaimsPrincipal(new ClaimsIdentity(Messages.Unknown));
         }
 
@@ -124,7 +124,7 @@ public partial class BusinessStartup
         services.AddTransient<IGroupRepository, GroupRepository>();
         services.AddTransient<IGroupClaimRepository, GroupClaimRepository>();
         services.AddTransient<IUserGroupRepository, UserGroupRepository>();
-        services.AddDbContext<ProjectDbContext,MsDbContext>();
+        services.AddDbContext<ProjectDbContext, MsDbContext>();
 
         services.AddSingleton<MongoDbContextBase, MongoDbContext>();
     }

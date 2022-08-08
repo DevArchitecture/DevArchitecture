@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace WebAPI.GraphQL.Queries;
+﻿namespace WebAPI.GraphQL.Queries;
 
 public partial class Query : BaseQuery
 {

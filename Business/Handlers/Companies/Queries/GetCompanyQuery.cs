@@ -1,13 +1,10 @@
 ﻿
 using Business.BusinessAspects;
+using Core.Aspects.Autofac.Logging;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Entities.Concrete;
 
 namespace Business.Handlers.Companies.Queries
 {
@@ -27,7 +24,7 @@ namespace Business.Handlers.Companies.Queries
             }
 
             [SecuredOperation(Priority = 1)]
-            [LogAspect()]          
+            [LogAspect()]
             public async Task<IDataResult<Company>> Handle(GetCompanyQuery request, CancellationToken cancellationToken)
             {
                 var company = await _companyRepository.GetAsync(p => p.Id == request.Id);

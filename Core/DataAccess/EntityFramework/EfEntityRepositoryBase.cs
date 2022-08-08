@@ -4,8 +4,9 @@ using Core.Enums;
 using Core.Extensions;
 using Core.Utilities.Results;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using ServiceStack;
+using System.Linq.Expressions;
+
 namespace Core.DataAccess.EntityFramework;
 
 /// <summary>

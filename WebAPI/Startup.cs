@@ -7,10 +7,10 @@ using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Globalization;
 using System.Text.Json.Serialization;
 using WebAPI.GraphQL.Mutations;
@@ -111,7 +111,7 @@ public partial class Startup : BusinessStartup
         // VERY IMPORTANT. Since we removed the build from AddDependencyResolvers, let's set the Service provider manually.
         // By the way, we can construct with DI by taking type to avoid calling static methods in aspects.
         ServiceTool.ServiceProvider = app.ApplicationServices;
-       
+
 
         var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
         switch (configurationManager.Mode)
@@ -172,7 +172,7 @@ public partial class Startup : BusinessStartup
 
         app.UseStaticFiles();
 
-        app.UseEndpoints(endpoints => 
+        app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
             endpoints.MapGraphQL();

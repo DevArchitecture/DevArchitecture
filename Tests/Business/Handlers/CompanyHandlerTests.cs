@@ -1,23 +1,19 @@
 ﻿
+using Business.Constants;
+using Business.Handlers.Companies.Commands;
 using Business.Handlers.Companies.Queries;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
+using FluentAssertions;
+using MediatR;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using static Business.Handlers.Companies.Queries.GetCompanyQuery;
-using static Business.Handlers.Companies.Queries.GetCompaniesQuery;
 using static Business.Handlers.Companies.Commands.CreateCompanyCommand;
-using Business.Handlers.Companies.Commands;
-using Business.Constants;
-using static Business.Handlers.Companies.Commands.UpdateCompanyCommand;
 using static Business.Handlers.Companies.Commands.DeleteCompanyCommand;
-using MediatR;
-using System.Linq;
-using FluentAssertions;
-using Core.Entities.Concrete;
+using static Business.Handlers.Companies.Commands.UpdateCompanyCommand;
+using static Business.Handlers.Companies.Queries.GetCompaniesQuery;
+using static Business.Handlers.Companies.Queries.GetCompanyQuery;
 
 
 namespace Tests.Business.Handlers
@@ -66,7 +62,14 @@ namespace Tests.Business.Handlers
             var query = new GetCompaniesQuery();
 
             _companyRepository.Setup(x => x.GetListAsync(It.IsAny<Expression<Func<Company, bool>>>()))
-                        .ReturnsAsync(new List<Company> { new Company() { Id = 1, Name = "test" /*TODO:propertyler buraya yazılacak CompanyId = 1, CompanyName = "test"*/ } });
+                        .ReturnsAsync(new List<Company> {
+                            new Company() {
+                                Id = 1, Name = "test" /*TODO:propertyler buraya yazılacak CompanyId = 1, CompanyName = "test"*/ 
+                            },
+                            new Company() {
+                                Id = 2, Name = "test2"
+                            }
+                        });
 
             var handler = new GetCompaniesQueryHandler(_companyRepository.Object, _mediator.Object);
 

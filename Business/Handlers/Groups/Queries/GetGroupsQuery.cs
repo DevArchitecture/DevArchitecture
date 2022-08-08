@@ -28,7 +28,7 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             if (tenant != null && tenant.Data.UserId == 1)
             {
                 return new SuccessDataResult<IEnumerable<Group>>(await _groupRepository.GetListAsync());

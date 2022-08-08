@@ -15,7 +15,7 @@ public class PostgreSqlLogger : LoggerServiceBase
     {
         var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
-        
+
         var logConfig = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration")
                             .Get<PostgreConfiguration>() ??
                         throw new Exception(SerilogMessages.NullOptionsMessage);

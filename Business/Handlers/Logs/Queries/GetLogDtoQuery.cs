@@ -30,7 +30,7 @@ public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
         [LogAspect]
         public async Task<IDataResult<IEnumerable<LogDto>>> Handle(GetLogDtoQuery request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery());
+            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             if (tenant != null && tenant.Data.UserId == 1)
             {
                 var logs = await _logRepository.GetListAsync();
@@ -85,11 +85,11 @@ public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
                 data.Add(list);
             }
 
-            return new SuccessDataResult<IEnumerable<LogDto>>(data.Where(x=>x.TenantId==tenant.Data.TenantId.ToString()));
-        
+            return new SuccessDataResult<IEnumerable<LogDto>>(data.Where(x => x.TenantId == tenant.Data.TenantId.ToString()));
 
 
-            
+
+
         }
     }
 }

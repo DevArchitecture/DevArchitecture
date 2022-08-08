@@ -21,7 +21,7 @@ public class LogAspect : MethodInterception
 
     public LogAspect() : this(LogAspectSettings.Logger)
     {
-        
+
     }
 
     public LogAspect(Type loggerService)

@@ -258,6 +258,6 @@ public class BaseApiController : Controller
     /// <param name="data"></param>
     /// <returns></returns>
     [NonAction]
-    protected IActionResult Error<T>(ApiResult<T> data) 
+    protected IActionResult Error<T>(ApiResult<T> data)
         => StatusCode(500, data);
 }
