@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Results;
-
+using System.Collections.Generic;
 namespace Core.Utilities.Business
 {
     public static class BusinessRules
