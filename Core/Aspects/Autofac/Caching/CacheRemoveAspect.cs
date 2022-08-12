@@ -18,6 +18,8 @@ public class CacheRemoveAspect : MethodInterception
     const string update = "Update";
     const string delete = "Delete";
     const string get = "Get";
+    const string internalCommand = "Internal";
+    const string register = "Register";
     public CacheRemoveAspect(string pattern = "")
     {
         _pattern = pattern;
@@ -32,6 +34,8 @@ public class CacheRemoveAspect : MethodInterception
             targetTypeName = targetTypeName.Replace(create, string.Empty);
             targetTypeName = targetTypeName.Replace(update, string.Empty);
             targetTypeName = targetTypeName.Replace(delete, string.Empty);
+            targetTypeName = targetTypeName.Replace(internalCommand, string.Empty);
+            targetTypeName = targetTypeName.Replace(register, string.Empty);
             _pattern = get + targetTypeName;
         }
         _cacheManager.RemoveByPattern(_pattern);
