@@ -2,6 +2,7 @@
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Caching;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
@@ -43,6 +44,11 @@ public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
                 return new ErrorDataResult<AccessToken>(Messages.PasswordError);
             }
 
+            return await Login(user);
+        }
+
+        internal async Task<IDataResult<AccessToken>> Login(User user)
+        {
             var claims = _userRepository.GetClaims(user.UserId);
 
             var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
