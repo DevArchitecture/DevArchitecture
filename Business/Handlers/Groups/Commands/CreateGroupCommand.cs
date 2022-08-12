@@ -31,21 +31,14 @@ public class CreateGroupCommand : IRequest<IResult>
         public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
             var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
-            try
+            var group = new Group
             {
-                var group = new Group
-                {
-                    TenantId = tenant.Data.TenantId,
-                    GroupName = request.GroupName
-                };
-                _groupRepository.Add(group);
-                await _groupRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Added);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                TenantId = tenant.Data.TenantId,
+                GroupName = request.GroupName
+            };
+            _groupRepository.Add(group);
+            await _groupRepository.SaveChangesAsync();
+            return new SuccessResult(Messages.Added);
         }
     }
 }
