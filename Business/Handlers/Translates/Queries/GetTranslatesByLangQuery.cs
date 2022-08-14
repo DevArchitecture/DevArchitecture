@@ -1,5 +1,4 @@
-﻿using Business.BusinessAspects;
-using Core.Aspects.Autofac.Logging;
+﻿using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;

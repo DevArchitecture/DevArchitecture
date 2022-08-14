@@ -10,8 +10,7 @@ namespace Business.Handlers.OperationClaims.Queries;
 
 public class GetOperationClaimsQuery : IRequest<IDataResult<IEnumerable<OperationClaim>>>
 {
-    public class
-        GetOperationClaimsQueryHandler : IRequestHandler<GetOperationClaimsQuery,
+    public class GetOperationClaimsQueryHandler : IRequestHandler<GetOperationClaimsQuery,
             IDataResult<IEnumerable<OperationClaim>>>
     {
         private readonly IOperationClaimRepository _operationClaimRepository;

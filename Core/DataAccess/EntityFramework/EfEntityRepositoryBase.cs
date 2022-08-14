@@ -31,6 +31,11 @@ public class EfEntityRepositoryBase<TEntity, TContext>
         return Context.Add(entity).Entity;
     }
 
+    public void AddRange(TEntity[] entities)
+    {
+        Context.AddRange(entities);
+    }
+
     public TEntity Update(TEntity entity)
     {
         Context.Update(entity);

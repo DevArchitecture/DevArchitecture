@@ -50,7 +50,7 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
                 Email = externalUser.Email,
                 FullName = externalUser.FullName,
                 Password = new Password(32).Next(),
-            }, cancellationToken);;
+            }, cancellationToken);
 
             var user = await _userRepository.GetAsync(u => u.Email == externalUser.Email);
 
@@ -107,6 +107,6 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
             {
                 return null;
             }
-        } 
+        }
     }
 }

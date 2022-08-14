@@ -1,5 +1,4 @@
 ﻿using Business.BusinessAspects;
-using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;

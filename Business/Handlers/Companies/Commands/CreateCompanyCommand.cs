@@ -59,8 +59,6 @@ namespace Business.Handlers.Companies.Commands
                     Email = request.Email,
                     TaxNo = request.TaxNo,
                     WebSite = request.WebSite,
-
-
                 };
 
                 _companyRepository.Add(addedCompany);

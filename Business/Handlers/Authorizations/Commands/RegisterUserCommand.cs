@@ -1,5 +1,6 @@
-﻿using Business.BusinessAspects;
-using Business.Constants;
+﻿using Business.Constants;
+using Business.Fakes.Handlers.Groups;
+using Business.Fakes.Handlers.UserGroups;
 using Business.Handlers.Authorizations.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -22,14 +23,15 @@ public class RegisterUserCommand : IRequest<IResult>
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
 
 
-        public RegisterUserCommandHandler(IUserRepository userRepository)
+        public RegisterUserCommandHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
-        [SecuredOperation]
         [ValidationAspect(typeof(RegisterUserValidator))]
         [CacheRemoveAspect]
         [LogAspect]
@@ -46,15 +48,17 @@ public class RegisterUserCommand : IRequest<IResult>
             var user = new User
             {
                 Email = request.Email,
-
                 FullName = request.FullName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = true,
+                TenantId = 1,
+                CompanyId = 1
             };
 
             _userRepository.Add(user);
             await _userRepository.SaveChangesAsync();
+
             return new SuccessResult(Messages.Added);
         }
     }
