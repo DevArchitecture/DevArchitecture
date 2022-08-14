@@ -15,16 +15,14 @@ namespace Business.Handlers.Companies.Queries
         public class GetCompanyQueryHandler : IRequestHandler<GetCompanyQuery, IDataResult<Company>>
         {
             private readonly ICompanyRepository _companyRepository;
-            private readonly IMediator _mediator;
 
-            public GetCompanyQueryHandler(ICompanyRepository companyRepository, IMediator mediator)
+            public GetCompanyQueryHandler(ICompanyRepository companyRepository)
             {
                 _companyRepository = companyRepository;
-                _mediator = mediator;
             }
 
-            [SecuredOperation(Priority = 1)]
-            [LogAspect()]
+            [SecuredOperation]
+            [LogAspect]
             public async Task<IDataResult<Company>> Handle(GetCompanyQuery request, CancellationToken cancellationToken)
             {
                 var company = await _companyRepository.GetAsync(p => p.Id == request.Id);

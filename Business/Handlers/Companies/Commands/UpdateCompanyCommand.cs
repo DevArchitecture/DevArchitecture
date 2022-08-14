@@ -31,22 +31,19 @@ namespace Business.Handlers.Companies.Commands
         public class UpdateCompanyCommandHandler : IRequestHandler<UpdateCompanyCommand, IResult>
         {
             private readonly ICompanyRepository _companyRepository;
-            private readonly IMediator _mediator;
 
-            public UpdateCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
+            public UpdateCompanyCommandHandler(ICompanyRepository companyRepository)
             {
                 _companyRepository = companyRepository;
-                _mediator = mediator;
             }
 
-            [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(UpdateCompanyValidator), Priority = 2)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect()]
+            [SecuredOperation]
+            [ValidationAspect(typeof(UpdateCompanyValidator))]
+            [CacheRemoveAspect]
+            [LogAspect]
             public async Task<IResult> Handle(UpdateCompanyCommand request, CancellationToken cancellationToken)
             {
                 var isThereCompanyRecord = await _companyRepository.GetAsync(u => u.Id == request.Id);
-
 
                 isThereCompanyRecord.TenantId = request.TenantId;
                 isThereCompanyRecord.Name = request.Name;
@@ -57,8 +54,6 @@ namespace Business.Handlers.Companies.Commands
                 isThereCompanyRecord.Email = request.Email;
                 isThereCompanyRecord.TaxNo = request.TaxNo;
                 isThereCompanyRecord.WebSite = request.WebSite;
-
-
 
                 _companyRepository.Update(isThereCompanyRecord);
                 await _companyRepository.SaveChangesAsync();

@@ -9,6 +9,7 @@ public interface IEntityRepository<T>
     where T : class, IEntity
 {
     T Add(T entity);
+    void AddRange(T[] entities);
     T Update(T entity);
     void Delete(T entity);
     IEnumerable<T> GetList(Expression<Func<T, bool>> expression = null);

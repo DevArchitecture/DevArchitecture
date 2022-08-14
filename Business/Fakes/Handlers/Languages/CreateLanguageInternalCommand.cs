@@ -1,11 +1,13 @@
-﻿using Business.Constants;
+﻿using AutoMapper;
+using Business.Handlers.Languages.Commands;
 using Business.Handlers.Languages.ValidationRules;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
+using static Business.Handlers.Languages.Commands.CreateLanguageCommand;
 
 namespace Business.Fakes.Handlers.Languages;
 
@@ -21,33 +23,22 @@ public class CreateLanguageInternalCommand : IRequest<IResult>
     public class CreateLanguageInternalCommandHandler : IRequestHandler<CreateLanguageInternalCommand, IResult>
     {
         private readonly ILanguageRepository _languageRepository;
+        private readonly IMapper _mapper;
 
-        public CreateLanguageInternalCommandHandler(ILanguageRepository languageRepository)
+        public CreateLanguageInternalCommandHandler(ILanguageRepository languageRepository, IMapper mapper)
         {
             _languageRepository = languageRepository;
+            _mapper = mapper;
         }
 
 
-        [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
+        [ValidationAspect(typeof(CreateLanguageValidator))]
         [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateLanguageInternalCommand request, CancellationToken cancellationToken)
         {
-            var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);
-
-            if (isThereLanguageRecord)
-            {
-                return new ErrorResult(Messages.NameAlreadyExist);
-            }
-
-            var addedLanguage = new Language
-            {
-                Name = request.Name,
-                Code = request.Code,
-            };
-
-            _languageRepository.Add(addedLanguage);
-            await _languageRepository.SaveChangesAsync();
-            return new SuccessResult(Messages.Added);
+            var handler = new CreateLanguageCommandHandler(_languageRepository);
+            return await handler.Handle(_mapper.Map<CreateLanguageCommand>(request), cancellationToken);
         }
     }
 }

@@ -8,6 +8,7 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using FluentAssertions;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;
@@ -26,6 +27,7 @@ public class AuthorizationsTests
     private Mock<IUserRepository> _userRepository;
     private Mock<ITokenHelper> _tokenHelper;
     private Mock<ICacheManager> _cacheManager;
+    private Mock<IMediator> _mediator;
 
     private LoginUserQueryHandler _loginUserQueryHandler;
     private LoginUserQuery _loginUserQuery;
@@ -40,9 +42,10 @@ public class AuthorizationsTests
         _userRepository = new Mock<IUserRepository>();
         _tokenHelper = new Mock<ITokenHelper>();
         _cacheManager = new Mock<ICacheManager>();
+        _mediator = new Mock<IMediator>();
 
         _loginUserQueryHandler = new LoginUserQueryHandler(_userRepository.Object, _tokenHelper.Object, _cacheManager.Object);
-        _registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object);
+        _registerUserCommandHandler = new RegisterUserCommandHandler(_userRepository.Object, _mediator.Object);
         _forgotPasswordCommandHandler = new ForgotPasswordCommandHandler(_userRepository.Object);
     }
 

@@ -1,4 +1,5 @@
 ﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
@@ -19,7 +20,8 @@ public class GetOperationClaimLookupQuery : IRequest<IDataResult<IEnumerable<Sel
             _operationClaimRepository = operationClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
+        [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetOperationClaimLookupQuery request, CancellationToken cancellationToken)
         {

@@ -1,7 +1,6 @@
 ﻿using Business.Constants;
+using Business.Fakes.Handlers.Authorizations;
 using Business.Handlers.Authorizations.ValidationRules;
-using Business.Services.Authentication;
-using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Caching;
@@ -13,6 +12,8 @@ using DataAccess.Abstract;
 using Google.Apis.Auth;
 using MediatR;
 using Newtonsoft.Json;
+using PasswordGenerator;
+using static Business.Handlers.Authorizations.Queries.LoginUserQuery;
 
 namespace Business.Handlers.Authorizations.Queries;
 public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
@@ -25,101 +26,50 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
         private readonly IUserRepository _userRepository;
         private readonly ITokenHelper _tokenHelper;
         private readonly ICacheManager _cacheManager;
+        private readonly IMediator _mediator;
 
-        public ExternalLoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager)
+        public ExternalLoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager, IMediator mediator)
         {
             _userRepository = userRepository;
             _tokenHelper = tokenHelper;
             _cacheManager = cacheManager;
+            _mediator = mediator;
         }
 
-        [ValidationAspect(typeof(ExternalLoginUserValidator), Priority = 1)]
+        [ValidationAspect(typeof(ExternalLoginUserValidator))]
         [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(ExternalLoginUserQuery request, CancellationToken cancellationToken)
         {
-            IDataResult<User> verifyResult;
+            var externalUser = await VerifyToken(request);
 
-            switch (request.Provider)
+            if (externalUser is null)
+                return new ErrorDataResult<AccessToken>(Messages.InvalidExternalAuthentication);
+
+            await _mediator.Send(new RegisterUserInternalCommand
             {
-                case "FACEBOOK":
-                    verifyResult = await VerifyFacebookToken(request.Token);
-                    break;
-                case "GOOGLE":
-                    verifyResult = await VerifyGoogleToken(request.Token);
-                    break;
-                default:
-                    return new ErrorDataResult<AccessToken>(Messages.InvalidExternalAuthentication);
-            }
+                Email = externalUser.Email,
+                FullName = externalUser.FullName,
+                Password = new Password(32).Next(),
+            }, cancellationToken);
 
-            if (!verifyResult.Success)
-            {
-                return new ErrorDataResult<AccessToken>(verifyResult.Message);
-            }
+            var user = await _userRepository.GetAsync(u => u.Email == externalUser.Email);
 
-            var userData = verifyResult.Data;
+            var loginUserQueryHandler = new LoginUserQueryHandler(_userRepository, _tokenHelper, _cacheManager);
 
-            var user = await _userRepository.GetAsync(u => u.Email == userData.Email);
-
-            if (user == null)
-            {
-                await RegisterUserAsync(userData);
-
-                user = await _userRepository.GetAsync(u => u.Email == userData.Email);
-            }
-
-            var claims = _userRepository.GetClaims(user.UserId);
-
-            var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
-            accessToken.Claims = claims.Select(x => x.Name).ToList();
-
-            user.RefreshToken = accessToken.RefreshToken;
-            _userRepository.Update(user);
-            await _userRepository.SaveChangesAsync();
-
-            _cacheManager.Add($"{CacheKeys.UserIdForClaim}={user.UserId}", claims.Select(x => x.Name));
-
-            return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
+            return await loginUserQueryHandler.Login(user);
         }
 
-        [CacheRemoveAspect]
-        private async Task RegisterUserAsync(User user)
+        private static async Task<User> VerifyToken(ExternalLoginUserQuery request)
         {
-            var registerUser = new User
+            return request.Provider switch
             {
-                TenantId = 1,
-                CompanyId = 1,
-                Email = user.Email,
-                FullName = user.FullName,
-                Status = true
+                "FACEBOOK" => await VerifyFacebookToken(request.Token),
+                "GOOGLE" => await VerifyGoogleToken(request.Token),
+                _ => null,
             };
-
-            _userRepository.Add(registerUser);
-            await _userRepository.SaveChangesAsync();
         }
 
-        private static async Task<IDataResult<User>> VerifyGoogleToken(string token)
-        {
-            try
-            {
-                var payload = await GoogleJsonWebSignature.ValidateAsync(token);
-
-                var user = new User
-                {
-                    TenantId = 1,
-                    CompanyId = 1,
-                    Email = payload.Email,
-                    FullName = payload.Name
-                };
-
-                return new SuccessDataResult<User>(user);
-            }
-            catch
-            {
-                return new ErrorDataResult<User>(Messages.InvalidExternalAuthentication);
-            }
-        }
-
-        private static async Task<IDataResult<User>> VerifyFacebookToken(string token)
+        private static async Task<User> VerifyFacebookToken(string token)
         {
             var client = new HttpClient
             {
@@ -129,22 +79,34 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
             var response = await client.GetAsync($"me?access_token={token}&fields=name,email");
 
             if (!response.IsSuccessStatusCode)
-            {
-                return new ErrorDataResult<User>(Messages.InvalidExternalAuthentication);
-            }
+                return null;
 
             var content = await response.Content.ReadAsStringAsync();
             var payload = JsonConvert.DeserializeObject<FacebookUserDto>(content);
 
-            var user = new User
+            return new User
             {
-                TenantId = 1,
-                CompanyId = 1,
                 Email = payload.Email,
                 FullName = payload.Name
             };
+        }
 
-            return new SuccessDataResult<User>(user);
+        private static async Task<User> VerifyGoogleToken(string token)
+        {
+            try
+            {
+                var payload = await GoogleJsonWebSignature.ValidateAsync(token);
+
+                return new User
+                {
+                    Email = payload.Email,
+                    FullName = payload.Name
+                };
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

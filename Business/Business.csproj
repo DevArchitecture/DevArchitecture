@@ -22,6 +22,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+		<PackageReference Include="PasswordGenerator" Version="2.1.0" />
 		<PackageReference Include="Refit" Version="6.3.2" />
 		<PackageReference Include="System.ServiceModel.Duplex" Version="4.9.0" />
 		<PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />

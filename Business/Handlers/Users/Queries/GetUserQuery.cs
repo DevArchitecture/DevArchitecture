@@ -23,7 +23,7 @@ public class GetUserQuery : IRequest<IDataResult<UserDto>>
             _mapper = mapper;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {

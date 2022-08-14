@@ -1,4 +1,6 @@
 ﻿using Business.Constants;
+using Business.Fakes.Handlers.Groups;
+using Business.Fakes.Handlers.UserGroups;
 using Business.Handlers.Authorizations.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -21,15 +23,16 @@ public class RegisterUserCommand : IRequest<IResult>
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
 
 
-        public RegisterUserCommandHandler(IUserRepository userRepository)
+        public RegisterUserCommandHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
-
-        [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
+        [ValidationAspect(typeof(RegisterUserValidator))]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -45,16 +48,38 @@ public class RegisterUserCommand : IRequest<IResult>
             var user = new User
             {
                 Email = request.Email,
-
                 FullName = request.FullName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                Status = true,
+                TenantId = 1,
+                CompanyId = 1
             };
 
             _userRepository.Add(user);
             await _userRepository.SaveChangesAsync();
+            await AddUserToGroup(request, cancellationToken);
+
             return new SuccessResult(Messages.Added);
+        }
+
+        private async Task AddUserToGroup(RegisterUserCommand request, CancellationToken cancellationToken)
+        {
+            var group = await _mediator.Send(new GetGroupByNameInternalQuery { GroupName = "Users" }, cancellationToken);
+
+            if (group is null)
+                return;
+
+            var addedUser = await _userRepository.GetAsync(u => u.Email == request.Email);
+
+            if (addedUser is null)
+                return;
+
+            await _mediator.Send(new CreateUserGroupInternalCommand
+            {
+                GroupId = group.Data.Id,
+                UserId = addedUser.UserId
+            }, cancellationToken);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,6 +26,8 @@ public class CreateUserClaimsInternalCommand : IRequest<IResult>
             _userClaimsRepository = userClaimsRepository;
         }
 
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateUserClaimsInternalCommand request, CancellationToken cancellationToken)
         {
             foreach (var claim in request.OperationClaims)

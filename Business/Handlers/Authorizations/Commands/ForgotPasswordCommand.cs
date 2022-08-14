@@ -1,6 +1,5 @@
 ﻿using Business.BusinessAspects;
 using Business.Constants;
-using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -29,8 +28,7 @@ public class ForgotPasswordCommand : IRequest<IResult>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [SecuredOperation(Priority = 1)]
-        [CacheRemoveAspect]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {

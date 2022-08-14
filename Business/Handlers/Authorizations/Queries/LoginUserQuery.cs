@@ -1,7 +1,10 @@
 ﻿using Business.Constants;
+using Business.Handlers.Authorizations.ValidationRules;
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Caching;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
@@ -28,6 +31,7 @@ public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
             _cacheManager = cacheManager;
         }
 
+        [ValidationAspect(typeof(LoginUserValidator))]
         [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
@@ -43,6 +47,11 @@ public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
                 return new ErrorDataResult<AccessToken>(Messages.PasswordError);
             }
 
+            return await Login(user);
+        }
+
+        internal async Task<IDataResult<AccessToken>> Login(User user)
+        {
             var claims = _userRepository.GetClaims(user.UserId);
 
             var accessToken = _tokenHelper.CreateToken<DArchToken>(user);

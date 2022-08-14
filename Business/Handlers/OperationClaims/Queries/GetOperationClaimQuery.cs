@@ -21,7 +21,7 @@ public class GetOperationClaimQuery : IRequest<IDataResult<OperationClaim>>
             _operationClaimRepository = operationClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<OperationClaim>> Handle(GetOperationClaimQuery request, CancellationToken cancellationToken)
         {

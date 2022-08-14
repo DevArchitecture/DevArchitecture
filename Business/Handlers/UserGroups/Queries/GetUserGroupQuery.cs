@@ -1,5 +1,4 @@
 ﻿using Business.BusinessAspects;
-using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -21,8 +20,7 @@ public class GetUserGroupQuery : IRequest<IDataResult<UserGroup>>
             _userGroupRepository = userGroupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
-        [CacheAspect]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request, CancellationToken cancellationToken)
         {

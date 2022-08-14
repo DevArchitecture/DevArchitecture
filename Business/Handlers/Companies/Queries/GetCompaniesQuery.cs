@@ -25,10 +25,10 @@ namespace Business.Handlers.Companies.Queries
                 _mediator = mediator;
             }
 
-            [SecuredOperation(Priority = 1)]
-            [PerformanceAspect(5)]
-            [CacheAspect(10)]
-            [LogAspect()]
+            [SecuredOperation]
+            [PerformanceAspect]
+            [CacheAspect]
+            [LogAspect]
             public async Task<IDataResult<IEnumerable<Company>>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
             {
                 var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);

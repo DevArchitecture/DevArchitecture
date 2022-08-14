@@ -1,4 +1,5 @@
 ﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,7 +20,8 @@ public class GetGroupQuery : IRequest<IDataResult<Group>>
             _groupRepository = groupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
+        [LogAspect]
         public async Task<IDataResult<Group>> Handle(GetGroupQuery request, CancellationToken cancellationToken)
         {
             var group = await _groupRepository.GetAsync(x => x.Id == request.GroupId);

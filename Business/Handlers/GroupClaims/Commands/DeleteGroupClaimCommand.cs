@@ -21,7 +21,7 @@ public class DeleteGroupClaimCommand : IRequest<IResult>
             _groupClaimRepository = groupClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(DeleteGroupClaimCommand request, CancellationToken cancellationToken)

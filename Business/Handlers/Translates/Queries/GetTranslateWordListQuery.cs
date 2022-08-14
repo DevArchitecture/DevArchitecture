@@ -22,7 +22,7 @@ public class GetTranslateWordListQuery : IRequest<IDataResult<Dictionary<string,
             _translateRepository = translateRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

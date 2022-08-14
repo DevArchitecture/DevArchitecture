@@ -25,8 +25,8 @@ public class UpdateLanguageCommand : IRequest<IResult>
             _languageRepository = languageRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
-        [ValidationAspect(typeof(UpdateLanguageValidator), Priority = 2)]
+        [SecuredOperation]
+        [ValidationAspect(typeof(UpdateLanguageValidator))]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(UpdateLanguageCommand request, CancellationToken cancellationToken)

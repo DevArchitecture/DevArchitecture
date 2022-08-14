@@ -16,7 +16,7 @@ public static class OperationClaimCreatorMiddleware
     public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
     {
         var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
-        var companies = await mediator.Send(new CreateCompanyInternalCommand
+        await mediator.Send(new CreateCompanyInternalCommand
         {
             FirmName = "DevArchitecture Inc.",
             Email = "info@adminmail.com",

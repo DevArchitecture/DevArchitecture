@@ -20,7 +20,7 @@ public class GetGroupClaimsQuery : IRequest<IDataResult<IEnumerable<GroupClaim>>
             _groupClaimRepository = groupClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<GroupClaim>>> Handle(GetGroupClaimsQuery request, CancellationToken cancellationToken)

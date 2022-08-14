@@ -7,6 +7,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
 {
     public RegisterUserValidator()
     {
+        RuleFor(p => p.Email).EmailAddress();
         RuleFor(p => p.Password).Password();
     }
 }

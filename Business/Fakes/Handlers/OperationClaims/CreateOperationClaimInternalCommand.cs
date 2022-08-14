@@ -1,8 +1,11 @@
-﻿using Business.Constants;
-using Core.Entities.Concrete;
+﻿using AutoMapper;
+using Business.Handlers.OperationClaims.Commands;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
+using static Business.Handlers.OperationClaims.Commands.CreateOperationClaimCommand;
 
 namespace Business.Fakes.Handlers.OperationClaims;
 
@@ -14,32 +17,20 @@ public class CreateOperationClaimInternalCommand : IRequest<IResult>
         CreateOperationClaimInternalCommandHandler : IRequestHandler<CreateOperationClaimInternalCommand, IResult>
     {
         private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IMapper _mapper;
 
-        public CreateOperationClaimInternalCommandHandler(IOperationClaimRepository operationClaimRepository)
+        public CreateOperationClaimInternalCommandHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper)
         {
             _operationClaimRepository = operationClaimRepository;
+            _mapper = mapper;
         }
 
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateOperationClaimInternalCommand request, CancellationToken cancellationToken)
         {
-            if (IsClaimExists(request.ClaimName))
-            {
-                return new ErrorResult(Messages.OperationClaimExists);
-            }
-
-            var operationClaim = new OperationClaim
-            {
-                Name = request.ClaimName
-            };
-            _operationClaimRepository.Add(operationClaim);
-            await _operationClaimRepository.SaveChangesAsync();
-
-            return new SuccessResult(Messages.Added);
-        }
-
-        private bool IsClaimExists(string claimName)
-        {
-            return _operationClaimRepository.Query().Any(x => x.Name == claimName);
+            var handler = new CreateOperationClaimCommandHandler(_operationClaimRepository);
+            return await handler.Handle(_mapper.Map<CreateOperationClaimCommand>(request), cancellationToken);
         }
     }
 }

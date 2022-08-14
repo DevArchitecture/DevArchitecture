@@ -22,7 +22,7 @@ public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem
             _mediator = mediator;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserLookupQuery request, CancellationToken cancellationToken)

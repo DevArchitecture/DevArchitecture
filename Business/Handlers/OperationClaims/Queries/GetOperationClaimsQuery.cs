@@ -10,8 +10,7 @@ namespace Business.Handlers.OperationClaims.Queries;
 
 public class GetOperationClaimsQuery : IRequest<IDataResult<IEnumerable<OperationClaim>>>
 {
-    public class
-        GetOperationClaimsQueryHandler : IRequestHandler<GetOperationClaimsQuery,
+    public class GetOperationClaimsQueryHandler : IRequestHandler<GetOperationClaimsQuery,
             IDataResult<IEnumerable<OperationClaim>>>
     {
         private readonly IOperationClaimRepository _operationClaimRepository;
@@ -21,7 +20,7 @@ public class GetOperationClaimsQuery : IRequest<IDataResult<IEnumerable<Operatio
             _operationClaimRepository = operationClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<OperationClaim>>> Handle(GetOperationClaimsQuery request, CancellationToken cancellationToken)

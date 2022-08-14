@@ -15,16 +15,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : BaseApiController
     {
-        private readonly IConfiguration _configuration;
-
-        /// <summary>
-        /// Dependency injection is provided by constructor injection.
-        /// </summary>
-        /// <param name="configuration"></param>
-        public AuthController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
 
         /// <summary>
         /// Make it User Login operations

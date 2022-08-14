@@ -32,17 +32,15 @@ namespace Business.Handlers.Companies.Commands
         public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, IResult>
         {
             private readonly ICompanyRepository _companyRepository;
-            private readonly IMediator _mediator;
-            public CreateCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
+            public CreateCompanyCommandHandler(ICompanyRepository companyRepository)
             {
                 _companyRepository = companyRepository;
-                _mediator = mediator;
             }
 
-            [SecuredOperation(Priority = 1)]
-            [ValidationAspect(typeof(CreateCompanyValidator), Priority = 2)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect()]
+            [SecuredOperation]
+            [ValidationAspect(typeof(CreateCompanyValidator))]
+            [CacheRemoveAspect]
+            [LogAspect]
             public async Task<IResult> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
             {
                 var isThereCompanyRecord = _companyRepository.Query().Any(u => u.Name == request.Name);
@@ -61,8 +59,6 @@ namespace Business.Handlers.Companies.Commands
                     Email = request.Email,
                     TaxNo = request.TaxNo,
                     WebSite = request.WebSite,
-
-
                 };
 
                 _companyRepository.Add(addedCompany);

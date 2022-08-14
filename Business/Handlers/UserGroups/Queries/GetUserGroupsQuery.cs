@@ -20,7 +20,7 @@ public class GetUserGroupsQuery : IRequest<IDataResult<IEnumerable<UserGroup>>>
             _userGroupRepository = userGroupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<UserGroup>>> Handle(GetUserGroupsQuery request, CancellationToken cancellationToken)

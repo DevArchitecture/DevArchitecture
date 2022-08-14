@@ -1,12 +1,13 @@
-﻿using Business.Constants;
+﻿using AutoMapper;
+using Business.Handlers.Authorizations.Commands;
 using Business.Handlers.Authorizations.ValidationRules;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.Entities.Concrete;
 using Core.Utilities.Results;
-using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
 using MediatR;
+using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
 
 namespace Business.Fakes.Handlers.Authorizations;
 
@@ -20,41 +21,24 @@ public class RegisterUserInternalCommand : IRequest<IResult>
     public class RegisterUserInternalCommandHandler : IRequestHandler<RegisterUserInternalCommand, IResult>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
 
-        public RegisterUserInternalCommandHandler(IUserRepository userRepository)
+        public RegisterUserInternalCommandHandler(IUserRepository userRepository, IMediator mediator, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
-
-        [ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]
+        [ValidationAspect(typeof(RegisterUserValidator))]
         [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(RegisterUserInternalCommand request, CancellationToken cancellationToken)
         {
-            var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
-
-            if (isThereAnyUser != null)
-            {
-                return new ErrorResult(Messages.NameAlreadyExist);
-            }
-
-            HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
-            var user = new User
-            {
-                Email = request.Email,
-
-                FullName = request.FullName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = true,
-                TenantId = 1,
-                CompanyId = 1
-            };
-
-            _userRepository.Add(user);
-            await _userRepository.SaveChangesAsync();
-            return new SuccessResult(Messages.Added);
+            var handler = new RegisterUserCommandHandler(_userRepository, _mediator);
+            return await handler.Handle(_mapper.Map<RegisterUserCommand>(request), cancellationToken);
         }
     }
 }

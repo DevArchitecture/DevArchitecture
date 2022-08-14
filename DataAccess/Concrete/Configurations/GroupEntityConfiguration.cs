@@ -9,6 +9,8 @@ public class GroupEntityConfiguration : BaseConfiguration<Group>
     {
         builder.Property(x => x.GroupName).HasMaxLength(50).IsRequired();
 
+        builder.HasData(new Group { Id = 1, TenantId = 1, GroupName = "Users" });
+
         base.Configure(builder);
     }
 }

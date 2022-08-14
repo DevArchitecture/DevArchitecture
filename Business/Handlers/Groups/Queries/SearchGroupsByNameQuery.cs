@@ -23,7 +23,7 @@ public class SearchGroupsByNameQuery : IRequest<IDataResult<IEnumerable<Group>>>
             _groupRepository = groupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(SearchGroupsByNameQuery request, CancellationToken cancellationToken)
         {

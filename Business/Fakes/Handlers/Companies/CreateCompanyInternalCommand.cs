@@ -1,8 +1,13 @@
-﻿using Business.Constants;
-using Core.Entities.Concrete;
+﻿using AutoMapper;
+using Business.Handlers.Companies.Commands;
+using Business.Handlers.Companies.ValidationRules;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
+using static Business.Handlers.Companies.Commands.CreateCompanyCommand;
 
 namespace Business.Fakes.Handlers.Companies
 {
@@ -26,39 +31,20 @@ namespace Business.Fakes.Handlers.Companies
         public class CreateCompanyInternalCommandHandler : IRequestHandler<CreateCompanyInternalCommand, IResult>
         {
             private readonly ICompanyRepository _companyRepository;
-            private readonly IMediator _mediator;
-            public CreateCompanyInternalCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
+            private readonly IMapper _mapper;
+            public CreateCompanyInternalCommandHandler(ICompanyRepository companyRepository, IMapper mapper)
             {
                 _companyRepository = companyRepository;
-                _mediator = mediator;
+                _mapper = mapper;
             }
 
-            //[ValidationAspect(typeof(CreateCompanyValidator), Priority = 1)]
-            //[CacheRemoveAspect("Get")]
-            //[LogAspect(typeof(FileLogger))]
-            //[SecuredOperation(Priority = 1)]
+            [ValidationAspect(typeof(CreateCompanyValidator))]
+            [CacheRemoveAspect]
+            [LogAspect]
             public async Task<IResult> Handle(CreateCompanyInternalCommand request, CancellationToken cancellationToken)
             {
-                var isThereCompanyRecord = _companyRepository.Query().Any(u => u.Name == request.Name);
-
-                if (isThereCompanyRecord == true)
-                    return new ErrorResult(Messages.NameAlreadyExist);
-
-                var addedCompany = new Company
-                {
-                    Name = request.Name,
-                    FirmName = request.FirmName,
-                    Address = request.Address,
-                    Phone = request.Phone,
-                    Phone2 = request.Phone2,
-                    Email = request.Email,
-                    TaxNo = request.TaxNo,
-                    WebSite = request.WebSite
-                };
-
-                _companyRepository.Add(addedCompany);
-                await _companyRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Added);
+                var handler = new CreateCompanyCommandHandler(_companyRepository);
+                return await handler.Handle(_mapper.Map<CreateCompanyCommand>(request), cancellationToken);
             }
         }
     }

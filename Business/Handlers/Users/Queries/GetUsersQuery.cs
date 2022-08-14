@@ -26,7 +26,7 @@ public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
             _mediator = mediator;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

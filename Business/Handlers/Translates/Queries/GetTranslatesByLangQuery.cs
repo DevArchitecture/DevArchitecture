@@ -20,7 +20,6 @@ public class GetTranslatesByLangQuery : IRequest<IDataResult<Dictionary<string, 
             _translateRepository = translateRepository;
         }
 
-
         [LogAspect]
         public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
         {

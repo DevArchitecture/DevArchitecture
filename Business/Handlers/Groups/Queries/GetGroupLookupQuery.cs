@@ -1,5 +1,7 @@
-﻿using Business.Helpers;
+﻿using Business.BusinessAspects;
+using Business.Helpers;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -21,7 +23,9 @@ public class GetGroupLookupQuery : IRequest<IDataResult<IEnumerable<SelectionIte
             _mediator = mediator;
         }
 
+        [SecuredOperation]
         [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetGroupLookupQuery request, CancellationToken cancellationToken)
         {
             var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);

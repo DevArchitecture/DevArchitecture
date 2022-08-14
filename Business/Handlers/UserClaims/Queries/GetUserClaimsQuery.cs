@@ -20,7 +20,7 @@ public class GetUserClaimsQuery : IRequest<IDataResult<IEnumerable<UserClaim>>>
             _userClaimRepository = userClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<UserClaim>>> Handle(GetUserClaimsQuery request, CancellationToken cancellationToken)
