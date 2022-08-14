@@ -58,8 +58,28 @@ public class RegisterUserCommand : IRequest<IResult>
 
             _userRepository.Add(user);
             await _userRepository.SaveChangesAsync();
+            await AddUserToGroup(request, cancellationToken);
 
             return new SuccessResult(Messages.Added);
+        }
+
+        private async Task AddUserToGroup(RegisterUserCommand request, CancellationToken cancellationToken)
+        {
+            var group = await _mediator.Send(new GetGroupByNameInternalQuery { GroupName = "Users" }, cancellationToken);
+
+            if (group is null)
+                return;
+
+            var addedUser = await _userRepository.GetAsync(u => u.Email == request.Email);
+
+            if (addedUser is null)
+                return;
+
+            await _mediator.Send(new CreateUserGroupInternalCommand
+            {
+                GroupId = group.Data.Id,
+                UserId = addedUser.UserId
+            }, cancellationToken);
         }
     }
 }
