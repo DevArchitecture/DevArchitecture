@@ -1,4 +1,5 @@
-﻿using Core.Aspects.Autofac.Logging;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Logging;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,6 +19,7 @@ public class GetLanguagesLookUpWithCodeQuery : IRequest<IDataResult<IEnumerable<
             _languageRepository = languageRepository;
         }
 
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request, CancellationToken cancellationToken)
         {

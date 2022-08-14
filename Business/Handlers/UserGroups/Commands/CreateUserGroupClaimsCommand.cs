@@ -23,7 +23,7 @@ public class CreateUserGroupClaimsCommand : IRequest<IResult>
             _userGroupRepository = userGroupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(CreateUserGroupClaimsCommand request, CancellationToken cancellationToken)

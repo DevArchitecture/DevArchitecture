@@ -1,6 +1,7 @@
 ﻿using Business.Constants;
 using Business.Handlers.Translates.ValidationRules;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -29,8 +30,9 @@ public class CreateTranslateInternalCommand : IRequest<IResult>
         }
 
 
-        [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
+        [ValidationAspect(typeof(CreateTranslateValidator))]
         [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateTranslateInternalCommand request, CancellationToken cancellationToken)
         {
             var isThereTranslateRecord = _translateRepository.Query()

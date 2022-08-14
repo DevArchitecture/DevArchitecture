@@ -21,7 +21,7 @@ public class DeleteTranslateCommand : IRequest<IResult>
             _translateRepository = translateRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(DeleteTranslateCommand request, CancellationToken cancellationToken)

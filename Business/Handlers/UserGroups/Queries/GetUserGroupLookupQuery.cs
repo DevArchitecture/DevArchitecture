@@ -23,7 +23,7 @@ public class GetUserGroupLookupQuery : IRequest<IDataResult<IEnumerable<Selectio
             _userGroupRepository = userGroupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserGroupLookupQuery request, CancellationToken cancellationToken)

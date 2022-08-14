@@ -1,4 +1,5 @@
-﻿using Core.Aspects.Autofac.Logging;
+﻿using Business.BusinessAspects;
+using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
@@ -20,7 +21,7 @@ public class GetTranslatesByLangQuery : IRequest<IDataResult<Dictionary<string, 
             _translateRepository = translateRepository;
         }
 
-
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
         {

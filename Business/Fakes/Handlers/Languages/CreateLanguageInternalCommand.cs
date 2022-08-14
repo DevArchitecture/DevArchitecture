@@ -1,6 +1,7 @@
 ﻿using Business.Constants;
 using Business.Handlers.Languages.ValidationRules;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -28,8 +29,9 @@ public class CreateLanguageInternalCommand : IRequest<IResult>
         }
 
 
-        [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
+        [ValidationAspect(typeof(CreateLanguageValidator))]
         [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateLanguageInternalCommand request, CancellationToken cancellationToken)
         {
             var isThereLanguageRecord = _languageRepository.Query().Any(u => u.Name == request.Name);

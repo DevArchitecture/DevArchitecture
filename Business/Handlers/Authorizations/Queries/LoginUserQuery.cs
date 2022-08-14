@@ -1,6 +1,8 @@
 ﻿using Business.Constants;
+using Business.Handlers.Authorizations.ValidationRules;
 using Business.Services.Authentication;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -29,6 +31,7 @@ public class LoginUserQuery : IRequest<IDataResult<AccessToken>>
             _cacheManager = cacheManager;
         }
 
+        [ValidationAspect(typeof(LoginUserValidator))]
         [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {

@@ -20,17 +20,15 @@ namespace Business.Handlers.Companies.Commands
         public class DeleteCompanyCommandHandler : IRequestHandler<DeleteCompanyCommand, IResult>
         {
             private readonly ICompanyRepository _companyRepository;
-            private readonly IMediator _mediator;
 
-            public DeleteCompanyCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
+            public DeleteCompanyCommandHandler(ICompanyRepository companyRepository)
             {
                 _companyRepository = companyRepository;
-                _mediator = mediator;
             }
 
-            [SecuredOperation(Priority = 1)]
-            [CacheRemoveAspect("Get")]
-            [LogAspect()]
+            [SecuredOperation]
+            [CacheRemoveAspect]
+            [LogAspect]
             public async Task<IResult> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)
             {
                 var companyToDelete = _companyRepository.Get(p => p.Id == request.Id);

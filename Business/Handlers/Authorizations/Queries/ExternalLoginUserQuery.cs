@@ -36,7 +36,7 @@ public class ExternalLoginUserQuery : IRequest<IDataResult<AccessToken>>
             _mediator = mediator;
         }
 
-        [ValidationAspect(typeof(ExternalLoginUserValidator), Priority = 1)]
+        [ValidationAspect(typeof(ExternalLoginUserValidator))]
         [LogAspect]
         public async Task<IDataResult<AccessToken>> Handle(ExternalLoginUserQuery request, CancellationToken cancellationToken)
         {

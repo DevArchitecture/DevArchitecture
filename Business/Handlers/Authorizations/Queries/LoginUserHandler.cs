@@ -23,7 +23,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, IDataResult<Lo
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [ValidationAspect(typeof(LoginUserValidator), Priority = 1)]
+    [ValidationAspect(typeof(LoginUserHandlerValidator))]
     [LogAspect]
     public async Task<IDataResult<LoginUserResult>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {

@@ -22,7 +22,7 @@ public class GetLanguagesLookUpQuery : IRequest<IDataResult<IEnumerable<Selectio
             _languageRepository = languageRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

@@ -23,7 +23,7 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
             _mediator = mediator;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)

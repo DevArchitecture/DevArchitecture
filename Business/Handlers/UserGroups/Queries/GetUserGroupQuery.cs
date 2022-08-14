@@ -21,8 +21,7 @@ public class GetUserGroupQuery : IRequest<IDataResult<UserGroup>>
             _userGroupRepository = userGroupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
-        [CacheAspect]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<UserGroup>> Handle(GetUserGroupQuery request, CancellationToken cancellationToken)
         {

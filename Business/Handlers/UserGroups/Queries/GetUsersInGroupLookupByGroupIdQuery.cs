@@ -22,7 +22,7 @@ public class GetUsersInGroupLookupByGroupIdQuery : IRequest<IDataResult<IEnumera
             _userGroupRepository = userGroupRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheAspect]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(

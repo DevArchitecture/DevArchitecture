@@ -21,7 +21,7 @@ public class GetTranslatesQuery : IRequest<IDataResult<IEnumerable<Translate>>>
             _translateRepository = translateRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

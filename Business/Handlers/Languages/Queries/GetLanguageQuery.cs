@@ -20,7 +20,7 @@ public class GetLanguageQuery : IRequest<IDataResult<Language>>
             _languageRepository = languageRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<Language>> Handle(GetLanguageQuery request, CancellationToken cancellationToken)
         {

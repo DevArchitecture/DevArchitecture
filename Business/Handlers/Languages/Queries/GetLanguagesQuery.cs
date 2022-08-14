@@ -20,7 +20,7 @@ public class GetLanguagesQuery : IRequest<IDataResult<IEnumerable<Language>>>
             _languageRepository = languageRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

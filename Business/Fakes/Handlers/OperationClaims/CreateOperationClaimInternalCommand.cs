@@ -1,4 +1,6 @@
 ﻿using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,6 +22,8 @@ public class CreateOperationClaimInternalCommand : IRequest<IResult>
             _operationClaimRepository = operationClaimRepository;
         }
 
+        [CacheRemoveAspect]
+        [LogAspect]
         public async Task<IResult> Handle(CreateOperationClaimInternalCommand request, CancellationToken cancellationToken)
         {
             if (IsClaimExists(request.ClaimName))

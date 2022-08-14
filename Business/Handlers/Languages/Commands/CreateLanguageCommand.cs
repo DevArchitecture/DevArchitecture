@@ -29,8 +29,8 @@ public class CreateLanguageCommand : IRequest<IResult>
             _languageRepository = languageRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
-        [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
+        [SecuredOperation]
+        [ValidationAspect(typeof(CreateLanguageValidator))]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(CreateLanguageCommand request, CancellationToken cancellationToken)

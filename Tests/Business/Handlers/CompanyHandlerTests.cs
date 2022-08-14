@@ -44,7 +44,7 @@ namespace Tests.Business.Handlers
 //}
 );
 
-            var handler = new GetCompanyQueryHandler(_companyRepository.Object, _mediator.Object);
+            var handler = new GetCompanyQueryHandler(_companyRepository.Object);
 
             //Act
             var x = await handler.Handle(query, new CancellationToken());
@@ -96,7 +96,7 @@ namespace Tests.Business.Handlers
 
             _companyRepository.Setup(x => x.Add(It.IsAny<Company>())).Returns(new Company());
 
-            var handler = new CreateCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
+            var handler = new CreateCompanyCommandHandler(_companyRepository.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _companyRepository.Verify(x => x.SaveChangesAsync());
@@ -117,7 +117,7 @@ namespace Tests.Business.Handlers
 
             _companyRepository.Setup(x => x.Add(It.IsAny<Company>())).Returns(new Company());
 
-            var handler = new CreateCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
+            var handler = new CreateCompanyCommandHandler(_companyRepository.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             x.Success.Should().BeFalse();
@@ -136,7 +136,7 @@ namespace Tests.Business.Handlers
 
             _companyRepository.Setup(x => x.Update(It.IsAny<Company>())).Returns(new Company());
 
-            var handler = new UpdateCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
+            var handler = new UpdateCompanyCommandHandler(_companyRepository.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _companyRepository.Verify(x => x.SaveChangesAsync());
@@ -155,7 +155,7 @@ namespace Tests.Business.Handlers
 
             _companyRepository.Setup(x => x.Delete(It.IsAny<Company>()));
 
-            var handler = new DeleteCompanyCommandHandler(_companyRepository.Object, _mediator.Object);
+            var handler = new DeleteCompanyCommandHandler(_companyRepository.Object);
             var x = await handler.Handle(command, new CancellationToken());
 
             _companyRepository.Verify(x => x.SaveChangesAsync());

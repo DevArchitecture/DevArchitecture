@@ -21,7 +21,7 @@ public class GetUserClaimLookupByUserIdQuery : IRequest<IDataResult<IEnumerable<
             _userClaimRepository = userClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetUserClaimLookupByUserIdQuery request, CancellationToken cancellationToken)
         {

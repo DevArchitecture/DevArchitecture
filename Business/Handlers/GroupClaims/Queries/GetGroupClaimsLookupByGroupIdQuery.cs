@@ -21,7 +21,7 @@ public class GetGroupClaimsLookupByGroupIdQuery : IRequest<IDataResult<IEnumerab
             _groupClaimRepository = groupClaimRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(
             GetGroupClaimsLookupByGroupIdQuery request, CancellationToken cancellationToken)

@@ -20,7 +20,7 @@ public class GetTranslateQuery : IRequest<IDataResult<Translate>>
             _translateRepository = translateRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<Translate>> Handle(GetTranslateQuery request, CancellationToken cancellationToken)
         {

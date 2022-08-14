@@ -1,5 +1,6 @@
 ﻿using Business.Adapters.PersonService;
 using Business.Constants;
+using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
 using Entities.Dtos;
 using MediatR;
@@ -22,6 +23,7 @@ public class VerifyCidQuery : IRequest<IDataResult<bool>>
             _personService = personService;
         }
 
+        [LogAspect]
         public async Task<IDataResult<bool>> Handle(VerifyCidQuery request, CancellationToken cancellationToken)
         {
             var result = await _personService.VerifyCid(new Citizen()

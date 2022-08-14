@@ -24,7 +24,7 @@ public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
             _mediator = mediator;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

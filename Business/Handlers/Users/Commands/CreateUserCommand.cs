@@ -37,7 +37,7 @@ public class CreateUserCommand : IRequest<IResult>
             _mediator = mediator;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [CacheRemoveAspect]
         [LogAspect]
         public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)

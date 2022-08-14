@@ -1,4 +1,8 @@
 ﻿using Business.Constants;
+using Business.Handlers.Companies.ValidationRules;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -26,17 +30,14 @@ namespace Business.Fakes.Handlers.Companies
         public class CreateCompanyInternalCommandHandler : IRequestHandler<CreateCompanyInternalCommand, IResult>
         {
             private readonly ICompanyRepository _companyRepository;
-            private readonly IMediator _mediator;
-            public CreateCompanyInternalCommandHandler(ICompanyRepository companyRepository, IMediator mediator)
+            public CreateCompanyInternalCommandHandler(ICompanyRepository companyRepository)
             {
                 _companyRepository = companyRepository;
-                _mediator = mediator;
             }
 
-            //[ValidationAspect(typeof(CreateCompanyValidator), Priority = 1)]
-            //[CacheRemoveAspect("Get")]
-            //[LogAspect(typeof(FileLogger))]
-            //[SecuredOperation(Priority = 1)]
+            [ValidationAspect(typeof(CreateCompanyValidator))]
+            [CacheRemoveAspect]
+            [LogAspect]
             public async Task<IResult> Handle(CreateCompanyInternalCommand request, CancellationToken cancellationToken)
             {
                 var isThereCompanyRecord = _companyRepository.Query().Any(u => u.Name == request.Name);

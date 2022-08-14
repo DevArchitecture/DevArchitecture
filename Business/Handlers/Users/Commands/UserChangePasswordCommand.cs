@@ -22,7 +22,7 @@ public class UserChangePasswordCommand : IRequest<IResult>
             _userRepository = userRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [LogAspect]
         public async Task<IResult> Handle(UserChangePasswordCommand request, CancellationToken cancellationToken)
         {

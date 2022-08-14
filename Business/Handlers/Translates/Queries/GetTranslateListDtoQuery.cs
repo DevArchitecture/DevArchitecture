@@ -22,7 +22,7 @@ public class GetTranslateListDtoQuery : IRequest<IDataResult<IEnumerable<Transla
             _translateRepository = translateRepository;
         }
 
-        [SecuredOperation(Priority = 1)]
+        [SecuredOperation]
         [PerformanceAspect]
         [CacheAspect]
         [LogAspect]

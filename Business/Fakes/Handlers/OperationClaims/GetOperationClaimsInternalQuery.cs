@@ -1,4 +1,6 @@
-﻿using Core.Entities.Concrete;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
@@ -17,6 +19,8 @@ public class GetOperationClaimsInternalQuery : IRequest<IDataResult<IEnumerable<
             _operationClaimRepository = operationClaimRepository;
         }
 
+        [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<OperationClaim>>> Handle(GetOperationClaimsInternalQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<OperationClaim>>(
