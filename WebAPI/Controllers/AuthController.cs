@@ -67,7 +67,6 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="createUser"></param>
         /// <returns></returns>
-        [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]

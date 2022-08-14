@@ -19,7 +19,6 @@ public class GetLanguagesLookUpWithCodeQuery : IRequest<IDataResult<IEnumerable<
             _languageRepository = languageRepository;
         }
 
-        [SecuredOperation]
         [LogAspect]
         public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request, CancellationToken cancellationToken)
         {

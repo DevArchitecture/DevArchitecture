@@ -1,4 +1,5 @@
-﻿using Business.Constants;
+﻿using Business.BusinessAspects;
+using Business.Constants;
 using Business.Handlers.Authorizations.ValidationRules;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
@@ -28,7 +29,7 @@ public class RegisterUserCommand : IRequest<IResult>
             _userRepository = userRepository;
         }
 
-
+        [SecuredOperation]
         [ValidationAspect(typeof(RegisterUserValidator))]
         [CacheRemoveAspect]
         [LogAspect]
