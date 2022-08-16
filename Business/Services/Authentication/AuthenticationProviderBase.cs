@@ -56,7 +56,7 @@ public abstract class AuthenticationProviderBase : IAuthenticationProvider
     protected virtual async Task<LoginUserResult> PrepareOneTimePassword(AuthenticationProviderType providerType, string cellPhone, string externalUserId)
     {
         var oneTimePassword = await _logins.Query()
-            .Where(m => m.Provider == providerType && m.ExternalUserId == externalUserId && m.IsUsed == false)
+            .Where(m => m.Provider == providerType && m.ExternalUserId == externalUserId && !m.IsUsed)
             .Select(m => m.Code)
             .FirstOrDefaultAsync();
         int mobileCode;

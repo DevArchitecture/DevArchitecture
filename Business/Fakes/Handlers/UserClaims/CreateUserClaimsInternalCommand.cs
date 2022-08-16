@@ -30,16 +30,16 @@ public class CreateUserClaimsInternalCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateUserClaimsInternalCommand request, CancellationToken cancellationToken)
         {
-            foreach (var claim in request.OperationClaims)
+            foreach (var claimId in request.OperationClaims.Select(claim => claim.Id))
             {
-                if (await DoesClaimExistsForUser(new UserClaim { ClaimId = claim.Id, UserId = request.UserId }))
+                if (await DoesClaimExistsForUser(new UserClaim { ClaimId = claimId, UserId = request.UserId }))
                 {
                     continue;
                 }
 
                 _userClaimsRepository.Add(new UserClaim
                 {
-                    ClaimId = claim.Id,
+                    ClaimId = claimId,
                     UserId = request.UserId
                 });
             }

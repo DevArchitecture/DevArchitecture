@@ -21,11 +21,9 @@ public class UpdateUserCommand : IRequest<IResult>
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMediator _mediator;
-        public UpdateUserCommandHandler(IUserRepository userRepository, IMediator mediator)
+        public UpdateUserCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _mediator = mediator;
         }
 
 
@@ -34,7 +32,6 @@ public class UpdateUserCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);
 
             isThereAnyUser.FullName = request.FullName;

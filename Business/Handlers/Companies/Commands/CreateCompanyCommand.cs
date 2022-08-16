@@ -45,7 +45,7 @@ namespace Business.Handlers.Companies.Commands
             {
                 var isThereCompanyRecord = _companyRepository.Query().Any(u => u.Name == request.Name);
 
-                if (isThereCompanyRecord == true)
+                if (isThereCompanyRecord)
                     return new ErrorResult(Messages.NameAlreadyExist);
 
                 var addedCompany = new Company

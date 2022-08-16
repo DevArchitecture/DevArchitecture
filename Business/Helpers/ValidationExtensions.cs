@@ -8,13 +8,6 @@ public static class ValidationExtensions
     {
         return citizenId is { Length: 11 } && IsCidValid(long.Parse(citizenId));
     }
-
-    public static long AddChecksumToCid(long cidWithoutChecksum)
-    {
-        var checksum = ComputeCidChecksum(cidWithoutChecksum);
-        return (cidWithoutChecksum / 100) * 100 + checksum;
-    }
-
     public static bool IsCidValid(this long citizenId)
     {
         var identificationNumber = citizenId;
@@ -24,6 +17,13 @@ public static class ValidationExtensions
 
         return returnValue;
     }
+
+    public static long AddChecksumToCid(long cidWithoutChecksum)
+    {
+        var checksum = ComputeCidChecksum(cidWithoutChecksum);
+        return (cidWithoutChecksum / 100) * 100 + checksum;
+    }
+
 
     public static long ComputeCidChecksum(this long citizenId)
     {

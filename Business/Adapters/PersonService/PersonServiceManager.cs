@@ -15,13 +15,13 @@ public class PersonServiceManager : IPersonService
     {
         var locale = new CultureInfo("tr-TR", false);
         var svc = new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);
-        {
-            var cmd = await svc.TCKimlikNoDogrulaAsync(
-                citizen.CitizenId,
-                citizen.Name.ToUpper(locale),
-                citizen.Surname.ToUpper(locale),
-                citizen.BirthYear);
-            return cmd.Body.TCKimlikNoDogrulaResult;
-        }
+
+        var cmd = await svc.TCKimlikNoDogrulaAsync(
+            citizen.CitizenId,
+            citizen.Name.ToUpper(locale),
+            citizen.Surname.ToUpper(locale),
+            citizen.BirthYear);
+        return cmd.Body.TCKimlikNoDogrulaResult;
+
     }
 }

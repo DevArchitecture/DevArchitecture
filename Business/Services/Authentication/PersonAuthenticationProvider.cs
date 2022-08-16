@@ -54,8 +54,6 @@ public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthent
         var citizenId = long.Parse(command.ExternalUserId);
         var user = await _users.GetAsync(u => u.CitizenId == citizenId);
         user.AuthenticationProviderType = ProviderType.ToString();
-
-        var claims = _users.GetClaims(user.UserId);
         var accessToken = _tokenHelper.CreateToken<DArchToken>(user);
         accessToken.Provider = ProviderType;
         return accessToken;

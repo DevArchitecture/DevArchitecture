@@ -39,7 +39,7 @@ public class CreateTranslateCommand : IRequest<IResult>
             var isThereTranslateRecord = _translateRepository.Query()
                 .Any(u => u.LangId == request.LangId && u.Code == request.Code);
 
-            if (isThereTranslateRecord == true)
+            if (isThereTranslateRecord)
             {
                 return new ErrorResult(Messages.NameAlreadyExist);
             }
