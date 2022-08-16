@@ -25,6 +25,7 @@ public class OverrideBase : CSharpEntityTypeGenerator
     /// <param name="entityType"></param>
     /// <param name="namespace"></param>
     /// <param name="useDataAnnotations"></param>
+    /// <param name="useNullableReferenceTypes"></param>
     /// <returns></returns>
     public override string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations, bool useNullableReferenceTypes)
     {

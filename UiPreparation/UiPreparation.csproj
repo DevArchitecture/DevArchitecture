@@ -4,9 +4,6 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
-	<PropertyGroup>
-		<CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
-	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="UI\node_modules\**" />
 		<EmbeddedResource Remove="UI\node_modules\**" />

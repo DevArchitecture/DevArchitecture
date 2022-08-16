@@ -7,8 +7,13 @@
 		<UserSecretsId>41c001a8-4c94-4c16-8f1a-ddd6e630a542</UserSecretsId>
 	</PropertyGroup>
 	<PropertyGroup>
-		<CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <NoWarn>1701;1702;1591;EF1001</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <NoWarn>1701;1702;1591;EF1001</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Properties\PublishProfiles\**" />
