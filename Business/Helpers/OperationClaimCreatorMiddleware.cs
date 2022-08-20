@@ -1,6 +1,7 @@
 ﻿using Business.BusinessAspects;
 using Business.Fakes.Handlers.Authorizations;
 using Business.Fakes.Handlers.Companies;
+using Business.Fakes.Handlers.Groups;
 using Business.Fakes.Handlers.OperationClaims;
 using Business.Fakes.Handlers.UserClaims;
 using Core.Utilities.IoC;
@@ -36,6 +37,11 @@ public static class OperationClaimCreatorMiddleware
         }
 
         var operationClaims = (await mediator.Send(new GetOperationClaimsInternalQuery())).Data;
+        await mediator.Send(new CreateGroupInternalCommand
+        {
+            TenantId = 1,
+            GroupName = "Users"
+        });
         await mediator.Send(new RegisterUserInternalCommand
         {
             FullName = "System Admin",
@@ -46,7 +52,7 @@ public static class OperationClaimCreatorMiddleware
         {
             UserId = 1,
             OperationClaims = operationClaims
-        });
+        });     
     }
 
     private static IEnumerable<string> GetOperationNames()

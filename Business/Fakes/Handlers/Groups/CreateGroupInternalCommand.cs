@@ -25,6 +25,11 @@ public class CreateGroupInternalCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateGroupInternalCommand request, CancellationToken cancellationToken)
         {
+            var isThereAnyGroupRecord = _groupRepository.Query().Any(x => x.GroupName == request.GroupName);
+
+            if (isThereAnyGroupRecord)
+                return new ErrorResult(Messages.NameAlreadyExist);
+
             var group = new Group
             {
                 TenantId = request.TenantId,

@@ -30,6 +30,11 @@ public class CreateGroupCommand : IRequest<IResult>
         [LogAspect]
         public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
+            var isThereAnyGroupRecord = _groupRepository.Query().Any(x => x.GroupName == request.GroupName);
+
+            if (isThereAnyGroupRecord)
+                return new ErrorResult(Messages.NameAlreadyExist);
+
             var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);
             var group = new Group
             {

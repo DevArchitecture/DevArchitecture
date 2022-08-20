@@ -15,8 +15,6 @@ public static class FakeDataMiddlleware
     {
         var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 
-        await mediator.Send(new CreateGroupInternalCommand { TenantId = 1, GroupName = "Users" });
-
         await mediator.Send(new CreateLanguageInternalCommand { Code = "tr-TR", Name = "Türkçe" });
         await mediator.Send(new CreateLanguageInternalCommand { Code = "en-EN", Name = "English" });
 
