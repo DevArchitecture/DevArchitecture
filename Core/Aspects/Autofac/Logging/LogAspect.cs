@@ -19,9 +19,9 @@ public class LogAspect : MethodInterception
     private readonly LoggerServiceBase _loggerServiceBase;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LogAspect() : this(LogAspectSettings.Logger)
+    public LogAspect() : this(DevArchitectureSettings.Loggers.LogAspectLogger)
     {
-
+        Priority = DevArchitectureSettings.Priorities.LogAspectPriority;
     }
 
     public LogAspect(Type loggerService)

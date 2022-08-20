@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Messages;
 using FluentValidation;
@@ -21,6 +22,7 @@ public class ValidationAspect : MethodInterception
         }
 
         _validatorType = validatorType;
+        Priority = DevArchitectureSettings.Priorities.ValidationAspectPriority;
     }
 
     protected override void OnBefore(IInvocation invocation)

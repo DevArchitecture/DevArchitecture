@@ -1,7 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Core.Constants;
-public class LogConsts
+public static class LogConsts
 {
     public static Type FileLogger => typeof(FileLogger);
     public static Type LogstashLogger => typeof(LogstashLogger);

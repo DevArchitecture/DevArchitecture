@@ -17,15 +17,14 @@ public class CacheAspect : MethodInterception
     private readonly int _duration;
     private readonly ICacheManager _cacheManager;
 
-    public CacheAspect() : this(CacheAspectSettings.Duration)
+    public CacheAspect() : this(DevArchitectureSettings.Durations.CacheAspectDuration)
     {
-
+        Priority = DevArchitectureSettings.Priorities.CacheAspectPriority;
     }
     public CacheAspect(int duration)
     {
         _duration = duration;
-        _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
-
+        _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>(); 
     }
 
     public override void Intercept(IInvocation invocation)

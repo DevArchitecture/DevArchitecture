@@ -1,6 +1,7 @@
 ﻿using Business.Constants;
 using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
@@ -19,11 +20,11 @@ public class SecuredOperation : MethodInterception
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ICacheManager _cacheManager;
 
-
     public SecuredOperation()
     {
         _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+        Priority = DevArchitectureSettings.Priorities.SecuredOperationAspectPriority;
     }
 
     protected override void OnBefore(IInvocation invocation)

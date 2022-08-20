@@ -15,9 +15,9 @@ public class PerformanceAspect : MethodInterception
     private readonly int _interval;
     private readonly Stopwatch _stopwatch;
 
-    public PerformanceAspect() : this(PerformanceAspectSettings.Interval)
+    public PerformanceAspect() : this(DevArchitectureSettings.Intervals.PerformanceAspectInterval)
     {
-
+        Priority = DevArchitectureSettings.Priorities.PerformanceAspectPriority;
     }
     public PerformanceAspect(int interval)
     {

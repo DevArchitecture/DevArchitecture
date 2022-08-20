@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ public class TransactionScopeAspectAsync : MethodInterception
 {
     public TransactionScopeAspectAsync()
     {
+        Priority = DevArchitectureSettings.Priorities.TransactionScopeAspectAsyncPriority;
     }
 
     public static void InterceptDbContext(IInvocation invocation)

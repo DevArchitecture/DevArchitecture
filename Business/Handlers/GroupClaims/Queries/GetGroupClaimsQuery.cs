@@ -21,8 +21,8 @@ public class GetGroupClaimsQuery : IRequest<IDataResult<IEnumerable<GroupClaim>>
         }
 
         [SecuredOperation]
-        [LogAspect]
         [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<GroupClaim>>> Handle(GetGroupClaimsQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<GroupClaim>>(await _groupClaimRepository.GetListAsync());

@@ -24,8 +24,8 @@ public class GetGroupsQuery : IRequest<IDataResult<IEnumerable<Group>>>
         }
 
         [SecuredOperation]
-        [LogAspect]
         [CacheAspect]
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<Group>>> Handle(GetGroupsQuery request, CancellationToken cancellationToken)
         {
             var tenant = await _mediator.Send(new GetTenantQuery(), cancellationToken);

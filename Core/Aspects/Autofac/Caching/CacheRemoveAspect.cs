@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
+using Core.Settings;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,7 @@ public class CacheRemoveAspect : MethodInterception
     {
         _pattern = pattern;
         _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+        Priority = DevArchitectureSettings.Priorities.CacheRemoveAspectPriority;
     }
     protected override void OnSuccess(IInvocation invocation)
     {
