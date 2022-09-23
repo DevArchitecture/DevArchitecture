@@ -53,9 +53,11 @@ namespace Tests.Business.Handlers
         [Test]
         public void Handler_CreateUserGroup()
         {
-            var createUserCommand = new CreateUserGroupCommand();
-            createUserCommand.UserId = 1;
-            createUserCommand.GroupId = 1;
+            var createUserCommand = new CreateUserGroupCommand
+            {
+                UserId = 1,
+                GroupId = 1
+            };
 
             var result = _createUserGroupCommandHandler
                 .Handle(createUserCommand, new CancellationToken()).Result;
@@ -65,9 +67,11 @@ namespace Tests.Business.Handlers
         [Test]
         public void Handler_UpdateUserGroup()
         {
-            var updateUserCommand = new UpdateUserGroupCommand();
-            updateUserCommand.GroupId = new int[] { 1 };
-            updateUserCommand.UserId = 1;
+            var updateUserCommand = new UpdateUserGroupCommand
+            {
+                GroupId = new int[] { 1 },
+                UserId = 1
+            };
 
             var result = _updateUserGroupCommandHandler
                 .Handle(updateUserCommand, new CancellationToken()).Result;

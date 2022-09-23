@@ -32,15 +32,13 @@ namespace Core.Utilities.Mail
             {
                 Text = messageBody
             };
-            using (var emailClient = new SmtpClient())
-            {
-                emailClient.Connect(
-                    _configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
-                    Convert.ToInt32(_configuration.GetSection("EmailConfiguration").GetSection("SmtpPort").Value),
-                    SecureSocketOptions.Auto);
-                emailClient.Send(message);
-                emailClient.Disconnect(true);
-            }
+            using var emailClient = new SmtpClient();
+            emailClient.Connect(
+                _configuration.GetSection("EmailConfiguration").GetSection("SmtpServer").Value,
+                Convert.ToInt32(_configuration.GetSection("EmailConfiguration").GetSection("SmtpPort").Value),
+                SecureSocketOptions.Auto);
+            emailClient.Send(message);
+            emailClient.Disconnect(true);
         }
     }
 }

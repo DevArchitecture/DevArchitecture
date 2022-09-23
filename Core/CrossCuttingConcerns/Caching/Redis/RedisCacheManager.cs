@@ -63,10 +63,8 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
         private void RedisInvoker(Action<RedisClient> redisAction)
         {
-            using (var client = new RedisClient(_redisEndpoint))
-            {
-                redisAction.Invoke(client);
-            }
+            using var client = new RedisClient(_redisEndpoint);
+            redisAction.Invoke(client);
         }
     }
 }

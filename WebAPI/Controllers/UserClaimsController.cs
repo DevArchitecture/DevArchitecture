@@ -81,7 +81,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Update GroupClaim.
         /// </summary>
-        /// <param name="updateUserClaim"></param>
+        /// <param name="updateUserClaimDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -96,7 +96,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Delete GroupClaim.
         /// </summary>
-        /// <param name="deleteUserClaim"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

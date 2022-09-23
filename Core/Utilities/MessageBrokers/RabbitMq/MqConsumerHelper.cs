@@ -25,32 +25,30 @@ namespace Core.Utilities.MessageBrokers.RabbitMq
                 UserName = _brokerOptions.UserName,
                 Password = _brokerOptions.Password
             };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+            channel.QueueDeclare(
+                queue: "DArchQueue",
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+
+            var consumer = new EventingBasicConsumer(channel);
+
+            consumer.Received += (model, mq) =>
             {
-                channel.QueueDeclare(
-                    queue: "DArchQueue",
-                    durable: false,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
+                var body = mq.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
 
-                var consumer = new EventingBasicConsumer(channel);
+                Console.WriteLine($"Message: {message}");
+            };
 
-                consumer.Received += (model, mq) =>
-                {
-                    var body = mq.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
-
-                    Console.WriteLine($"Message: {message}");
-                };
-
-                channel.BasicConsume(
-                    queue: "DArchQueue",
-                    autoAck: true,
-                    consumer: consumer);
-                Console.ReadKey();
-            }
+            channel.BasicConsume(
+                queue: "DArchQueue",
+                autoAck: true,
+                consumer: consumer);
+            Console.ReadKey();
         }
     }
 }

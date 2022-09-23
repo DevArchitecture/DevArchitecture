@@ -25,12 +25,12 @@ namespace Core.Utilities.Security.Jwt
 
         public IConfiguration Configuration { get; }
 
-        public string DecodeToken(string input)
+        public static string DecodeToken(string input)
         {
             var handler = new JwtSecurityTokenHandler();
             if (input.StartsWith("Bearer "))
             {
-                input = input.Substring("Bearer ".Length);
+                input = input["Bearer ".Length..];
             }
 
             return handler.ReadJwtToken(input).ToString();
@@ -72,12 +72,12 @@ namespace Core.Utilities.Security.Jwt
         {
             var randomNumber = new byte[32];
 
-            using var generator = new RNGCryptoServiceProvider();
+            using var generator = RandomNumberGenerator.Create();
             generator.GetBytes(randomNumber);
 
             return Convert.ToBase64String(randomNumber);
         }
-        private IEnumerable<Claim> SetClaims(User user)
+        private static IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();
             claims.AddNameIdentifier(user.UserId.ToString());

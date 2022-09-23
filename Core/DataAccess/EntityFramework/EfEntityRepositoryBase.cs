@@ -185,19 +185,17 @@ namespace Core.DataAccess.EntityFramework
                 }
                 else
                 {
-                    using (var tx = Context.Database.BeginTransaction())
+                    using var tx = Context.Database.BeginTransaction();
+                    try
                     {
-                        try
-                        {
-                            result = action();
-                            SaveChanges();
-                            tx.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            tx.Rollback();
-                            throw;
-                        }
+                        result = action();
+                        SaveChanges();
+                        tx.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        tx.Rollback();
+                        throw;
                     }
                 }
 

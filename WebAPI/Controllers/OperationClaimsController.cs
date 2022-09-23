@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Update OperationClaim .
         /// </summary>
-        /// <param name="updateOperationClaim"></param>
+        /// <param name="updateOperationClaimDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

@@ -82,7 +82,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Update Group.
         /// </summary>
-        /// <param name="updateGroup"></param>
+        /// <param name="updateGroupDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -97,7 +97,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Delete Group.
         /// </summary>
-        /// <param name="deleteGroup"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

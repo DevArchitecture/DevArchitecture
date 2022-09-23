@@ -38,14 +38,9 @@ namespace Tests.Business.Services.Authentication
         [Test]
         public async Task TokenExpiredTest()
         {
-            const int delayAmount = 10000;
-
             // Arrange
-            var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims());
+            var token = MockJwtTokens.GenerateJwtToken(ClaimsData.GetClaims(), 0);
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_authenticationScheme, token);
-
-            // Act
-            await Task.Delay(delayAmount);
 
             var response = await HttpClient.GetAsync(_requestUri);
 
