@@ -27,14 +27,15 @@ namespace Core.Aspects.Autofac.Caching
             var methodName = string.Format($"{invocation.Arguments[0]}.{invocation.Method.Name}");
             var arguments = invocation.Arguments;
             var key = $"{methodName}({BuildKey(arguments)})";
+            var returnType = invocation.Method.ReturnType.GenericTypeArguments.FirstOrDefault();
             if (_cacheManager.IsAdd(key))
             {
-                invocation.ReturnValue = _cacheManager.Get(key);
+                invocation.ReturnValue = _cacheManager.Get(key, returnType);
                 return;
             }
 
             invocation.Proceed();
-            _cacheManager.Add(key, invocation.ReturnValue, _duration);
+            _cacheManager.Add(key, invocation.ReturnValue, _duration, returnType);
         }
 
 

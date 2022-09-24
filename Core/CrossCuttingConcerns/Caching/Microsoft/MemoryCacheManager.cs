@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceStack.Text;
 
 namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
@@ -36,6 +38,18 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             _cache.Set(key, data);
         }
 
+        public void Add(string key, dynamic data, int duration, Type type)
+        {
+            var json = JsonSerializer.SerializeToString(data.Result, type);
+            Add(key, json, duration);
+        }
+
+        public void Add(string key, dynamic data, Type type)
+        {
+            var json = JsonSerializer.SerializeToString(data.Result, type);
+            Add(key, json);
+        }
+
         public T Get<T>(string key)
         {
             return _cache.Get<T>(key);
@@ -44,6 +58,17 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
         public object Get(string key)
         {
             return _cache.Get(key);
+        }
+
+        public object Get(string key, Type type)
+        {
+            var json = Get<string>(key);
+            var result = JsonSerializer.DeserializeFromString(json, type);
+
+            return typeof(Task)
+                .GetMethod(nameof(Task.FromResult))
+                .MakeGenericMethod(type)
+                .Invoke(this, new object[] { result });
         }
 
         public bool IsAdd(string key)
