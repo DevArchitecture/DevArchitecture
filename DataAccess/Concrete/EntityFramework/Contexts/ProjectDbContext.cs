@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             : base(options)
         {
             Configuration = configuration;
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         }
 
         /// <summary>
@@ -33,6 +36,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
             : base(options)
         {
             Configuration = configuration;
+           
         }
 
         public DbSet<OperationClaim> OperationClaims { get; set; }
@@ -55,6 +59,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             if (!optionsBuilder.IsConfigured)
             {
                 base.OnConfiguring(optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DArchPgContext"))
