@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Entities.Dtos;
+using IResult = Core.Utilities.Results.IResult;
 
 namespace WebAPI.Controllers
 {
@@ -19,16 +20,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : BaseApiController
     {
-        private readonly IConfiguration _configuration;
-
-        /// <summary>
-        /// Dependency injection is provided by constructor injection.
-        /// </summary>
-        /// <param name="configuration"></param>
-        public AuthController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
 
         /// <summary>
         /// Make it User Login operations
@@ -134,7 +125,7 @@ namespace WebAPI.Controllers
         public IActionResult LoginTest()
         {
             var auth = Request.Headers["Authorization"];
-            var token = new JwtHelper(_configuration).DecodeToken(auth);
+            var token = JwtHelper.DecodeToken(auth);
 
             return Ok(token);
         }

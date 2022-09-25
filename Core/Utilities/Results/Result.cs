@@ -13,7 +13,7 @@
             Success = success;
         }
 
-        public bool Success { get; }
-        public string Message { get; }
+        public bool Success { get; set; }
+        public string Message { get; set; }
     }
 }

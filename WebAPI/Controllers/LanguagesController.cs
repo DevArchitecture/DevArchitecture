@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Update Language.
         /// </summary>
-        /// <param name="updateLanguage"></param>
+        /// <param name="updateLanguageDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -113,7 +113,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Delete Language.
         /// </summary>
-        /// <param name="deleteLanguage"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

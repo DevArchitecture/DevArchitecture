@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Design;
+﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using System;
 
 namespace WebAPI.EntityBaseOverride
 {
@@ -15,8 +15,8 @@ namespace WebAPI.EntityBaseOverride
         /// </summary>
         /// <param name="annotationCodeGenerator"></param>
         /// <param name="cSharpHelper"></param>
-        public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper CSharpHelper)
-            : base(annotationCodeGenerator, CSharpHelper)
+        public OverrideBase(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper)
+            : base(annotationCodeGenerator, cSharpHelper)
         {
         }
 
@@ -26,10 +26,11 @@ namespace WebAPI.EntityBaseOverride
         /// <param name="entityType"></param>
         /// <param name="namespace"></param>
         /// <param name="useDataAnnotations"></param>
+        /// <param name="useNullableReferenceTypes"></param>
         /// <returns></returns>
-        public override string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations)
+        public override string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations, bool useNullableReferenceTypes)
         {
-            var str = base.WriteCode(entityType, @namespace, useDataAnnotations).Replace(
+            var str = base.WriteCode(entityType, @namespace, useDataAnnotations, useNullableReferenceTypes).Replace(
                 "public partial class " + entityType.Name, "public class " + entityType.Name + " : IEntity");
             var oldValue = "using System;";
             var newValue = oldValue + Environment.NewLine + "using Core.Entities;";

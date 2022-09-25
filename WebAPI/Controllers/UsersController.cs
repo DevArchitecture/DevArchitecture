@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Update User.
         /// </summary>
-        /// <param name="updateUser"></param>
+        /// <param name="updateUserDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -94,7 +94,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Delete User.
         /// </summary>
-        /// <param name="deleteUser"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

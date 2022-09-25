@@ -71,7 +71,6 @@ namespace Business
 
             services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
-            services.AddSingleton<ICacheManager, MemoryCacheManager>();
 
             services.AddAutoMapper(typeof(ConfigurationManager));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

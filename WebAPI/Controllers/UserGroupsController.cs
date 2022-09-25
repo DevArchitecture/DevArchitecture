@@ -114,7 +114,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Update UserGroup by Id.
         /// </summary>
-        /// <param name="updateUserGroup"></param>
+        /// <param name="updateUserGroupByGroupIdDto"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
@@ -129,7 +129,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// Delete UserGroup.
         /// </summary>
-        /// <param name="deleteUserGroup"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]

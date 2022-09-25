@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using ConfigurationManager = Business.ConfigurationManager;
 
 namespace WebAPI
 {
@@ -55,7 +56,7 @@ namespace WebAPI
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
 
             services.AddApiVersioning(v =>
@@ -120,7 +121,7 @@ namespace WebAPI
             switch (configurationManager.Mode)
             {
                 case ApplicationMode.Development:
-                    app.UseDbFakeDataCreator();
+                    _ = app.UseDbFakeDataCreator();
                     break;
 
                 case ApplicationMode.Profiling:
@@ -135,13 +136,18 @@ namespace WebAPI
 
             app.ConfigureCustomExceptionMiddleware();
 
-            app.UseDbOperationClaimCreator();
-            app.UseSwagger();
+            _ = app.UseDbOperationClaimCreator();
+            
+            if (!env.IsProduction())
+            {
+                app.UseSwagger();
 
-            app.UseSwaggerUI(c => {
-              c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture"); 
-              c.DocExpansion(DocExpansion.None);
-            });
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
+                    c.DocExpansion(DocExpansion.None);
+                });
+            }
             app.UseCors("AllowOrigin");
 
             app.UseHttpsRedirection();

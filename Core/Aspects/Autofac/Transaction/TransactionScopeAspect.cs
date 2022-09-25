@@ -11,18 +11,16 @@ namespace Core.Aspects.Autofac.Transaction
     {
         public override void Intercept(IInvocation invocation)
         {
-            using (var transactionScope = new TransactionScope())
+            using var transactionScope = new TransactionScope();
+            try
             {
-                try
-                {
-                    invocation.Proceed();
-                    transactionScope.Complete();
-                }
-                catch (System.Exception ex)
-                {
-                    ex.ToString();
-                    throw;
-                }
+                invocation.Proceed();
+                transactionScope.Complete();
+            }
+            catch (System.Exception ex)
+            {
+                ex.ToString();
+                throw;
             }
         }
     }

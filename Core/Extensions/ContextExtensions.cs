@@ -32,7 +32,7 @@ namespace Core.Extensions
         public static IQueryable<T> QueryableOf<T>(this DbContext context, string typeName)
             where T : class
         {
-            var type = context.Model.GetEntityTypes(typeName).First();
+            var type = context.Model.FindEntityType(typeName);
             var q = (IQueryable)context
                 .GetType()
                 .GetMethod("Set")
