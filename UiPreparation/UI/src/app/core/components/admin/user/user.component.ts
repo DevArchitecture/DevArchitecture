@@ -250,9 +250,7 @@ export class UserComponent implements AfterViewInit, OnInit {
   }
 
   updateUser() {
-    debugger;
     this.userService.updateUser(this.user).subscribe((data) => {
-      debugger;
       var index = this.userList.findIndex((x) => x.userId == this.user.userId);
       this.userList[index] = this.user;
       this.dataSource = new MatTableDataSource(this.userList);

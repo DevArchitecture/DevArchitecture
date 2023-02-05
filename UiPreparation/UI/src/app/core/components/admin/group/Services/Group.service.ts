@@ -26,7 +26,6 @@ export class GroupService {
   }
 
   getGroupUsers(id: number): Observable<LookUp[]> {
-    debugger
     return this._httpClient.get<LookUp[]>(
       environment.getApiUrl + `/user-groups/groups/${id}/users`
     );
@@ -58,7 +57,6 @@ export class GroupService {
   }
 
   saveGroupClaims(groupId: number, claims: number[]): Observable<any> {
-    debugger;
     var result = this._httpClient.put(
       environment.getApiUrl + `/group-claims/`,
       { GroupId: groupId, ClaimIds: claims },

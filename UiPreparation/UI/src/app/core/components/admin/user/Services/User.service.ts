@@ -33,7 +33,6 @@ export class UserService {
   }
 
   updateUser(user:User):Observable<any> {
-debugger;
     var result = this.httpClient.put(environment.getApiUrl + "/users/", user, { responseType: 'text' });
     return result;
   }

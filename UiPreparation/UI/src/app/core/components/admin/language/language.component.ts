@@ -52,7 +52,6 @@ export class LanguageComponent implements AfterViewInit, OnInit {
 	}
 
 	save(){
-debugger
 		if (this.languageAddForm.valid) {
 			this.language = Object.assign({}, this.languageAddForm.value)
 
@@ -65,12 +64,11 @@ debugger
 	}
 
 	addLanguage(){
-
 		this.languageService.addLanguage(this.language).subscribe(data => {
 			this.getLanguageList();
 			this.language = new Language();
 			jQuery('#language').modal('hide');
-			this.alertifyService.success('Ba?ar?l?');
+			this.alertifyService.success(data);
 			this.clearFormGroup(this.languageAddForm);
 
 		})
@@ -78,7 +76,6 @@ debugger
 	}
 
 	updateLanguage(){
-debugger
 		this.languageService.updateLanguage(this.language).subscribe(data => {
 
 			var index=this.languageList.findIndex(x=>x.id==this.language.id);

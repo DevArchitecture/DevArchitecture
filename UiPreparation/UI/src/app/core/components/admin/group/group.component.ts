@@ -78,7 +78,6 @@ export class GroupComponent implements AfterViewInit, OnInit {
   }
 
   save(){
-    debugger;
     if (this.groupAddForm.valid) {
       this.group = Object.assign({}, this.groupAddForm.value)
 
