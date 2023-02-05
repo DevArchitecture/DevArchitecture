@@ -33,9 +33,4 @@
 		<ProjectReference Include="..\Entities\Entities.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Migrations\Ms\" />
-		<Folder Include="Migrations\Ora\" />
-	</ItemGroup>
-
 </Project>

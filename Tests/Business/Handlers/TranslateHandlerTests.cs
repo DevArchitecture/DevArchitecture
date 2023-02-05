@@ -13,14 +13,15 @@ using FluentAssertions;
 using MediatR;
 using Moq;
 using NUnit.Framework;
+using static Business.Handlers.Translates.Commands.CreateTranslateCommand;
+using static Business.Handlers.Translates.Commands.DeleteTranslateCommand;
+using static Business.Handlers.Translates.Queries.GetTranslateQuery;
+using static Business.Handlers.Translates.Queries.GetTranslatesQuery;
+using static Business.Handlers.Translates.Commands.UpdateTranslateCommand;
 
 namespace Tests.Business.Handlers
 {
-    using static CreateTranslateCommand;
-    using static DeleteTranslateCommand;
-    using static GetTranslateQuery;
-    using static GetTranslatesQuery;
-    using static UpdateTranslateCommand;
+    
 
     [TestFixture]
     public class TranslateHandlerTests

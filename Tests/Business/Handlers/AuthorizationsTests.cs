@@ -17,13 +17,14 @@ using MediatR;
 using Moq;
 using NUnit.Framework;
 using Tests.Helpers;
+using static Business.Handlers.Authorizations.Commands.ForgotPasswordCommand;
+using static Business.Handlers.Authorizations.Queries.LoginUserQuery;
+using static Business.Handlers.Authorizations.Queries.LoginWithRefreshTokenQuery;
+using static Business.Handlers.Authorizations.Commands.RegisterUserCommand;
 
 namespace Tests.Business.Handlers
 {
-    using static ForgotPasswordCommand;
-    using static LoginUserQuery;
-    using static LoginWithRefreshTokenQuery;
-    using static RegisterUserCommand;
+    
 
     [TestFixture]
     public class AuthorizationsTests

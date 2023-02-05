@@ -13,14 +13,16 @@ using FluentAssertions;
 using MediatR;
 using Moq;
 using NUnit.Framework;
+using static Business.Handlers.Languages.Commands.CreateLanguageCommand;
+using static Business.Handlers.Languages.Commands.DeleteLanguageCommand;
+using static Business.Handlers.Languages.Queries.GetLanguageQuery;
+using static Business.Handlers.Languages.Queries.GetLanguagesQuery;
+using static Business.Handlers.Languages.Commands.UpdateLanguageCommand;
+
 
 namespace Tests.Business.Handlers
 {
-    using static CreateLanguageCommand;
-    using static DeleteLanguageCommand;
-    using static GetLanguageQuery;
-    using static GetLanguagesQuery;
-    using static UpdateLanguageCommand;
+   
 
     [TestFixture]
     public class LanguageHandlerTests

@@ -10,13 +10,13 @@ using DataAccess.Abstract;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
+using static Business.Handlers.UserGroups.Commands.CreateUserGroupCommand;
+using static Business.Handlers.UserGroups.Commands.DeleteUserGroupCommand;
+using static Business.Handlers.UserGroups.Queries.GetUserGroupsQuery;
+using static Business.Handlers.UserGroups.Commands.UpdateUserGroupCommand;
 
 namespace Tests.Business.Handlers
 {
-    using static CreateUserGroupCommand;
-    using static DeleteUserGroupCommand;
-    using static GetUserGroupsQuery;
-    using static UpdateUserGroupCommand;
 
     [TestFixture]
     public class UserGroupsTests
