@@ -22,7 +22,7 @@ export class OperationClaimService {
   }
 
   updateOperationClaim(operationClaim: OperationClaim): Observable<any> {
-    return this._httpClient.put(environment.getApiUrl  + `/operation-claims/${operationClaim.id}`, operationClaim, { responseType: 'text' });
+    return this._httpClient.put(environment.getApiUrl  + "/operation-claims/", operationClaim, { responseType: 'text' });
 
   }
 

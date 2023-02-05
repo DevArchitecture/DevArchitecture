@@ -44,9 +44,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] int groupId)
+        public async Task<IActionResult> GetById( int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = groupId }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = id }));
         }
 
         /// <summary>
@@ -88,10 +88,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateGroupDto updateGroupDto)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateGroupDto updateGroupDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupCommand{ Id = id, GroupName = updateGroupDto.GroupName }));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupCommand{ Id = updateGroupDto.Id, GroupName = updateGroupDto.GroupName }));
         }
 
         /// <summary>

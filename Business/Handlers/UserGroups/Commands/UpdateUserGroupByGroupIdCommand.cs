@@ -14,8 +14,7 @@ using MediatR;
 namespace Business.Handlers.UserGroups.Commands
 {
     public class UpdateUserGroupByGroupIdCommand : IRequest<IResult>
-    {
-        public int Id { get; set; }
+    {       
         public int GroupId { get; set; }
         public int[] UserIds { get; set; }
 

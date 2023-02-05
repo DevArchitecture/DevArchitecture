@@ -72,10 +72,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateOperationClaimDto updateOperationClaimDto)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateOperationClaimDto updateOperationClaimDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateOperationClaimCommand{Id = id, Alias = updateOperationClaimDto.Alias, Description = updateOperationClaimDto.Description}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateOperationClaimCommand{Id = updateOperationClaimDto.Id, Alias = updateOperationClaimDto.Alias, Description = updateOperationClaimDto.Description}));
         }
 
         /// <summary>

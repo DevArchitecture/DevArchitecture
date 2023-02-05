@@ -52,7 +52,7 @@ export class LanguageComponent implements AfterViewInit, OnInit {
 	}
 
 	save(){
-
+debugger
 		if (this.languageAddForm.valid) {
 			this.language = Object.assign({}, this.languageAddForm.value)
 
@@ -78,7 +78,7 @@ export class LanguageComponent implements AfterViewInit, OnInit {
 	}
 
 	updateLanguage(){
-
+debugger
 		this.languageService.updateLanguage(this.language).subscribe(data => {
 
 			var index=this.languageList.findIndex(x=>x.id==this.language.id);

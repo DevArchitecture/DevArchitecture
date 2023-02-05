@@ -16,7 +16,7 @@ namespace Business.Handlers.UserClaims.Commands
 {
     public class UpdateUserClaimCommand : IRequest<IResult>
     {
-        public int Id { get; set; }
+      
         public int UserId { get; set; }
         public int[] ClaimId { get; set; }
 

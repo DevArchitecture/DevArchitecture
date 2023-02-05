@@ -28,10 +28,11 @@ export class LanguageService {
   }
 
   updateLanguage(language: Language): Observable<any> {
-    return this._httpClient.put(environment.getApiUrl +`/languages/${language.id}`, language);
+    debugger
+    return this._httpClient.put(environment.getApiUrl +"/languages/", language);
   }
 
   deleteLanguage(id: number) {
-    return this._httpClient.delete(`/languages/${id}`);
+    return this._httpClient.delete(environment.getApiUrl +`/languages/${id}`);
   }
 }

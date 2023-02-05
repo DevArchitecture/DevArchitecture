@@ -33,8 +33,8 @@ export class UserService {
   }
 
   updateUser(user:User):Observable<any> {
-
-    var result = this.httpClient.put(environment.getApiUrl + `/users/${user.userId}`, user, { responseType: 'text' });
+debugger;
+    var result = this.httpClient.put(environment.getApiUrl + "/users/", user, { responseType: 'text' });
     return result;
   }
 
@@ -47,18 +47,18 @@ export class UserService {
   }
 
   getUserClaims(userId:number){
-     return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-claims/users${userId}`);
+     return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-claims/users/${userId}`);
   }
 
   saveUserClaims(userId:number,claims:number[] ):Observable<any> {
 
-    var result = this.httpClient.put(environment.getApiUrl + `/user-claims/${userId}`, { ClaimId:claims }, { responseType: 'text' });
+    var result = this.httpClient.put(environment.getApiUrl + "/user-claims/", {UserId:userId, ClaimIds:claims }, { responseType: 'text' });
     return result;
 
   }
 
   saveUserGroupPermissions(userId:number, groups:number[]):Observable<any> {
-    var result = this.httpClient.put(environment.getApiUrl + `/user-groups/${userId}`, { GroupId:groups }, { responseType: 'text' });
+    var result = this.httpClient.put(environment.getApiUrl + "/user-groups/", {UserId:userId, GroupId:groups }, { responseType: 'text' });
     return result;
 
   }

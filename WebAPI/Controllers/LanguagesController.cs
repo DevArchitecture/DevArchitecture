@@ -75,9 +75,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute]int languageId)
+        public async Task<IActionResult> GetById(int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = languageId }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = id }));
         }
 
         /// <summary>
@@ -104,10 +104,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateLanguageDto updateLanguageDto)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateLanguageDto updateLanguageDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateLanguageCommand{Id = id, Name = updateLanguageDto.Name, Code = updateLanguageDto.Code}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateLanguageCommand{Id = updateLanguageDto.Id, Name = updateLanguageDto.Name, Code = updateLanguageDto.Code}));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteLanguageCommand{}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteLanguageCommand{Id=id}));
         }
     }
 }

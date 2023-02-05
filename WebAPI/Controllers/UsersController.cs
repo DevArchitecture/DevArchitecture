@@ -56,9 +56,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute]int userId)
+        public async Task<IActionResult> GetById(int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = userId }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = id }));
         }
 
         /// <summary>
@@ -85,10 +85,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateUserDto updateUserDto)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateUserDto updateUserDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserCommand{UserId = id,Email = updateUserDto.Email,FullName = updateUserDto.FullName, MobilePhones = updateUserDto.MobilePhones, Address = updateUserDto.Address,Notes = updateUserDto.Notes}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserCommand{UserId = updateUserDto.UserId,Email = updateUserDto.Email,FullName = updateUserDto.FullName, MobilePhones = updateUserDto.MobilePhones, Address = updateUserDto.Address,Notes = updateUserDto.Notes}));
         }
 
         /// <summary>

@@ -120,10 +120,10 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpPut("groups/{id}")]
-        public async Task<IActionResult> UpdateByGroupId([FromRoute] int id,[FromBody] UpdateUserGroupByGroupIdDto updateUserGroupByGroupIdDto)
+        [HttpPut("groups")]
+        public async Task<IActionResult> UpdateByGroupId([FromBody] UpdateUserGroupByGroupIdDto updateUserGroupByGroupIdDto)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserGroupByGroupIdCommand{Id = id, GroupId = updateUserGroupByGroupIdDto.GroupId, UserIds = updateUserGroupByGroupIdDto.UserIds}));
+            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserGroupByGroupIdCommand{ GroupId = updateUserGroupByGroupIdDto.GroupId, UserIds = updateUserGroupByGroupIdDto.UserIds}));
         }
 
         /// <summary>
