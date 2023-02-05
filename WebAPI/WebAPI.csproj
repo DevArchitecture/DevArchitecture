@@ -39,6 +39,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
 			<IncludeAssets>all</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>		
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
 			<PrivateAssets>all</PrivateAssets>
