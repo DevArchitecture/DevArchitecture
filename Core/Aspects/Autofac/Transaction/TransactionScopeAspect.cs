@@ -19,7 +19,7 @@ namespace Core.Aspects.Autofac.Transaction
             }
             catch (System.Exception ex)
             {
-                transactionScope.Rollback();
+                transactionScope.Dispose();
                 throw;
             }
         }
