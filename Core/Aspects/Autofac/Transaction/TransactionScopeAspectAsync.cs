@@ -30,9 +30,17 @@ namespace Core.Aspects.Autofac.Transaction
 
         public override void Intercept(IInvocation invocation)
         {
-            using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-            invocation.Proceed();
-            tx.Complete();
+            using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            try
+            {
+                invocation.Proceed();
+                transactionScope.Complete();
+            }
+            catch (System.Exception ex)
+            {
+                transactionScope.Rollback();
+                throw;
+            }
         }
     }
 }
