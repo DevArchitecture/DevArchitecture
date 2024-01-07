@@ -1,6 +1,6 @@
 # DevArchitecture
 
-DevArchitecture Open Source Rapid Application Framework for .Net 5
+DevArchitecture Open Source Rapid Application Framework for .Net 7
 
 For full documentation support [DevArchitecture](https://www.devarchitecture.net)
 
@@ -10,7 +10,7 @@ For full documentation support [DevArchitecture](https://www.devarchitecture.net
 
 # Support the DevArchitecture 
 
-If you liked DevArchitecture Open Source Rapid Application Framework for .Net 5? 
+If you liked DevArchitecture Open Source Rapid Application Framework for .Net 7? 
 
 ## Please give a star to this repository ⭐
 
