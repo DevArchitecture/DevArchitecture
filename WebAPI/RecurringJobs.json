@@ -1,0 +1,11 @@
+[
+//	{
+//		"job-name": "JobName",
+//		"job-type": "Business.Concretes.Type.Name, Business",
+//		"cron-expression": "*/1 * * * *",
+//		"job-data": {
+//			"Parameter1": true,
+//			"Parameter2": true
+//		}
+//	}
+]
