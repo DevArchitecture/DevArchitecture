@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,7 +10,7 @@ namespace Tests.Helpers.Token
     public static class MockJwtTokens
     {
         private static readonly JwtSecurityTokenHandler s_tokenHandler = new ();
-        private static string s_keyString = "!z2x3C4v5B*_*!z2x3C4v5B*_*";
+        private static string s_keyString = "!z2x3C4v5B*_*!z2x3C4v5B*_*!z2x3C4v5B*_*";
 
         static MockJwtTokens()
         {
