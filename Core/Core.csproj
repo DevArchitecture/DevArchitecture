@@ -13,7 +13,6 @@
 		<PackageReference Include="FluentValidation" Version="11.4.0" />
 		<PackageReference Include="Hangfire" Version="1.8.11" />
 		<PackageReference Include="Hangfire.Autofac" Version="2.6.0" />
-		<PackageReference Include="Hangfire.Dashboard.Authorization" Version="3.0.1" />
 		<PackageReference Include="Hangfire.PostgreSql" Version="1.20.6" />
 		<PackageReference Include="Hangfire.RecurringJobExtensions" Version="1.1.6" />
 		<PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.3" />
@@ -31,7 +30,7 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
-		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.26.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.4.1" />
 		<PackageReference Include="Microsoft.OpenApi" Version="1.6.0" />
 		<PackageReference Include="MimeKit" Version="3.5.0" />
 		<PackageReference Include="MongoDB.Bson" Version="2.19.0" />
@@ -48,6 +47,6 @@
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.2.0" />
 		<PackageReference Include="ServiceStack.Redis.Core" Version="6.5.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.1" />
   </ItemGroup>
 </Project>
