@@ -9,6 +9,7 @@
 	<PropertyGroup>
 		<CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<NoWarn>1701;1702;1591;EF1001</NoWarn>
