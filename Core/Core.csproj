@@ -45,7 +45,8 @@
 		<PackageReference Include="Serilog.Sinks.MicrosoftTeams" Version="0.2.1" />
 		<PackageReference Include="Serilog.Sinks.MongoDB" Version="5.3.1" />
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.2.0" />
-		<PackageReference Include="ServiceStack.Redis.Core" Version="6.5.0" />
+		<PackageReference Include="ServiceStack.Text.Core" Version="8.2.2" />
+		<PackageReference Include="StackExchange.Redis" Version="2.6.122" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.1" />
   </ItemGroup>
