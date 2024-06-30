@@ -1,43 +1,51 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
+using Core.Utilities.Results;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace Core.Utilities.MessageBrokers.RabbitMq
+namespace Core.Utilities.MessageBrokers.RabbitMq;
+
+public class RMqQueueHelper : IMessageBrokerHelper
 {
-    public class MqQueueHelper : IMessageBrokerHelper
+    private readonly MessageBrokerOptions _brokerOptions;
+
+    public RMqQueueHelper(IConfiguration configuration)
     {
-        private readonly MessageBrokerOptions _brokerOptions;
+        Configuration = configuration;
+        _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
+    }
 
-        public MqQueueHelper(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
-        }
+    public IConfiguration Configuration { get; }
 
-        public IConfiguration Configuration { get; }
-
-        public void QueueMessage(string messageText)
-        {
-            var factory = new ConnectionFactory
+    public Task<IResult> QueueMessageAsync<T>(T messageModel)
+    {
+        using var connection = new ConnectionFactory()
             {
                 HostName = _brokerOptions.HostName,
+                Port = _brokerOptions.Port,
                 UserName = _brokerOptions.UserName,
-                Password = _brokerOptions.Password
-            };
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-            channel.QueueDeclare(
-                queue: "DArchQueue",
-                durable: false,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
+                Password = _brokerOptions.Password,
+                AutomaticRecoveryEnabled = true,
+                NetworkRecoveryInterval = new TimeSpan(2000),
+            }
+            .CreateConnection();
+        using var channel = connection.CreateModel();
+        var topicName = typeof(T).Name;
+        channel.QueueDeclare(
+            topicName,
+            false,
+            false,
+            false,
+            null);
 
-            var message = JsonConvert.SerializeObject(messageText);
-            var body = Encoding.UTF8.GetBytes(message);
+        var message = JsonConvert.SerializeObject(messageModel);
+        var body = Encoding.UTF8.GetBytes(message);
 
-            channel.BasicPublish(exchange: string.Empty, routingKey: "DArchQueue", basicProperties: null, body: body);
-        }
+        channel.BasicPublish(string.Empty, topicName, null, body);
+        return Task.FromResult<IResult>(new SuccessResult());
+
     }
 }
