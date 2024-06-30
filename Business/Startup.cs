@@ -26,6 +26,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
+using Core.Utilities.MessageBrokers;
 using Core.Utilities.TaskScheduler;
 using Core.Utilities.TaskScheduler.Hangfire;
 using Core.Utilities.TaskScheduler.Hangfire.Models;
@@ -78,7 +79,7 @@ namespace Business
             services.AddTransient<ITokenHelper, JwtHelper>();
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
 
-            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
+            services.AddTransient<IMessageBrokerHelper, RMqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
 
             var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
