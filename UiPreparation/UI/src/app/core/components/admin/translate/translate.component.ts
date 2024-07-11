@@ -1,17 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../login/services/auth.service';
-import { Translate } from './Models/Translate';
-import { TranslateService } from './Services/Translate.service';
-import { LookUp } from '../../../models/LookUp';
+import { CustomTranslateService } from './services/custom_translate.service';
 import { LookUpService } from 'app/core/services/lookUp.service';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LookUp } from 'app/core/models/lookUp';
+import { Translate } from './models/translate';
 
 
-declare var jQuery: any;
+declare let jQuery: any;
 
 @Component({
 	selector: 'app-translate',
@@ -36,7 +36,7 @@ export class TranslateComponent implements  AfterViewInit, OnInit {
 	translateId: number;
 
 
-	constructor(private translateService: TranslateService, private lookupService: LookUpService, private alertifyService: AlertifyService, private formBuilder: FormBuilder, private authService: AuthService) { }
+	constructor(private translateService: CustomTranslateService, private lookupService: LookUpService, private alertifyService: AlertifyService, private formBuilder: FormBuilder, private authService: AuthService) { }
 
 	ngAfterViewInit(): void {
 
