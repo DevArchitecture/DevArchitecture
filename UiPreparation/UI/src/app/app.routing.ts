@@ -11,7 +11,7 @@ const routes: Routes =[
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
-  }, 
+  },
 
 
   {
@@ -19,9 +19,7 @@ const routes: Routes =[
     component: AdminLayoutComponent,
     children: [{
       path: '',
-      // loadChildren: './core/components/app/layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-      loadChildren: './core/modules/admin-layout.module#AdminLayoutModule'
-    }]
+      loadChildren: () => import('./core/modules/admin-layout.module').then(m => m.AdminLayoutModule)    }]
   }
 ];
 
@@ -30,7 +28,7 @@ const routes: Routes =[
     CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes,{
-       useHash: true
+      useHash: true
     })
   ],
   exports: [

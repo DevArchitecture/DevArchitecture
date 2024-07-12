@@ -8,13 +8,13 @@
 
 .no-sort::after {
 	display: none !important;
-	background-image: url() !important;
+	/* background-image: url() !important; */
 }
 
 .no-sort {
 	pointer-events: none !important;
 	cursor: default !important;
-	background-image: url() !important;
+	/* background-image: url() !important; */
 }
 
 .card .card-header .card-title {
