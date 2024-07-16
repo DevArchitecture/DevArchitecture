@@ -15,7 +15,7 @@ namespace Core.Aspects.Autofac.Caching
     {
         private readonly int _duration;
         private readonly ICacheManager _cacheManager;
-
+        
         public CacheAspect(int duration = 60)
         {
             _duration = duration;
@@ -46,7 +46,9 @@ namespace Core.Aspects.Autofac.Caching
             {
                 var paramValues = arg.GetType().GetProperties()
                     .Select(p => p.GetValue(arg)?.ToString() ?? string.Empty);
-                sb.Append(string.Join('_', paramValues));
+                var enumerable = paramValues.ToList();
+                if(enumerable.Any(w => w.Contains("Cancellation"))) continue;
+                sb.Append(string.Join('_', enumerable));
             }
 
             return sb.ToString();

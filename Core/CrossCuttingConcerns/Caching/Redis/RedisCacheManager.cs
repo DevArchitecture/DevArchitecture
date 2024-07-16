@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using ServiceStack.Redis;
+using Microsoft.Extensions.Configuration;
 using ServiceStack.Text;
+using StackExchange.Redis;
 
 namespace Core.CrossCuttingConcerns.Caching.Redis
 {
@@ -10,46 +12,69 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
     /// </summary>
     public class RedisCacheManager : ICacheManager
     {
-        private readonly RedisEndpoint _redisEndpoint;
+        private readonly ConnectionMultiplexer _redis;
+        private readonly IDatabase _cache;
 
-        public RedisCacheManager()
+        public RedisCacheManager(IConfiguration configuration)
         {
-            _redisEndpoint = new RedisEndpoint("localhost", 6379);
+            var cacheConfig = configuration.GetSection(nameof(CacheOptions)).Get<CacheOptions>();
+            var configurationOptions = ConfigurationOptions.Parse($"{cacheConfig.Host}:{cacheConfig.Port}");
+            if (!string.IsNullOrEmpty(cacheConfig.Password))
+            {
+                configurationOptions.Password = cacheConfig.Password;
+            }
+
+            configurationOptions.DefaultDatabase = cacheConfig.Database;
+            _redis = ConnectionMultiplexer.Connect(configurationOptions);
+            _cache = _redis.GetDatabase(cacheConfig.Database);
         }
 
         public T Get<T>(string key)
         {
             var result = default(T);
-            RedisInvoker(x => { result = x.Get<T>(key); });
+            RedisInvoker(x =>
+            {
+                var data = _cache.StringGet(key);
+                if (data.HasValue)
+                {
+                    result = JsonSerializer.DeserializeFromString<T>(data);
+                }
+            });
             return result;
         }
 
         public object Get(string key)
         {
             var result = default(object);
-            RedisInvoker(x => { result = x.Get<object>(key); });
+            RedisInvoker(x =>
+            {
+                var data = _cache.StringGet(key);
+                if (data.HasValue)
+                {
+                    result = JsonSerializer.DeserializeFromString<object>(data);
+                }
+            });
             return result;
         }
 
         public object Get(string key, Type type)
         {
-            var json = Get<string>(key);
-            var result = JsonSerializer.DeserializeFromString(json, type);
-
+            var data = Get<string>(key);
+            var result = data != null ? JsonSerializer.DeserializeFromString(data, type) : null;
             return typeof(Task)
-                .GetMethod(nameof(Task.FromResult))
+                .GetMethod(nameof(Task.FromResult))!
                 .MakeGenericMethod(type)
                 .Invoke(this, new object[] { result });
         }
 
         public void Add(string key, object data, int duration)
         {
-            RedisInvoker(x => x.Add(key, data, TimeSpan.FromMinutes(duration)));
+            RedisInvoker(x => x.StringSet(key, JsonSerializer.SerializeToString(data), TimeSpan.FromMinutes(duration)));
         }
 
         public void Add(string key, object data)
         {
-            RedisInvoker(x => x.Add(key, data));
+            RedisInvoker(x => x.StringSet(key, JsonSerializer.SerializeToString(data)));
         }
 
         public void Add(string key, dynamic data, int duration, Type type)
@@ -67,29 +92,60 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         public bool IsAdd(string key)
         {
             var isAdded = false;
-            RedisInvoker(x => isAdded = x.ContainsKey(key));
+            RedisInvoker(x => isAdded = x.KeyExists(key));
             return isAdded;
         }
 
         public void Remove(string key)
         {
-            RedisInvoker(x => x.Remove(key));
+            RedisInvoker(x => x.KeyDelete(key));
         }
 
-        public void RemoveByPattern(string pattern)
+        public async void RemoveByPattern(string pattern)
         {
-            RedisInvoker(x => x.RemoveByPattern($"*{pattern}*"));
+            await _redis.KeyDeleteByPatternAsync(pattern: pattern, 0);
         }
 
         public void Clear()
         {
-            RedisInvoker(x => x.FlushAll());
+            var redisServer = _redis.GetServer(_redis.Configuration);
+            var redisDatabase = _redis.GetDatabase();
+            redisServer.FlushDatabase(redisDatabase.Database);
         }
 
-        private void RedisInvoker(Action<RedisClient> redisAction)
+        private void RedisInvoker(Action<IDatabase> redisAction)
         {
-            using var client = new RedisClient(_redisEndpoint);
-            redisAction.Invoke(client);
+            var redisDatabase = _redis.GetDatabase();
+            redisAction.Invoke(redisDatabase);
+        }
+    }
+
+    public static class RedisExtensions
+    {
+        public static async ValueTask KeyDeleteByPatternAsync(
+            this IConnectionMultiplexer multiplexer,
+            string pattern = null,
+            int database = -1)
+        {
+            // there may be multiple endpoints behind a multiplexer
+            var endpoints = multiplexer.GetEndPoints();
+            var db = multiplexer.GetDatabase(database);
+            RedisKey[] keys;
+
+            foreach (var ep in endpoints)
+            {
+                var server = multiplexer.GetServer(ep);
+                if (!server.IsConnected || server.IsReplica) continue;
+                keys = server.Keys(database, $"*{pattern}*").ToArray();
+                await FlushBatch().ConfigureAwait(false);
+            }
+
+            return;
+
+            Task FlushBatch()
+            {
+                return keys.Length == 0 ? Task.CompletedTask : db.KeyDeleteAsync(keys);
+            }
         }
     }
 }

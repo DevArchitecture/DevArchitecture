@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.Json.Serialization;
 using Business;
 using Business.Helpers;
@@ -10,6 +9,9 @@ using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
+using Core.Utilities.TaskScheduler.Hangfire.Models;
+using Hangfire;
+using HangfireBasicAuthenticationFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -171,6 +173,24 @@ namespace WebAPI
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseStaticFiles();
+
+            var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
+            
+            if (taskSchedulerConfig.Enabled)
+            {
+                app.UseHangfireDashboard(taskSchedulerConfig.Path, new DashboardOptions
+                {
+                    DashboardTitle = taskSchedulerConfig.Title,
+                    Authorization = new[]
+                    {
+                        new HangfireCustomBasicAuthenticationFilter
+                        {
+                            User = taskSchedulerConfig.Username,
+                            Pass = taskSchedulerConfig.Password
+                        }
+                    }
+                });
+            }
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

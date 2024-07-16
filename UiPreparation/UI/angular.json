@@ -51,15 +51,26 @@
             "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",
               "jquery",
-              "chartist"
-            ]
+              "chartist",
+              "rxjs-compat",
+              "rxjs/Rx",
+              "sweetalert2",
+              "url"
+
+            ],
+            "aot": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -72,6 +83,19 @@
                 }
               ]
             }
+          },
+          "defaultConfiguration": ""
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "serve": {
@@ -119,16 +143,6 @@
               "src/favicon.ico"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": []
-          }
         }
       }
     },
@@ -143,20 +157,10 @@
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "material-dashboard-angular:serve"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": []
-          }
         }
       }
     }
   },
-  "defaultProject": "material-dashboard-angular",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

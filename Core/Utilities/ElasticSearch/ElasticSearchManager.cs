@@ -19,7 +19,7 @@ namespace Core.Utilities.ElasticSearch
         {
             var settings = configuration.GetSection("ElasticSearchConfig").Get<ElasticSearchConfig>();
             var uri = new System.Uri(settings.ConnectionString);
-            _connectionSettings = new ConnectionSettings(uri);
+            _connectionSettings = new ConnectionSettings(uri).BasicAuthentication(settings.UserName, settings.Password);;
         }
 
         public async Task<IResult> CreateNewIndexAsync(IndexModel indexModel)
