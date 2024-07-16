@@ -30,14 +30,10 @@ namespace Business.Handlers.Users.Commands
         public string Password { get; set; }
 
 
-        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IResult>
+        public class CreateUserCommandHandler(IUserRepository userRepository) 
+            : IRequestHandler<CreateUserCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-
-            public CreateUserCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

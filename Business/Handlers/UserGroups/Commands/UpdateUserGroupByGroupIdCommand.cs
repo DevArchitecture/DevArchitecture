@@ -19,14 +19,10 @@ namespace Business.Handlers.UserGroups.Commands
         public int[] UserIds { get; set; }
 
 
-        public class UpdateUserGroupByGroupIdCommandHandler : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
+        public class UpdateUserGroupByGroupIdCommandHandler(IUserGroupRepository userGroupRepository)
+            : IRequestHandler<UpdateUserGroupByGroupIdCommand, IResult>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
-
-            public UpdateUserGroupByGroupIdCommandHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

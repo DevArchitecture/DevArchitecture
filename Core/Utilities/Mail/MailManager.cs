@@ -8,14 +8,9 @@ using MimeKit.Text;
 
 namespace Core.Utilities.Mail
 {
-    public class MailManager : IMailService
+    public class MailManager(IConfiguration configuration) : IMailService
     {
-        private readonly IConfiguration _configuration;
-
-        public MailManager(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        private readonly IConfiguration _configuration = configuration;
 
         public void Send(EmailMessage emailMessage)
         {

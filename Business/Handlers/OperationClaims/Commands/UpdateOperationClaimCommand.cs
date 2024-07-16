@@ -18,14 +18,10 @@ namespace Business.Handlers.OperationClaims.Commands
         public string Description { get; set; }
 
 
-        public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
+        public class UpdateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository) 
+            : IRequestHandler<UpdateOperationClaimCommand, IResult>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-
-            public UpdateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

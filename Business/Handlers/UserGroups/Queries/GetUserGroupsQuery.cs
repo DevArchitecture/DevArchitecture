@@ -15,22 +15,16 @@ namespace Business.Handlers.UserGroups.Queries
     public class GetUserGroupsQuery : IRequest<IDataResult<IEnumerable<UserGroup>>>
     {
         public class
-            GetUserGroupsQueryHandler : IRequestHandler<GetUserGroupsQuery, IDataResult<IEnumerable<UserGroup>>>
+            GetUserGroupsQueryHandler(IUserGroupRepository userGroupRepository) 
+            : IRequestHandler<GetUserGroupsQuery, IDataResult<IEnumerable<UserGroup>>>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
-
-            public GetUserGroupsQueryHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<UserGroup>>> Handle(GetUserGroupsQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<IEnumerable<UserGroup>>(await _userGroupRepository.GetListAsync());
-            }
+            public async Task<IDataResult<IEnumerable<UserGroup>>> Handle(GetUserGroupsQuery request, CancellationToken cancellationToken) => 
+                new SuccessDataResult<IEnumerable<UserGroup>>(await _userGroupRepository.GetListAsync());
         }
     }
 }

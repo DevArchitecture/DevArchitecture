@@ -16,27 +16,20 @@ namespace Business.Handlers.Translates.Queries
     {
         public string Lang { get; set; }
 
-        public class GetTranslateWordListQueryHandler : IRequestHandler<GetTranslateWordListQuery,
+        public class GetTranslateWordListQueryHandler(ITranslateRepository translateRepository,
+            IMediator mediator) : IRequestHandler<GetTranslateWordListQuery,
             IDataResult<Dictionary<string, string>>>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public GetTranslateWordListQueryHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslateWordListQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<Dictionary<string, string>>(
+            public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslateWordListQuery request, CancellationToken cancellationToken) => 
+                new SuccessDataResult<Dictionary<string, string>>(
                     await _translateRepository.GetTranslateWordList(request.Lang));
-            }
         }
     }
 }

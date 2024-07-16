@@ -6,15 +6,10 @@ namespace Core.Utilities.Results
     /// Paginated response
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PagingResult<T> : Result, IPagingResult<T>
+    public class PagingResult<T>(List<T> data, int totalItemCount, 
+        bool success, string message) : Result(success, message), IPagingResult<T>
     {
-        public PagingResult(List<T> data, int totalItemCount, bool success, string message) : base(success, message)
-        {
-            Data = data;
-            TotalItemCount = totalItemCount;
-        }
-
-        public List<T> Data { get; }
-        public int TotalItemCount { get; }
+        public List<T> Data { get; } = data;
+        public int TotalItemCount { get; } = totalItemCount;
     }
 }

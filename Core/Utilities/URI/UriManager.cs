@@ -7,17 +7,12 @@ namespace Core.Utilities.Uri
     /// <summary>
     /// URI manager
     /// </summary>
-    public class UriManager : IUriService
+    public class UriManager(string baseUri) : IUriService
     {
         /// <summary>
         /// Application url in launchSettings.json
         /// </summary>
-        private readonly string _baseUri;
-
-        public UriManager(string baseUri)
-        {
-            _baseUri = baseUri;
-        }
+        private readonly string _baseUri = baseUri;
 
         /// <summary>
         /// Get page uri from request

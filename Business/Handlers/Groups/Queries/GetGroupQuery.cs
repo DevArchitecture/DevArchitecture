@@ -12,14 +12,10 @@ namespace Business.Handlers.Groups.Queries
     {
         public int GroupId { get; set; }
 
-        public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, IDataResult<Group>>
+        public class GetGroupQueryHandler(IGroupRepository groupRepository)
+            : IRequestHandler<GetGroupQuery, IDataResult<Group>>
         {
-            private readonly IGroupRepository _groupRepository;
-
-            public GetGroupQueryHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+            private readonly IGroupRepository _groupRepository = groupRepository;
 
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<Group>> Handle(GetGroupQuery request, CancellationToken cancellationToken)

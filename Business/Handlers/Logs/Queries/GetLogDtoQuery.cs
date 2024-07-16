@@ -16,16 +16,11 @@ namespace Business.Handlers.Logs.Queries
 {
     public class GetLogDtoQuery : IRequest<IDataResult<IEnumerable<LogDto>>>
     {
-        public class GetLogDtoQueryHandler : IRequestHandler<GetLogDtoQuery, IDataResult<IEnumerable<LogDto>>>
+        public class GetLogDtoQueryHandler(ILogRepository logRepository, 
+            IMediator mediator) : IRequestHandler<GetLogDtoQuery, IDataResult<IEnumerable<LogDto>>>
         {
-            private readonly ILogRepository _logRepository;
-            private readonly IMediator _mediator;
-
-            public GetLogDtoQueryHandler(ILogRepository logRepository, IMediator mediator)
-            {
-                _logRepository = logRepository;
-                _mediator = mediator;
-            }
+            private readonly ILogRepository _logRepository = logRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]

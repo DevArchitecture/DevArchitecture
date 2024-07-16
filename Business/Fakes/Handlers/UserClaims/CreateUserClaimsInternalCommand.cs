@@ -18,16 +18,12 @@ namespace Business.Fakes.Handlers.UserClaims
         public int UserId { get; set; }
         public IEnumerable<OperationClaim> OperationClaims { get; set; }
 
-        public class CreateUserClaimsInternalCommandHandler : IRequestHandler<CreateUserClaimsInternalCommand, IResult>
+        public class CreateUserClaimsInternalCommandHandler(IUserClaimRepository userClaimsRepository) : IRequestHandler<CreateUserClaimsInternalCommand, IResult>
         {
-            private readonly IUserClaimRepository _userClaimsRepository;
+            private readonly IUserClaimRepository _userClaimsRepository = userClaimsRepository;
 
-            public CreateUserClaimsInternalCommandHandler(IUserClaimRepository userClaimsRepository)
-            {
-                _userClaimsRepository = userClaimsRepository;
-            }
-
-            public async Task<IResult> Handle(CreateUserClaimsInternalCommand request, CancellationToken cancellationToken)
+            public async Task<IResult> Handle(CreateUserClaimsInternalCommand request, 
+                CancellationToken cancellationToken)
             {
                 foreach (var claim in request.OperationClaims)
                 {
@@ -47,11 +43,10 @@ namespace Business.Fakes.Handlers.UserClaims
                 return new SuccessResult(Messages.Added);
             }
 
-            private async Task<bool> DoesClaimExistsForUser(UserClaim userClaim)
-            {
-                return (await _userClaimsRepository.GetAsync(x =>
+            private async Task<bool> DoesClaimExistsForUser(UserClaim userClaim)=>
+                 (await _userClaimsRepository.GetAsync(x =>
                     x.UserId == userClaim.UserId && x.ClaimId == userClaim.ClaimId)) is { };
-            }
+            
         }
     }
 }

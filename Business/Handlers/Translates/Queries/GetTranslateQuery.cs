@@ -14,16 +14,11 @@ namespace Business.Handlers.Translates.Queries
     {
         public int Id { get; set; }
 
-        public class GetTranslateQueryHandler : IRequestHandler<GetTranslateQuery, IDataResult<Translate>>
+        public class GetTranslateQueryHandler(ITranslateRepository translateRepository, 
+            IMediator mediator) : IRequestHandler<GetTranslateQuery, IDataResult<Translate>>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public GetTranslateQueryHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

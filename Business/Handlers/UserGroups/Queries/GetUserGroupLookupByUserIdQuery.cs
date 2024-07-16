@@ -16,17 +16,12 @@ namespace Business.Handlers.UserGroups.Queries
     {
         public int UserId { get; set; }
 
-        public class GetUserGroupLookupByUserIdQueryHandler : IRequestHandler<GetUserGroupLookupByUserIdQuery,
+        public class GetUserGroupLookupByUserIdQueryHandler(IUserGroupRepository groupClaimRepository,
+            IMediator mediator) : IRequestHandler<GetUserGroupLookupByUserIdQuery,
             IDataResult<IEnumerable<SelectionItem>>>
         {
-            private readonly IUserGroupRepository _groupClaimRepository;
-            private readonly IMediator _mediator;
-
-            public GetUserGroupLookupByUserIdQueryHandler(IUserGroupRepository groupClaimRepository, IMediator mediator)
-            {
-                _groupClaimRepository = groupClaimRepository;
-                _mediator = mediator;
-            }
+            private readonly IUserGroupRepository _groupClaimRepository = groupClaimRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]

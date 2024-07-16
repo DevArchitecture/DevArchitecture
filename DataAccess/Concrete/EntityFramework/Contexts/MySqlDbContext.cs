@@ -3,13 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccess.Concrete.EntityFramework.Contexts
 {
-    public sealed class MySqlDbContext : ProjectDbContext
+    public sealed class MySqlDbContext(DbContextOptions<MySqlDbContext> options, IConfiguration configuration) 
+        : ProjectDbContext(options, configuration)
     {
-        public MySqlDbContext(DbContextOptions<MySqlDbContext> options, IConfiguration configuration)
-            : base(options, configuration)
-        {
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

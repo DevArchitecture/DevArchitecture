@@ -1,19 +1,11 @@
 ﻿namespace Core.Utilities.Results
 {
-    public class Result : IResult
+    public class Result(bool success) : IResult
     {
         public Result(bool success, string message)
-            : this(success)
-        {
-            Message = message;
-        }
+            : this(success) => Message = message;
 
-        public Result(bool success)
-        {
-            Success = success;
-        }
-
-        public bool Success { get; set; }
+        public bool Success { get; set; } = success;
         public string Message { get; set; }
     }
 }

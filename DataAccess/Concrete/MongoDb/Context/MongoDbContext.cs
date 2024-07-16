@@ -2,11 +2,7 @@
 
 namespace DataAccess.Concrete.MongoDb.Context
 {
-    public class MongoDbContext : MongoDbContextBase
+    public class MongoDbContext(IConfiguration configuration) : MongoDbContextBase(configuration)
     {
-        public MongoDbContext(IConfiguration configuration)
-            : base(configuration)
-        {
-        }
     }
 }

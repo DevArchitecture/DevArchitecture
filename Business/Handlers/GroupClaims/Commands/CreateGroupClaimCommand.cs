@@ -16,14 +16,10 @@ namespace Business.Handlers.GroupClaims.Commands
     {
         public string ClaimName { get; set; }
 
-        public class CreateGroupClaimCommandHandler : IRequestHandler<CreateGroupClaimCommand, IResult>
+        public class CreateGroupClaimCommandHandler(IOperationClaimRepository operationClaimRepository) 
+            : IRequestHandler<CreateGroupClaimCommand, IResult>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-
-            public CreateGroupClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
@@ -45,10 +41,8 @@ namespace Business.Handlers.GroupClaims.Commands
                 return new SuccessResult(Messages.Added);
             }
 
-            private bool IsClaimExists(string claimName)
-            {
-                return !(_operationClaimRepository.Get(x => x.Name == claimName) is null);
-            }
+            private bool IsClaimExists(string claimName) =>
+                !(_operationClaimRepository.Get(x => x.Name == claimName) is null);
         }
     }
 }

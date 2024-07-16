@@ -67,15 +67,11 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
                 .Invoke(this, new object[] { result });
         }
 
-        public void Add(string key, object data, int duration)
-        {
+        public void Add(string key, object data, int duration) => 
             RedisInvoker(x => x.StringSet(key, JsonSerializer.SerializeToString(data), TimeSpan.FromMinutes(duration)));
-        }
 
-        public void Add(string key, object data)
-        {
+        public void Add(string key, object data) => 
             RedisInvoker(x => x.StringSet(key, JsonSerializer.SerializeToString(data)));
-        }
 
         public void Add(string key, dynamic data, int duration, Type type)
         {
@@ -96,15 +92,9 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
             return isAdded;
         }
 
-        public void Remove(string key)
-        {
-            RedisInvoker(x => x.KeyDelete(key));
-        }
+        public void Remove(string key) => RedisInvoker(x => x.KeyDelete(key));
 
-        public async void RemoveByPattern(string pattern)
-        {
-            await _redis.KeyDeleteByPatternAsync(pattern: pattern, 0);
-        }
+        public async void RemoveByPattern(string pattern) => await _redis.KeyDeleteByPatternAsync(pattern: pattern, 0);
 
         public void Clear()
         {

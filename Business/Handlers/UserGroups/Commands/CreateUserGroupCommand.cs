@@ -17,14 +17,10 @@ namespace Business.Handlers.UserGroups.Commands
         public int GroupId { get; set; }
         public int UserId { get; set; }
 
-        public class CreateUserGroupCommandHandler : IRequestHandler<CreateUserGroupCommand, IResult>
+        public class CreateUserGroupCommandHandler(IUserGroupRepository userGroupRepository) 
+            : IRequestHandler<CreateUserGroupCommand, IResult>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
-
-            public CreateUserGroupCommandHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

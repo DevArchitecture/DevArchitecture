@@ -15,14 +15,10 @@ namespace Business.Handlers.Authorizations.Queries
         public long CitizenId { get; set; }
         public int BirthYear { get; set; }
 
-        public class VerifyCidQueryHandler : IRequestHandler<VerifyCidQuery, IDataResult<bool>>
+        public class VerifyCidQueryHandler(IPersonService personService) 
+            : IRequestHandler<VerifyCidQuery, IDataResult<bool>>
         {
-            private readonly IPersonService _personService;
-
-            public VerifyCidQueryHandler(IPersonService personService)
-            {
-                _personService = personService;
-            }
+            private readonly IPersonService _personService = personService;
 
             public async Task<IDataResult<bool>> Handle(VerifyCidQuery request, CancellationToken cancellationToken)
             {

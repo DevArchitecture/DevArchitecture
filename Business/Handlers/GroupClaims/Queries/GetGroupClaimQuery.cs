@@ -14,22 +14,16 @@ namespace Business.Handlers.GroupClaims.Queries
     {
         public int Id { get; set; }
 
-        public class GetGroupClaimQueryHandler : IRequestHandler<GetGroupClaimQuery, IDataResult<GroupClaim>>
+        public class GetGroupClaimQueryHandler(IGroupClaimRepository groupClaimRepository)
+            : IRequestHandler<GetGroupClaimQuery, IDataResult<GroupClaim>>
         {
-            private readonly IGroupClaimRepository _groupClaimRepository;
-
-            public GetGroupClaimQueryHandler(IGroupClaimRepository groupClaimRepository)
-            {
-                _groupClaimRepository = groupClaimRepository;
-            }
+            private readonly IGroupClaimRepository _groupClaimRepository = groupClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<GroupClaim>> Handle(GetGroupClaimQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<GroupClaim>(
+            public async Task<IDataResult<GroupClaim>> Handle(GetGroupClaimQuery request, CancellationToken cancellationToken) =>
+                new SuccessDataResult<GroupClaim>(
                     await _groupClaimRepository.GetAsync(x => x.GroupId == request.Id));
-            }
         }
     }
 }

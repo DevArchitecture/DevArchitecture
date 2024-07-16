@@ -16,14 +16,10 @@ namespace Business.Handlers.OperationClaims.Commands
         public int Id { get; set; }
 
 
-        public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
+        public class DeleteOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
+            : IRequestHandler<DeleteOperationClaimCommand, IResult>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-
-            public DeleteOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

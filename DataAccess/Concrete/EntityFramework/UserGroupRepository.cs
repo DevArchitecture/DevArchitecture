@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class UserGroupRepository : EfEntityRepositoryBase<UserGroup, ProjectDbContext>, IUserGroupRepository
+    public class UserGroupRepository(ProjectDbContext context) : EfEntityRepositoryBase<UserGroup, ProjectDbContext>(context), IUserGroupRepository
     {
-        public UserGroupRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
-
         public async Task BulkInsert(int userId, IEnumerable<UserGroup> userGroups)
         {
             var DbUserGroupList = Context.UserGroups.Where(x => x.UserId == userId);

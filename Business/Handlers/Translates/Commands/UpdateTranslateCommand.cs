@@ -20,16 +20,11 @@ namespace Business.Handlers.Translates.Commands
         public string Value { get; set; }
         public string Code { get; set; }
 
-        public class UpdateTranslateCommandHandler : IRequestHandler<UpdateTranslateCommand, IResult>
+        public class UpdateTranslateCommandHandler(ITranslateRepository translateRepository,
+            IMediator mediator) : IRequestHandler<UpdateTranslateCommand, IResult>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public UpdateTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]

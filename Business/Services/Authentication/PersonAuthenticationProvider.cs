@@ -13,21 +13,16 @@ namespace Business.Services.Authentication
     /// <summary>
     /// Provider that logs in using the DevArchitecture database.
     /// </summary>
-    public class PersonAuthenticationProvider : AuthenticationProviderBase, IAuthenticationProvider
+    public class PersonAuthenticationProvider(AuthenticationProviderType providerType, 
+        IUserRepository users, IMobileLoginRepository mobileLogins, 
+        ITokenHelper tokenHelper, ISmsService smsService) 
+        : AuthenticationProviderBase(mobileLogins, smsService), IAuthenticationProvider
     {
-        private readonly IUserRepository _users;
+        private readonly IUserRepository _users = users;
 
-        private readonly ITokenHelper _tokenHelper;
+        private readonly ITokenHelper _tokenHelper = tokenHelper;
 
-        public PersonAuthenticationProvider(AuthenticationProviderType providerType, IUserRepository users, IMobileLoginRepository mobileLogins, ITokenHelper tokenHelper, ISmsService smsService)
-            : base(mobileLogins, smsService)
-        {
-            _users = users;
-            ProviderType = providerType;
-            _tokenHelper = tokenHelper;
-        }
-
-        public AuthenticationProviderType ProviderType { get; }
+        public AuthenticationProviderType ProviderType { get; } = providerType;
 
         public override async Task<LoginUserResult> Login(LoginUserCommand command)
         {

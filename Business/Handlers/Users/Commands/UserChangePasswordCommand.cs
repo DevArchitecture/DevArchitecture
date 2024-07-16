@@ -16,16 +16,11 @@ namespace Business.Handlers.Users.Commands
         public int UserId { get; set; }
         public string Password { get; set; }
 
-        public class UserChangePasswordCommandHandler : IRequestHandler<UserChangePasswordCommand, IResult>
+        public class UserChangePasswordCommandHandler(IUserRepository userRepository,
+            IMediator mediator) : IRequestHandler<UserChangePasswordCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-            private readonly IMediator _mediator;
-
-            public UserChangePasswordCommandHandler(IUserRepository userRepository, IMediator mediator)
-            {
-                _userRepository = userRepository;
-                _mediator = mediator;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

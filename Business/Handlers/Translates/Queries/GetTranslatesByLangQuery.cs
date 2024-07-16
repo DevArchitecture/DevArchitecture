@@ -14,25 +14,17 @@ namespace Business.Handlers.Translates.Queries
         public string Lang { get; set; }
 
         public class
-            GetTranslatesByLangQueryHandler : IRequestHandler<GetTranslatesByLangQuery,
+            GetTranslatesByLangQueryHandler(ITranslateRepository translateRepository,
+            IMediator mediator) : IRequestHandler<GetTranslatesByLangQuery,
                 IDataResult<Dictionary<string, string>>>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public GetTranslatesByLangQueryHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
-
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<Dictionary<string, string>>(
+            public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken) => 
+                new SuccessDataResult<Dictionary<string, string>>(
                     await _translateRepository.GetTranslatesByLang(request.Lang));
-            }
         }
     }
 }

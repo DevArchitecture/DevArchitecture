@@ -6,15 +6,9 @@ namespace Business.Services.Authentication
     /// <summary>
     ///
     /// </summary>
-    public class AuthenticationCoordinator : IAuthenticationCoordinator
+    public class AuthenticationCoordinator(IServiceProvider serviceProvider) : IAuthenticationCoordinator
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public AuthenticationCoordinator(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
-
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public IAuthenticationProvider SelectProvider(AuthenticationProviderType type)
         {

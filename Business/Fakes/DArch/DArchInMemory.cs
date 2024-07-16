@@ -4,13 +4,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Business.Fakes.DArch
 {
-    public sealed class DArchInMemory : ProjectDbContext
+    public sealed class DArchInMemory(DbContextOptions<DArchInMemory> options,
+        IConfiguration configuration) : ProjectDbContext(options, configuration)
     {
-        public DArchInMemory(DbContextOptions<DArchInMemory> options, IConfiguration configuration)
-            : base(options, configuration)
-        {
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

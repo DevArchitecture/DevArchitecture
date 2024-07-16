@@ -11,16 +11,10 @@ namespace Core.Aspects.Autofac.Caching
     /// <summary>
     /// CacheAspect
     /// </summary>
-    public class CacheAspect : MethodInterception
+    public class CacheAspect(int duration = 60) : MethodInterception
     {
-        private readonly int _duration;
-        private readonly ICacheManager _cacheManager;
-        
-        public CacheAspect(int duration = 60)
-        {
-            _duration = duration;
-            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
-        }
+        private readonly int _duration = duration;
+        private readonly ICacheManager _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
 
         public override void Intercept(IInvocation invocation)
         {

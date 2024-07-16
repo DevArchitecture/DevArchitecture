@@ -16,29 +16,19 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
     /// <summary>
     /// Microsoft MemoryCacheManager
     /// </summary>
-    public class MemoryCacheManager : ICacheManager
+    public class MemoryCacheManager(IMemoryCache cache) : ICacheManager
     {
-        private readonly IMemoryCache _cache;
+        private readonly IMemoryCache _cache = cache;
 
         public MemoryCacheManager()
             : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
         }
 
-        public MemoryCacheManager(IMemoryCache cache)
-        {
-            _cache = cache;
-        }
-
-        public void Add(string key, object data, int duration)
-        {
+        public void Add(string key, object data, int duration) =>
             _cache.Set(key, data, TimeSpan.FromMinutes(duration));
-        }
 
-        public void Add(string key, object data)
-        {
-            _cache.Set(key, data);
-        }
+        public void Add(string key, object data) => _cache.Set(key, data);
 
         public void Add(string key, dynamic data, int duration, Type type)
         {
@@ -52,15 +42,9 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             Add(key, json);
         }
 
-        public T Get<T>(string key)
-        {
-            return _cache.Get<T>(key);
-        }
+        public T Get<T>(string key) => _cache.Get<T>(key);
 
-        public object Get(string key)
-        {
-            return _cache.Get(key);
-        }
+        public object Get(string key) => _cache.Get(key);
 
         public object Get(string key, Type type)
         {
@@ -73,15 +57,9 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
                 .Invoke(this, new object[] { result });
         }
 
-        public bool IsAdd(string key)
-        {
-            return _cache.TryGetValue(key, out _);
-        }
+        public bool IsAdd(string key) => _cache.TryGetValue(key, out _);
 
-        public void Remove(string key)
-        {
-            _cache.Remove(key);
-        }
+        public void Remove(string key) => _cache.Remove(key);
 
         public void RemoveByPattern(string pattern)
         {

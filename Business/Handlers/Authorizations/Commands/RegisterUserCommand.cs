@@ -22,16 +22,10 @@ namespace Business.Handlers.Authorizations.Commands
         public string FullName { get; set; }
 
 
-        public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
+        public class RegisterUserCommandHandler(IUserRepository userRepository) 
+            : IRequestHandler<RegisterUserCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-
-
-            public RegisterUserCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
-
+            private readonly IUserRepository _userRepository = userRepository;
 
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]

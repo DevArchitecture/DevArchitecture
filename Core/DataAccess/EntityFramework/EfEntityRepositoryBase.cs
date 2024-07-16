@@ -18,22 +18,14 @@ namespace Core.DataAccess.EntityFramework
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TContext"></typeparam>
-    public class EfEntityRepositoryBase<TEntity, TContext>
+    public class EfEntityRepositoryBase<TEntity, TContext>(TContext context)
         : IEntityRepository<TEntity>
         where TEntity : class, IEntity
         where TContext : DbContext
     {
-        public EfEntityRepositoryBase(TContext context)
-        {
-            Context = context;
-        }
+        protected TContext Context { get; } = context;
 
-        protected TContext Context { get; }
-
-        public TEntity Add(TEntity entity)
-        {
-            return Context.Add(entity).Entity;
-        }
+        public TEntity Add(TEntity entity) => Context.Add(entity).Entity;
 
         public TEntity Update(TEntity entity)
         {
@@ -41,34 +33,23 @@ namespace Core.DataAccess.EntityFramework
             return entity;
         }
 
-        public void Delete(TEntity entity)
-        {
-            Context.Remove(entity);
-        }
+        public void Delete(TEntity entity) => Context.Remove(entity);
 
-        public TEntity Get(Expression<Func<TEntity, bool>> expression)
-        {
-            return Context.Set<TEntity>().FirstOrDefault(expression);
-        }
+        public TEntity Get(Expression<Func<TEntity, bool>> expression) =>
+            Context.Set<TEntity>().FirstOrDefault(expression);
 
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression)
-        {
-            return await Context.Set<TEntity>().AsQueryable().FirstOrDefaultAsync(expression);
-        }
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression) =>
+            await Context.Set<TEntity>().AsQueryable().FirstOrDefaultAsync(expression);
 
-        public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> expression = null)
-        {
-            return expression == null
+        public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> expression = null) =>
+            expression == null
                 ? Context.Set<TEntity>().AsNoTracking()
                 : Context.Set<TEntity>().Where(expression).AsNoTracking();
-        }
 
-        public async Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression = null)
-        {
-            return expression == null
+        public async Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression = null) =>
+            expression == null
                 ? await Context.Set<TEntity>().ToListAsync()
                 : await Context.Set<TEntity>().Where(expression).ToListAsync();
-        }
 
         //sources: https://www.nuget.org/packages/Apsiyon  |||  https://github.com/vmutlu/ApsiyonFramework
         public PagingResult<TEntity> GetListForPaging(int page, string propertyName, bool asc, Expression<Func<TEntity, bool>> expression = null, params Expression<Func<TEntity, object>>[] includeEntities)
@@ -90,7 +71,7 @@ namespace Core.DataAccess.EntityFramework
             return new PagingResult<TEntity>(list.ToList(), totalCount, true, $"{totalCount} records listed.");
         }
 
-        
+
         public async Task<PagingResult<TEntity>> GetListForTableSearch(TableGlobalFilter globalFilter)
         {
             if (globalFilter == null)
@@ -118,7 +99,7 @@ namespace Core.DataAccess.EntityFramework
                 for (int i = 1; i < globalFilter.PropertyField.Count; i++)
                 {
                     var propertyName = globalFilter.PropertyField[i];
-                    
+
                     globalFilterPropertyField = Expression.PropertyOrField(parameterOfExpression, propertyName);
                     var globalFilterConstant = Expression.Call(Expression.Call(globalFilterPropertyField, toLowerMethod), containMethod, searchedValue);
 
@@ -145,25 +126,14 @@ namespace Core.DataAccess.EntityFramework
         }
 
 
-        public int SaveChanges()
-        {
-            return Context.SaveChanges();
-        }
+        public int SaveChanges() => Context.SaveChanges();
 
-        public Task<int> SaveChangesAsync()
-        {
-            return Context.SaveChangesAsync();
-        }
+        public Task<int> SaveChangesAsync() => Context.SaveChangesAsync();
 
-        public IQueryable<TEntity> Query()
-        {
-            return Context.Set<TEntity>();
-        }
+        public IQueryable<TEntity> Query() => Context.Set<TEntity>();
 
-        public Task<int> Execute(FormattableString interpolatedQueryString)
-        {
-            return Context.Database.ExecuteSqlInterpolatedAsync(interpolatedQueryString);
-        }
+        public Task<int> Execute(FormattableString interpolatedQueryString) =>
+            Context.Database.ExecuteSqlInterpolatedAsync(interpolatedQueryString);
 
         /// <summary>
         /// Transactional operations is prohibited when working with InMemoryDb!
@@ -226,9 +196,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public int GetCount(Expression<Func<TEntity, bool>> expression = null)
-        {
-            return expression == null ? Context.Set<TEntity>().Count() : Context.Set<TEntity>().Count(expression);
-        }
+        public int GetCount(Expression<Func<TEntity, bool>> expression = null) =>
+            expression == null ? Context.Set<TEntity>().Count() : Context.Set<TEntity>().Count(expression);
     }
 }

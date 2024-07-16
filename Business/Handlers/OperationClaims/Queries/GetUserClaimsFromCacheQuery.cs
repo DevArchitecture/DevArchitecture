@@ -19,21 +19,15 @@ namespace Business.Handlers.OperationClaims.Queries
     public class GetUserClaimsFromCacheQuery : IRequest<IDataResult<IEnumerable<string>>>
     {
         public class
-            GetUserClaimsFromCacheQueryHandler : IRequestHandler<GetUserClaimsFromCacheQuery,
+            GetUserClaimsFromCacheQueryHandler(IOperationClaimRepository operationClaimRepository,
+            IMediator mediator, ICacheManager cacheManager, 
+            IHttpContextAccessor contextAccessor) : IRequestHandler<GetUserClaimsFromCacheQuery,
                 IDataResult<IEnumerable<string>>>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-            private readonly IMediator _mediator;
-            private readonly ICacheManager _cacheManager;
-            private readonly IHttpContextAccessor _contextAccessor;
-
-            public GetUserClaimsFromCacheQueryHandler(IOperationClaimRepository operationClaimRepository, IMediator mediator, ICacheManager cacheManager, IHttpContextAccessor contextAccessor)
-            {
-                _operationClaimRepository = operationClaimRepository;
-                _mediator = mediator;
-                _cacheManager = cacheManager;
-                _contextAccessor = contextAccessor;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
+            private readonly IMediator _mediator = mediator;
+            private readonly ICacheManager _cacheManager = cacheManager;
+            private readonly IHttpContextAccessor _contextAccessor = contextAccessor;
 
             [PerformanceAspect(5)]
             [CacheAspect(10)]

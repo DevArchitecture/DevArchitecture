@@ -5,11 +5,7 @@ using DataAccess.Concrete.EntityFramework.Contexts;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class LogRepository : EfEntityRepositoryBase<Log, ProjectDbContext>, ILogRepository
+    public class LogRepository(ProjectDbContext context) : EfEntityRepositoryBase<Log, ProjectDbContext>(context), ILogRepository
     {
-        public LogRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
     }
 }

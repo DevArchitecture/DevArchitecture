@@ -1,57 +1,57 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 <Version>1.0.0</Version>
   </PropertyGroup>
     <PropertyGroup>
         <CodeAnalysisRuleSet>$(SolutionDir)\shared\DevArchitectureCodeAnalysis.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
  <ItemGroup>
-	 <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
-		<PackageReference Include="AutoMapper" Version="12.0.1" />
+	 <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="CassandraCSharpDriver" Version="3.20.1" />
-		<PackageReference Include="Confluent.Kafka" Version="2.4.0" />
-		<PackageReference Include="FluentValidation" Version="11.4.0" />
-		<PackageReference Include="Hangfire" Version="1.8.11" />
+		<PackageReference Include="Confluent.Kafka" Version="2.5.0" />
+		<PackageReference Include="FluentValidation" Version="11.9.2" />
+		<PackageReference Include="Hangfire" Version="1.8.14" />
 		<PackageReference Include="Hangfire.Autofac" Version="2.6.0" />
-		<PackageReference Include="Hangfire.PostgreSql" Version="1.20.6" />
+		<PackageReference Include="Hangfire.PostgreSql" Version="1.20.9" />
 		<PackageReference Include="Hangfire.RecurringJobExtensions" Version="1.1.6" />
 		<PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.3" />
-		<PackageReference Include="Hangfire.SqlServer" Version="1.8.11" />
-		<PackageReference Include="Serilog.Sinks.Postgresql.Alternative" Version="3.5.0" />
-		<PackageReference Include="MailKit" Version="3.5.0" />
-		<PackageReference Include="MediatR" Version="11.1.0" />
-		<PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="9.2.0" />
-		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2">
+		<PackageReference Include="Hangfire.SqlServer" Version="1.8.14" />
+		<PackageReference Include="Serilog.Sinks.Postgresql.Alternative" Version="4.1.1" />
+		<PackageReference Include="MailKit" Version="4.7.1.1" />
+		<PackageReference Include="MediatR" Version="12.3.0" />
+		<PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.1.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
-		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.4.1" />
-		<PackageReference Include="Microsoft.OpenApi" Version="1.6.0" />
-		<PackageReference Include="MimeKit" Version="3.5.0" />
-		<PackageReference Include="MongoDB.Bson" Version="2.19.0" />
-		<PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.0" />
+		<PackageReference Include="Microsoft.OpenApi" Version="1.6.15" />
+		<PackageReference Include="MimeKit" Version="4.7.1" />
+		<PackageReference Include="MongoDB.Bson" Version="2.27.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.27.0" />
 		<PackageReference Include="NEST" Version="7.17.5" />
-		<PackageReference Include="Oracle.EntityFrameworkCore" Version="7.21.9" />
-		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
-		<PackageReference Include="Refit" Version="6.3.2" />
-		<PackageReference Include="Serilog" Version="2.12.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1"/>
-		<PackageReference Include="Serilog.Formatting.Elasticsearch" Version="9.0.0" />
-		<PackageReference Include="Serilog.Sinks.Http" Version="8.0.0" />
+		<PackageReference Include="Oracle.EntityFrameworkCore" Version="8.23.50" />
+		<PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+		<PackageReference Include="Refit" Version="7.1.2" />
+		<PackageReference Include="Serilog" Version="4.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+		<PackageReference Include="Serilog.Formatting.Elasticsearch" Version="10.0.0" />
+		<PackageReference Include="Serilog.Sinks.Http" Version="9.0.0" />
 		<PackageReference Include="Serilog.Sinks.MicrosoftTeams" Version="0.2.1" />
-		<PackageReference Include="Serilog.Sinks.MongoDB" Version="5.3.1" />
-		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.2.0" />
-		<PackageReference Include="ServiceStack.Text.Core" Version="8.2.2" />
-		<PackageReference Include="StackExchange.Redis" Version="2.6.122" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.1" />
+		<PackageReference Include="Serilog.Sinks.MongoDB" Version="5.4.1" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.1" />
+		<PackageReference Include="ServiceStack.Text.Core" Version="8.3.0" />
+		<PackageReference Include="StackExchange.Redis" Version="2.8.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
   </ItemGroup>
 </Project>

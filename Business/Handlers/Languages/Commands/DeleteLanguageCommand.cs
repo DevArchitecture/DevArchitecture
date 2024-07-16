@@ -16,16 +16,11 @@ namespace Business.Handlers.Languages.Commands
         public int Id { get; set; }
 
 
-        public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, IResult>
+        public class DeleteLanguageCommandHandler(ILanguageRepository languageRepository, 
+            IMediator mediator) : IRequestHandler<DeleteLanguageCommand, IResult>
         {
-            private readonly ILanguageRepository _languageRepository;
-            private readonly IMediator _mediator;
-
-            public DeleteLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
-            {
-                _languageRepository = languageRepository;
-                _mediator = mediator;
-            }
+            private readonly ILanguageRepository _languageRepository = languageRepository;
+            private readonly IMediator _mediator = mediator;
 
             [CacheRemoveAspect()]
             [LogAspect(typeof(FileLogger))]

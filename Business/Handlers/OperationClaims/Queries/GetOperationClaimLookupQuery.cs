@@ -14,15 +14,11 @@ namespace Business.Handlers.OperationClaims.Queries
 {
     public class GetOperationClaimLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
     {
-        public class GetOperationClaimLookupQueryHandler : IRequestHandler<GetOperationClaimLookupQuery,
+        public class GetOperationClaimLookupQueryHandler(IOperationClaimRepository operationClaimRepository)
+            : IRequestHandler<GetOperationClaimLookupQuery,
             IDataResult<IEnumerable<SelectionItem>>>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-
-            public GetOperationClaimLookupQueryHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

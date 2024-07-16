@@ -16,14 +16,10 @@ namespace Business.Handlers.UserGroups.Commands
         public int Id { get; set; }
 
 
-        public class DeleteUserGroupCommandHandler : IRequestHandler<DeleteUserGroupCommand, IResult>
+        public class DeleteUserGroupCommandHandler(IUserGroupRepository userGroupRepository)
+            : IRequestHandler<DeleteUserGroupCommand, IResult>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
-
-            public DeleteUserGroupCommandHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

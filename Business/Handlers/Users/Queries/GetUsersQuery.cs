@@ -17,16 +17,11 @@ namespace Business.Handlers.Users.Queries
 {
     public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
     {
-        public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IDataResult<IEnumerable<UserDto>>>
+        public class GetUsersQueryHandler(IUserRepository userRepository, IMapper mapper) 
+            : IRequestHandler<GetUsersQuery, IDataResult<IEnumerable<UserDto>>>
         {
-            private readonly IUserRepository _userRepository;
-            private readonly IMapper _mapper;
-
-            public GetUsersQueryHandler(IUserRepository userRepository, IMapper mapper)
-            {
-                _userRepository = userRepository;
-                _mapper = mapper;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
+            private readonly IMapper _mapper = mapper;
 
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]

@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class LanguageRepository : EfEntityRepositoryBase<Language, ProjectDbContext>, ILanguageRepository
+    public class LanguageRepository(ProjectDbContext context) : EfEntityRepositoryBase<Language, ProjectDbContext>(context), ILanguageRepository
     {
-        public LanguageRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
-
         public async Task<List<SelectionItem>> GetLanguagesLookUp()
         {
             var lookUp = await (from entity in Context.Languages

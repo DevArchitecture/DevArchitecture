@@ -26,10 +26,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
-        public async Task<IActionResult> GetList()
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery()));
-        }
+        public async Task<IActionResult> GetList() =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery()));
 
         /// <summary>
         /// User Lookup
@@ -41,10 +39,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("lookups")]
-        public async Task<IActionResult> GetUserLookup()
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserLookupQuery()));
-        }
+        public async Task<IActionResult> GetUserLookup() =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserLookupQuery()));
 
         /// <summary>
         /// It brings the details according to its id.
@@ -56,10 +52,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = id }));
-        }
+        public async Task<IActionResult> GetById(int id) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserQuery { UserId = id }));
 
         /// <summary>
         /// Add User.
@@ -71,10 +65,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateUserCommand createUser)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createUser));
-        }
+        public async Task<IActionResult> Add([FromBody] CreateUserCommand createUser) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(createUser));
 
         /// <summary>
         /// Update User.
@@ -86,10 +78,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateUserDto updateUserDto)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserCommand{UserId = updateUserDto.UserId,Email = updateUserDto.Email,FullName = updateUserDto.FullName, MobilePhones = updateUserDto.MobilePhones, Address = updateUserDto.Address,Notes = updateUserDto.Notes}));
-        }
+        public async Task<IActionResult> Update([FromBody] UpdateUserDto updateUserDto) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserCommand { UserId = updateUserDto.UserId, Email = updateUserDto.Email, FullName = updateUserDto.FullName, MobilePhones = updateUserDto.MobilePhones, Address = updateUserDto.Address, Notes = updateUserDto.Notes }));
 
         /// <summary>
         /// Delete User.
@@ -101,9 +91,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserCommand{ UserId = id }));
-        }
+        public async Task<IActionResult> Delete([FromRoute] int id) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserCommand { UserId = id }));
     }
 }

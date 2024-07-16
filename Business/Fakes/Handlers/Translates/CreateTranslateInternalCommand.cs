@@ -22,17 +22,11 @@ namespace Business.Fakes.Handlers.Translates
         public string Code { get; set; }
 
 
-        public class CreateTranslateInternalCommandHandler : IRequestHandler<CreateTranslateInternalCommand, IResult>
+        public class CreateTranslateInternalCommandHandler(ITranslateRepository translateRepository, 
+            IMediator mediator) : IRequestHandler<CreateTranslateInternalCommand, IResult>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public CreateTranslateInternalCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
-
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect()]

@@ -5,11 +5,7 @@ using DataAccess.Concrete.EntityFramework.Contexts;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class GroupRepository : EfEntityRepositoryBase<Group, ProjectDbContext>, IGroupRepository
+    public class GroupRepository(ProjectDbContext context) : EfEntityRepositoryBase<Group, ProjectDbContext>(context), IGroupRepository
     {
-        public GroupRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
     }
 }

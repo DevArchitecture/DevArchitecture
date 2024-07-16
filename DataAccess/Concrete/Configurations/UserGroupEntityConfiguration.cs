@@ -6,9 +6,6 @@ namespace DataAccess.Concrete.Configurations
 {
     public class UserGroupEntityConfiguration : IEntityTypeConfiguration<UserGroup>
     {
-        public void Configure(EntityTypeBuilder<UserGroup> builder)
-        {
-            builder.HasKey(x => new { x.UserId, x.GroupId });
-        }
+        public void Configure(EntityTypeBuilder<UserGroup> builder) => builder.HasKey(x => new { x.UserId, x.GroupId });
     }
 }
