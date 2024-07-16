@@ -20,11 +20,10 @@
 		<PackageReference Include="Hangfire.RecurringJobExtensions" Version="1.1.6" />
 		<PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.3" />
 		<PackageReference Include="Hangfire.SqlServer" Version="1.8.14" />
+		<PackageReference Include="MediatR" Version="12.3.0" />
 		<PackageReference Include="Serilog.Sinks.Postgresql.Alternative" Version="4.1.1" />
 		<PackageReference Include="MailKit" Version="4.7.1.1" />
-		<PackageReference Include="MediatR" Version="12.3.0" />
 		<PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.1.0" />
-		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">

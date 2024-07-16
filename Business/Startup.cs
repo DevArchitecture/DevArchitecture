@@ -136,7 +136,7 @@ namespace Business
 
             services.AddAutoMapper(typeof(ConfigurationManager));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(typeof(BusinessStartup).GetTypeInfo().Assembly);
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
             {
