@@ -17,14 +17,10 @@ namespace Business.Handlers.Groups.Commands
         public int Id { get; set; }
         public string GroupName { get; set; }
 
-        public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, IResult>
+        public class UpdateGroupCommandHandler(IGroupRepository groupRepository) 
+            : IRequestHandler<UpdateGroupCommand, IResult>
         {
-            private readonly IGroupRepository _groupRepository;
-
-            public UpdateGroupCommandHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+            private readonly IGroupRepository _groupRepository = groupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

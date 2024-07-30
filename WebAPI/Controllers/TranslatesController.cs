@@ -27,10 +27,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("languages/{lang}")]
-        public async Task<IActionResult> GetTranslatesByLang([FromRoute] string lang)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
-        }
+        public async Task<IActionResult> GetTranslatesByLang([FromRoute] string lang) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
 
         /// <summary>
         /// List Translate
@@ -42,10 +40,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
-        public async Task<IActionResult> GetList()
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesQuery()));
-        }
+        public async Task<IActionResult> GetList() =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesQuery()));
 
         /// <summary>
         /// List Dto Translate
@@ -57,10 +53,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("dtos")]
-        public async Task<IActionResult> GetTranslateListDto()
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateListDtoQuery()));
-        }
+        public async Task<IActionResult> GetTranslateListDto() =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetTranslateListDtoQuery()));
 
         /// <summary>
         /// It brings the details according to its id.
@@ -72,10 +66,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Translate))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateQuery { Id = id }));
-        }
+        public async Task<IActionResult> GetById(int id) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetTranslateQuery { Id = id }));
 
         /// <summary>
         /// Add Translate.
@@ -87,10 +79,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateTranslateCommand createTranslate)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createTranslate));
-        }
+        public async Task<IActionResult> Add([FromBody] CreateTranslateCommand createTranslate) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(createTranslate));
 
         /// <summary>
         /// Update Translate.
@@ -102,10 +92,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateTranslateDto updateTranslateDto)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateTranslateCommand{Id = updateTranslateDto.Id, LangId = updateTranslateDto.LangId, Value = updateTranslateDto.Value,Code = updateTranslateDto.Code }));
-        }
+        public async Task<IActionResult> Update([FromBody] UpdateTranslateDto updateTranslateDto) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new UpdateTranslateCommand { Id = updateTranslateDto.Id, LangId = updateTranslateDto.LangId, Value = updateTranslateDto.Value, Code = updateTranslateDto.Code }));
 
         /// <summary>
         /// Delete Translate.
@@ -117,9 +105,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteTranslateCommand{Id = id}));
-        }
+        public async Task<IActionResult> Delete([FromRoute] int id) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new DeleteTranslateCommand { Id = id }));
     }
 }

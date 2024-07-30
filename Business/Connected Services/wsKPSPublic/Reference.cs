@@ -42,10 +42,7 @@ namespace wsKPSPublic
         {
         }
 
-        public TCKimlikNoDogrulaRequest(wsKPSPublic.TCKimlikNoDogrulaRequestBody Body)
-        {
-            this.Body = Body;
-        }
+        public TCKimlikNoDogrulaRequest(wsKPSPublic.TCKimlikNoDogrulaRequestBody Body) => this.Body = Body;
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -94,10 +91,7 @@ namespace wsKPSPublic
         {
         }
 
-        public TCKimlikNoDogrulaResponse(wsKPSPublic.TCKimlikNoDogrulaResponseBody Body)
-        {
-            this.Body = Body;
-        }
+        public TCKimlikNoDogrulaResponse(wsKPSPublic.TCKimlikNoDogrulaResponseBody Body) => this.Body = Body;
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -114,10 +108,7 @@ namespace wsKPSPublic
         {
         }
 
-        public TCKimlikNoDogrulaResponseBody(bool TCKimlikNoDogrulaResult)
-        {
-            this.TCKimlikNoDogrulaResult = TCKimlikNoDogrulaResult;
-        }
+        public TCKimlikNoDogrulaResponseBody(bool TCKimlikNoDogrulaResult) => this.TCKimlikNoDogrulaResult = TCKimlikNoDogrulaResult;
     }
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
@@ -164,10 +155,8 @@ namespace wsKPSPublic
         }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        wsKPSPublic.TCKimlikNoDogrulaResponse wsKPSPublic.KPSPublicSoap.TCKimlikNoDogrula(wsKPSPublic.TCKimlikNoDogrulaRequest request)
-        {
-            return base.Channel.TCKimlikNoDogrula(request);
-        }
+        wsKPSPublic.TCKimlikNoDogrulaResponse wsKPSPublic.KPSPublicSoap.TCKimlikNoDogrula(wsKPSPublic.TCKimlikNoDogrulaRequest request) => 
+            base.Channel.TCKimlikNoDogrula(request);
 
         public bool TCKimlikNoDogrula(long TCKimlikNo, string Ad, string Soyad, int DogumYili)
         {
@@ -182,10 +171,8 @@ namespace wsKPSPublic
         }
 
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<wsKPSPublic.TCKimlikNoDogrulaResponse> wsKPSPublic.KPSPublicSoap.TCKimlikNoDogrulaAsync(wsKPSPublic.TCKimlikNoDogrulaRequest request)
-        {
-            return base.Channel.TCKimlikNoDogrulaAsync(request);
-        }
+        System.Threading.Tasks.Task<wsKPSPublic.TCKimlikNoDogrulaResponse> wsKPSPublic.KPSPublicSoap.TCKimlikNoDogrulaAsync(wsKPSPublic.TCKimlikNoDogrulaRequest request) => 
+            base.Channel.TCKimlikNoDogrulaAsync(request);
 
         public System.Threading.Tasks.Task<wsKPSPublic.TCKimlikNoDogrulaResponse> TCKimlikNoDogrulaAsync(long TCKimlikNo, string Ad, string Soyad, int DogumYili)
         {
@@ -198,15 +185,11 @@ namespace wsKPSPublic
             return ((wsKPSPublic.KPSPublicSoap)(this)).TCKimlikNoDogrulaAsync(inValue);
         }
 
-        public virtual System.Threading.Tasks.Task OpenAsync()
-        {
-            return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
-        }
+        public virtual System.Threading.Tasks.Task OpenAsync() =>
+            System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
 
-        public new virtual System.Threading.Tasks.Task CloseAsync()
-        {
-            return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
-        }
+        public new virtual System.Threading.Tasks.Task CloseAsync() => 
+            System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
 
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {

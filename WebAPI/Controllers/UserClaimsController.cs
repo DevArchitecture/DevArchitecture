@@ -28,10 +28,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
-        public async Task<IActionResult> GetList()
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsQuery()));
-        }
+        public async Task<IActionResult> GetList() =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsQuery()));
 
         /// <summary>
         /// Id sine göre detaylarını getirir.
@@ -43,10 +41,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByUserId([FromRoute]int userid)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid }));
-        }
+        public async Task<IActionResult> GetByUserId([FromRoute] int userid) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = userid }));
 
         /// <summary>
         /// It brings the details according to its id.
@@ -58,10 +54,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("users/{id}")]
-        public async Task<IActionResult> GetOperationClaimByUserId([FromRoute]int id)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id }));
-        }
+        public async Task<IActionResult> GetOperationClaimByUserId([FromRoute] int id) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id }));
 
         /// <summary>
         /// Add GroupClaim.
@@ -73,10 +67,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateUserClaimCommand createUserClaim)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createUserClaim));
-        }
+        public async Task<IActionResult> Add([FromBody] CreateUserClaimCommand createUserClaim) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(createUserClaim));
 
         /// <summary>
         /// Update GroupClaim.
@@ -88,10 +80,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateUserClaimDto updateUserClaimDto)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new  UpdateUserClaimCommand{UserId = updateUserClaimDto.UserId, ClaimId = updateUserClaimDto.ClaimIds}));
-        }
+        public async Task<IActionResult> Update([FromBody] UpdateUserClaimDto updateUserClaimDto) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserClaimCommand { UserId = updateUserClaimDto.UserId, ClaimId = updateUserClaimDto.ClaimIds }));
 
         /// <summary>
         /// Delete GroupClaim.
@@ -103,9 +93,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserClaimCommand{Id = id}));
-        }
+        public async Task<IActionResult> Delete([FromRoute] int id) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserClaimCommand { Id = id }));
     }
 }

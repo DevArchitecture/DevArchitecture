@@ -16,14 +16,10 @@ namespace Business.Handlers.GroupClaims.Commands
         public int Id { get; set; }
 
 
-        public class DeleteGroupClaimCommandHandler : IRequestHandler<DeleteGroupClaimCommand, IResult>
+        public class DeleteGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository) 
+            : IRequestHandler<DeleteGroupClaimCommand, IResult>
         {
-            private readonly IGroupClaimRepository _groupClaimRepository;
-
-            public DeleteGroupClaimCommandHandler(IGroupClaimRepository groupClaimRepository)
-            {
-                _groupClaimRepository = groupClaimRepository;
-            }
+            private readonly IGroupClaimRepository _groupClaimRepository = groupClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

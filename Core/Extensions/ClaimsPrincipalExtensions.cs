@@ -12,9 +12,7 @@ namespace Core.Extensions
             return result;
         }
 
-        public static List<string> ClaimRoles(this ClaimsPrincipal claimsPrincipal)
-        {
-            return claimsPrincipal?.Claims(ClaimTypes.Role);
-        }
+        public static List<string> ClaimRoles(this ClaimsPrincipal claimsPrincipal) => 
+            claimsPrincipal?.Claims(ClaimTypes.Role);
     }
 }

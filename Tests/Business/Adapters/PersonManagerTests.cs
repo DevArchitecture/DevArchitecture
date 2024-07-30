@@ -61,15 +61,13 @@ namespace Tests.Business.Adapters
             int birthYear = _birthYear,
             string surname = _surname,
             string name = _name,
-            long citizenId = _citizenId)
-        {
-            return new ()
+            long citizenId = _citizenId) =>
+            new()
             {
                 BirthYear = birthYear,
                 Surname = surname,
                 Name = name,
                 CitizenId = citizenId
             };
-        }
     }
 }

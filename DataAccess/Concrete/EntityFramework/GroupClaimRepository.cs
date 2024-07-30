@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class GroupClaimRepository : EfEntityRepositoryBase<GroupClaim, ProjectDbContext>, IGroupClaimRepository
+    public class GroupClaimRepository(ProjectDbContext context) : EfEntityRepositoryBase<GroupClaim, ProjectDbContext>(context), IGroupClaimRepository
     {
-        public GroupClaimRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
-
         public async Task BulkInsert(int groupId, IEnumerable<GroupClaim> groupClaims)
         {
             var DbList = await Context.GroupClaims.Where(x => x.GroupId == groupId).ToListAsync();

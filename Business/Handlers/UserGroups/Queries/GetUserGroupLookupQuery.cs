@@ -17,15 +17,11 @@ namespace Business.Handlers.UserGroups.Queries
         public int UserId { get; set; }
 
         public class
-            GetUserGroupLookupQueryHandler : IRequestHandler<GetUserGroupLookupQuery,
+            GetUserGroupLookupQueryHandler(IUserGroupRepository userGroupRepository) 
+            : IRequestHandler<GetUserGroupLookupQuery,
                 IDataResult<IEnumerable<SelectionItem>>>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
-
-            public GetUserGroupLookupQueryHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]

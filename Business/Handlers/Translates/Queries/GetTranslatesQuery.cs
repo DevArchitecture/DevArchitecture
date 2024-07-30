@@ -16,25 +16,18 @@ namespace Business.Handlers.Translates.Queries
     public class GetTranslatesQuery : IRequest<IDataResult<IEnumerable<Translate>>>
     {
         public class
-            GetTranslatesQueryHandler : IRequestHandler<GetTranslatesQuery, IDataResult<IEnumerable<Translate>>>
+            GetTranslatesQueryHandler(ITranslateRepository translateRepository, 
+            IMediator mediator) : IRequestHandler<GetTranslatesQuery, IDataResult<IEnumerable<Translate>>>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public GetTranslatesQueryHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<IEnumerable<Translate>>(await _translateRepository.GetListAsync());
-            }
+            public async Task<IDataResult<IEnumerable<Translate>>> Handle(GetTranslatesQuery request, CancellationToken cancellationToken) =>
+                new SuccessDataResult<IEnumerable<Translate>>(await _translateRepository.GetListAsync());
         }
     }
 }

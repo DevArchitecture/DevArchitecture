@@ -18,14 +18,10 @@ namespace Business.Handlers.UserClaims.Queries
         public int UserId { get; set; }
 
         public class
-            GetUserClaimQueryHandler : IRequestHandler<GetUserClaimLookupQuery, IDataResult<IEnumerable<UserClaim>>>
+            GetUserClaimQueryHandler(IUserClaimRepository userClaimRepository) 
+            : IRequestHandler<GetUserClaimLookupQuery, IDataResult<IEnumerable<UserClaim>>>
         {
-            private readonly IUserClaimRepository _userClaimRepository;
-
-            public GetUserClaimQueryHandler(IUserClaimRepository userClaimRepository)
-            {
-                _userClaimRepository = userClaimRepository;
-            }
+            private readonly IUserClaimRepository _userClaimRepository = userClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]

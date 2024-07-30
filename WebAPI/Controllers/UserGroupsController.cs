@@ -29,10 +29,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
-        public async Task<IActionResult> GetList()
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupsQuery()));
-        }
+        public async Task<IActionResult> GetList() =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupsQuery()));
 
         /// <summary>
         /// It brings the details according to its id.
@@ -44,10 +42,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("users/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByUserId([FromRoute]int userId)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
-        }
+        public async Task<IActionResult> GetByUserId([FromRoute] int userId) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
 
         /// <summary>
         /// It brings the details according to its id.
@@ -59,10 +55,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("users/{id}/groups")]
-        public async Task<IActionResult> GetGroupClaimsByUserId([FromRoute]int id)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id }));
-        }
+        public async Task<IActionResult> GetGroupClaimsByUserId([FromRoute] int id) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupByUserIdQuery { UserId = id }));
 
 
         /// <summary>
@@ -75,11 +69,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserGroup>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("groups/{id}/users")]
-        public async Task<IActionResult> GetUsersInGroupByGroupid([FromRoute]int id)
-        {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery
-                { GroupId = id }));
-        }
+        public async Task<IActionResult> GetUsersInGroupByGroupid([FromRoute] int id) =>
+            GetResponseOnlyResultData(await Mediator.Send(new GetUsersInGroupLookupByGroupIdQuery
+            { GroupId = id }));
 
         /// <summary>
         /// Add UserGroup.
@@ -91,10 +83,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateUserGroupCommand createUserGroup)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createUserGroup));
-        }
+        public async Task<IActionResult> Add([FromBody] CreateUserGroupCommand createUserGroup) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(createUserGroup));
 
         /// <summary>
         /// Update UserGroup.
@@ -106,10 +96,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateUserGroupCommand updateUserGroup)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));        
-        }
+        public async Task<IActionResult> Update([FromBody] UpdateUserGroupCommand updateUserGroup) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(updateUserGroup));
 
         /// <summary>
         /// Update UserGroup by Id.
@@ -121,10 +109,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut("groups")]
-        public async Task<IActionResult> UpdateByGroupId([FromBody] UpdateUserGroupByGroupIdDto updateUserGroupByGroupIdDto)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserGroupByGroupIdCommand{ GroupId = updateUserGroupByGroupIdDto.GroupId, UserIds = updateUserGroupByGroupIdDto.UserIds}));
-        }
+        public async Task<IActionResult> UpdateByGroupId([FromBody] UpdateUserGroupByGroupIdDto updateUserGroupByGroupIdDto) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new UpdateUserGroupByGroupIdCommand { GroupId = updateUserGroupByGroupIdDto.GroupId, UserIds = updateUserGroupByGroupIdDto.UserIds }));
 
         /// <summary>
         /// Delete UserGroup.
@@ -136,9 +122,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserGroupCommand{Id = id}));
-        }
+        public async Task<IActionResult> Delete([FromRoute] int id) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserGroupCommand { Id = id }));
     }
 }

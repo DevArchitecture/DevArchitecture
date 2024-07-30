@@ -18,18 +18,13 @@ namespace Business.Handlers.Authorizations.Queries
     {
         public string RefreshToken { get; set; }
 
-        public class LoginWithRefreshTokenQueryHandler : IRequestHandler<LoginWithRefreshTokenQuery, IResult>
+        public class LoginWithRefreshTokenQueryHandler(IUserRepository userRepository,
+            ITokenHelper tokenHelper, 
+            ICacheManager cacheManager) : IRequestHandler<LoginWithRefreshTokenQuery, IResult>
         {
-            private readonly IUserRepository _userRepository;
-            private readonly ITokenHelper _tokenHelper;
-            private readonly ICacheManager _cacheManager;
-
-            public LoginWithRefreshTokenQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, ICacheManager cacheManager)
-            {
-                _userRepository = userRepository;
-                _tokenHelper = tokenHelper;
-                _cacheManager = cacheManager;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
+            private readonly ITokenHelper _tokenHelper = tokenHelper;
+            private readonly ICacheManager _cacheManager = cacheManager;
 
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)

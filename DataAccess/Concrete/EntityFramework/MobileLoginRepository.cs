@@ -5,11 +5,7 @@ using DataAccess.Concrete.EntityFramework.Contexts;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class MobileLoginRepository : EfEntityRepositoryBase<MobileLogin, ProjectDbContext>, IMobileLoginRepository
+    public class MobileLoginRepository(ProjectDbContext context) : EfEntityRepositoryBase<MobileLogin, ProjectDbContext>(context), IMobileLoginRepository
     {
-        public MobileLoginRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
     }
 }

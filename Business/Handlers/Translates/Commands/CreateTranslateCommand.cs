@@ -25,16 +25,11 @@ namespace Business.Handlers.Translates.Commands
         public string Code { get; set; }
 
 
-        public class CreateTranslateCommandHandler : IRequestHandler<CreateTranslateCommand, IResult>
+        public class CreateTranslateCommandHandler(ITranslateRepository translateRepository, 
+            IMediator mediator) : IRequestHandler<CreateTranslateCommand, IResult>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public CreateTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]

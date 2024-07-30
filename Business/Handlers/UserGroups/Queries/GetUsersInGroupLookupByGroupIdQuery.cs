@@ -16,24 +16,18 @@ namespace Business.Handlers.UserGroups.Queries
     {
         public int GroupId { get; set; }
 
-        public class GetUsersInGroupLookupByGroupIdQueryHandler : IRequestHandler<GetUsersInGroupLookupByGroupIdQuery,
+        public class GetUsersInGroupLookupByGroupIdQueryHandler(IUserGroupRepository userGroupRepository)
+            : IRequestHandler<GetUsersInGroupLookupByGroupIdQuery,
             IDataResult<IEnumerable<SelectionItem>>>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
-            public GetUsersInGroupLookupByGroupIdQueryHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
-
-            [SecuredOperation(Priority = 1)]            
+            [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(
-                GetUsersInGroupLookupByGroupIdQuery request, CancellationToken cancellationToken)
-            {
-                return new SuccessDataResult<IEnumerable<SelectionItem>>(
+                GetUsersInGroupLookupByGroupIdQuery request, CancellationToken cancellationToken) =>
+                new SuccessDataResult<IEnumerable<SelectionItem>>(
                     await _userGroupRepository.GetUsersInGroupSelectedListByGroupId(request.GroupId));
-            }
         }
     }
 }

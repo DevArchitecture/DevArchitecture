@@ -6,9 +6,6 @@ namespace DataAccess.Concrete.Configurations
 {
     public class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : BaseEntity, IEntity
     {
-        public virtual void Configure(EntityTypeBuilder<TEntity> builder)
-        {
-            builder.HasKey(x => x.Id);
-        }
+        public virtual void Configure(EntityTypeBuilder<TEntity> builder) => builder.HasKey(x => x.Id);
     }
 }

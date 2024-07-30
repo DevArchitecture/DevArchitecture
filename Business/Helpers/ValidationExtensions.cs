@@ -4,10 +4,8 @@ namespace Business.Helpers
 {
     public static class ValidationExtensions
     {
-        public static bool IsCidValid(this string citizenId)
-        {
-            return citizenId is { Length: 11 } && IsCidValid(long.Parse(citizenId));
-        }
+        public static bool IsCidValid(this string citizenId) => 
+            citizenId is { Length: 11 } && IsCidValid(long.Parse(citizenId));
 
         public static long AddChecksumToCid(long cidWithoutChecksum)
         {

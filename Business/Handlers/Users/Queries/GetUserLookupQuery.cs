@@ -16,14 +16,10 @@ namespace Business.Handlers.Users.Queries
     public class GetUserLookupQuery : IRequest<IDataResult<IEnumerable<SelectionItem>>>
     {
         public class
-            GetUserLookupQueryHandler : IRequestHandler<GetUserLookupQuery, IDataResult<IEnumerable<SelectionItem>>>
+            GetUserLookupQueryHandler(IUserRepository userRepository) 
+            : IRequestHandler<GetUserLookupQuery, IDataResult<IEnumerable<SelectionItem>>>
         {
-            private readonly IUserRepository _userRepository;
-
-            public GetUserLookupQueryHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]

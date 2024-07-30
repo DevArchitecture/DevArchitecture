@@ -29,10 +29,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GroupClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
-        public async Task<IActionResult> GetList()
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimsQuery()));
-        }
+        public async Task<IActionResult> GetList() =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimsQuery()));
 
         /// <summary>
         /// It brings the details according to its id.
@@ -44,10 +42,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById( int id)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
-        }
+        public async Task<IActionResult> GetById(int id) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
 
         /// <summary>
         /// Brings up Claims by Group Id.
@@ -59,11 +55,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("groups/{id}")]
-        public async Task<IActionResult> GetGroupClaimsByGroupId([FromRoute]int id)
-        {
-            return GetResponseOnlyResultData(
+        public async Task<IActionResult> GetGroupClaimsByGroupId([FromRoute] int id) =>
+            GetResponseOnlyResultData(
                 await Mediator.Send(new GetGroupClaimsLookupByGroupIdQuery { GroupId = id }));
-        }
 
         /// <summary>
         /// Addded GroupClaim .
@@ -75,10 +69,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateGroupClaimCommand createGroupClaim)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createGroupClaim));
-        }
+        public async Task<IActionResult> Add([FromBody] CreateGroupClaimCommand createGroupClaim) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(createGroupClaim));
 
         /// <summary>
         /// Update GroupClaim.
@@ -90,10 +82,8 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateGroupClaimDto updateGroupClaimDto)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupClaimCommand{ Id = updateGroupClaimDto.Id, GroupId = updateGroupClaimDto.GroupId, ClaimIds = updateGroupClaimDto.ClaimIds }));
-        }
+        public async Task<IActionResult> Update([FromBody] UpdateGroupClaimDto updateGroupClaimDto) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupClaimCommand { Id = updateGroupClaimDto.Id, GroupId = updateGroupClaimDto.GroupId, ClaimIds = updateGroupClaimDto.ClaimIds }));
 
         /// <summary>
         /// Delete GroupClaim.
@@ -105,9 +95,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteGroupClaimCommand{Id = id}));
-        }
+        public async Task<IActionResult> Delete([FromRoute] int id) =>
+            GetResponseOnlyResultMessage(await Mediator.Send(new DeleteGroupClaimCommand { Id = id }));
     }
 }

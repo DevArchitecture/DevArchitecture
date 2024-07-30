@@ -17,14 +17,10 @@ namespace Business.Handlers.Groups.Queries
     {
         public string GroupName { get; set; }
 
-        public class SearchGroupsByNameQueryHandler : IRequestHandler<SearchGroupsByNameQuery, IDataResult<IEnumerable<Group>>>
+        public class SearchGroupsByNameQueryHandler(IGroupRepository groupRepository)
+            : IRequestHandler<SearchGroupsByNameQuery, IDataResult<IEnumerable<Group>>>
         {
-            private readonly IGroupRepository _groupRepository;
-
-            public SearchGroupsByNameQueryHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+            private readonly IGroupRepository _groupRepository = groupRepository;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

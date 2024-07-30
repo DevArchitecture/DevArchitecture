@@ -15,16 +15,11 @@ namespace Business.Handlers.Users.Queries
     {
         public int UserId { get; set; }
 
-        public class GetUserQueryHandler : IRequestHandler<GetUserQuery, IDataResult<UserDto>>
+        public class GetUserQueryHandler(IUserRepository userRepository, IMapper mapper) 
+            : IRequestHandler<GetUserQuery, IDataResult<UserDto>>
         {
-            private readonly IUserRepository _userRepository;
-            private readonly IMapper _mapper;
-
-            public GetUserQueryHandler(IUserRepository userRepository, IMapper mapper)
-            {
-                _userRepository = userRepository;
-                _mapper = mapper;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
+            private readonly IMapper _mapper = mapper;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

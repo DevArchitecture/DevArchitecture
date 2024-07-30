@@ -5,12 +5,8 @@ using DataAccess.Concrete.EntityFramework.Contexts;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class OperationClaimRepository : EfEntityRepositoryBase<OperationClaim, ProjectDbContext>,
+    public class OperationClaimRepository(ProjectDbContext context) : EfEntityRepositoryBase<OperationClaim, ProjectDbContext>(context),
         IOperationClaimRepository
     {
-        public OperationClaimRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
     }
 }

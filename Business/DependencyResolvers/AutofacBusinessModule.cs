@@ -20,10 +20,7 @@ namespace Business.DependencyResolvers
         {
         }
 
-        public AutofacBusinessModule(ConfigurationManager configuration)
-        {
-            _configuration = configuration;
-        }
+        public AutofacBusinessModule(ConfigurationManager configuration) => _configuration = configuration;
 
         /// <summary>
         /// </summary>

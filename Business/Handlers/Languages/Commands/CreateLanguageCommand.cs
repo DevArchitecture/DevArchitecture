@@ -24,16 +24,11 @@ namespace Business.Handlers.Languages.Commands
         public string Code { get; set; }
 
 
-        public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, IResult>
+        public class CreateLanguageCommandHandler(ILanguageRepository languageRepository,
+            IMediator mediator) : IRequestHandler<CreateLanguageCommand, IResult>
         {
-            private readonly ILanguageRepository _languageRepository;
-            private readonly IMediator _mediator;
-
-            public CreateLanguageCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
-            {
-                _languageRepository = languageRepository;
-                _mediator = mediator;
-            }
+            private readonly ILanguageRepository _languageRepository = languageRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]

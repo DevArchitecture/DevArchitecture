@@ -14,14 +14,10 @@ namespace Business.Fakes.Handlers.OperationClaims
         public string ClaimName { get; set; }
 
         public class
-            CreateOperationClaimInternalCommandHandler : IRequestHandler<CreateOperationClaimInternalCommand, IResult>
+            CreateOperationClaimInternalCommandHandler(IOperationClaimRepository operationClaimRepository)
+            : IRequestHandler<CreateOperationClaimInternalCommand, IResult>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-
-            public CreateOperationClaimInternalCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
 
             public async Task<IResult> Handle(CreateOperationClaimInternalCommand request, CancellationToken cancellationToken)
             {
@@ -40,10 +36,8 @@ namespace Business.Fakes.Handlers.OperationClaims
                 return new SuccessResult(Messages.Added);
             }
 
-            private bool IsClaimExists(string claimName)
-            {
-                return _operationClaimRepository.Query().Any(x => x.Name == claimName);
-            }
+            private bool IsClaimExists(string claimName) =>
+                _operationClaimRepository.Query().Any(x => x.Name == claimName);
         }
     }
 }

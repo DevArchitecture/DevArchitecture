@@ -14,16 +14,11 @@ namespace Business.Handlers.Languages.Queries
     {
         public int Id { get; set; }
 
-        public class GetLanguageQueryHandler : IRequestHandler<GetLanguageQuery, IDataResult<Language>>
+        public class GetLanguageQueryHandler(ILanguageRepository languageRepository, 
+            IMediator mediator) : IRequestHandler<GetLanguageQuery, IDataResult<Language>>
         {
-            private readonly ILanguageRepository _languageRepository;
-            private readonly IMediator _mediator;
-
-            public GetLanguageQueryHandler(ILanguageRepository languageRepository, IMediator mediator)
-            {
-                _languageRepository = languageRepository;
-                _mediator = mediator;
-            }
+            private readonly ILanguageRepository _languageRepository = languageRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

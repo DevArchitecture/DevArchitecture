@@ -16,16 +16,11 @@ namespace Business.Handlers.Translates.Commands
         public int Id { get; set; }
 
 
-        public class DeleteTranslateCommandHandler : IRequestHandler<DeleteTranslateCommand, IResult>
+        public class DeleteTranslateCommandHandler(ITranslateRepository translateRepository, 
+            IMediator mediator) : IRequestHandler<DeleteTranslateCommand, IResult>
         {
-            private readonly ITranslateRepository _translateRepository;
-            private readonly IMediator _mediator;
-
-            public DeleteTranslateCommandHandler(ITranslateRepository translateRepository, IMediator mediator)
-            {
-                _translateRepository = translateRepository;
-                _mediator = mediator;
-            }
+            private readonly ITranslateRepository _translateRepository = translateRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

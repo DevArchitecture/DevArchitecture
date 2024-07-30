@@ -11,14 +11,10 @@ using MediatR;
 
 namespace Business.Handlers.Authorizations.Queries
 {
-    public class LoginUserHandler : IRequestHandler<LoginUserCommand, IDataResult<LoginUserResult>>
+    public class LoginUserHandler(IAuthenticationCoordinator coordinator)
+        : IRequestHandler<LoginUserCommand, IDataResult<LoginUserResult>>
     {
-        private readonly IAuthenticationCoordinator _coordinator;
-
-        public LoginUserHandler(IAuthenticationCoordinator coordinator)
-        {
-            _coordinator = coordinator;
-        }
+        private readonly IAuthenticationCoordinator _coordinator = coordinator;
 
         /// <summary>
         /// Allows a user to login to the system, back to the browser returns a token stored in local storage.

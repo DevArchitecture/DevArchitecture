@@ -19,16 +19,10 @@ namespace Business.Fakes.Handlers.Authorizations
         public string FullName { get; set; }
 
 
-        public class RegisterUserInternalCommandHandler : IRequestHandler<RegisterUserInternalCommand, IResult>
+        public class RegisterUserInternalCommandHandler(IUserRepository userRepository) 
+            : IRequestHandler<RegisterUserInternalCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-
-
-            public RegisterUserInternalCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
-
+            private readonly IUserRepository _userRepository = userRepository;
 
             [ValidationAspect(typeof(RegisterUserValidator), Priority = 2)]
             [CacheRemoveAspect()]

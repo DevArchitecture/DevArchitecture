@@ -16,14 +16,10 @@ namespace Business.Handlers.Groups.Commands
         public int Id { get; set; }
 
 
-        public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, IResult>
+        public class DeleteGroupCommandHandler(IGroupRepository groupRepository) 
+            : IRequestHandler<DeleteGroupCommand, IResult>
         {
-            private readonly IGroupRepository _groupRepository;
-
-            public DeleteGroupCommandHandler(IGroupRepository groupRepository)
-            {
-                _groupRepository = groupRepository;
-            }
+            private readonly IGroupRepository _groupRepository = groupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

@@ -7,10 +7,7 @@ namespace Business.Adapters.PersonService
 {
     public class PersonServiceManager : IPersonService
     {
-        public async Task<bool> VerifyCid(Citizen citizen)
-        {
-            return await Verify(citizen);
-        }
+        public async Task<bool> VerifyCid(Citizen citizen) => await Verify(citizen);
 
         private static async Task<bool> Verify(Citizen citizen)
         {

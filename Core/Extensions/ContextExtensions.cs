@@ -15,10 +15,7 @@ namespace Core.Extensions
         /// <param name="t"></param>
         /// <returns></returns>
         public static DbSet<T> Set<T>(this DbContext context, Type t)
-            where T : class
-        {
-            return (DbSet<T>)context.GetType().GetMethod("Set").MakeGenericMethod(t).Invoke(context, null);
-        }
+            where T : class => (DbSet<T>)context.GetType().GetMethod("Set").MakeGenericMethod(t).Invoke(context, null);
 
         /// <summary>
         /// Returns the DbSet object as a queryable of the desired type (T).

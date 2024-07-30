@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class UserClaimRepository : EfEntityRepositoryBase<UserClaim, ProjectDbContext>, IUserClaimRepository
+    public class UserClaimRepository(ProjectDbContext context) : EfEntityRepositoryBase<UserClaim, ProjectDbContext>(context), IUserClaimRepository
     {
-        public UserClaimRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
-
         public async Task<IEnumerable<UserClaim>> BulkInsert(int userId, IEnumerable<UserClaim> userClaims)
         {
             var DbClaimList = Context.UserClaims.Where(x => x.UserId == userId);

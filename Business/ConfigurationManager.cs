@@ -12,16 +12,10 @@ namespace Business
         Production,
     }
 
-    public class ConfigurationManager
+    public class ConfigurationManager(IConfiguration configuration, IHostEnvironment env)
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration = configuration;
 
-        public ConfigurationManager(IConfiguration configuration, IHostEnvironment env)
-        {
-            _configuration = configuration;
-            Mode = (ApplicationMode)Enum.Parse(typeof(ApplicationMode), env.EnvironmentName);
-        }
-
-        public ApplicationMode Mode { get; private set; }
+        public ApplicationMode Mode { get; private set; } = (ApplicationMode)Enum.Parse(typeof(ApplicationMode), env.EnvironmentName);
     }
 }

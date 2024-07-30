@@ -11,10 +11,7 @@ namespace Business.Helpers
     {
         private readonly SemaphoreSlim _toLock;
 
-        public AwaitableLock()
-        {
-            _toLock = new SemaphoreSlim(1, 1);
-        }
+        public AwaitableLock() => _toLock = new SemaphoreSlim(1, 1);
 
         public async Task<LockReleaser> Lock(TimeSpan timeout)
         {
@@ -26,16 +23,11 @@ namespace Business.Helpers
             throw new TimeoutException();
         }
 
-        public struct LockReleaser : IDisposable
+        public struct LockReleaser(SemaphoreSlim toRelease) : IDisposable
         {
-            private readonly SemaphoreSlim _toRelease;
+            private readonly SemaphoreSlim _toRelease = toRelease;
 
-            public LockReleaser(SemaphoreSlim toRelease)
-            {
-                _toRelease = toRelease;
-            }
-
-            public void Dispose()
+            public readonly void Dispose()
             {
                 _toRelease.Release();
             }

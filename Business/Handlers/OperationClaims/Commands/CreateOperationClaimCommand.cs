@@ -17,14 +17,10 @@ namespace Business.Handlers.OperationClaims.Commands
     {
         public string ClaimName { get; set; }
 
-        public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, IResult>
+        public class CreateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository) 
+            : IRequestHandler<CreateOperationClaimCommand, IResult>
         {
-            private readonly IOperationClaimRepository _operationClaimRepository;
-
-            public CreateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository)
-            {
-                _operationClaimRepository = operationClaimRepository;
-            }
+            private readonly IOperationClaimRepository _operationClaimRepository = operationClaimRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
@@ -46,10 +42,8 @@ namespace Business.Handlers.OperationClaims.Commands
                 return new SuccessResult(Messages.Added);
             }
 
-            private bool IsClaimExists(string claimName)
-            {
-                return _operationClaimRepository.Query().Any(x => x.Name == claimName);
-            }
+            private bool IsClaimExists(string claimName) => 
+                _operationClaimRepository.Query().Any(x => x.Name == claimName);
         }
     }
 }

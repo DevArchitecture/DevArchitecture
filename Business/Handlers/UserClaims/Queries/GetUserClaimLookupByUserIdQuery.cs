@@ -15,17 +15,12 @@ namespace Business.Handlers.UserClaims.Queries
     {
         public int Id { get; set; }
 
-        public class GetUserClaimLookupByUserIdQueryHandler : IRequestHandler<GetUserClaimLookupByUserIdQuery,
+        public class GetUserClaimLookupByUserIdQueryHandler(IUserClaimRepository userClaimRepository, 
+            IMediator mediator) : IRequestHandler<GetUserClaimLookupByUserIdQuery,
             IDataResult<IEnumerable<SelectionItem>>>
         {
-            private readonly IUserClaimRepository _userClaimRepository;
-            private readonly IMediator _mediator;
-
-            public GetUserClaimLookupByUserIdQueryHandler(IUserClaimRepository userClaimRepository, IMediator mediator)
-            {
-                _userClaimRepository = userClaimRepository;
-                _mediator = mediator;
-            }
+            private readonly IUserClaimRepository _userClaimRepository = userClaimRepository;
+            private readonly IMediator _mediator = mediator;
 
             [SecuredOperation(Priority = 1)]
             [LogAspect(typeof(FileLogger))]

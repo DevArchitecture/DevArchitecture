@@ -9,14 +9,10 @@ using MediatR;
 
 namespace Business.Handlers.Authorizations.Queries
 {
-    public class VerifyOtpHandler : IRequestHandler<VerifyOtpCommand, IDataResult<DArchToken>>
+    public class VerifyOtpHandler(IAuthenticationCoordinator coordinator) 
+        : IRequestHandler<VerifyOtpCommand, IDataResult<DArchToken>>
     {
-        private readonly IAuthenticationCoordinator _coordinator;
-
-        public VerifyOtpHandler(IAuthenticationCoordinator coordinator)
-        {
-            _coordinator = coordinator;
-        }
+        private readonly IAuthenticationCoordinator _coordinator = coordinator;
 
         /// <summary>
         /// Allows a user to login to the system, back to the browser returns a token stored in local storage.

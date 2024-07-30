@@ -20,20 +20,14 @@ namespace Business.Handlers.Authorizations.Queries
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, IDataResult<AccessToken>>
+        public class LoginUserQueryHandler(IUserRepository userRepository, 
+            ITokenHelper tokenHelper, IMediator mediator, 
+            ICacheManager cacheManager) : IRequestHandler<LoginUserQuery, IDataResult<AccessToken>>
         {
-            private readonly IUserRepository _userRepository;
-            private readonly ITokenHelper _tokenHelper;
-            private readonly IMediator _mediator;
-            private readonly ICacheManager _cacheManager;
-
-            public LoginUserQueryHandler(IUserRepository userRepository, ITokenHelper tokenHelper, IMediator mediator, ICacheManager cacheManager)
-            {
-                _userRepository = userRepository;
-                _tokenHelper = tokenHelper;
-                _mediator = mediator;
-                _cacheManager = cacheManager;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
+            private readonly ITokenHelper _tokenHelper = tokenHelper;
+            private readonly IMediator _mediator = mediator;
+            private readonly ICacheManager _cacheManager = cacheManager;
 
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)

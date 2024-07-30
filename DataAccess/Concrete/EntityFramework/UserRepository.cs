@@ -9,13 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class UserRepository : EfEntityRepositoryBase<User, ProjectDbContext>, IUserRepository
+    public class UserRepository(ProjectDbContext context) : EfEntityRepositoryBase<User, ProjectDbContext>(context), IUserRepository
     {
-        public UserRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
-
         public List<OperationClaim> GetClaims(int userId)
         {
             var result = (from user in Context.Users

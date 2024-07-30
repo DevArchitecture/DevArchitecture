@@ -21,17 +21,11 @@ namespace Business.Fakes.Handlers.Languages
         public string Code { get; set; }
 
 
-        public class CreateLanguageInternalCommandHandler : IRequestHandler<CreateLanguageInternalCommand, IResult>
+        public class CreateLanguageInternalCommandHandler(ILanguageRepository languageRepository, 
+            IMediator mediator) : IRequestHandler<CreateLanguageInternalCommand, IResult>
         {
-            private readonly ILanguageRepository _languageRepository;
-            private readonly IMediator _mediator;
-
-            public CreateLanguageInternalCommandHandler(ILanguageRepository languageRepository, IMediator mediator)
-            {
-                _languageRepository = languageRepository;
-                _mediator = mediator;
-            }
-
+            private readonly ILanguageRepository _languageRepository = languageRepository;
+            private readonly IMediator _mediator = mediator;
 
             [ValidationAspect(typeof(CreateLanguageValidator), Priority = 2)]
             [CacheRemoveAspect()]

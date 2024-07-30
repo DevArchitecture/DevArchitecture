@@ -11,13 +11,8 @@ using Newtonsoft.Json;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class TranslateRepository : EfEntityRepositoryBase<Translate, ProjectDbContext>, ITranslateRepository
+    public class TranslateRepository(ProjectDbContext context) : EfEntityRepositoryBase<Translate, ProjectDbContext>(context), ITranslateRepository
     {
-        public TranslateRepository(ProjectDbContext context)
-            : base(context)
-        {
-        }
-
         public async Task<List<TranslateDto>> GetTranslateDto()
         {
             var list = await (from lng in Context.Languages

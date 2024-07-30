@@ -15,14 +15,10 @@ namespace Business.Handlers.UserGroups.Queries
     {
         public int UserId { get; set; }
 
-        public class GetUserGroupQueryHandler : IRequestHandler<GetUserGroupQuery, IDataResult<UserGroup>>
+        public class GetUserGroupQueryHandler(IUserGroupRepository userGroupRepository) 
+            : IRequestHandler<GetUserGroupQuery, IDataResult<UserGroup>>
         {
-            private readonly IUserGroupRepository _userGroupRepository;
-
-            public GetUserGroupQueryHandler(IUserGroupRepository userGroupRepository)
-            {
-                _userGroupRepository = userGroupRepository;
-            }
+            private readonly IUserGroupRepository _userGroupRepository = userGroupRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]

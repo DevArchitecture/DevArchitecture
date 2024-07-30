@@ -41,55 +41,43 @@ public class CassandraRepositoryBase<T>
         _mapper = new Mapper(session, mappingConfiguration);
     }
 
-    public IQueryable<T> GetList(Expression<Func<T, bool>> predicate = null)
-    {
-        return predicate == null
+    public IQueryable<T> GetList(Expression<Func<T, bool>> predicate = null) =>
+        predicate == null
             ? _table.Execute().AsQueryable()
             : _table.Where(predicate)
                 .Execute().AsQueryable();
-    }
 
-    public T GetById(long id)
-    {
-        return _table.FirstOrDefault(u => u.Id == id).Execute();
-    }
+    public T GetById(long id) => _table.FirstOrDefault(u => u.Id == id).Execute();
 
-    public long GetCount(Expression<Func<T, bool>> predicate = null)
-    {
-        return predicate == null
+    public long GetCount(Expression<Func<T, bool>> predicate = null) =>
+        predicate == null
             ? _table.Count().Execute()
             : _table.Where(predicate)
                 .Count<T>().Execute();
-    }
 
-    public async Task<long> GetCountAsync(Expression<Func<T, bool>> predicate = null)
-    {
-        return await Task.Run(() => predicate == null
+    public async Task<long> GetCountAsync(Expression<Func<T, bool>> predicate = null) =>
+         await Task.Run(() => predicate == null
             ? _table.Count().Execute()
             : _table.Where(predicate)
                 .Count<T>().Execute());
-    }
 
-    public async Task<IQueryable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null)
-    {
-        return await Task.Run(() => predicate == null
+
+    public async Task<IQueryable<T>> GetListAsync(Expression<Func<T, bool>> predicate = null) =>
+         await Task.Run(() => predicate == null
             ? _table.Execute().AsQueryable()
             : _table.Where(predicate)
                 .Execute().AsQueryable());
-    }
 
-    public async Task<T> GetByIdAsync(long id)
-    {
-        return await Task.Run(() =>
+
+    public async Task<T> GetByIdAsync(long id) =>
+         await Task.Run(() =>
         {
             return _table.FirstOrDefault(u => u.Id == id).Execute();
         });
-    }
 
-    public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
-    {
-        return (await Task.Run(() => _table.Where(predicate).FirstOrDefault<T>().Execute()))!;
-    }
+
+    public async Task<T> GetAsync(Expression<Func<T, bool>> predicate) =>
+        (await Task.Run(() => _table.Where(predicate).FirstOrDefault<T>().Execute()))!;
 
     public bool Any(Expression<Func<T, bool>> predicate = null)
     {
@@ -100,9 +88,8 @@ public class CassandraRepositoryBase<T>
         return data != null;
     }
 
-    public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate = null)
-    {
-        return await Task.Run(() =>
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate = null) =>
+         await Task.Run(() =>
         {
             var data = predicate == null
                 ? _table.FirstOrDefault().Execute()
@@ -110,7 +97,7 @@ public class CassandraRepositoryBase<T>
 
             return data != null;
         });
-    }
+
 
     public void Add(T entity)
     {
@@ -120,8 +107,7 @@ public class CassandraRepositoryBase<T>
         _table.Insert(entity).Execute();
     }
 
-    public async Task AddAsync(T entity)
-    {
+    public async Task AddAsync(T entity)=>
         await Task.Run(() =>
         {
             var filter = _table.Execute().MaxBy(e => e.Id);
@@ -129,7 +115,7 @@ public class CassandraRepositoryBase<T>
             entity.Id = id + 1;
             _table.Insert(entity).Execute();
         });
-    }
+    
 
     public async Task UpdateAsync(T entity)
     {
@@ -143,13 +129,7 @@ public class CassandraRepositoryBase<T>
         _mapper.Insert(entity);
     }
 
-    public void Delete(T entity)
-    {
-        _mapper.Delete(entity);
-    }
+    public void Delete(T entity) => _mapper.Delete(entity);
 
-    public async Task DeleteAsync(T entity)
-    {
-        await _mapper.DeleteAsync(entity);
-    }
+    public async Task DeleteAsync(T entity) => await _mapper.DeleteAsync(entity);
 }

@@ -20,15 +20,10 @@ namespace Business.Handlers.Users.Commands
         public string Address { get; set; }
         public string Notes { get; set; }
 
-        public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
+        public class UpdateUserCommandHandler(IUserRepository userRepository) 
+            : IRequestHandler<UpdateUserCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-
-            public UpdateUserCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
-
+            private readonly IUserRepository _userRepository = userRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

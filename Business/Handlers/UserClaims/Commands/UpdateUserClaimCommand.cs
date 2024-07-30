@@ -21,16 +21,11 @@ namespace Business.Handlers.UserClaims.Commands
         public int[] ClaimId { get; set; }
 
 
-        public class UpdateUserClaimCommandHandler : IRequestHandler<UpdateUserClaimCommand, IResult>
+        public class UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, 
+            ICacheManager cacheManager) : IRequestHandler<UpdateUserClaimCommand, IResult>
         {
-            private readonly IUserClaimRepository _userClaimRepository;
-            private readonly ICacheManager _cacheManager;
-
-            public UpdateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
-            {
-                _userClaimRepository = userClaimRepository;
-                _cacheManager = cacheManager;
-            }
+            private readonly IUserClaimRepository _userClaimRepository = userClaimRepository;
+            private readonly ICacheManager _cacheManager = cacheManager;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

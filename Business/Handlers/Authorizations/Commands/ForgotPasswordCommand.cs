@@ -19,14 +19,10 @@ namespace Business.Handlers.Authorizations.Commands
         public string TcKimlikNo { get; set; }
         public string Email { get; set; }
 
-        public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, IResult>
+        public class ForgotPasswordCommandHandler(IUserRepository userRepository) 
+            : IRequestHandler<ForgotPasswordCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-
-            public ForgotPasswordCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
 
             /// <summary>
             /// </summary>

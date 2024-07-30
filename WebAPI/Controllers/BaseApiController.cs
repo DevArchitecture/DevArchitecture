@@ -22,28 +22,16 @@ namespace WebAPI.Controllers
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult GetResponse<T>(IDataResult<T> result)
-        {
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
+        public IActionResult GetResponse<T>(IDataResult<T> result) => result.Success ? Ok(result) : BadRequest(result);
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult GetResponseOnlyResult(IResult result)
-        {
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
+        public IActionResult GetResponseOnlyResult(IResult result) => result.Success ? Ok(result) : BadRequest(result);
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult GetResponseOnlyResultMessage(IResult result)
-        {
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
-        }
+        public IActionResult GetResponseOnlyResultMessage(IResult result) => result.Success ? Ok(result.Message) : BadRequest(result.Message);
 
         [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult GetResponseOnlyResultData<T>(IDataResult<T> result)
-        {
-            return result.Success ? Ok(result.Data) : BadRequest(result.Message);
-        }
+        public IActionResult GetResponseOnlyResultData<T>(IDataResult<T> result) => result.Success ? Ok(result.Data) : BadRequest(result.Message);
 
         /// <summary>
         ///
@@ -54,16 +42,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Success<T>(string message, string internalMessage, T data)
-        {
-            return Success(new ApiResult<T>
+        protected IActionResult Success<T>(string message, string internalMessage, T data) =>
+            Success(new ApiResult<T>
             {
                 Success = true,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -72,10 +58,7 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Success<T>(ApiResult<T> data)
-        {
-            return Ok(data);
-        }
+        protected IActionResult Success<T>(ApiResult<T> data) => Ok(data);
 
         /// <summary>
         ///
@@ -86,16 +69,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Created<T>(string message, string internalMessage, T data)
-        {
-            return Created(new ApiResult<T>
+        protected IActionResult Created<T>(string message, string internalMessage, T data) =>
+            Created(new ApiResult<T>
             {
                 Success = true,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -104,10 +85,7 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Created<T>(ApiResult<T> data)
-        {
-            return StatusCode(201, data);
-        }
+        protected IActionResult Created<T>(ApiResult<T> data) => StatusCode(201, data);
 
         /// <summary>
         ///
@@ -118,16 +96,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult NoContent<T>(string message, string internalMessage, T data)
-        {
-            return NoContent(new ApiResult<T>
+        protected IActionResult NoContent<T>(string message, string internalMessage, T data) =>
+            NoContent(new ApiResult<T>
             {
                 Success = true,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -136,42 +112,7 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult NoContent<T>(ApiResult<T> data)
-        {
-            return StatusCode(204, data);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="message"></param>
-        /// <param name="internalMessage"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [NonAction]
-        protected IActionResult BadRequest<T>(string message, string internalMessage, T data)
-        {
-            return BadRequest(new ApiResult<T>
-            {
-                Success = false,
-                Message = message,
-                InternalMessage = internalMessage,
-                Data = data
-            });
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [NonAction]
-        protected IActionResult BadRequest<T>(ApiResult<T> data)
-        {
-            return StatusCode(400, data);
-        }
+        protected IActionResult NoContent<T>(ApiResult<T> data) => StatusCode(204, data);
 
         /// <summary>
         ///
@@ -182,16 +123,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Unauthorized<T>(string message, string internalMessage, T data)
-        {
-            return Unauthorized(new ApiResult<T>
+        protected IActionResult BadRequest<T>(string message, string internalMessage, T data) =>
+            BadRequest(new ApiResult<T>
             {
                 Success = false,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -200,10 +139,7 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Unauthorized<T>(ApiResult<T> data)
-        {
-            return StatusCode(401, data);
-        }
+        protected IActionResult BadRequest<T>(ApiResult<T> data) => StatusCode(400, data);
 
         /// <summary>
         ///
@@ -214,16 +150,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Forbidden<T>(string message, string internalMessage, T data)
-        {
-            return Forbidden(new ApiResult<T>
+        protected IActionResult Unauthorized<T>(string message, string internalMessage, T data) =>
+            Unauthorized(new ApiResult<T>
             {
                 Success = false,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -232,10 +166,7 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Forbidden<T>(ApiResult<T> data)
-        {
-            return StatusCode(403, data);
-        }
+        protected IActionResult Unauthorized<T>(ApiResult<T> data) => StatusCode(401, data);
 
         /// <summary>
         ///
@@ -246,16 +177,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult NotFound<T>(string message, string internalMessage, T data)
-        {
-            return NotFound(new ApiResult<T>
+        protected IActionResult Forbidden<T>(string message, string internalMessage, T data) =>
+            Forbidden(new ApiResult<T>
             {
                 Success = false,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -264,10 +193,7 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult NotFound<T>(ApiResult<T> data)
-        {
-            return StatusCode(404, data);
-        }
+        protected IActionResult Forbidden<T>(ApiResult<T> data) => StatusCode(403, data);
 
         /// <summary>
         ///
@@ -278,16 +204,14 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Error<T>(string message, string internalMessage, T data)
-        {
-            return Error(new ApiResult<T>
+        protected IActionResult NotFound<T>(string message, string internalMessage, T data) =>
+            NotFound(new ApiResult<T>
             {
                 Success = false,
                 Message = message,
                 InternalMessage = internalMessage,
                 Data = data
             });
-        }
 
         /// <summary>
         ///
@@ -296,9 +220,33 @@ namespace WebAPI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [NonAction]
-        protected IActionResult Error<T>(ApiResult<T> data)
-        {
-            return StatusCode(500, data);
-        }
+        protected IActionResult NotFound<T>(ApiResult<T> data) => StatusCode(404, data);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <param name="internalMessage"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [NonAction]
+        protected IActionResult Error<T>(string message, string internalMessage, T data) =>
+            Error(new ApiResult<T>
+            {
+                Success = false,
+                Message = message,
+                InternalMessage = internalMessage,
+                Data = data
+            });
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [NonAction]
+        protected IActionResult Error<T>(ApiResult<T> data) => StatusCode(500, data);
     }
 }

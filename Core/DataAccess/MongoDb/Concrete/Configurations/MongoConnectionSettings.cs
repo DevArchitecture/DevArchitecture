@@ -8,10 +8,8 @@ namespace Core.DataAccess.MongoDb.Concrete.Configurations
         {
         }
 
-        public MongoConnectionSettings(MongoClientSettings mongoClientSettings)
-        {
+        public MongoConnectionSettings(MongoClientSettings mongoClientSettings) => 
             MongoClientSettings = mongoClientSettings;
-        }
 
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
@@ -21,9 +19,6 @@ namespace Core.DataAccess.MongoDb.Concrete.Configurations
         /// </summary>
         private MongoClientSettings MongoClientSettings { get; set; }
 
-        public MongoClientSettings GetMongoClientSettings()
-        {
-            return MongoClientSettings;
-        }
+        public MongoClientSettings GetMongoClientSettings() => MongoClientSettings;
     }
 }

@@ -15,14 +15,10 @@ namespace Business.Handlers.Users.Commands
     {
         public int UserId { get; set; }
 
-        public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, IResult>
+        public class DeleteUserCommandHandler(IUserRepository userRepository) 
+            : IRequestHandler<DeleteUserCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
-
-            public DeleteUserCommandHandler(IUserRepository userRepository)
-            {
-                _userRepository = userRepository;
-            }
+            private readonly IUserRepository _userRepository = userRepository;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]

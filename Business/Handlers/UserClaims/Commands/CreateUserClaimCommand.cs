@@ -18,16 +18,11 @@ namespace Business.Handlers.UserClaims.Commands
         public int UserId { get; set; }
         public int ClaimId { get; set; }
 
-        public class CreateUserClaimCommandHandler : IRequestHandler<CreateUserClaimCommand, IResult>
+        public class CreateUserClaimCommandHandler(IUserClaimRepository userClaimRepository,
+            ICacheManager cacheManager) : IRequestHandler<CreateUserClaimCommand, IResult>
         {
-            private readonly IUserClaimRepository _userClaimRepository;
-            private readonly ICacheManager _cacheManager;
-
-            public CreateUserClaimCommandHandler(IUserClaimRepository userClaimRepository, ICacheManager cacheManager)
-            {
-                _userClaimRepository = userClaimRepository;
-                _cacheManager = cacheManager;
-            }
+            private readonly IUserClaimRepository _userClaimRepository = userClaimRepository;
+            private readonly ICacheManager _cacheManager = cacheManager;
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
