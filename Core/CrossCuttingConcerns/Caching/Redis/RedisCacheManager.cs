@@ -19,6 +19,7 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         {
             var cacheConfig = configuration.GetSection(nameof(CacheOptions)).Get<CacheOptions>();
             var configurationOptions = ConfigurationOptions.Parse($"{cacheConfig.Host}:{cacheConfig.Port}");
+            configurationOptions.AbortOnConnectFail = false;
             if (!string.IsNullOrEmpty(cacheConfig.Password))
             {
                 configurationOptions.Password = cacheConfig.Password;
@@ -96,6 +97,11 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
             return isAdded;
         }
 
+        public bool IsConnected()
+        {
+            return _redis.IsConnected;
+        }
+
         public void Remove(string key)
         {
             RedisInvoker(x => x.KeyDelete(key));
@@ -103,11 +109,15 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
         public async void RemoveByPattern(string pattern)
         {
+            if (!IsConnected()) return;
+
             await _redis.KeyDeleteByPatternAsync(pattern: pattern, 0);
         }
 
         public void Clear()
         {
+            if (!IsConnected()) return;
+
             var redisServer = _redis.GetServer(_redis.Configuration);
             var redisDatabase = _redis.GetDatabase();
             redisServer.FlushDatabase(redisDatabase.Database);
@@ -115,6 +125,8 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
         private void RedisInvoker(Action<IDatabase> redisAction)
         {
+            if (!IsConnected()) return;
+
             var redisDatabase = _redis.GetDatabase();
             redisAction.Invoke(redisDatabase);
         }
