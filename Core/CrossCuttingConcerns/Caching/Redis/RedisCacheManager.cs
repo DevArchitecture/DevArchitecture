@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using ServiceStack.Text;
 using StackExchange.Redis;
+using System.Collections.Generic;
 
 namespace Core.CrossCuttingConcerns.Caching.Redis
 {
