@@ -13,7 +13,6 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
     public class RedisCacheManager : ICacheManager
     {
         private readonly ConnectionMultiplexer _redis;
-        private readonly IDatabase _cache;
 
         public RedisCacheManager(IConfiguration configuration)
         {
@@ -26,15 +25,14 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
             configurationOptions.DefaultDatabase = cacheConfig.Database;
             _redis = ConnectionMultiplexer.Connect(configurationOptions);
-            _cache = _redis.GetDatabase(cacheConfig.Database);
         }
 
         public T Get<T>(string key)
         {
             var result = default(T);
-            RedisInvoker(x =>
+            RedisInvoker(cache =>
             {
-                var data = _cache.StringGet(key);
+                var data = cache.StringGet(key);
                 if (data.HasValue)
                 {
                     result = JsonSerializer.DeserializeFromString<T>(data);
@@ -46,9 +44,9 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         public object Get(string key)
         {
             var result = default(object);
-            RedisInvoker(x =>
+            RedisInvoker(cache =>
             {
-                var data = _cache.StringGet(key);
+                var data = cache.StringGet(key);
                 if (data.HasValue)
                 {
                     result = JsonSerializer.DeserializeFromString<object>(data);
@@ -69,12 +67,12 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
         public void Add(string key, object data, int duration)
         {
-            RedisInvoker(x => x.StringSet(key, JsonSerializer.SerializeToString(data), TimeSpan.FromMinutes(duration)));
+            RedisInvoker(cache => cache.StringSet(key, JsonSerializer.SerializeToString(data), TimeSpan.FromMinutes(duration)));
         }
 
         public void Add(string key, object data)
         {
-            RedisInvoker(x => x.StringSet(key, JsonSerializer.SerializeToString(data)));
+            RedisInvoker(cache => cache.StringSet(key, JsonSerializer.SerializeToString(data)));
         }
 
         public void Add(string key, dynamic data, int duration, Type type)
@@ -92,13 +90,13 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         public bool IsAdd(string key)
         {
             var isAdded = false;
-            RedisInvoker(x => isAdded = x.KeyExists(key));
+            RedisInvoker(cache => isAdded = cache.KeyExists(key));
             return isAdded;
         }
 
         public void Remove(string key)
         {
-            RedisInvoker(x => x.KeyDelete(key));
+            RedisInvoker(cache => cache.KeyDelete(key));
         }
 
         public async void RemoveByPattern(string pattern)
