@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using ServiceStack.Text;
 using StackExchange.Redis;
+using System.Collections.Generic;
 
 namespace Core.CrossCuttingConcerns.Caching.Redis
 {
@@ -132,29 +133,29 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
     public static class RedisExtensions
     {
-        public static async ValueTask KeyDeleteByPatternAsync(
-            this IConnectionMultiplexer multiplexer,
-            string pattern = null,
-            int database = -1)
+        public static async ValueTask KeyDeleteByPatternAsync(this IConnectionMultiplexer multiplexer, string pattern = null, int database = -1)
         {
-            // there may be multiple endpoints behind a multiplexer
+            if (string.IsNullOrEmpty(pattern)) return;
+
             var endpoints = multiplexer.GetEndPoints();
-            var db = multiplexer.GetDatabase(database);
-            RedisKey[] keys;
+            var keys = new List<RedisKey>();
 
             foreach (var ep in endpoints)
             {
                 var server = multiplexer.GetServer(ep);
                 if (!server.IsConnected || server.IsReplica) continue;
-                keys = server.Keys(database, $"*{pattern}*").ToArray();
-                await FlushBatch().ConfigureAwait(false);
-            }
 
-            return;
+                // Use async enumerator for more efficient memory usage
+                await foreach (var key in server.KeysAsync(database, $"*{pattern}*"))
+                {
+                    keys.Add(key);
+                }
 
-            Task FlushBatch()
-            {
-                return keys.Length == 0 ? Task.CompletedTask : db.KeyDeleteAsync(keys);
+                if (keys.Count > 0)
+                {
+                    var db = multiplexer.GetDatabase(database);
+                    await db.KeyDeleteAsync(keys.ToArray());
+                }
             }
         }
     }
