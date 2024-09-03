@@ -1,20 +1,17 @@
 ﻿using Core.Utilities.Results;
-
+using System.Collections.Generic;
 namespace Core.Utilities.Business
 {
     public static class BusinessRules
     {
         public static IResult Run(params IResult[] logics)
         {
-            foreach (var result in logics)
-            {
-                if (!result.Success)
-                {
-                    return result;
-                }
-            }
+            return logics.FirstOrDefault(result => result is { Success: false });
+        }
 
-            return null;
+        public static List<IResult> RunMultiple(params IResult[] logics)
+        {
+            return logics.Where(logic => !logic.Success).ToList();
         }
     }
 }
