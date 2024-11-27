@@ -15,10 +15,16 @@ namespace Core.Aspects.Autofac.Caching
     {
         private readonly int _duration;
         private readonly ICacheManager _cacheManager;
-        
-        public CacheAspect(int duration = 60)
+        private readonly string _cacheKey;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="duration">cache duration minutes time </param>
+        /// <param name="cacheKey">Optional parameter. When you need of use a specific cache name. You can use of all methods.</param>
+        public CacheAspect(int duration = 60, string cacheKey = null)
         {
             _duration = duration;
+            _cacheKey = cacheKey;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
 
@@ -26,7 +32,7 @@ namespace Core.Aspects.Autofac.Caching
         {
             var methodName = string.Format($"{invocation.Arguments[0]}.{invocation.Method.Name}");
             var arguments = invocation.Arguments;
-            var key = $"{methodName}({BuildKey(arguments)})";
+            var key = string.IsNullOrEmpty(_cacheKey) ? $"{methodName}({BuildKey(arguments)})" : $"{_cacheKey}:{methodName}({BuildKey(arguments)})";
             var returnType = invocation.Method.ReturnType.GenericTypeArguments.FirstOrDefault();
             if (_cacheManager.IsAdd(key))
             {
@@ -47,7 +53,7 @@ namespace Core.Aspects.Autofac.Caching
                 var paramValues = arg.GetType().GetProperties()
                     .Select(p => p.GetValue(arg)?.ToString() ?? string.Empty);
                 var enumerable = paramValues.ToList();
-                if(enumerable.Any(w => w.Contains("Cancellation"))) continue;
+                if (enumerable.Any(w => w.Contains("Cancellation"))) continue;
                 sb.Append(string.Join('_', enumerable));
             }
 
