@@ -105,7 +105,7 @@ export class UserComponent implements AfterViewInit, OnInit {
       this.claimSelectedItems = data;
     });
   }
-
+ 
   saveUserGroupsPermissions() {
     if (this.isGroupChange) {
       var ids = this.groupSelectedItems.map(function (x) {

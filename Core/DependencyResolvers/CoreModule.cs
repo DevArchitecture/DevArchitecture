@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using Core.ApiDoc;
 using Core.CrossCuttingConcerns.Caching;
@@ -42,9 +41,8 @@ namespace Core.DependencyResolvers
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc(SwaggerMessages.Version, new OpenApiInfo
                 {
-
                     Version = SwaggerMessages.Version,
                     Title = SwaggerMessages.Title,
                     Description = SwaggerMessages.Description
@@ -58,7 +56,7 @@ namespace Core.DependencyResolvers
                     //    Name = SwaggerMessages.LicenceName,
                     // },
                 });
-                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
                 c.OperationFilter<AddAuthHeaderOperationFilter>();
                 c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
@@ -67,16 +65,6 @@ namespace Core.DependencyResolvers
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
                     Scheme = "bearer"
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" }
-                        },
-                        new string[] {}
-                    }
                 });
             });
         }

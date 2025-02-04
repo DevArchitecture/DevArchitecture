@@ -43,7 +43,6 @@ namespace Business.Handlers.UserClaims.Commands
                 await _userClaimRepository.SaveChangesAsync();
 
                 _cacheManager.Remove($"{CacheKeys.UserIdForClaim}={request.UserId}");
-
                 return new SuccessResult(Messages.Updated);
             }
         }

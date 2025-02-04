@@ -1,59 +1,44 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Utilities.Results;
+﻿using System.Text;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace Core.Utilities.MessageBrokers.RabbitMq;
-
-public class RMqQueueHelper : IMessageBrokerHelper
+namespace Core.Utilities.MessageBrokers.RabbitMq
 {
-    private readonly MessageBrokerOptions _brokerOptions;
-
-    public RMqQueueHelper(IConfiguration configuration)
+    public class MqQueueHelper : IMessageBrokerHelper
     {
-        Configuration = configuration;
-        _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
-    }
+        private readonly MessageBrokerOptions _brokerOptions;
 
-    public IConfiguration Configuration { get; }
+        public MqQueueHelper(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
+        }
 
-    public async Task<IResult> QueueMessageAsync<T>(T messageModel)
-    {
-        var factory = new ConnectionFactory
-            {
-                HostName = _brokerOptions.HostName,
-                Port = _brokerOptions.Port,
-                UserName = _brokerOptions.UserName,
-                Password = _brokerOptions.Password,
-                AutomaticRecoveryEnabled = true,
-                NetworkRecoveryInterval = TimeSpan.FromSeconds(2)
-            };
+        public IConfiguration Configuration { get; }
 
-            using var connection = await factory.CreateConnectionAsync();
-            using var channel = await connection.CreateChannelAsync();
-        var topicName = typeof(T).Name;
-        await channel.QueueDeclareAsync(
-            topicName,
-            false,
-            false,
-            false,
-            null);
+        public void QueueMessage(string messageText)
+        {
+            ConnectionFactory factory = new ConnectionFactory();
 
-        var message = JsonConvert.SerializeObject(messageModel);
-        var body = Encoding.UTF8.GetBytes(message);
+            factory.UserName = _brokerOptions.UserName;
+            factory.Password = _brokerOptions.Password;
+            factory.HostName = _brokerOptions.HostName;
 
-        var props = new BasicProperties();
+            using var connection = factory.CreateConnectionAsync().GetAwaiter().GetResult();
+            using var channel =  connection.CreateChannelAsync().GetAwaiter().GetResult();
 
-        await channel.BasicPublishAsync(
-            exchange: "",
-            routingKey: topicName,
-            mandatory: false,
-            basicProperties: props,
-            body: body);
+            channel.QueueDeclareAsync(
+                queue: "DArchQueue",
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null).GetAwaiter().GetResult();
 
-        return new SuccessResult();
+            var message = JsonConvert.SerializeObject(messageText);
+            byte[] messageBodyBytes = Encoding.UTF8.GetBytes(message);
+
+            channel.BasicPublishAsync(exchange: string.Empty, routingKey: "DArchQueue", false, body: messageBodyBytes).GetAwaiter().GetResult();
+        }
     }
 }

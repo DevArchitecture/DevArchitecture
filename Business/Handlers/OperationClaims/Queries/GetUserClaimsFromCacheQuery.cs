@@ -50,7 +50,7 @@ namespace Business.Handlers.OperationClaims.Queries
                 }
 
                 var oprClaims = await Task.Run(() => _cacheManager.Get($"{CacheKeys.UserIdForClaim}={userId}") as IEnumerable<string>);
-
+                
                 return new SuccessDataResult<IEnumerable<string>>(oprClaims);
             }
         }

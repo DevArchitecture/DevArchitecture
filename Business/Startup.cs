@@ -32,7 +32,6 @@ using Hangfire.InMemory;
 using Hangfire.PostgreSql;
 using Hangfire.RecurringJobExtensions;
 using Hangfire.SqlServer;
-using Core.Utilities.MessageBrokers;
 
 namespace Business
 {
@@ -76,7 +75,7 @@ namespace Business
             services.AddTransient<ITokenHelper, JwtHelper>();
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
 
-            services.AddTransient<IMessageBrokerHelper, RMqQueueHelper>();
+            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
 
             var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();

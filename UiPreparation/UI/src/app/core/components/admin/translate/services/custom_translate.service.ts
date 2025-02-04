@@ -17,7 +17,7 @@ export class CustomTranslateService {
     return this._httpClient.get<Translate[]>(environment.getApiUrl + '/translates/dtos')
   }
 
-  getTranslate(id: number): Observable<Translate> {
+  getTranslateById(id: number): Observable<Translate> {
     return this._httpClient.get<Translate>(environment.getApiUrl + `/translates/${id}`)
   }
 

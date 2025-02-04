@@ -1,70 +1,57 @@
 ﻿using System;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Core.Utilities.MessageBrokers.RabbitMq;
-
-public class MqConsumerHelper : IMessageConsumer
+namespace Core.Utilities.MessageBrokers.RabbitMq
 {
-    private readonly MessageBrokerOptions _brokerOptions;
-
-    public MqConsumerHelper(IConfiguration configuration)
+    public class MqConsumerHelper : IMessageConsumer
     {
-        if (configuration == null)
-            throw new ArgumentNullException(nameof(configuration));
+        private readonly IConfiguration _configuration;
+        private readonly MessageBrokerOptions _brokerOptions;
 
-        _brokerOptions = configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
-        if (_brokerOptions == null)
-            throw new InvalidOperationException("MessageBrokerOptions configuration section is missing.");
-    }
-
-    public async Task GetQueue()
-    {
-
-        using var connection = await new ConnectionFactory
+        public MqConsumerHelper(IConfiguration configuration)
         {
-            HostName = _brokerOptions.HostName,
-            Port = _brokerOptions.Port,
-            UserName = _brokerOptions.UserName,
-            Password = _brokerOptions.Password,
-            AutomaticRecoveryEnabled = true,
-            NetworkRecoveryInterval = TimeSpan.FromSeconds(2)
-        }.CreateConnectionAsync();
-            using var channel = await connection.CreateChannelAsync();
+            _configuration = configuration;
+            _brokerOptions = _configuration.GetSection("MessageBrokerOptions").Get<MessageBrokerOptions>();
+        }
 
-            const string queueName = "DArchQueue";
+        public void GetQueue()
+        {
+            ConnectionFactory factory = new ConnectionFactory();
 
-            await channel.QueueDeclareAsync(
-                queue: queueName,
+            factory.UserName = _brokerOptions.UserName;
+            factory.Password = _brokerOptions.Password;
+            factory.HostName = _brokerOptions.HostName;
+
+            using var connection = factory.CreateConnectionAsync().GetAwaiter().GetResult();
+            using var channel =  connection.CreateChannelAsync().GetAwaiter().GetResult();
+
+            channel.QueueDeclareAsync(
+                queue: "DArchQueue",
                 durable: false,
                 exclusive: false,
                 autoDelete: false,
-                arguments: null);
+                arguments: null).GetAwaiter().GetResult();
 
             var consumer = new AsyncEventingBasicConsumer(channel);
-            consumer.ReceivedAsync += async (model, mq) =>
-            {
-                try
-                {
-                    var body = mq.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
-                    Console.WriteLine($"Message received: {message}");
 
-                    await channel.BasicAckAsync(mq.DeliveryTag, false);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error processing message: {ex.Message}");
-                }
+            consumer.ReceivedAsync += async (ch, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                Console.WriteLine($"Message: {message}");
+                await channel.BasicAckAsync(ea.DeliveryTag, false);
+
             };
 
-            await channel.BasicConsumeAsync(
-                queue: queueName,
-                autoAck: false,
-                consumer: consumer);
-            Console.ReadLine();
+                string consumerTag = channel.BasicConsumeAsync(queue: "DArchQueue",
+                autoAck: true,
+                consumer: consumer).GetAwaiter().GetResult();
+
+
+            Console.ReadKey();
+        }
     }
 }

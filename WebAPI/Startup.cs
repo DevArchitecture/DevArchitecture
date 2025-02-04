@@ -23,8 +23,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using NSwag.AspNetCore;
-
 using ConfigurationManager = Business.ConfigurationManager;
 
 namespace WebAPI
@@ -135,15 +133,20 @@ namespace WebAPI
                 case ApplicationMode.Production:
                     break;
             }
+
             app.UseDeveloperExceptionPage();
+
             app.ConfigureCustomExceptionMiddleware();
+
             _ = app.UseDbOperationClaimCreator();
+            
             if (!env.IsProduction())
             {
                 app.UseSwagger();
+
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("./v1/swagger.json", "DevArchitecture");
+                    c.SwaggerEndpoint("v1/swagger.json", "DevArchitecture");
                     c.DocExpansion(DocExpansion.None);
                 });
             }

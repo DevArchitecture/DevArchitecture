@@ -134,7 +134,7 @@ export class TranslateComponent implements  AfterViewInit, OnInit {
 
 	getTranslateById(translateId: number) {
 		this.clearFormGroup(this.translateAddForm);
-		this.translateService.getTranslate(translateId).subscribe(data => {
+		this.translateService.getTranslateById(translateId).subscribe(data => {
 			this.translate = data;
 			this.translateAddForm.patchValue(data);
 		})
