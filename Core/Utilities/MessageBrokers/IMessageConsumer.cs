@@ -1,6 +1,7 @@
 ﻿namespace Core.Utilities.MessageBrokers;
+using System.Threading.Tasks;
 
 public interface IMessageConsumer
 {
-    void GetQueue();
+    Task GetQueue();
 }

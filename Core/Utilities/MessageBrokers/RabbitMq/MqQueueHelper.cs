@@ -20,21 +20,22 @@ public class RMqQueueHelper : IMessageBrokerHelper
 
     public IConfiguration Configuration { get; }
 
-    public Task<IResult> QueueMessageAsync<T>(T messageModel)
+    public async Task<IResult> QueueMessageAsync<T>(T messageModel)
     {
-        using var connection = new ConnectionFactory()
+        var factory = new ConnectionFactory
             {
                 HostName = _brokerOptions.HostName,
                 Port = _brokerOptions.Port,
                 UserName = _brokerOptions.UserName,
                 Password = _brokerOptions.Password,
                 AutomaticRecoveryEnabled = true,
-                NetworkRecoveryInterval = new TimeSpan(2000),
-            }
-            .CreateConnection();
-        using var channel = connection.CreateModel();
+                NetworkRecoveryInterval = TimeSpan.FromSeconds(2)
+            };
+
+            using var connection = await factory.CreateConnectionAsync();
+            using var channel = await connection.CreateChannelAsync();
         var topicName = typeof(T).Name;
-        channel.QueueDeclare(
+        await channel.QueueDeclareAsync(
             topicName,
             false,
             false,
@@ -44,8 +45,15 @@ public class RMqQueueHelper : IMessageBrokerHelper
         var message = JsonConvert.SerializeObject(messageModel);
         var body = Encoding.UTF8.GetBytes(message);
 
-        channel.BasicPublish(string.Empty, topicName, null, body);
-        return Task.FromResult<IResult>(new SuccessResult());
+        var props = new BasicProperties();
 
+        await channel.BasicPublishAsync(
+            exchange: "",
+            routingKey: topicName,
+            mandatory: false,
+            basicProperties: props,
+            body: body);
+
+        return new SuccessResult();
     }
 }
