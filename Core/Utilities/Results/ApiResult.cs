@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Utilities.Results
 {
+    [Serializable]
     public class ApiResult<T>
     {
         public bool Success { get; set; }

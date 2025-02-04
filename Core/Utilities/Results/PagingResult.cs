@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Utilities.Results
 {
@@ -6,6 +7,7 @@ namespace Core.Utilities.Results
     /// Paginated response
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Serializable]
     public class PagingResult<T> : Result, IPagingResult<T>
     {
         public PagingResult(List<T> data, int totalItemCount, bool success, string message) : base(success, message)
