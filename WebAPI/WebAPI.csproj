@@ -52,7 +52,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+		<PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>

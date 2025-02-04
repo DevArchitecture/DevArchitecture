@@ -47,10 +47,10 @@
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.1.0" />
 		<PackageReference Include="ServiceStack.Text.Core" Version="8.5.2" />
 		<PackageReference Include="StackExchange.Redis" Version="2.8.24" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.1" />
 		<PackageReference Include="CassandraCSharpDriver" Version="3.22.0" />
 		<PackageReference Include="Confluent.Kafka" Version="2.8.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.*" />
   </ItemGroup>
 </Project>

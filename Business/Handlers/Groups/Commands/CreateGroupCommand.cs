@@ -32,8 +32,6 @@ namespace Business.Handlers.Groups.Commands
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var group = new Group
                     {
                         GroupName = request.GroupName
@@ -42,11 +40,6 @@ namespace Business.Handlers.Groups.Commands
                     await _groupRepository.SaveChangesAsync();
                     return new SuccessResult(Messages.Added);
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
         }
     }
 }
