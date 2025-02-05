@@ -63,13 +63,6 @@ class _AppState extends State<MyApp> with OKToastMixin<MyApp>, ModularMixin {
     _initializeTranslations =
         Provider.of<TranslationProvider>(context, listen: false)
             .loadTranslations("tr-TR");
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      CoreInitializer()
-          .coreContainer
-          .internetConnection
-          .listenConnection(context);
-    });
   }
 
   @override
@@ -111,6 +104,12 @@ class _AppState extends State<MyApp> with OKToastMixin<MyApp>, ModularMixin {
             ),
           );
         }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          CoreInitializer()
+              .coreContainer
+              .internetConnection
+              .listenConnection(context);
+        });
         return buildChild(context);
       },
     );

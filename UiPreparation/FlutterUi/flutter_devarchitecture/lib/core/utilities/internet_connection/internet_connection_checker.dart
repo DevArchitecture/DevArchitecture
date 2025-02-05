@@ -38,6 +38,7 @@ class InternetConnectionWithChecker implements IInternetConnection {
     showDialog(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: true,
       builder: (ctx) {
         _popupContext = ctx;
         return AlertDialog(
