@@ -5,7 +5,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'i_internet_connection.dart';
 
 class InternetConnectionWithChecker implements IInternetConnection {
-  late final StreamSubscription<InternetStatus> _subscription;
+  StreamSubscription<InternetStatus>? _subscription;
   BuildContext? _popupContext;
   bool _isPopupVisible = false;
 
@@ -14,6 +14,8 @@ class InternetConnectionWithChecker implements IInternetConnection {
   }
 
   Future<void> listenConnection(BuildContext context) async {
+    if (_subscription != null) return; // Zaten başlatılmışsa tekrar başlatma
+
     _subscription =
         InternetConnection().onStatusChange.listen((InternetStatus status) {
       switch (status) {
@@ -28,7 +30,8 @@ class InternetConnectionWithChecker implements IInternetConnection {
   }
 
   Future<void> stopListening() async {
-    await _subscription.cancel();
+    await _subscription?.cancel();
+    _subscription = null;
   }
 
   void _showPopup(BuildContext context) {

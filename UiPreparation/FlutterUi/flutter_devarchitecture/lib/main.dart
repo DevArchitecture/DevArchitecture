@@ -23,15 +23,9 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => ThemeProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TranslationProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ClaimProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => TranslationProvider()),
+        ChangeNotifierProvider(create: (_) => ClaimProvider()),
       ],
       child: OKToast(
         child: MyApp(),
@@ -74,44 +68,41 @@ class _AppState extends State<MyApp> with OKToastMixin<MyApp>, ModularMixin {
   @override
   Widget build(BuildContext context) {
     ConstantsInitializer(context);
-    return FutureBuilder<void>(
-      future: _initializeTranslations,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(
-            home: Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          );
-        }
+    return MaterialApp(
+      home: Scaffold(
+        body: FutureBuilder<void>(
+          future: _initializeTranslations,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
 
-        if (snapshot.hasError) {
-          print(snapshot.error);
-          print(snapshot.stackTrace);
-          return MaterialApp(
-            home: Scaffold(
-              body: Center(
+            if (snapshot.hasError) {
+              print(snapshot.error);
+              print(snapshot.stackTrace);
+              return Center(
                 child: Text(
                   "Bir hata oluştu: ${snapshot.error}",
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
                 ),
-              ),
-            ),
-          );
-        }
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          CoreInitializer()
-              .coreContainer
-              .internetConnection
-              .listenConnection(context);
-        });
-        return buildChild(context);
-      },
+              );
+            }
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              CoreInitializer()
+                  .coreContainer
+                  .internetConnection
+                  .listenConnection(context);
+            });
+
+            return buildChild(context);
+          },
+        ),
+      ),
     );
   }
 
