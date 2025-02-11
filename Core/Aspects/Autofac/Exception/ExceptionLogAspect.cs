@@ -37,7 +37,7 @@ namespace Core.Aspects.Autofac.Exception
 
             logDetailWithException.ExceptionMessage = e is AggregateException
                 ? string.Join(Environment.NewLine, (e as AggregateException).InnerExceptions.Select(x => x.Message))
-                : e.Message;
+                : e.ToString();
             _loggerServiceBase.Error(JsonConvert.SerializeObject(logDetailWithException));
         }
 

@@ -1,5 +1,8 @@
-﻿namespace Core.Utilities.Results
+﻿using System;
+
+namespace Core.Utilities.Results
 {
+    [Serializable]
     public class Result : IResult
     {
         public Result(bool success, string message)

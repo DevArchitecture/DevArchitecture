@@ -41,19 +41,19 @@ export class UserService {
     return this.httpClient.request('delete', environment.getApiUrl + `/users/${id}`);
   }
 
-  getUserGroupPermissions(userId:number):Observable<LookUp[]>{
-    return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-groups/users/${userId}/groups`);
-  }
 
   getUserClaims(userId:number){
-     return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-claims/users/${userId}`);
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-claims/users/${userId}`);
   }
 
   saveUserClaims(userId:number,claims:number[] ):Observable<any> {
 
     var result = this.httpClient.put(environment.getApiUrl + "/user-claims/", {UserId:userId, ClaimIds:claims }, { responseType: 'text' });
     return result;
+  }
 
+  getUserGroupPermissions(userId:number):Observable<LookUp[]>{
+    return this.httpClient.get<LookUp[]>(environment.getApiUrl + `/user-groups/users/${userId}/groups`);
   }
 
   saveUserGroupPermissions(userId:number, groups:number[]):Observable<any> {

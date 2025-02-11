@@ -3,6 +3,7 @@ using System.Reflection;
 using Core.ApiDoc;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.CrossCuttingConcerns.Caching.Redis;
 using Core.Utilities.IoC;
 using Core.Utilities.Mail;
 using Core.Utilities.Messages;
@@ -21,12 +22,15 @@ namespace Core.DependencyResolvers
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
             services.AddMemoryCache();
-            services.AddSingleton<ICacheManager, MemoryCacheManager>();
+            services.AddSingleton<ICacheManager, RedisCacheManager>();
             services.AddSingleton<IMailService, MailManager>();
             services.AddSingleton<IEmailConfiguration, EmailConfiguration>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<Stopwatch>();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            IServiceCollection serviceCollection = services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
             services.AddSingleton<IUriService>(o =>
             {
                 var accessor = o.GetRequiredService<IHttpContextAccessor>();

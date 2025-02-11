@@ -1,5 +1,9 @@
-﻿namespace Core.Utilities.Results
+﻿using System;
+using System.Text.Json.Serialization;
+
+namespace Core.Utilities.Results
 {
+    [Serializable]
     public class SuccessResult : Result
     {
         public SuccessResult(string message)

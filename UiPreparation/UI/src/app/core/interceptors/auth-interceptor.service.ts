@@ -40,7 +40,7 @@ export class AuthInterceptorService implements HttpInterceptor {
        responseType: req.method == "DELETE" ? "text" : req.responseType
      });
 
-   
+
   }
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);

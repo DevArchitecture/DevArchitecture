@@ -23,7 +23,7 @@ export class AuthService {
   jwtHelper: JwtHelperService = new JwtHelperService();
   claims: string[];
 
-  constructor(private httpClient: HttpClient, private storageService: LocalStorageService, 
+  constructor(private httpClient: HttpClient, private storageService: LocalStorageService,
     private router: Router, private alertifyService:AlertifyService,private sharedService:SharedService) {
 
     this.setClaims();

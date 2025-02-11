@@ -13,22 +13,15 @@ namespace Core.Aspects.Autofac.Caching
     {
         private string _pattern;
         private readonly ICacheManager _cacheManager;
-        private readonly string _cacheKey;
         const string commandHandler = "CommandHandler";
         const string create = "Create";
         const string update = "Update";
         const string delete = "Delete";
         const string get = "Get";
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pattern">CommandHandler, Get, Create, Update, Delete</param>
-        /// <param name="cacheKey">If you used CacheKey when used CacheAspect. You can remove the cacheKey with this parameter.</param>
-        public CacheRemoveAspect(string pattern = "", string cacheKey = null)
+        public CacheRemoveAspect(string pattern = "")
         {
             _pattern = pattern;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
-            _cacheKey = cacheKey;
         }
         protected override void OnSuccess(IInvocation invocation)
         {
@@ -41,15 +34,7 @@ namespace Core.Aspects.Autofac.Caching
                 targetTypeName = targetTypeName.Replace(delete, string.Empty);
                 _pattern = get + targetTypeName;
             }
-            if (string.IsNullOrWhiteSpace(_cacheKey))
-            {
-                _cacheManager.RemoveByPattern(_pattern);
-            }
-            else
-            {
-                _cacheManager.Remove(_cacheKey);
-            }
-
+            _cacheManager.RemoveByPattern(_pattern);
         }
     }
 }

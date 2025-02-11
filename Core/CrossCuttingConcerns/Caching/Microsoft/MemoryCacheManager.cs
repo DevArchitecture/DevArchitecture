@@ -78,11 +78,6 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             return _cache.TryGetValue(key, out _);
         }
 
-        public bool IsConnected()
-        {
-            return true;
-        }
-
         public void Remove(string key)
         {
             _cache.Remove(key);

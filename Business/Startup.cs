@@ -3,8 +3,6 @@ using Business.Constants;
 using Business.DependencyResolvers;
 using Business.Fakes.DArch;
 using Business.Services.Authentication;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.ElasticSearch;
@@ -26,7 +24,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
-using Core.Utilities.MessageBrokers;
 using Core.Utilities.TaskScheduler;
 using Core.Utilities.TaskScheduler.Hangfire;
 using Core.Utilities.TaskScheduler.Hangfire.Models;
@@ -35,7 +32,6 @@ using Hangfire.InMemory;
 using Hangfire.PostgreSql;
 using Hangfire.RecurringJobExtensions;
 using Hangfire.SqlServer;
-using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 
 namespace Business
 {
@@ -79,7 +75,7 @@ namespace Business
             services.AddTransient<ITokenHelper, JwtHelper>();
             services.AddTransient<IElasticSearch, ElasticSearchManager>();
 
-            services.AddTransient<IMessageBrokerHelper, RMqQueueHelper>();
+            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
             services.AddTransient<IMessageConsumer, MqConsumerHelper>();
 
             var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
@@ -122,7 +118,7 @@ namespace Business
                         case "inMemory":
                             var inMemoryOptions = new InMemoryStorageOptions
                             {
-                                DisableJobSerialization = false
+                                //TODO: DisableJobSerialization = false
                             };
                             config.UseInMemoryStorage(inMemoryOptions);
                             break;
@@ -136,7 +132,10 @@ namespace Business
 
             services.AddAutoMapper(typeof(ConfigurationManager));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(typeof(BusinessStartup).GetTypeInfo().Assembly);
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(BusinessStartup).Assembly);
+            });
 
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
             {

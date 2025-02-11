@@ -95,7 +95,7 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-*.json
+
 
 # Chutzpah Test files
 _Chutzpah*
@@ -466,3 +466,4 @@ fabric.properties
 # Local History for Visual Studio Code
 .history/
 .idea/*
+UiPreparation/.DS_Store

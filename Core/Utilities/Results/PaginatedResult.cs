@@ -1,7 +1,9 @@
-﻿using Core.Utilities.Messages;
+﻿using System;
+using Core.Utilities.Messages;
 
 namespace Core.Utilities.Results
 {
+    [Serializable]
     public class PaginatedResult<T> : IDataResult<T>
     {
         public PaginatedResult(T data, int pageNumber, int pageSize)

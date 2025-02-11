@@ -25,5 +25,5 @@ Build succeeded.
 ``
 
 # Run Api Project with Any Terminal
-
-``> dotnet run -p WebAPI``
+``> dotnet dev-certs https --trust``
+``> dotnet watch run --project ./WebAPI/WebAPI.csproj``
