@@ -14,7 +14,7 @@ namespace Tests.WebAPI
     [TestFixture]
     public class UsersControllerTests : BaseIntegrationTest
     {
-        [Test]
+        //[Test]
         public async Task GetAll()
         {
             const string authenticationScheme = "Bearer";

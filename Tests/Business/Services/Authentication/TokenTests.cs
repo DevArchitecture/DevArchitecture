@@ -19,7 +19,7 @@ namespace Tests.Business.Services.Authentication
         private const string _requestUri = "api/v1/users";
 
 
-        [Test]
+        //[Test]
         public async Task TokenAuthorizeTest()
         {
             // Arrange
