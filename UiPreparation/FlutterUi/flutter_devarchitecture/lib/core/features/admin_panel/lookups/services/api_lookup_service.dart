@@ -19,8 +19,9 @@ class ApiLookupService implements ILookupService {
   Future<List<LookUp>> getGroupLookUp() async {
     var result =
         await CoreInitializer().coreContainer.http.get(url + "/groups/lookups");
-    var data =
-        (result["data"] as List).map((e) => e as Map<String, dynamic>).toList();
+    var data = ((result["data"] ?? []) as List)
+        .map((e) => e as Map<String, dynamic>)
+        .toList();
 
     return Future.value(data.map((e) => LookUp.fromMap(e)).toList());
   }
@@ -28,9 +29,10 @@ class ApiLookupService implements ILookupService {
   @override
   Future<List<LookUp>> getLanguageLookup() async {
     var result =
-        await CoreInitializer().coreContainer.http.get(url + "/users/lookups");
-    var data =
-        (result["data"] as List).map((e) => e as Map<String, dynamic>).toList();
+        await CoreInitializer().coreContainer.http.get(url + "/languages/lookups");
+    var data = ((result["data"] ?? []) as List)
+        .map((e) => e as Map<String, dynamic>)
+        .toList();
     return Future.value(data.map((e) => LookUp.fromMap(e)).toList());
   }
 
@@ -56,8 +58,9 @@ class ApiLookupService implements ILookupService {
   Future<List<LookUp>> getUserLookUp() async {
     var result =
         await CoreInitializer().coreContainer.http.get(url + "/users/lookups");
-    var data =
-        (result["data"] as List).map((e) => e as Map<String, dynamic>).toList();
+    var data = ((result["data"] ?? []) as List)
+        .map((e) => e as Map<String, dynamic>)
+        .toList();
     return Future.value(data.map((e) => LookUp.fromMap(e)).toList());
   }
 }

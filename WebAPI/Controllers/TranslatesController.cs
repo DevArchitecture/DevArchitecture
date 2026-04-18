@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         [HttpGet("languages/{lang}")]
         public async Task<IActionResult> GetTranslatesByLang([FromRoute] string lang)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
         }
 
         /// <summary>

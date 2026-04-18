@@ -17,6 +17,7 @@ declare var jQuery: any;
 
 @Component({
   selector: 'app-group',
+  standalone: false,
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.scss']
 })

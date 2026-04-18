@@ -15,6 +15,7 @@ declare let jQuery: any;
 
 @Component({
 	selector: 'app-translate',
+	standalone: false,
 	templateUrl: './translate.component.html',
 	styleUrls: ['./translate.component.scss']
 })

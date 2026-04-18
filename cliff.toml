@@ -1,0 +1,81 @@
+# git-cliff — CHANGELOG from conventional commits
+# https://git-cliff.org/docs/configuration/
+
+[changelog]
+header = """
+# Changelog
+
+This file is generated from **conventional commits** via [git-cliff](https://git-cliff.org/). Use `feat:`, `fix:`, `docs:`, `feat!:`, or a `BREAKING CHANGE:` footer for clear entries.
+
+| Marker | Meaning |
+|--------|---------|
+| **[version]** | Changes in that release. |
+| **Breaking changes** | Incompatible changes; consumers may need code updates. |
+| **Features** | `feat:` → minor bump. |
+| **Bug Fixes** | `fix:` → patch. |
+
+---
+
+"""
+
+body = """
+{% if version %}\
+## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+## [unreleased]
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+{% if group == "Breaking" %}
+### Breaking changes
+{% for commit in commits %}
+- **{{ commit.message | upper_first }}**{% if commit.scope %} *({{ commit.scope }})*{% endif %}
+{% if commit.breaking_description %}
+  - {{ commit.breaking_description }}
+{% endif %}\
+{% if commit.body %}
+  - {{ commit.body | trim }}
+{% endif %}
+{% endfor %}
+{% endif %}\
+{% endfor %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+{% if group != "Breaking" %}
+### {{ group | striptags | trim | upper_first }}
+{% for commit in commits %}
+- **{{ commit.message | upper_first }}**{% if commit.scope %} *({{ commit.scope }})*{% endif %}\
+{% if commit.body %}
+
+  {{ commit.body | trim }}
+{% endif %}
+
+{% endfor %}
+{% endif %}\
+{% endfor %}
+"""
+trim = true
+render_always = true
+
+[git]
+conventional_commits = true
+filter_unconventional = true
+require_conventional = false
+commit_parsers = [
+  { message = "^[a-zA-Z]*!:", group = "Breaking" },
+  { body = "BREAKING CHANGE", group = "Breaking" },
+  { message = "^feat", group = "Features" },
+  { message = "^fix", group = "Bug Fixes" },
+  { message = "^doc", group = "Documentation" },
+  { message = "^perf", group = "Performance" },
+  { message = "^refactor", group = "Refactor" },
+  { message = "^style", group = "Styling" },
+  { message = "^test", group = "Testing" },
+  { message = "^chore\\(release\\)", skip = true },
+  { message = "^chore.*update CHANGELOG", skip = true },
+  { message = "^chore|^ci", group = "Miscellaneous" },
+  { message = ".*security", group = "Security" },
+  { message = "^revert", group = "Revert" },
+  { message = ".*", group = "Other" },
+]
+filter_commits = false
+sort_commits = "oldest"
+protect_breaking_commits = true

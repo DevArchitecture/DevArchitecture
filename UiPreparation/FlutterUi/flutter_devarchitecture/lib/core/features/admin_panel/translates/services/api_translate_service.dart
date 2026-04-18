@@ -19,7 +19,9 @@ class ApiTranslateService extends ApiService<Translate>
         return Future.value(FailureDataResult(result["message"] ?? ""));
       }
     }
-    var data = result["data"] as List<Map<String, dynamic>>;
+    var data = ((result["data"] ?? []) as List)
+        .map((e) => e as Map<String, dynamic>)
+        .toList();
     return Future.value(SuccessDataResult(
         data.map((e) => TranslateDto.fromMap(e)).toList(), ""));
   }

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
-import 'rxjs/add/operator/filter';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
 import { AuthService } from 'app/core/components/admin/login/services/auth.service';
@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-admin-layout',
+    standalone: false,
     templateUrl: './admin-layout.component.html',
     styleUrls: ['./admin-layout.component.scss']
 })
@@ -63,7 +64,9 @@ export class AdminLayoutComponent implements OnInit {
                         window.scrollTo(0, 0);
                 }
             });
-            this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+            this._router = this.router.events
+                .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+                .subscribe((event: NavigationEnd) => {
                 elemMainPanel.scrollTop = 0;
                 elemSidebar.scrollTop = 0;
             });

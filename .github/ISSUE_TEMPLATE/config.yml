@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://www.devarchitecture.net
+    about: Official DevArchitecture documentation
+  - name: Breaking changes (.NET 10)
+    url: https://github.com/DevArchitecture/DevArchitecture/blob/master/docs/BREAKING-CHANGES-NET10.md
+    about: Migration notes and breaking changes for .NET 10
+  - name: Turkish README
+    url: https://github.com/DevArchitecture/DevArchitecture/blob/master/README.tr.md
+    about: Repository overview in Turkish

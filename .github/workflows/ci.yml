@@ -1,0 +1,45 @@
+# Main CI: build, test, vulnerability check, Docker smoke (Intentum-style "ci" entrypoint).
+name: ci
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches: [ master ]
+
+env:
+  DOTNET_VERSION: "10.0.x"
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore DevArchitecture.sln
+
+      - name: Check vulnerable packages
+        run: dotnet list DevArchitecture.sln package --vulnerable --include-transitive
+
+      - name: Build
+        run: dotnet build DevArchitecture.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test DevArchitecture.sln --no-build -c Release --verbosity normal
+
+      - name: Docker build image
+        run: docker build -t devarchitecture-webapi:ci -f WebAPI/Dockerfile .
+
+      - name: Docker smoke test
+        run: |
+          docker run -d --rm --name devarchitecture-webapi-smoke -p 18080:8080 devarchitecture-webapi:ci
+          sleep 15
+          curl --fail --show-error --silent http://127.0.0.1:18080/healthz
+          docker stop devarchitecture-webapi-smoke

@@ -1,0 +1,14 @@
+{
+  "name": "devarchitecture-clients",
+  "private": true,
+  "workspaces": [
+    "clients/react-admin",
+    "clients/vue-admin"
+  ],
+  "scripts": {
+    "dev:react": "npm --workspace clients/react-admin run dev",
+    "dev:vue": "npm --workspace clients/vue-admin run dev",
+    "build:react": "npm --workspace clients/react-admin run build",
+    "build:vue": "npm --workspace clients/vue-admin run build"
+  }
+}

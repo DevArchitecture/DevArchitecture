@@ -24,6 +24,7 @@ declare var jQuery: any;
 
 @Component({
   selector: "app-user",
+  standalone: false,
   templateUrl: "./user.component.html",
   styleUrls: ["./user.component.scss"],
 })

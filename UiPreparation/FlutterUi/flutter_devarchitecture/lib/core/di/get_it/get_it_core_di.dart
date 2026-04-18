@@ -1,4 +1,5 @@
 import 'package:dart_amqp/dart_amqp.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_devarchitecture/core/widgets/tables/data_table/data_table_2.dart';
 import '../../key_value_storage/shared_pref/shared_preferences.dart';
 import '/core/utilities/file_share/i_share.dart';
@@ -35,7 +36,6 @@ import '../../widgets/animations/i_page_animation_asset.dart';
 import '../../widgets/animations/i_interaction_animation_asset.dart';
 import '../../widgets/animations/lottie/lottie_page_animation_asset.dart';
 import '../../widgets/map/google_map.dart';
-import '/core/utilities/internet_connection/internet_connection_checker.dart';
 import '../../utilities/device_information_management/device_info_plus.dart';
 import '../../utilities/device_information_management/i_device_information.dart';
 import '/core/utilities/message_broker/i_message_broker.dart';
@@ -49,6 +49,7 @@ import 'package:get_it/get_it.dart';
 import '../../utilities/internet_connection/i_internet_connection.dart';
 import '../../utilities/message_broker/rabbitmq_broker.dart';
 import '../../utilities/screen_message/ok_toast_screen_message.dart';
+import '../../utilities/internet_connection/internet_connection_factory.dart';
 import '../../http/http_dart.dart';
 import '../../http/http_interceptor.dart';
 import '../../http/i_http.dart';
@@ -235,8 +236,13 @@ class GetItCoreContainer implements ICoreContainer {
     }));
 
     checkIfUnRegistered<IInternetConnection>((() {
+      final internetConnectionService = createInternetConnection();
+      if (kDebugMode) {
+        debugPrint(
+            "InternetConnection implementation: ${internetConnectionService.runtimeType}");
+      }
       internetConnection = _getIt.registerSingleton<IInternetConnection>(
-          InternetConnectionWithChecker());
+          internetConnectionService);
     }));
 
     checkIfUnRegistered<IBatteryState>((() {

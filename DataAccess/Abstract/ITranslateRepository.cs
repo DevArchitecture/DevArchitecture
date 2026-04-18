@@ -10,6 +10,6 @@ namespace DataAccess.Abstract
     {
         Task<List<TranslateDto>> GetTranslateDto();
         Task<Dictionary<string, string>> GetTranslateWordList(string lang);
-        Task<string> GetTranslatesByLang(string langCode);
+        Task<Dictionary<string, string>> GetTranslatesByLang(string langCode);
     }
 }

@@ -1,0 +1,29 @@
+# Optional longer test pass (manual). DevArchitecture has no OpenAI-specific tests;
+# this runs the full test suite on demand (e.g. before a release).
+name: integration-tests
+
+on:
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: "10.0.x"
+
+jobs:
+  test:
+    name: Full test suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore DevArchitecture.sln
+
+      - name: Build
+        run: dotnet build DevArchitecture.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test DevArchitecture.sln --no-build -c Release --verbosity normal

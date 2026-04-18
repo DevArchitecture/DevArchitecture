@@ -1,0 +1,59 @@
+{
+  "apiVersion": "v1",
+  "basePath": "/api/v1",
+  "headers": {
+    "apiVersionHeader": "x-dev-arch-version",
+    "authorization": "Authorization"
+  },
+  "auth": {
+    "login": "/Auth/login",
+    "refreshToken": "/Auth/refresh-token",
+    "register": "/Auth/register",
+    "forgotPassword": "/Auth/forgot-password",
+    "changePassword": "/Auth/user-password"
+  },
+  "modules": [
+    {
+      "key": "dashboard",
+      "label": "Dashboard",
+      "route": "/dashboard",
+      "resourcePath": null
+    },
+    {
+      "key": "user",
+      "label": "Users",
+      "route": "/user",
+      "resourcePath": "/users"
+    },
+    {
+      "key": "group",
+      "label": "Groups",
+      "route": "/group",
+      "resourcePath": "/groups"
+    },
+    {
+      "key": "language",
+      "label": "Languages",
+      "route": "/language",
+      "resourcePath": "/languages"
+    },
+    {
+      "key": "translate",
+      "label": "Translates",
+      "route": "/translate",
+      "resourcePath": "/translates/dtos"
+    },
+    {
+      "key": "operationclaim",
+      "label": "Operation Claims",
+      "route": "/operationclaim",
+      "resourcePath": "/operation-claims"
+    },
+    {
+      "key": "log",
+      "label": "Logs",
+      "route": "/log",
+      "resourcePath": "/logs"
+    }
+  ]
+}

@@ -9,7 +9,7 @@ class ProdConfig implements AppConfig {
   ProdConfig._internal();
 
   @override
-  String get apiUrl => 'https://localhost:5001/api/v1'; // Set by backend url
+  String get apiUrl => 'https://localhost:5101/api/v1'; // Set by backend url
 
   @override
   String get name => 'prod';

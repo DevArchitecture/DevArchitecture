@@ -1,0 +1,27 @@
+@page "/dashboard"
+@inject AuthState AuthState
+@inject NavigationManager NavigationManager
+
+<PageTitle>@Translate("dashboard.pageTitle", "Dashboard")</PageTitle>
+
+@if (!AuthState.IsSessionReady)
+{
+    <RadzenText TextStyle="TextStyle.Body1">@Translate("common.loading", "Loading...")</RadzenText>
+}
+else if (!AuthState.IsAuthenticated)
+{
+    <RedirectToLogin />
+}
+else
+{
+    <RadzenCard>
+        <RadzenText TextStyle="TextStyle.H4">@Translate("dashboard.title", "Dashboard")</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body1">
+            @Translate("dashboard.description", "This Blazor client uses the shared WebAPI contract with Radzen components.")
+        </RadzenText>
+    </RadzenCard>
+}
+
+@code {
+    private string Translate(string key, string fallback) => AuthState.T(key, fallback);
+}

@@ -1,0 +1,39 @@
+# On each push to master, regenerate CHANGELOG.md from conventional commits (git-cliff).
+# Commits use [skip ci] so the changelog push does not re-trigger heavy CI.
+name: changelog
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate CHANGELOG (git-cliff)
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: -o CHANGELOG.md -v
+        env:
+          OUTPUT: CHANGELOG.md
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet CHANGELOG.md 2>/dev/null; then
+            echo "CHANGELOG.md unchanged, nothing to commit."
+          else
+            git add CHANGELOG.md
+            git commit -m "chore: update CHANGELOG [skip ci]"
+            git push
+          fi

@@ -44,9 +44,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("users/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetByUserId([FromRoute]int userId)
+        public async Task<IActionResult> GetByUserId([FromRoute] int id)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = userId }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUserGroupLookupQuery { UserId = id }));
         }
 
         /// <summary>

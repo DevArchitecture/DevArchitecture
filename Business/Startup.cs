@@ -130,7 +130,7 @@ namespace Business
                 services.AddTransient<IRecurringJobService, HangfireRecurringJobService>();
             }
 
-            services.AddAutoMapper(typeof(ConfigurationManager));
+            services.AddAutoMapper(_ => { }, typeof(ConfigurationManager).Assembly);
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(cfg =>
             {

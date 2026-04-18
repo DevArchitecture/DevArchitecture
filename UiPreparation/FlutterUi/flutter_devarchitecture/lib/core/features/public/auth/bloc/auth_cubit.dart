@@ -23,11 +23,6 @@ class AuthCubit extends BaseCubit<AuthRequestBasic> {
         emitFailState(result.message);
         return;
       }
-      if (appConfig.name == "dev") {
-        emit(const BlocSuccess('Hoşgeldiniz. Admin'));
-        return;
-      }
-
       Map<String, dynamic> decodedToken = JwtDecoder.decode(result.data!.token);
       await CoreInitializer().coreContainer.storage.save("lang", body.lang);
 

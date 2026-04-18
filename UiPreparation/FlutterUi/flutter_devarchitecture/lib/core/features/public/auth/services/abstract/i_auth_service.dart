@@ -11,7 +11,7 @@ abstract class IAuthService implements IService {
   Future<String> getUsername();
   Future<IResult> setClaims();
   Future<int> getCurrentUserId();
-  bool loggedIn();
+  Future<bool> loggedIn();
   Future<bool> claimGuard(
       {required BuildContext context, required String claim});
   Future<void> refreshToken();

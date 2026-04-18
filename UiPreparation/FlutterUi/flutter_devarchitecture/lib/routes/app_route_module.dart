@@ -123,6 +123,7 @@ class AppRouteModule extends Module {
     //*? LOGIN PAGE
     r.child(RoutesConstants.loginPage,
         child: (context) => LoginPage(), transition: transition);
+    r.child('/login', child: (context) => LoginPage(), transition: transition);
 
     //*? WILDCARD
     r.wildcard(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/public_messages.dart';
 import '../../constants/public_screen_texts.dart';
@@ -123,22 +124,36 @@ class LoginPage extends StatelessWidget {
                     flex: 1,
                     child: ElevatedButton(
                       onPressed: () async {
-                        BlocProvider.of<AuthCubit>(context).emitCheckingState();
                         if (!_form.currentState!.validate()) {
                           BlocProvider.of<AuthCubit>(context).emitFailState(
                               PublicMessages.formValidationErrorMessage);
                           return;
                         }
-                        await BlocProvider.of<AuthCubit>(context)
-                            .login(AuthRequestBasic(
+                        await _performLogin(
+                          context,
                           email: _emailController.text,
                           password: _passwordController.text,
                           lang: _languageController.text,
-                        ));
+                        );
                       },
                       child: Text(PublicScreenTexts.loginButton),
                     ),
                   ),
+                  if (kDebugMode)
+                    Expanded(
+                      flex: 1,
+                      child: TextButton(
+                        onPressed: () async {
+                          await _performLogin(
+                            context,
+                            email: "admin@adminmail.com",
+                            password: "Q1w212*_*",
+                            lang: "tr-TR",
+                          );
+                        },
+                        child: const Text("Dev Test Login"),
+                      ),
+                    ),
                   const Spacer(
                     flex: 2,
                   ),
@@ -147,5 +162,21 @@ class LoginPage extends StatelessWidget {
             ),
           );
         }));
+  }
+
+  Future<void> _performLogin(
+    BuildContext context, {
+    required String email,
+    required String password,
+    required String lang,
+  }) async {
+    BlocProvider.of<AuthCubit>(context).emitCheckingState();
+    await BlocProvider.of<AuthCubit>(context).login(
+      AuthRequestBasic(
+        email: email,
+        password: password,
+        lang: lang,
+      ),
+    );
   }
 }

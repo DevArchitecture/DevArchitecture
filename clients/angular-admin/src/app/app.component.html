@@ -1,0 +1,63 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="layout-shell" [class.auth-layout]="authService.isAuthenticated()" [class.sidebar-collapsed]="authService.isAuthenticated() && !sidebarOpen">
+  <header *ngIf="authService.isAuthenticated()" class="topbar">
+    <div class="topbar-left">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-bars"
+        severity="secondary"
+        [attr.title]="translate('action.menu', 'Menu')"
+        (click)="toggleSidebar()"
+      ></button>
+      <h1>DevArchitecture</h1>
+    </div>
+    <div class="topbar-right">
+      <label class="lang-select-wrap">
+        <span class="visually-hidden">{{ translate("action.language", "Language") }}</span>
+        <select
+          class="lang-select"
+          [(ngModel)]="selectedLang"
+          (ngModelChange)="onLangChange()"
+          [attr.aria-label]="translate('action.language', 'Language')"
+        >
+          <option *ngFor="let o of languageEntries" [value]="o.code">{{ o.flag }} {{ o.label }}</option>
+        </select>
+      </label>
+      <button
+        pButton
+        type="button"
+        severity="secondary"
+        [rounded]="true"
+        [icon]="darkMode ? 'pi pi-sun' : 'pi pi-moon'"
+        [attr.title]="translate('action.toggleTheme', 'Toggle theme')"
+        (click)="toggleDark()"
+      ></button>
+      <button
+        pButton
+        severity="secondary"
+        icon="pi pi-sign-out"
+        [attr.title]="translate('action.logout', 'Logout')"
+        (click)="logout()"
+      ></button>
+    </div>
+  </header>
+
+  <aside *ngIf="authService.isAuthenticated()" class="side-nav" [class.collapsed]="!sidebarOpen">
+    <div class="brand">Sakai</div>
+    <button
+      *ngFor="let item of modules"
+      class="nav-link"
+      [class.active]="isActive(item.route)"
+      (click)="navigate(item.route)"
+      [attr.title]="translate('menu.' + item.key, item.label)"
+    >
+      {{ translate('menu.' + item.key, item.label) }}
+    </button>
+  </aside>
+
+  <main class="content-area">
+    <router-outlet></router-outlet>
+  </main>
+</div>

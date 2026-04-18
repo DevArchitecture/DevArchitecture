@@ -102,6 +102,7 @@ namespace WebAPI
             services.AddTransient<PostgreSqlLogger>();
             services.AddTransient<MsSqlLogger>();
             services.AddScoped<IpControlAttribute>();
+            services.AddHealthChecks();
 
             base.ConfigureServices(services);
         }
@@ -138,7 +139,7 @@ namespace WebAPI
 
             app.ConfigureCustomExceptionMiddleware();
 
-            _ = app.UseDbOperationClaimCreator();
+            app.UseDbOperationClaimCreator().GetAwaiter().GetResult();
             
             if (!env.IsProduction())
             {
@@ -192,7 +193,11 @@ namespace WebAPI
                 });
             }
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/healthz");
+            });
         }
     }
 }

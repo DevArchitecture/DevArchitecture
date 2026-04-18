@@ -75,7 +75,7 @@ class ApiAuthService extends ApiService<AuthRequestBasic>
   Future<IResult> setClaims() async {
     var _token = await CoreInitializer().coreContainer.storage.read("token");
 
-    if (_token == null || loggedIn() == false) {
+    if (_token == null || !(await loggedIn())) {
       return FailureResult("Geçerli bir oturum bulunamadı.");
     }
 
@@ -97,10 +97,9 @@ class ApiAuthService extends ApiService<AuthRequestBasic>
   }
 
   @override
-  bool loggedIn() {
-    var _token =
-        CoreInitializer().coreContainer.storage.read("token") as String?;
-    return _token != null;
+  Future<bool> loggedIn() async {
+    var token = await CoreInitializer().coreContainer.storage.read("token");
+    return token != null && token.isNotEmpty;
   }
 
   @override
@@ -124,7 +123,7 @@ class ApiAuthService extends ApiService<AuthRequestBasic>
       var result = await CoreInitializer()
           .coreContainer
           .http
-          .post("$url/Auth/refresh-token", {"refreshToken": _refreshToken});
+          .post("$url/refresh-token", {"refreshToken": _refreshToken});
 
       if (result["success"] != null && result["success"] == false) {
         return;

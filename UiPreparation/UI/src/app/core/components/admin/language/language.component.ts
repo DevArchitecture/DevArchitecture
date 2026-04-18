@@ -13,6 +13,7 @@ declare var jQuery: any;
 
 @Component({
 	selector: 'app-language',
+	standalone: false,
 	templateUrl: './language.component.html',
 	styleUrls: ['./language.component.scss']
 })

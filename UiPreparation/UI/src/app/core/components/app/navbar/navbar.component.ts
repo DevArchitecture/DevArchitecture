@@ -7,6 +7,7 @@ import { SharedService } from 'app/core/services/shared.service';
 
 @Component({
 	selector: 'app-navbar',
+  standalone: false,
 	templateUrl: './navbar.component.html',
 	styleUrls: ['./navbar.component.css']
 })

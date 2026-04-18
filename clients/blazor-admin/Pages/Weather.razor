@@ -1,0 +1,60 @@
+﻿@page "/weather"
+@inject HttpClient Http
+@inject AuthState AuthState
+
+<PageTitle>@T("demo.weatherPageTitle", "Weather")</PageTitle>
+
+<h1>@T("demo.weatherHeading", "Weather")</h1>
+
+<p>@T("demo.weatherIntro", "This component demonstrates fetching sample data.")</p>
+
+@if (forecasts == null)
+{
+    <p><em>@T("common.loading", "Loading...")</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@T("demo.weatherColDate", "Date")</th>
+                <th aria-label="@T("demo.weatherColTempC", "Temperature in Celsius")">@T("demo.weatherColTempCShort", "Temp. (C)")</th>
+                <th aria-label="@T("demo.weatherColTempF", "Temperature in Fahrenheit")">@T("demo.weatherColTempFShort", "Temp. (F)")</th>
+                <th>@T("demo.weatherColSummary", "Summary")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+
+    private string T(string key, string fallback) => AuthState.T(key, fallback);
+
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string? Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}

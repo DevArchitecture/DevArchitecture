@@ -1,0 +1,93 @@
+﻿@inject NavigationManager NavigationManager
+@inject AuthState AuthState
+@inject ApiClient ApiClient
+@inject IAuthSessionStorage SessionStorage
+@implements IDisposable
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">@Translate("app.brand", "DevArchitecture")</a>
+    </div>
+</div>
+
+@if (AuthState.IsAuthenticated)
+{
+    <div class="px-3 pt-2 lang-picker" style="width:100%;">
+        <label class="form-label small text-white-50 mb-1" for="nav-lang-select">@Translate("action.language", "Language")</label>
+        <select id="nav-lang-select" class="form-select form-select-sm lang-select lang-select--dark" value="@AuthState.Lang" @onchange="OnLanguageChange" aria-label="@Translate("action.language", "Language")">
+            @foreach (var opt in _languageOptions)
+            {
+                <option value="@opt.Code">@opt.Flag @opt.Label</option>
+            }
+        </select>
+    </div>
+
+    <RadzenStack Orientation="Orientation.Vertical" Gap="0.35rem" Style="width:100%;padding:0.75rem;">
+        @foreach (var item in ClientModules.All)
+        {
+            <RadzenButton
+                Variant="Variant.Text"
+                Icon="chevron_right"
+                Text="@Translate($"menu.{item.Key}", item.Label)"
+                Click="@(() => Navigate(item.Route))"
+                Style="justify-content:flex-start;text-align:left;" />
+        }
+    </RadzenStack>
+
+    <RadzenButton Icon="logout" title="@Translate("action.logout", "Logout")" Text="@Translate("action.logout", "Logout")" ButtonStyle="ButtonStyle.Secondary" Click="@LogoutAsync" Style="margin:1rem;" />
+}
+
+@code {
+    private List<LanguageDisplay.LanguageOption> _languageOptions = LanguageDisplay.ToLanguageOptions(["tr-TR"]);
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthState.Changed += OnAuthChanged;
+        try
+        {
+            var list = (await ApiClient.GetLanguageCodesAsync()).ToList();
+            _languageOptions = list.Count > 0
+                ? LanguageDisplay.ToLanguageOptions(list)
+                : LanguageDisplay.ToLanguageOptions(["tr-TR"]);
+        }
+        catch
+        {
+            _languageOptions = LanguageDisplay.ToLanguageOptions(["tr-TR"]);
+        }
+    }
+
+    private async Task OnLanguageChange(ChangeEventArgs e)
+    {
+        var lang = e.Value?.ToString()?.Trim();
+        if (string.IsNullOrEmpty(lang) || string.Equals(lang, AuthState.Lang, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        await ApiClient.SwitchUiLanguageAsync(lang);
+    }
+
+    private void OnAuthChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LogoutAsync()
+    {
+        await SessionStorage.ClearAsync();
+        AuthState.Logout();
+        NavigationManager.NavigateTo("/login");
+    }
+
+    private void Navigate(string route)
+    {
+        NavigationManager.NavigateTo(route);
+    }
+
+    private string Translate(string key, string fallback) => AuthState.T(key, fallback);
+
+    public void Dispose()
+    {
+        AuthState.Changed -= OnAuthChanged;
+    }
+}

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../routes/routes_constants.dart';
-import '../configs/app_config.dart';
 import '../di/core_initializer.dart';
 
 class ModularAuthGuard extends RouteGuard {
@@ -11,15 +10,12 @@ class ModularAuthGuard extends RouteGuard {
 
   @override
   Future<bool> canActivate(String path, ModularRoute router) {
-    return (Modular.get<AuthStore>().isLogged);
+    return Modular.get<AuthStore>().isLogged;
   }
 }
 
 class AuthStore {
   Future<bool> get isLogged async {
-    if (appConfig.name == "dev") {
-      return true;
-    }
     bool isLogged =
         await CoreInitializer().coreContainer.storage.containsKey("token");
     if (await CoreInitializer()

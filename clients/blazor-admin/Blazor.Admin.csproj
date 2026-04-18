@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <!-- Local HTTPS: if standalone DevServer 404s on /_framework/*.wasm, run ../blazor-admin-server instead (ASP.NET Core + UseBlazorFrameworkFiles). -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Align with official blazorwasm template: import map + fingerprinted _framework assets (avoids wasm 404 / stale hashes). -->
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+    <!-- Avoid dotnet watch + fingerprint mismatch on blazor.webassembly.js (SDK convention). -->
+    <BlazorFingerprintBlazorJs Condition="'$(DOTNET_WATCH)' == '1'">false</BlazorFingerprintBlazorJs>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+    <PackageReference Include="Radzen.Blazor" />
+  </ItemGroup>
+
+</Project>

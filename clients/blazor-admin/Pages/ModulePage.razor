@@ -1,0 +1,1077 @@
+@page "/user"
+@page "/group"
+@page "/language"
+@page "/translate"
+@page "/operationclaim"
+@page "/log"
+@inject AuthState AuthState
+@inject ApiClient ApiClient
+@inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+@implements IDisposable
+@using System.Text.Json
+@using Radzen
+
+<PageTitle>@Translate($"menu.{CurrentModule.Key}", CurrentModule.Label)</PageTitle>
+
+@if (!AuthState.IsSessionReady)
+{
+    <RadzenText TextStyle="TextStyle.Body1">@Translate("common.loading", "Loading...")</RadzenText>
+}
+else if (!AuthState.IsAuthenticated)
+{
+    <RedirectToLogin />
+}
+else
+{
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+            <RadzenText TextStyle="TextStyle.H5">@Translate($"menu.{CurrentModule.Key}", CurrentModule.Label)</RadzenText>
+            <RadzenBadge Text="@(CurrentModule.Endpoint ?? Translate("module.noEndpoint", "No API endpoint"))" BadgeStyle="BadgeStyle.Info" />
+            @if (!string.IsNullOrWhiteSpace(formError))
+            {
+                <RadzenText TextStyle="TextStyle.Body2" Style="color:#c62828">@formError</RadzenText>
+            }
+        </RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" Style="margin-top:1rem;flex-wrap:wrap;">
+            <RadzenButton Icon="refresh" title="@Translate("action.refresh", "Refresh")" ButtonStyle="ButtonStyle.Light" Click="@(() => Refresh(true))" />
+            <RadzenButton Icon="add" title="@Translate("action.create", "Create")" ButtonStyle="ButtonStyle.Success" Disabled="@(!CanCreateAction())" Click="@OpenCreateDialog" />
+            <RadzenButton Icon="edit" title="@Translate("action.edit", "Edit")" ButtonStyle="ButtonStyle.Warning" Disabled="@(SelectedId() <= 0 || !CanUpdateAction())" Click="@OpenEditDialog" />
+            <RadzenButton Icon="delete" title="@Translate("action.delete", "Delete")" ButtonStyle="ButtonStyle.Danger" Disabled="@(SelectedId() <= 0 || !CanDeleteAction())" Click="@DeleteSelected" />
+
+            @if (CurrentModule.Key == "user" && AuthState.HasClaim("UpdateUserClaimCommand"))
+            {
+                <RadzenButton Icon="security" title="@Translate("action.userClaims", "User Claims")" Disabled="@(SelectedId() <= 0)" Click="@(() => OpenRelationDialog("userClaims"))" />
+            }
+            @if (CurrentModule.Key == "user" && AuthState.HasClaim("UpdateGroupClaimCommand"))
+            {
+                <RadzenButton Icon="groups" title="@Translate("action.userGroups", "User Groups")" Disabled="@(SelectedId() <= 0)" Click="@(() => OpenRelationDialog("userGroups"))" />
+            }
+            @if (CurrentModule.Key == "user" && AuthState.HasClaim("UserChangePasswordCommand"))
+            {
+                <RadzenButton Icon="vpn_key" title="@Translate("action.changePassword", "Change Password")" Disabled="@(SelectedId() <= 0)" Click="@(() => OpenRelationDialog("password"))" />
+            }
+            @if (CurrentModule.Key == "group" && AuthState.HasClaim("UpdateGroupClaimCommand"))
+            {
+                <RadzenButton Icon="security" title="@Translate("action.groupClaims", "Group Claims")" Disabled="@(SelectedId() <= 0)" Click="@(() => OpenRelationDialog("groupClaims"))" />
+            }
+            @if (CurrentModule.Key == "group" && AuthState.HasClaim("UpdateUserGroupByGroupIdCommand"))
+            {
+                <RadzenButton Icon="groups" title="@Translate("action.groupUsers", "Group Users")" Disabled="@(SelectedId() <= 0)" Click="@(() => OpenRelationDialog("groupUsers"))" />
+            }
+        </RadzenStack>
+
+        <RadzenDataGrid
+            @key="activeModuleKey"
+            Data="@rows"
+            TItem="Dictionary<string, object?>"
+            RowSelect="@OnRowSelect"
+            Style="margin-top:1rem;"
+            AllowPaging="true"
+            AllowSorting="true"
+            AllowFiltering="true"
+            FilterMode="FilterMode.Advanced"
+            PageSize="10"
+            PageSizeOptions="@(new int[] { 10, 25, 50 })"
+            ShowPagingSummary="true"
+            PagingSummaryFormat="Page {0} of {1} ({2} items)">
+            <Columns>
+                @foreach (var column in Descriptor.Columns)
+                {
+                    <RadzenDataGridColumn TItem="Dictionary<string, object?>" Title="@column" Property="@GetGridProperty(column)">
+                        <Template Context="row">@DisplayValue(row, column)</Template>
+                    </RadzenDataGridColumn>
+                }
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+}
+
+@if (showFormDialog)
+{
+    <div class="modal-backdrop">
+        <div class="modal-panel">
+            <h3>@(formMode == "create" ? Translate("form.createRecord", "Create Record") : Translate("form.editRecord", "Edit Record"))</h3>
+            @if (CurrentModule.Key == "user")
+            {
+                <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+                    <RadzenTextBox Placeholder="@Translate("field.fullName", "Full Name")" @bind-Value="userFormFullName" />
+                    <RadzenTextBox Placeholder="@Translate("field.email", "Email")" @bind-Value="userFormEmail" />
+                    <RadzenTextBox Placeholder="@Translate("field.phone", "Phone")" @bind-Value="userFormPhone" />
+                    <RadzenTextBox Placeholder="@Translate("field.address", "Address")" @bind-Value="userFormAddress" />
+                    <RadzenTextArea Placeholder="@Translate("field.notes", "Notes")" Rows="4" @bind-Value="userFormNotes" Style="width:100%;" />
+                    <div style="display:flex;align-items:center;gap:0.5rem;">
+                        <RadzenCheckBox @bind-Value="userFormStatus" TValue="bool" />
+                        <span>@Translate("field.status", "Status")</span>
+                    </div>
+                </RadzenStack>
+            }
+            @if (CurrentModule.Key == "group")
+            {
+                <RadzenTextBox Placeholder="@Translate("field.groupName", "Group Name")" @bind-Value="groupName" Style="width:100%;" />
+            }
+            @if (CurrentModule.Key == "language")
+            {
+                <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+                    <RadzenTextBox Placeholder="@Translate("field.name", "Name")" @bind-Value="languageName" />
+                    <RadzenTextBox Placeholder="@Translate("field.code", "Code")" @bind-Value="languageCode" />
+                </RadzenStack>
+            }
+            @if (CurrentModule.Key == "translate")
+            {
+                <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+                    <RadzenDropDown TValue="int"
+                                    Data="@languageFormLookupOptions"
+                                    TextProperty="Label"
+                                    ValueProperty="Value"
+                                    @bind-Value="translateLangId"
+                                    Placeholder="@Translate("field.language", "Language")"
+                                    AllowClear="true"
+                                    Style="width:100%;" />
+                    <RadzenTextBox Placeholder="@Translate("field.code", "Code")" @bind-Value="translateCode" />
+                    <RadzenTextArea Placeholder="@Translate("field.value", "Value")" Rows="4" @bind-Value="translateValue" Style="width:100%;" />
+                </RadzenStack>
+            }
+            @if (CurrentModule.Key == "operationclaim")
+            {
+                <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+                    <RadzenTextBox Placeholder="@Translate("field.name", "Name")" @bind-Value="operationClaimName" />
+                    <RadzenTextBox Placeholder="@Translate("field.alias", "Alias")" @bind-Value="operationClaimAlias" />
+                    <RadzenTextArea Placeholder="@Translate("field.description", "Description")" Rows="4" @bind-Value="operationClaimDescription" Style="width:100%;" />
+                </RadzenStack>
+            }
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" Style="margin-top:1rem;justify-content:flex-end;">
+                <RadzenButton Icon="close" title="@Translate("action.cancel", "Cancel")" ButtonStyle="ButtonStyle.Secondary" Click="@(() => showFormDialog = false)" />
+                <RadzenButton Icon="save" title="@Translate("action.save", "Save")" Click="@SaveFormDialog" />
+            </RadzenStack>
+        </div>
+    </div>
+}
+
+@if (showRelationDialog)
+{
+    <div class="modal-backdrop">
+        <div class="modal-panel">
+            <h3>@Translate("relation.title", "Relation")</h3>
+            <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+                <RadzenTextBox Value="@SelectedId().ToString()" Disabled="true" />
+                @if (relationDialogType != "password")
+                {
+                    <RadzenTextBox
+                        Placeholder="@Translate("action.filterTable", "Filter list...")"
+                        @bind-Value="relationLookupFilter"
+                        Style="width:100%;"
+                        aria-label="@Translate("action.filterTable", "Filter list...")" />
+                    <div class="relation-checkbox-scroll">
+                        <RadzenCheckBoxList
+                            TValue="int"
+                            Data="@FilteredRelationLookupOptions"
+                            TextProperty="Label"
+                            ValueProperty="Value"
+                            @bind-Value="relationSelectedIds"
+                            AllowSelectAll="true"
+                            SelectAllText="@Translate("relation.selectAllVisible", "Select all (visible)")"
+                            Orientation="Orientation.Vertical"
+                            Style="width:100%;" />
+                    </div>
+                }
+                @if (relationDialogType == "password")
+                {
+                    <RadzenPassword Placeholder="@Translate("field.password", "Password")" @bind-Value="passwordValue" />
+                    <RadzenPassword Placeholder="@Translate("field.confirmPassword", "Confirm Password")" @bind-Value="confirmPasswordValue" />
+                }
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" Style="margin-top:1rem;justify-content:flex-end;">
+                @if (relationDialogType != "password")
+                {
+                    <RadzenButton Icon="download" title="@Translate("action.load", "Load")" ButtonStyle="ButtonStyle.Secondary" Click="@LoadRelationData" />
+                }
+                <RadzenButton Icon="close" title="@Translate("action.cancel", "Cancel")" ButtonStyle="ButtonStyle.Secondary" Click="@(() => showRelationDialog = false)" />
+                <RadzenButton Icon="save" title="@Translate("action.save", "Save")" Click="@SaveRelationDialog" />
+            </RadzenStack>
+        </div>
+    </div>
+}
+
+@code {
+    private IReadOnlyList<Dictionary<string, object?>> rows = [];
+    private Dictionary<string, object?>? selectedRow;
+    private IEnumerable<int> relationSelectedIds = new List<int>();
+    private List<LookupOption> relationLookupOptions = [];
+    private List<LookupOption> languageFormLookupOptions = [];
+    private readonly Dictionary<int, string> langIdDisplay = [];
+    private string relationLookupFilter = string.Empty;
+
+    private IEnumerable<LookupOption> FilteredRelationLookupOptions =>
+        string.IsNullOrWhiteSpace(relationLookupFilter)
+            ? relationLookupOptions
+            : relationLookupOptions
+                .Where(o => o.Label.Contains(relationLookupFilter.Trim(), StringComparison.OrdinalIgnoreCase))
+                .ToList();
+    private string passwordValue = string.Empty;
+    private string confirmPasswordValue = string.Empty;
+    private string relationDialogType = "userClaims";
+    private string formError = string.Empty;
+    private bool showFormDialog;
+    private bool showRelationDialog;
+    private string formMode = "create";
+    private int editEntityId;
+    private string userFormFullName = string.Empty;
+    private string userFormEmail = string.Empty;
+    private string userFormPhone = string.Empty;
+    private string userFormAddress = string.Empty;
+    private string userFormNotes = string.Empty;
+    private bool userFormStatus = true;
+    private string groupName = string.Empty;
+    private string languageName = string.Empty;
+    private string languageCode = string.Empty;
+    private int translateLangId;
+    private string translateCode = string.Empty;
+    private string translateValue = string.Empty;
+    private string operationClaimName = string.Empty;
+    private string operationClaimAlias = string.Empty;
+    private string operationClaimDescription = string.Empty;
+    private string? activeModuleKey;
+    private ModuleDescriptor Descriptor => GetDescriptor(CurrentModule.Key);
+
+    private ClientModule CurrentModule =>
+        ClientModules.All.FirstOrDefault(x =>
+            string.Equals(NormalizeRoute(x.Route), NormalizeRoute(CurrentRoute), StringComparison.OrdinalIgnoreCase))
+        ?? ClientModules.All[1];
+
+    private string CurrentRoute
+    {
+        get
+        {
+            var relative = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+            var pathOnly = relative.Split('?', '#')[0];
+            var trimmed = pathOnly.Trim('/');
+            return string.IsNullOrWhiteSpace(trimmed) ? "/" : $"/{trimmed}";
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+        activeModuleKey = CurrentModule.Key;
+        if (AuthState.IsSessionReady && AuthState.IsAuthenticated)
+        {
+            await Refresh(false);
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.Equals(activeModuleKey, CurrentModule.Key, StringComparison.OrdinalIgnoreCase))
+        {
+            activeModuleKey = CurrentModule.Key;
+            formError = string.Empty;
+            showFormDialog = false;
+            showRelationDialog = false;
+            selectedRow = null;
+            if (AuthState.IsSessionReady && AuthState.IsAuthenticated)
+            {
+                await Refresh(false);
+            }
+        }
+    }
+
+    private async void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs args)
+    {
+        var moduleKey = CurrentModule.Key;
+        if (string.Equals(activeModuleKey, moduleKey, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        activeModuleKey = moduleKey;
+        formError = string.Empty;
+        showFormDialog = false;
+        showRelationDialog = false;
+        selectedRow = null;
+        if (AuthState.IsSessionReady && AuthState.IsAuthenticated)
+        {
+            await Refresh(false);
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private static string NormalizeRoute(string route)
+    {
+        if (string.IsNullOrWhiteSpace(route))
+        {
+            return "/";
+        }
+
+        var value = route.Split('?', '#')[0].Trim();
+        if (!value.StartsWith('/'))
+        {
+            value = $"/{value}";
+        }
+
+        if (value.Length > 1)
+        {
+            value = value.TrimEnd('/');
+        }
+
+        return value;
+    }
+
+    private static string GetGridProperty(string column)
+    {
+        return $"[\"{column}\"]";
+    }
+
+    private async Task Refresh(bool showMessage = true)
+    {
+        if (CurrentModule.Endpoint is null)
+        {
+            rows = [];
+            return;
+        }
+
+        if (string.Equals(CurrentModule.Key, "translate", StringComparison.OrdinalIgnoreCase))
+        {
+            await LoadLanguageLookupOptionsAsync();
+        }
+
+        rows = await ApiClient.GetListAsync(CurrentModule.Endpoint);
+        selectedRow = null;
+        if (showMessage)
+        {
+            NotifyInfo(Translate("notify.listRefreshed", "List refreshed"));
+        }
+    }
+
+    private bool CanClaim(string? claim) => !string.IsNullOrWhiteSpace(claim) && AuthState.HasClaim(claim);
+
+    private bool CanCreateAction() => CanClaim(Descriptor.CreateClaim);
+
+    private bool CanUpdateAction() => CanClaim(Descriptor.UpdateClaim);
+
+    private bool CanDeleteAction() => CanClaim(Descriptor.DeleteClaim);
+
+    private int SelectedId()
+    {
+        if (selectedRow is null)
+        {
+            return 0;
+        }
+        return GetIntValue(selectedRow, Descriptor.IdKey);
+    }
+
+    private void OnRowSelect(Dictionary<string, object?> row)
+    {
+        selectedRow = row;
+    }
+
+    private async Task OpenCreateDialog()
+    {
+        if (!CanCreateAction())
+        {
+            return;
+        }
+
+        formMode = "create";
+        editEntityId = 0;
+        formError = string.Empty;
+        ResetModuleForm();
+        if (string.Equals(CurrentModule.Key, "translate", StringComparison.OrdinalIgnoreCase))
+        {
+            await LoadLanguageLookupOptionsAsync();
+        }
+        showFormDialog = true;
+    }
+
+    private async Task OpenEditDialog()
+    {
+        if (selectedRow is null || !CanUpdateAction())
+        {
+            return;
+        }
+
+        formMode = "edit";
+        formError = string.Empty;
+        editEntityId = SelectedId();
+        if (string.Equals(CurrentModule.Key, "translate", StringComparison.OrdinalIgnoreCase))
+        {
+            await LoadLanguageLookupOptionsAsync();
+        }
+        LoadFormFromSelected();
+        showFormDialog = true;
+    }
+
+    private async Task SaveFormDialog()
+    {
+        if (CurrentModule.Endpoint is null)
+        {
+            return;
+        }
+
+        var payload = BuildFormPayload();
+        if (payload is null)
+        {
+            return;
+        }
+
+        var success = formMode == "create"
+            ? await ApiClient.CreateAsync(CurrentModule.Endpoint, payload)
+            : await ApiClient.UpdateAsync(CurrentModule.Endpoint, payload);
+        if (!success)
+        {
+            NotifyError(Translate("notify.saveFailed", "Save failed"));
+            return;
+        }
+
+        showFormDialog = false;
+        NotifySuccess(formMode == "create"
+            ? Translate("notify.created", "Created successfully")
+            : Translate("notify.updated", "Updated successfully"));
+        if (formMode == "edit")
+        {
+            UpsertRow(editEntityId, payload);
+            return;
+        }
+        await Refresh(false);
+    }
+
+    private async Task DeleteSelected()
+    {
+        if (CurrentModule.Endpoint is null || SelectedId() <= 0 || !CanDeleteAction())
+        {
+            return;
+        }
+
+        var confirmed = await DialogService.Confirm(
+            Translate("dialog.deleteConfirm", "Are you sure you want to delete this record?"),
+            Translate("dialog.confirmDelete", "Confirm delete"));
+        if (confirmed != true)
+        {
+            return;
+        }
+
+        var success = await ApiClient.DeleteAsync(CurrentModule.Endpoint, SelectedId().ToString());
+        if (!success)
+        {
+            NotifyError(Translate("notify.deleteFailed", "Delete failed"));
+            return;
+        }
+
+        NotifySuccess(Translate("notify.deleted", "Deleted successfully"));
+        RemoveRow(SelectedId());
+    }
+
+    private void OpenRelationDialog(string type)
+    {
+        if (SelectedId() <= 0)
+        {
+            return;
+        }
+        relationDialogType = type;
+        relationSelectedIds = new List<int>();
+        relationLookupOptions = [];
+        relationLookupFilter = string.Empty;
+        passwordValue = string.Empty;
+        confirmPasswordValue = string.Empty;
+        showRelationDialog = true;
+        if (type != "password")
+        {
+            _ = LoadRelationLookupOptions(type);
+        }
+    }
+
+    private async Task LoadRelationData()
+    {
+        if (SelectedId() <= 0 || relationDialogType == "password")
+        {
+            return;
+        }
+
+        await LoadRelationCurrentSelectionAsync(relationDialogType);
+        NotifyInfo(Translate("notify.selectionLoaded", "Selection loaded"));
+    }
+
+    private async Task SaveRelationDialog()
+    {
+        var id = SelectedId();
+        if (id <= 0)
+        {
+            return;
+        }
+
+        if (relationDialogType == "password")
+        {
+            if (string.IsNullOrWhiteSpace(passwordValue) || string.IsNullOrWhiteSpace(confirmPasswordValue))
+            {
+                NotifyWarn(Translate("notify.passwordRequired", "Password fields are required"));
+                return;
+            }
+
+            var passwordPayload = System.Text.Json.JsonSerializer.Serialize(new
+            {
+                userId = id,
+                password = passwordValue,
+                confirmPassword = confirmPasswordValue
+            });
+
+            var passwordSuccess = await ApiClient.UpdateAsync("/Auth/user-password", passwordPayload);
+            if (!passwordSuccess)
+            {
+                NotifyError(Translate("notify.operationFailed", "Operation failed"));
+                return;
+            }
+            showRelationDialog = false;
+            NotifySuccess(Translate("notify.operationCompleted", "Operation completed"));
+            await Refresh(false);
+            await Task.Delay(450);
+            await Refresh(false);
+            return;
+        }
+
+        var ids = relationSelectedIds.ToArray();
+        if (ids.Length == 0)
+        {
+            NotifyWarn(Translate("notify.selectAtLeastOne", "Select at least one item"));
+            return;
+        }
+        var commandPath = relationDialogType switch
+        {
+            "userClaims" => "/user-claims",
+            "userGroups" => "/user-groups",
+            "groupClaims" => "/group-claims",
+            "groupUsers" => "/user-groups/groups",
+            _ => string.Empty
+        };
+
+        if (string.IsNullOrWhiteSpace(commandPath))
+        {
+            return;
+        }
+
+        var commandPayload = relationDialogType switch
+        {
+            "userClaims" => System.Text.Json.JsonSerializer.Serialize(new { UserId = id, ClaimIds = ids }),
+            "userGroups" => System.Text.Json.JsonSerializer.Serialize(new { UserId = id, GroupId = ids }),
+            "groupClaims" => System.Text.Json.JsonSerializer.Serialize(new { GroupId = id, ClaimIds = ids }),
+            "groupUsers" => System.Text.Json.JsonSerializer.Serialize(new { GroupId = id, UserIds = ids }),
+            _ => "{}"
+        };
+
+        var success = await ApiClient.UpdateAsync(commandPath, commandPayload);
+        if (!success)
+        {
+            NotifyError(Translate("notify.operationFailed", "Operation failed"));
+            return;
+        }
+        showRelationDialog = false;
+        NotifySuccess(Translate("notify.operationCompleted", "Operation completed"));
+        await Refresh(false);
+        await Task.Delay(450);
+        await Refresh(false);
+    }
+
+    private async Task LoadRelationLookupOptions(string type)
+    {
+        var endpoint = type switch
+        {
+            "userClaims" => "/operation-claims",
+            "userGroups" => "/groups",
+            "groupClaims" => "/operation-claims",
+            "groupUsers" => "/users",
+            _ => string.Empty
+        };
+
+        if (string.IsNullOrWhiteSpace(endpoint))
+        {
+            relationLookupOptions = [];
+            return;
+        }
+
+        var list = await ApiClient.GetListAsync(endpoint);
+        relationLookupOptions = list
+            .Select(row => ToLookupOption(type, row))
+            .Where(option => option is not null)
+            .Cast<LookupOption>()
+            .ToList();
+        await LoadRelationCurrentSelectionAsync(type);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LoadRelationCurrentSelectionAsync(string type)
+    {
+        var id = SelectedId();
+        if (id <= 0 || type == "password")
+        {
+            return;
+        }
+
+        var path = type switch
+        {
+            "userClaims" => $"/user-claims/users/{id}",
+            "userGroups" => $"/user-groups/users/{id}/groups",
+            "groupClaims" => $"/group-claims/groups/{id}",
+            "groupUsers" => $"/user-groups/groups/{id}/users",
+            _ => string.Empty
+        };
+
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            relationSelectedIds = new List<int>();
+            return;
+        }
+
+        var list = await ApiClient.GetListAsync(path);
+        relationSelectedIds = new List<int>(ExtractRelationSelectedIds(type, list));
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private static List<int> ExtractRelationSelectedIds(string type, IReadOnlyList<Dictionary<string, object?>> relationRows)
+    {
+        static int GetInt(Dictionary<string, object?> row, params string[] keys)
+        {
+            foreach (var key in keys)
+            {
+                if (!row.TryGetValue(key, out var raw) || raw is null)
+                {
+                    continue;
+                }
+
+                switch (raw)
+                {
+                    case int i when i > 0:
+                        return i;
+                    case long l when l is > 0 and <= int.MaxValue:
+                        return (int)l;
+                    case JsonElement je:
+                        if (je.ValueKind == JsonValueKind.Number && je.TryGetInt32(out var n) && n > 0)
+                        {
+                            return n;
+                        }
+                        if (je.ValueKind == JsonValueKind.String && int.TryParse(je.GetString(), out var p) && p > 0)
+                        {
+                            return p;
+                        }
+                        break;
+                    default:
+                        if (int.TryParse(raw.ToString(), out var x) && x > 0)
+                        {
+                            return x;
+                        }
+                        break;
+                }
+            }
+            return 0;
+        }
+
+        var set = new HashSet<int>();
+        foreach (var row in relationRows)
+        {
+            var rid = type switch
+            {
+                "userClaims" or "groupClaims" => GetInt(row, "id", "Id", "operationClaimId", "claimId"),
+                "userGroups" => GetInt(row, "id", "Id", "groupId"),
+                "groupUsers" => GetInt(row, "userId", "id", "Id"),
+                _ => 0
+            };
+            if (rid > 0)
+            {
+                set.Add(rid);
+            }
+        }
+        return set.OrderBy(x => x).ToList();
+    }
+
+    private static LookupOption? ToLookupOption(string type, Dictionary<string, object?> row)
+    {
+        static int GetId(Dictionary<string, object?> source, params string[] keys)
+        {
+            foreach (var key in keys)
+            {
+                if (!source.TryGetValue(key, out var raw) || raw is null)
+                {
+                    continue;
+                }
+                if (int.TryParse(raw.ToString(), out var id) && id > 0)
+                {
+                    return id;
+                }
+            }
+            return 0;
+        }
+
+        static string GetText(Dictionary<string, object?> source, params string[] keys)
+        {
+            foreach (var key in keys)
+            {
+                if (!source.TryGetValue(key, out var raw) || raw is null)
+                {
+                    continue;
+                }
+
+                var value = raw.ToString();
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    return value;
+                }
+            }
+            return string.Empty;
+        }
+
+        var id = type switch
+        {
+            "groupUsers" => GetId(row, "userId", "id"),
+            "userClaims" or "groupClaims" => GetId(row, "id", "operationClaimId"),
+            _ => GetId(row, "id", "groupId")
+        };
+        if (id <= 0)
+        {
+            return null;
+        }
+
+        var label = type switch
+        {
+            "groupUsers" => GetText(row, "fullName", "email", "userName"),
+            "userClaims" or "groupClaims" => GetText(row, "name", "alias"),
+            _ => GetText(row, "groupName", "name")
+        };
+
+        return new LookupOption(id, string.IsNullOrWhiteSpace(label) ? $"#{id}" : $"{label} (#{id})");
+    }
+
+    private void ResetModuleForm()
+    {
+        userFormFullName = string.Empty;
+        userFormEmail = string.Empty;
+        userFormPhone = string.Empty;
+        userFormAddress = string.Empty;
+        userFormNotes = string.Empty;
+        userFormStatus = true;
+        groupName = string.Empty;
+        languageName = string.Empty;
+        languageCode = string.Empty;
+        translateLangId = 0;
+        translateCode = string.Empty;
+        translateValue = string.Empty;
+        operationClaimName = string.Empty;
+        operationClaimAlias = string.Empty;
+        operationClaimDescription = string.Empty;
+    }
+
+    private void LoadFormFromSelected()
+    {
+        if (selectedRow is null)
+        {
+            return;
+        }
+
+        switch (CurrentModule.Key)
+        {
+            case "user":
+                userFormFullName = GetStringValue(selectedRow, "fullName");
+                userFormEmail = GetStringValue(selectedRow, "email");
+                userFormPhone = GetStringValue(selectedRow, "mobilePhones");
+                userFormAddress = GetStringValue(selectedRow, "address");
+                userFormNotes = GetStringValue(selectedRow, "notes");
+                userFormStatus = GetBoolValue(selectedRow, "status");
+                break;
+            case "group":
+                groupName = GetStringValue(selectedRow, "groupName");
+                break;
+            case "language":
+                languageName = GetStringValue(selectedRow, "name");
+                languageCode = GetStringValue(selectedRow, "code");
+                break;
+            case "translate":
+                translateLangId = GetIntValue(selectedRow, "langId");
+                translateCode = GetStringValue(selectedRow, "code");
+                translateValue = GetStringValue(selectedRow, "value");
+                break;
+            case "operationclaim":
+                operationClaimName = GetStringValue(selectedRow, "name");
+                operationClaimAlias = GetStringValue(selectedRow, "alias");
+                operationClaimDescription = GetStringValue(selectedRow, "description");
+                break;
+        }
+    }
+
+    private string? BuildFormPayload()
+    {
+        formError = string.Empty;
+
+        switch (CurrentModule.Key)
+        {
+            case "user":
+                if (string.IsNullOrWhiteSpace(userFormFullName) || string.IsNullOrWhiteSpace(userFormEmail))
+                {
+                    formError = Translate("validation.userRequired", "Missing required fields: full name, email");
+                    NotifyWarn(formError);
+                    return null;
+                }
+                return System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    userId = formMode == "edit" ? editEntityId : 0,
+                    fullName = userFormFullName,
+                    email = userFormEmail,
+                    mobilePhones = userFormPhone,
+                    address = userFormAddress,
+                    notes = userFormNotes,
+                    status = userFormStatus
+                });
+            case "group":
+                if (string.IsNullOrWhiteSpace(groupName))
+                {
+                    formError = Translate("validation.groupNameRequired", "Missing required field: group name");
+                    NotifyWarn(formError);
+                    return null;
+                }
+                return System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    id = formMode == "edit" ? editEntityId : 0,
+                    groupName
+                });
+            case "language":
+                if (string.IsNullOrWhiteSpace(languageName) || string.IsNullOrWhiteSpace(languageCode))
+                {
+                    formError = Translate("validation.languageNameCodeRequired", "Missing required fields: name, code");
+                    NotifyWarn(formError);
+                    return null;
+                }
+                return System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    id = formMode == "edit" ? editEntityId : 0,
+                    name = languageName,
+                    code = languageCode
+                });
+            case "translate":
+                if (translateLangId <= 0 || string.IsNullOrWhiteSpace(translateCode) || string.IsNullOrWhiteSpace(translateValue))
+                {
+                    formError = Translate("validation.translateFieldsRequired", "Missing required fields: language, code, value");
+                    NotifyWarn(formError);
+                    return null;
+                }
+                return System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    id = formMode == "edit" ? editEntityId : 0,
+                    langId = translateLangId,
+                    code = translateCode,
+                    value = translateValue
+                });
+            case "operationclaim":
+                return System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    id = formMode == "edit" ? editEntityId : 0,
+                    name = operationClaimName,
+                    alias = operationClaimAlias,
+                    description = operationClaimDescription
+                });
+            default:
+                NotifyWarn(Translate("notify.noFormSupport", "This module does not support form operations"));
+                return null;
+        }
+    }
+
+    private string DisplayValue(Dictionary<string, object?> row, string key)
+    {
+        if (string.Equals(CurrentModule.Key, "translate", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(key, "langId", StringComparison.OrdinalIgnoreCase))
+        {
+            var lid = GetIntValue(row, "langId");
+            if (lid > 0 && langIdDisplay.TryGetValue(lid, out var lab))
+            {
+                return lab;
+            }
+        }
+
+        if (!row.TryGetValue(key, out var value) || value is null)
+        {
+            return string.Empty;
+        }
+        return value.ToString() ?? string.Empty;
+    }
+
+    private async Task LoadLanguageLookupOptionsAsync()
+    {
+        languageFormLookupOptions = [];
+        langIdDisplay.Clear();
+        var list = await ApiClient.GetListAsync("/languages");
+        foreach (var row in list)
+        {
+            var id = GetIntValue(row, "id");
+            if (id <= 0)
+            {
+                id = GetIntValue(row, "Id");
+            }
+            if (id <= 0)
+            {
+                continue;
+            }
+
+            var name = GetStringValue(row, "name");
+            if (string.IsNullOrEmpty(name))
+            {
+                name = GetStringValue(row, "Name");
+            }
+            var code = GetStringValue(row, "code");
+            if (string.IsNullOrEmpty(code))
+            {
+                code = GetStringValue(row, "Code");
+            }
+            var label = !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(code)
+                ? $"{name} ({code})"
+                : !string.IsNullOrEmpty(name) ? name : !string.IsNullOrEmpty(code) ? code : $"#{id}";
+            languageFormLookupOptions.Add(new LookupOption(id, label));
+            langIdDisplay[id] = label;
+        }
+    }
+
+    private static string GetStringValue(Dictionary<string, object?> row, string key)
+    {
+        if (!row.TryGetValue(key, out var value) || value is null) return string.Empty;
+        return value.ToString() ?? string.Empty;
+    }
+
+    private static int GetIntValue(Dictionary<string, object?> row, string key)
+    {
+        return int.TryParse(GetStringValue(row, key), out var value) ? value : 0;
+    }
+
+    private static bool GetBoolValue(Dictionary<string, object?> row, string key)
+    {
+        return bool.TryParse(GetStringValue(row, key), out var value) && value;
+    }
+
+    private ModuleDescriptor GetDescriptor(string moduleKey) => moduleKey switch
+    {
+        "user" => new("userId", ["userId", "fullName", "email", "status", "mobilePhones", "address", "notes"], "CreateUserCommand", "UpdateUserCommand", "DeleteUserCommand"),
+        "group" => new("id", ["id", "groupName"], "CreateGroupCommand", "UpdateGroupCommand", "DeleteGroupCommand"),
+        "language" => new("id", ["id", "name", "code"], "CreateLanguageCommand", "UpdateLanguageCommand", "DeleteLanguageCommand"),
+        "translate" => new("id", ["id", "langId", "code", "value"], "CreateTranslateCommand", "UpdateTranslateCommand", "DeleteTranslateCommand"),
+        "operationclaim" => new("id", ["id", "name", "alias", "description"], null, "UpdateOperationClaimCommand", null),
+        "log" => new("id", ["id", "level", "exceptionMessage", "timeStamp", "user", "value", "type"], null, null, null),
+        _ => new("id", ["id"], null, null, null)
+    };
+
+    private void NotifySuccess(string message) =>
+        NotificationService.Notify(
+            NotificationSeverity.Success,
+            Translate("notify.severity.success", "Success"),
+            message);
+
+    private void NotifyError(string message) =>
+        NotificationService.Notify(
+            NotificationSeverity.Error,
+            Translate("notify.severity.error", "Error"),
+            message);
+
+    private void NotifyWarn(string message) =>
+        NotificationService.Notify(
+            NotificationSeverity.Warning,
+            Translate("notify.severity.warning", "Warning"),
+            message);
+
+    private void NotifyInfo(string message) =>
+        NotificationService.Notify(
+            NotificationSeverity.Info,
+            Translate("notify.severity.info", "Info"),
+            message);
+
+    private string Translate(string key, string fallback) => AuthState.T(key, fallback);
+
+    private void UpsertRow(int id, string payloadJson)
+    {
+        if (id <= 0) return;
+        Dictionary<string, object?> patch;
+        try
+        {
+            patch = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object?>>(payloadJson) ?? [];
+        }
+        catch
+        {
+            return;
+        }
+
+        var list = rows.ToList();
+        for (var i = 0; i < list.Count; i++)
+        {
+            var rowId = GetIntValue(list[i], Descriptor.IdKey);
+            if (rowId != id) continue;
+
+            var merged = new Dictionary<string, object?>(list[i], StringComparer.OrdinalIgnoreCase);
+            foreach (var pair in patch)
+            {
+                merged[pair.Key] = pair.Value;
+            }
+            merged[Descriptor.IdKey] = id;
+            list[i] = merged;
+            selectedRow = merged;
+            break;
+        }
+        rows = list;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void RemoveRow(int id)
+    {
+        if (id <= 0) return;
+        rows = rows.Where(row => GetIntValue(row, Descriptor.IdKey) != id).ToList();
+        selectedRow = null;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private sealed record ModuleDescriptor(
+        string IdKey,
+        IReadOnlyList<string> Columns,
+        string? CreateClaim,
+        string? UpdateClaim,
+        string? DeleteClaim
+    );
+
+    private sealed record LookupOption(int Value, string Label);
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
+
+<style>
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-panel {
+        width: min(720px, calc(100vw - 2rem));
+        max-width: 100%;
+        background: white;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        overflow: visible;
+        box-sizing: border-box;
+    }
+
+    .modal-panel .rz-dropdown,
+    .modal-panel .rz-multiselect {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .relation-checkbox-scroll {
+        width: 100%;
+        max-height: min(50vh, 360px);
+        overflow: auto;
+        padding: 0.25rem 0.25rem 0.25rem 0;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+</style>

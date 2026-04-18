@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimsQuery()));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimsQuery()));
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById( int id)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
         }
 
         /// <summary>

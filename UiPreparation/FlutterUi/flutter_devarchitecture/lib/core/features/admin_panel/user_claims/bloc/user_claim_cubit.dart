@@ -1,6 +1,3 @@
-import 'package:flutter_devarchitecture/routes/routes_constants.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-
 import '../../../../di/core_initializer.dart';
 import '../../lookups/models/lookup.dart';
 import '../models/user_claim.dart';
@@ -60,7 +57,15 @@ class UserClaimCubit extends BaseCubit<UserClaim> {
           await CoreInitializer().coreContainer.storage.read("userId");
 
       if (currentUser == null || userId == int.parse(currentUser)) {
-        Modular.to.pushNamed(RoutesConstants.loginPage);
+        final refreshResult = await BusinessInitializer()
+            .businessContainer
+            .authService
+            .setClaims();
+        if (!refreshResult.isSuccess) {
+          emitFailState(refreshResult.message);
+          return;
+        }
+        emit(const BlocSuccess<String>("User claims updated."));
         return;
       }
       await getUserClaimsByUserId(userId);

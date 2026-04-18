@@ -34,19 +34,19 @@ void showScreenMessageByBlocStatus(BaseState state) {
     CoreInitializer()
         .coreContainer
         .screenMessage
-        .getSuccessMessage(state.message!);
+        .getSuccessMessage(state.message ?? "");
   }
   if (state is BlocUpdated) {
     CoreInitializer()
         .coreContainer
         .screenMessage
-        .getSuccessMessage(state.message!);
+        .getSuccessMessage(state.message ?? "");
   }
   if (state is BlocDeleted) {
     CoreInitializer()
         .coreContainer
         .screenMessage
-        .getWarningMessage(state.message!);
+        .getWarningMessage(state.message ?? "");
   }
 }
 

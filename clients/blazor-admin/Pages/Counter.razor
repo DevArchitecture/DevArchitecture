@@ -1,0 +1,21 @@
+﻿@page "/counter"
+@inject AuthState AuthState
+
+<PageTitle>@T("demo.counterPageTitle", "Counter")</PageTitle>
+
+<h1>@T("demo.counterHeading", "Counter")</h1>
+
+<p role="status">@T("demo.counterStatus", "Current count:") @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">@T("demo.counterClick", "Click me")</button>
+
+@code {
+    private int currentCount;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private string T(string key, string fallback) => AuthState.T(key, fallback);
+}

@@ -1,0 +1,76 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="AutoMapper" Version="16.1.1" />
+    <PackageVersion Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
+    <PackageVersion Include="Autofac.Extras.Moq" Version="7.0.0" />
+    <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="11.0.0" />
+    <PackageVersion Include="FluentAssertions" Version="8.9.0" />
+    <PackageVersion Include="FluentValidation" Version="12.1.1" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageVersion Include="Hangfire" Version="1.8.23" />
+    <PackageVersion Include="Hangfire.Autofac" Version="2.7.0" />
+    <PackageVersion Include="Hangfire.Dashboard.Basic.Authentication" Version="8.0.0" />
+    <PackageVersion Include="Hangfire.InMemory" Version="1.0.0" />
+    <PackageVersion Include="Hangfire.PostgreSql" Version="1.21.1" />
+    <PackageVersion Include="Hangfire.RecurringJobExtensions" Version="1.1.6" />
+    <PackageVersion Include="Hangfire.Redis.StackExchange" Version="1.12.0" />
+    <PackageVersion Include="Hangfire.SqlServer" Version="1.8.23" />
+    <PackageVersion Include="MailKit" Version="4.16.0" />
+    <PackageVersion Include="MediatR" Version="14.1.0" />
+    <PackageVersion Include="MediatR.Extensions.Autofac.DependencyInjection" Version="14.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.17.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.22" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageVersion Include="MimeKit" Version="4.16.0" />
+    <PackageVersion Include="MongoDB.Bson" Version="3.7.1" />
+    <PackageVersion Include="MongoDB.Driver" Version="3.7.1" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="MySql.EntityFrameworkCore" Version="10.0.1" />
+    <PackageVersion Include="NEST" Version="7.17.5" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
+    <PackageVersion Include="nunit" Version="4.5.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="6.2.0" />
+    <PackageVersion Include="NuGet.Packaging" Version="7.3.1" />
+    <PackageVersion Include="NuGet.Protocol" Version="7.3.1" />
+    <PackageVersion Include="Oracle.EntityFrameworkCore" Version="10.23.26200" />
+    <PackageVersion Include="RabbitMQ.Client" Version="7.2.1" />
+    <PackageVersion Include="Radzen.Blazor" Version="6.0.0" />
+    <PackageVersion Include="Refit" Version="10.1.6" />
+    <PackageVersion Include="Serilog" Version="4.3.1" />
+    <PackageVersion Include="Serilog.Formatting.Elasticsearch" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Http" Version="9.2.1" />
+    <PackageVersion Include="Serilog.Sinks.MicrosoftTeams" Version="0.2.1" />
+    <PackageVersion Include="Serilog.Sinks.MongoDB" Version="7.2.0" />
+    <PackageVersion Include="Serilog.Sinks.MSSqlServer" Version="9.0.3" />
+    <PackageVersion Include="Serilog.Sinks.Postgresql.Alternative" Version="4.2.0" />
+    <PackageVersion Include="ServiceStack.Text.Core" Version="8.10.0" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.12.14" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageVersion Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageVersion Include="System.ServiceModel.Http" Version="10.0.652802" />
+    <PackageVersion Include="System.ServiceModel.NetTcp" Version="10.0.652802" />
+    <PackageVersion Include="System.ServiceModel.Security" Version="6.0.0" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.17.0" />
+    <PackageVersion Include="System.Security.Cryptography.Xml" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.6" />
+  </ItemGroup>
+</Project>

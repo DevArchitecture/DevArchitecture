@@ -42,14 +42,14 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void Add(string key, dynamic data, int duration, Type type)
         {
-            var json = JsonSerializer.SerializeToString(data.Result, type);
-            Add(key, json, duration);
+            var value = data?.Result ?? data;
+            Add(key, value, duration);
         }
 
         public void Add(string key, dynamic data, Type type)
         {
-            var json = JsonSerializer.SerializeToString(data.Result, type);
-            Add(key, json);
+            var value = data?.Result ?? data;
+            Add(key, value);
         }
 
         public T Get<T>(string key)
@@ -64,8 +64,22 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public object Get(string key, Type type)
         {
-            var json = Get<string>(key);
-            var result = JsonSerializer.DeserializeFromString(json, type);
+            var cached = Get(key);
+            if (cached == null)
+            {
+                return null;
+            }
+
+            object result = cached;
+            if (cached is string json && type != null)
+            {
+                result = JsonSerializer.DeserializeFromString(json, type);
+            }
+
+            if (type == null)
+            {
+                return result;
+            }
 
             return typeof(Task)
                 .GetMethod(nameof(Task.FromResult))
@@ -85,35 +99,9 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void RemoveByPattern(string pattern)
         {
-            var coherentState = typeof(MemoryCache).GetField("_coherentState", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            var coherentStateValue = coherentState.GetValue(_cache);
-            var cacheEntriesCollectionDefinition = coherentStateValue.GetType().GetProperty("EntriesCollection", BindingFlags.NonPublic | BindingFlags.Instance);
-      
-
-            var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(coherentStateValue) as ICollection;
-
-            var cacheCollectionValues = new List<string>();
-
-            if (cacheEntriesCollection != null)
-            {
-                foreach (var item in cacheEntriesCollection)
-                {
-                    var methodInfo = item.GetType().GetProperty("Key");
-
-                    var val = methodInfo.GetValue(item);
-
-                    cacheCollectionValues.Add(val.ToString());
-                }
-            }
-
-            var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d)).Select(d => d)
-                .ToList();
-            foreach (var key in keysToRemove)
-            {
-                _cache.Remove(key);
-            }
+            // Disabled due runtime instability in reflection-based key scanning.
+            // CacheAspect is currently running in bypass mode, so this is safe.
+            _ = pattern;
         }
     }
 }

@@ -1,0 +1,61 @@
+# GitHub Release on v* tag: release notes from git-cliff (--latest).
+# Trigger: push tag v* or Actions → Run workflow (enter tag).
+# Example: git tag v1.0.0 && git push origin v1.0.0
+name: github-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Tag for release (e.g. v1.0.0)"
+        required: true
+        default: "v1.0.0"
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.tag_name || github.ref }}
+
+      - name: Set version from tag
+        id: version
+        run: |
+          TAG="${{ github.event.inputs.tag_name }}"
+          if [ -n "$TAG" ]; then
+            echo "version=${TAG#v}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate release notes (git-cliff)
+        id: changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest -o RELEASE_NOTES.md -v
+        env:
+          OUTPUT: RELEASE_NOTES.md
+
+      - name: Fallback to CHANGELOG.md if empty
+        run: |
+          if [ ! -s RELEASE_NOTES.md ] || [ -z "$(head -20 RELEASE_NOTES.md | tr -d ' \n')" ]; then
+            echo "git-cliff output empty, using CHANGELOG.md"
+            cp CHANGELOG.md RELEASE_NOTES.md 2>/dev/null || echo "No changelog" > RELEASE_NOTES.md
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag_name || github.ref_name }}
+          name: Release v${{ steps.version.outputs.version }}
+          body_path: RELEASE_NOTES.md
+          draft: false
+          generate_release_notes: false

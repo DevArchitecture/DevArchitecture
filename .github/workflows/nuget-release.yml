@@ -1,0 +1,64 @@
+# Pack Core/Business (and related libraries) as .nupkg artifacts. Publishing to nuget.org
+# requires a repository secret NUGET_API_KEY — uncomment the push step when ready.
+# Intentum publishes multiple packages; this repo packs the main class libraries for CI artifacts.
+name: nuget-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      push_to_nuget:
+        description: "Push packages to nuget.org (requires NUGET_API_KEY secret)"
+        required: false
+        default: "false"
+        type: boolean
+
+env:
+  DOTNET_VERSION: "10.0.x"
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore DevArchitecture.sln
+
+      - name: Build
+        run: dotnet build DevArchitecture.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test Tests/Tests.csproj -c Release --no-build --verbosity normal
+
+      - name: Pack class libraries
+        run: |
+          mkdir -p artifacts
+          dotnet pack Core/Core.csproj -c Release --no-build -o artifacts
+          dotnet pack Business/Business.csproj -c Release --no-build -o artifacts
+          dotnet pack Entities/Entities.csproj -c Release --no-build -o artifacts
+          dotnet pack DataAccess/DataAccess.csproj -c Release --no-build -o artifacts
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: artifacts/*.nupkg
+
+      - name: Push to NuGet (optional)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.push_to_nuget == 'true' }}
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "::error::NUGET_API_KEY is not set. Add it under Repository → Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          for f in artifacts/*.nupkg; do
+            dotnet nuget push "$f" -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
+          done

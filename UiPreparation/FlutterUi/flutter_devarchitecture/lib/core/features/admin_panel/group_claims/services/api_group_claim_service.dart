@@ -20,7 +20,9 @@ class ApiGroupClaimService extends ApiService<GroupClaim>
         return Future.value(FailureDataResult(result["message"] ?? ""));
       }
     }
-    var data = result["data"] as List<Map<String, dynamic>>;
+    var data = ((result["data"] ?? []) as List)
+        .map((e) => e as Map<String, dynamic>)
+        .toList();
     return Future.value(
         SuccessDataResult(data.map((e) => LookUp.fromMap(e)).toList(), ""));
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import 'i_internet_connection.dart';
@@ -10,10 +11,17 @@ class InternetConnectionWithChecker implements IInternetConnection {
   bool _isPopupVisible = false;
 
   Future<bool> isConnected() async {
+    if (kIsWeb) {
+      // Avoid CORS-based false negatives from probe URLs on browser builds.
+      return true;
+    }
     return await InternetConnection().hasInternetAccess;
   }
 
   Future<void> listenConnection(BuildContext context) async {
+    if (kIsWeb) {
+      return;
+    }
     if (_subscription != null) return; // Zaten başlatılmışsa tekrar başlatma
 
     _subscription =

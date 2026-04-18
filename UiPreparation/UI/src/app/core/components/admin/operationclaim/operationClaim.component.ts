@@ -14,6 +14,7 @@ declare var jQuery: any;
 
 @Component({
 	selector: 'app-operationClaim',
+  standalone: false,
 	templateUrl: './operationClaim.component.html',
 	styleUrls: ['./operationClaim.component.scss']
 })

@@ -3,10 +3,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Business.BusinessAspects;
-using Business.Fakes.Handlers.Authorizations;
 using Business.Fakes.Handlers.OperationClaims;
 using Business.Fakes.Handlers.UserClaims;
+using Core.Entities.Concrete;
 using Core.Utilities.IoC;
+using Core.Utilities.Security.Hashing;
+using DataAccess.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ namespace Business.Helpers
         public static async Task UseDbOperationClaimCreator(this IApplicationBuilder app)
         {
             var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
+            var userRepository = ServiceTool.ServiceProvider.GetService<IUserRepository>();
             foreach (var operationName in GetOperationNames())
             {
                 await mediator.Send(new CreateOperationClaimInternalCommand
@@ -27,15 +30,35 @@ namespace Business.Helpers
             }
 
             var operationClaims = (await mediator.Send(new GetOperationClaimsInternalQuery())).Data;
-            var user = await mediator.Send(new RegisterUserInternalCommand
+            var adminUser = await userRepository.GetAsync(x => x.Email == "admin@adminmail.com");
+            HashingHelper.CreatePasswordHash("Q1w212*_*", out var passwordSalt, out var passwordHash);
+
+            if (adminUser == null)
             {
-                FullName = "System Admin",
-                Password = "Q1w212*_*",
-                Email = "admin@adminmail.com",
-            });
+                adminUser = new User
+                {
+                    FullName = "System Admin",
+                    Email = "admin@adminmail.com",
+                    Status = true,
+                    PasswordSalt = passwordSalt,
+                    PasswordHash = passwordHash
+                };
+                userRepository.Add(adminUser);
+            }
+            else
+            {
+                adminUser.FullName = "System Admin";
+                adminUser.Status = true;
+                adminUser.PasswordSalt = passwordSalt;
+                adminUser.PasswordHash = passwordHash;
+                userRepository.Update(adminUser);
+            }
+
+            await userRepository.SaveChangesAsync();
+
             await mediator.Send(new CreateUserClaimsInternalCommand
             {
-                UserId = 1,
+                UserId = adminUser.UserId,
                 OperationClaims = operationClaims
             });
         }

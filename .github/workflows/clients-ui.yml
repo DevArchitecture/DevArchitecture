@@ -1,0 +1,60 @@
+name: Clients UI CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    paths:
+      - "clients/**"
+      - ".github/workflows/clients-ui.yml"
+      - "Directory.Packages.props"
+  pull_request:
+    paths:
+      - "clients/**"
+      - ".github/workflows/clients-ui.yml"
+      - "Directory.Packages.props"
+
+jobs:
+  js-clients:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app:
+          - clients/react-admin
+          - clients/vue-admin
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ${{ matrix.app }}
+      - name: Build
+        run: npm run build
+        working-directory: ${{ matrix.app }}
+
+  angular-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+        working-directory: clients/angular-admin
+      - name: Build
+        run: npm run build -- --configuration production
+        working-directory: clients/angular-admin
+
+  blazor-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Restore
+        run: dotnet restore clients/blazor-admin/Blazor.Admin.csproj
+      - name: Build
+        run: dotnet build clients/blazor-admin/Blazor.Admin.csproj --configuration Release --no-restore

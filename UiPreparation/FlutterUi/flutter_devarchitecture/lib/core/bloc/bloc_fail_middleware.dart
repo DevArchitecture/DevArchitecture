@@ -40,16 +40,12 @@ class BlocFailedMiddleware {
               .coreContainer
               .screenMessage
               .getErrorMessage(CoreMessages.customerDefaultErrorMessage);
-          Navigator.pushReplacementNamed(context, RoutesConstants.loginPage);
-
           break;
         default:
           CoreInitializer()
               .coreContainer
               .screenMessage
               .getErrorMessage(CoreMessages.customerDefaultErrorMessage);
-          Navigator.pushReplacementNamed(context, RoutesConstants.loginPage);
-
           break;
       }
     }

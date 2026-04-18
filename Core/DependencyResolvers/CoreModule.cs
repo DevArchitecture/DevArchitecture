@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using Core.ApiDoc;
 using Core.CrossCuttingConcerns.Caching;
@@ -11,6 +12,7 @@ using Core.Utilities.Uri;
 using Core.Utilities.URI;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -22,7 +24,24 @@ namespace Core.DependencyResolvers
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
             services.AddMemoryCache();
-            services.AddSingleton<ICacheManager, RedisCacheManager>();
+            services.AddSingleton<ICacheManager>(provider =>
+            {
+                // In development, avoid hard dependency on external Redis.
+                var appMode = configuration.GetValue<string>("AppSettings:Mode");
+                if (string.Equals(appMode, "Development", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new MemoryCacheManager(provider.GetRequiredService<IMemoryCache>());
+                }
+
+                try
+                {
+                    return new RedisCacheManager(configuration);
+                }
+                catch
+                {
+                    return new MemoryCacheManager(provider.GetRequiredService<IMemoryCache>());
+                }
+            });
             services.AddSingleton<IMailService, MailManager>();
             services.AddSingleton<IEmailConfiguration, EmailConfiguration>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

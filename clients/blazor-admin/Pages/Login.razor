@@ -1,0 +1,90 @@
+@page "/login"
+@layout EmptyLayout
+@inject ApiClient ApiClient
+@inject AuthState AuthState
+@inject NavigationManager NavigationManager
+
+<PageTitle>@Translate("login.pageTitle", "Login")</PageTitle>
+
+<div class="centered-page">
+    <RadzenCard Style="max-width:420px; width:100%;">
+        <RadzenText TextStyle="TextStyle.H5">@Translate("login.title", "DevArchitecture Login")</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2">@Translate("login.subtitle", "Radzen Blazor admin client")</RadzenText>
+        <RadzenStack Gap="0.8rem" Style="margin-top:1rem;">
+            <RadzenTextBox Name="Email" Placeholder="@Translate("login.email", "Email")" @bind-Value="model.Email" Style="width:100%;" />
+            <RadzenPassword Name="Password" Placeholder="@Translate("login.password", "Password")" @bind-Value="model.Password" Style="width:100%;" />
+            <div class="lang-field">
+                <label class="lang-field-label" for="login-lang-select">@Translate("login.language", "Language")</label>
+                <select id="login-lang-select" class="form-select lang-select lang-select--light" @bind="model.Lang" aria-label="@Translate("login.language", "Language")">
+                    @foreach (var opt in languageOptions)
+                    {
+                        <option value="@opt.Code">@opt.Flag @opt.Label</option>
+                    }
+                </select>
+            </div>
+            <RadzenButton Icon="login" title="@Translate("action.login", "Login")" Text="@Translate("action.login", "Login")" Click="@HandleLogin" />
+            @if (!string.IsNullOrWhiteSpace(loginError))
+            {
+                <RadzenText TextStyle="TextStyle.Body2" Style="color:#c62828">@loginError</RadzenText>
+            }
+        </RadzenStack>
+    </RadzenCard>
+</div>
+
+@code {
+    private LoginModel model = new()
+    {
+        Email = "admin@adminmail.com",
+        Password = "Q1w212*_*",
+        Lang = "tr-TR"
+    };
+    private List<LanguageDisplay.LanguageOption> languageOptions = LanguageDisplay.ToLanguageOptions(["tr-TR"]);
+    private string loginError = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthState.IsSessionReady && AuthState.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/dashboard");
+            return;
+        }
+
+        try
+        {
+            var list = (await ApiClient.GetLanguageCodesAsync()).ToList();
+            if (list.Count > 0)
+            {
+                languageOptions = LanguageDisplay.ToLanguageOptions(list);
+                model.Lang = list[0];
+            }
+        }
+        catch
+        {
+            languageOptions = LanguageDisplay.ToLanguageOptions(["tr-TR"]);
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        loginError = string.Empty;
+        var isSuccess = await ApiClient.LoginAsync(model.Email, model.Password, model.Lang);
+        if (!isSuccess)
+        {
+            loginError = Translate("login.failed", "Login failed. Check email/password.");
+            return;
+        }
+
+        await ApiClient.SwitchUiLanguageAsync(model.Lang);
+
+        NavigationManager.NavigateTo("/dashboard");
+    }
+
+    private string Translate(string key, string fallback) => AuthState.T(key, fallback);
+
+    private sealed class LoginModel
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Lang { get; set; } = "tr-TR";
+    }
+}

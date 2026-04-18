@@ -1,0 +1,51 @@
+﻿@inject AuthState AuthState
+@inject ApiClient ApiClient
+@inject IAuthSessionStorage SessionStorage
+
+@if (!_bootstrapComplete)
+{
+    <div style="padding:2rem;text-align:center;">
+        <RadzenProgressBarCircular ShowValue="false" Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Large" />
+        <p style="margin-top:1rem;">@AuthState.T("common.loading", "Loading...")</p>
+    </div>
+}
+else
+{
+    <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+    </Router>
+}
+
+@code {
+    private bool _bootstrapComplete;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TryRestoreSessionAsync();
+        AuthState.SetSessionReady();
+        _bootstrapComplete = true;
+    }
+
+    private async Task TryRestoreSessionAsync()
+    {
+        var stored = await SessionStorage.TryLoadAsync();
+        if (stored is null)
+        {
+            return;
+        }
+
+        var session = stored.Value;
+        if (string.IsNullOrWhiteSpace(session.Token))
+        {
+            return;
+        }
+
+        AuthState.SetToken(session.Token, session.Claims);
+        AuthState.SetLang(session.Lang);
+        var dictionary = await ApiClient.GetTranslationsAsync(session.Lang);
+        AuthState.SetTranslations(dictionary);
+    }
+}
