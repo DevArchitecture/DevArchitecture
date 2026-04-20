@@ -80,7 +80,7 @@ namespace Business
 
             var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
 
-            if (taskSchedulerConfig.Enabled)
+            if (taskSchedulerConfig?.Enabled == true)
             {
                 services.AddHangfire(config =>
                 {
@@ -148,6 +148,14 @@ namespace Business
         /// This method gets called by the Development
         /// </summary>
         /// <param name="services"></param>
+        /// <summary>
+        /// Container image / CI smoke: same service registration as Development (in-memory EF, no external DB).
+        /// </summary>
+        public void ConfigureDockerServices(IServiceCollection services)
+        {
+            ConfigureDevelopmentServices(services);
+        }
+
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);

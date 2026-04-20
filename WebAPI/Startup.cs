@@ -176,8 +176,8 @@ namespace WebAPI
             app.UseStaticFiles();
 
             var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
-            
-            if (taskSchedulerConfig.Enabled)
+
+            if (taskSchedulerConfig?.Enabled == true)
             {
                 app.UseHangfireDashboard(taskSchedulerConfig.Path, new DashboardOptions
                 {

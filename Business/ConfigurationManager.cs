@@ -19,7 +19,13 @@ namespace Business
         public ConfigurationManager(IConfiguration configuration, IHostEnvironment env)
         {
             _configuration = configuration;
-            Mode = (ApplicationMode)Enum.Parse(typeof(ApplicationMode), env.EnvironmentName);
+            var modeName = env.EnvironmentName;
+            if (string.Equals(modeName, "Docker", StringComparison.OrdinalIgnoreCase))
+            {
+                modeName = nameof(ApplicationMode.Development);
+            }
+
+            Mode = (ApplicationMode)Enum.Parse(typeof(ApplicationMode), modeName);
         }
 
         public ApplicationMode Mode { get; private set; }

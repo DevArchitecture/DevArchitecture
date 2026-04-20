@@ -18,10 +18,19 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "Waiting for API startup"
-sleep 15
-
-echo "Checking health endpoint"
-curl --fail --show-error --silent "http://127.0.0.1:${HOST_PORT}/healthz" >/dev/null
+echo "Waiting for /healthz (up to 45s)"
+ok=0
+for _ in $(seq 1 45); do
+  if curl --fail --show-error --silent "http://127.0.0.1:${HOST_PORT}/healthz" >/dev/null; then
+    ok=1
+    break
+  fi
+  sleep 1
+done
+if [ "$ok" != "1" ]; then
+  echo "Smoke test failed; container logs:"
+  docker logs "${CONTAINER_NAME}" 2>&1 || true
+  exit 1
+fi
 
 echo "Smoke test passed"
