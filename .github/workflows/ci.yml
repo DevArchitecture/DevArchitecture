@@ -1,4 +1,4 @@
-# Main CI: build, test, vulnerability check, Docker smoke (Intentum-style "ci" entrypoint).
+# Main CI: restore, vulnerable package check, build, test, Docker image + /healthz smoke.
 name: ci
 
 on:

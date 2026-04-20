@@ -1,6 +1,5 @@
 # Pack Core/Business (and related libraries) as .nupkg artifacts. Publishing to nuget.org
 # requires a repository secret NUGET_API_KEY — uncomment the push step when ready.
-# Intentum publishes multiple packages; this repo packs the main class libraries for CI artifacts.
 name: nuget-release
 
 on:

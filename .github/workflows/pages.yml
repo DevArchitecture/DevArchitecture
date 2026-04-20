@@ -1,8 +1,8 @@
-# GitHub Pages placeholder. Intentum builds DocFX + coverage into `docs/`; this repo only has
-# Markdown under `docs/`. Enable a static site generator later, or copy Intentum's doc pipeline.
+# GitHub Pages placeholder: repo has Markdown under `docs/` only. Replace with a static site
+# build (e.g. DocFX) when ready.
 #
-# To enable: Repository → Settings → Pages → Source = GitHub Actions, then replace this workflow
-# with a build step that produces a `dist/` or `_site/` folder and use actions/upload-pages-artifact.
+# To enable: Repository → Settings → Pages → Source = GitHub Actions, then add a job that
+# produces `dist/` or `_site/` and use actions/upload-pages-artifact + actions/deploy-pages.
 name: pages
 
 on:
@@ -18,4 +18,4 @@ jobs:
     steps:
       - name: Pages not configured
         run: |
-          echo "::notice::Pages workflow is a placeholder. Add DocFX or a static site build (see Intentum pages.yml) and deploy with actions/upload-pages-artifact + actions/deploy-pages."
+          echo "::notice::Pages workflow is a placeholder. Add a static site build and deploy with actions/upload-pages-artifact + actions/deploy-pages."
