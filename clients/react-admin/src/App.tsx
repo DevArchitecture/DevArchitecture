@@ -6,6 +6,7 @@ import { CLIENT_MODULES } from "./config/modules";
 import { LoginPage } from "./pages/LoginPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { ResourcePage } from "./pages/ResourcePage";
+import { ShowcasePage } from "./pages/ShowcasePage";
 import { toLanguageOptions, type LanguageOption } from "./core/language-display";
 import { cultureCodeFromLanguageLookupRow, normalizeUiLanguage } from "./core/ui-language-code";
 import { applyPrimeReactThemeLink } from "./theme/primereact-theme";
@@ -21,6 +22,7 @@ function ProtectedRoutes() {
   return (
     <Routes>
       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/showcase" element={<ShowcasePage />} />
       <Route path="/:moduleKey" element={<ResourcePage />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

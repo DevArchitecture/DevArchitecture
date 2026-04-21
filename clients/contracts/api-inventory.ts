@@ -91,5 +91,12 @@ export const apiInventory: ApiInventoryModule[] = [
     endpoints: [
       "GET /api/v1/logs"
     ]
+  },
+  {
+    name: "Showcase",
+    angularRoute: "/showcase",
+    endpoints: [
+      "GET /api/v1/showcase/rows?page={page}&pageSize={pageSize}"
+    ]
   }
 ];

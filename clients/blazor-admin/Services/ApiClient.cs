@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Blazor.Admin.Models;
 
 namespace Blazor.Admin.Services;
 
@@ -138,6 +139,41 @@ public sealed class ApiClient(HttpClient httpClient, AuthState authState, IAuthS
         catch
         {
             return [];
+        }
+    }
+
+    public async Task<ShowcasePageResult> GetShowcaseRowsAsync(int page, int pageSize)
+    {
+        try
+        {
+            using var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                $"{BaseUrl}/showcase/rows?page={Math.Max(1, page)}&pageSize={Math.Max(10, pageSize)}&_ts={DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}");
+            request.Headers.Add("x-dev-arch-version", "1.0");
+            request.Headers.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue
+            {
+                NoCache = true,
+                NoStore = true,
+                MustRevalidate = true
+            };
+            request.Headers.Pragma.ParseAdd("no-cache");
+            if (authState.Token is { Length: > 0 } token)
+            {
+                request.Headers.Authorization = new("Bearer", token);
+            }
+
+            using var response = await httpClient.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                return new ShowcasePageResult();
+            }
+
+            var payload = await response.Content.ReadFromJsonAsync<ShowcasePageResult>();
+            return payload ?? new ShowcasePageResult();
+        }
+        catch
+        {
+            return new ShowcasePageResult();
         }
     }
 

@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { LoginPageComponent } from "./pages/login-page.component";
 import { DashboardPageComponent } from "./pages/dashboard-page.component";
 import { ResourcePageComponent } from "./pages/resource-page.component";
+import { ShowcasePageComponent } from "./pages/showcase-page.component";
 import { authGuard } from "./core/auth.guard";
 
 export const routes: Routes = [
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: "translate", component: ResourcePageComponent, canActivate: [authGuard], data: { moduleKey: "translate" } },
   { path: "operationclaim", component: ResourcePageComponent, canActivate: [authGuard], data: { moduleKey: "operationclaim" } },
   { path: "log", component: ResourcePageComponent, canActivate: [authGuard], data: { moduleKey: "log" } },
+  { path: "showcase", component: ShowcasePageComponent, canActivate: [authGuard] },
   { path: "", pathMatch: "full", redirectTo: "dashboard" },
   { path: "**", redirectTo: "dashboard" }
 ];

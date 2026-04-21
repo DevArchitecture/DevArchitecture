@@ -54,6 +54,12 @@
       "label": "Logs",
       "route": "/log",
       "resourcePath": "/logs"
+    },
+    {
+      "key": "showcase",
+      "label": "Showcase",
+      "route": "/showcase",
+      "resourcePath": "/showcase/rows"
     }
   ]
 }

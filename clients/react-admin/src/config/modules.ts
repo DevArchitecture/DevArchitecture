@@ -15,5 +15,6 @@ export const CLIENT_MODULES: ClientModule[] = [
   { key: "language", label: "Languages", route: "/language", resourcePath: "/languages" },
   { key: "translate", label: "Translates", route: "/translate", resourcePath: "/translates" },
   { key: "operationclaim", label: "Operation Claims", route: "/operationclaim", resourcePath: "/operation-claims" },
-  { key: "log", label: "Logs", route: "/log", resourcePath: "/logs" }
+  { key: "log", label: "Logs", route: "/log", resourcePath: "/logs" },
+  { key: "showcase", label: "Showcase", route: "/showcase", resourcePath: "/showcase/rows" }
 ];

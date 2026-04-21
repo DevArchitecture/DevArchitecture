@@ -17,7 +17,8 @@ export const CLIENT_MODULES: ClientModule[] = [
   { key: "language", label: "Languages", route: "/language", resourcePath: "/languages" },
   { key: "translate", label: "Translates", route: "/translate", resourcePath: "/translates" },
   { key: "operationclaim", label: "Operation Claims", route: "/operationclaim", resourcePath: "/operation-claims" },
-  { key: "log", label: "Logs", route: "/log", resourcePath: "/logs" }
+  { key: "log", label: "Logs", route: "/log", resourcePath: "/logs" },
+  { key: "showcase", label: "Showcase", route: "/showcase", resourcePath: "/showcase/rows" }
 ];
 
 @Injectable({ providedIn: "root" })
@@ -54,10 +55,16 @@ export class ApiService {
     });
   }
 
-  getByPath(path: string): Observable<unknown> {
+  getByPath(path: string, queryParams?: Record<string, string | number>): Observable<unknown> {
+    let params = new HttpParams().set("_ts", Date.now().toString());
+    if (queryParams) {
+      for (const [key, value] of Object.entries(queryParams)) {
+        params = params.set(key, String(value));
+      }
+    }
     return this.http.get(`${environment.apiBaseUrl}${path}`, {
       headers: this.noCacheHeaders,
-      params: new HttpParams().set("_ts", Date.now().toString())
+      params
     });
   }
 

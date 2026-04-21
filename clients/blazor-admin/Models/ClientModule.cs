@@ -12,6 +12,7 @@ public static class ClientModules
         new("language", "Languages", "/language", "/languages"),
         new("translate", "Translates", "/translate", "/translates"),
         new("operationclaim", "Operation Claims", "/operationclaim", "/operation-claims"),
-        new("log", "Logs", "/log", "/logs")
+        new("log", "Logs", "/log", "/logs"),
+        new("showcase", "Showcase", "/showcase", "/showcase/rows")
     ];
 }

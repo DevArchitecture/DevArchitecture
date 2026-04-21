@@ -1,0 +1,116 @@
+@page "/showcase"
+@inject AuthState AuthState
+@inject ApiClient ApiClient
+@using System.Diagnostics
+
+<PageTitle>@Translate("menu.showcase", "Showcase")</PageTitle>
+
+@if (!AuthState.IsSessionReady)
+{
+    <RadzenText TextStyle="TextStyle.Body1">@Translate("common.loading", "Loading...")</RadzenText>
+}
+else if (!AuthState.IsAuthenticated)
+{
+    <RedirectToLogin />
+}
+else
+{
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Vertical" Gap="0.6rem">
+            <RadzenText TextStyle="TextStyle.H5">@Translate("menu.showcase", "Showcase")</RadzenText>
+            <RadzenBadge Text="/showcase/rows" BadgeStyle="BadgeStyle.Info" />
+            <div style="padding:0.55rem 0.7rem;border:1px solid #d7dce2;border-radius:8px;">
+                <strong>KPI / Anlik:</strong> @timingText
+            </div>
+            @if (!string.IsNullOrWhiteSpace(actualApiGenerationText))
+            {
+                <div style="padding:0.55rem 0.7rem;border:1px solid #d7dce2;border-radius:8px;">
+                    <strong>KPI / API Gercek:</strong> @actualApiGenerationText
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(estimatedText))
+            {
+                <div style="padding:0.55rem 0.7rem;border:1px solid #d7dce2;border-radius:8px;">
+                    <strong>KPI / Tahmin:</strong> @estimatedText
+                </div>
+            }
+        </RadzenStack>
+
+        <RadzenDataGrid TItem="ShowcaseRowModel"
+                        @ref="grid"
+                        Data="@rows"
+                        Count="@totalRecords"
+                        LoadData="@LoadData"
+                        AllowPaging="true"
+                        AllowSorting="false"
+                        AllowFiltering="false"
+                        PageSize="50"
+                        PageSizeOptions="@(new int[] { 25, 50, 100, 200 })"
+                        ShowPagingSummary="true"
+                        PagingSummaryFormat="Page {0} of {1} ({2} items)"
+                        Style="margin-top:1rem;">
+            <Columns>
+                <RadzenDataGridColumn TItem="ShowcaseRowModel" Property="@nameof(ShowcaseRowModel.Id)" Title="id" />
+                <RadzenDataGridColumn TItem="ShowcaseRowModel" Property="@nameof(ShowcaseRowModel.Code)" Title="code" />
+                <RadzenDataGridColumn TItem="ShowcaseRowModel" Property="@nameof(ShowcaseRowModel.Amount)" Title="amount" />
+                <RadzenDataGridColumn TItem="ShowcaseRowModel" Property="@nameof(ShowcaseRowModel.CreatedAt)" Title="createdAt" />
+                <RadzenDataGridColumn TItem="ShowcaseRowModel" Property="@nameof(ShowcaseRowModel.Category)" Title="category" />
+                <RadzenDataGridColumn TItem="ShowcaseRowModel" Property="@nameof(ShowcaseRowModel.Status)" Title="status" />
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+}
+
+@code {
+    private RadzenDataGrid<ShowcaseRowModel>? grid;
+    private bool initialLoadRequested;
+    private IReadOnlyList<ShowcaseRowModel> rows = [];
+    private int totalRecords = 1_000_000;
+    private string timingText = "Loading...";
+    private string actualApiGenerationText = string.Empty;
+    private string estimatedText = string.Empty;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (initialLoadRequested || !AuthState.IsSessionReady || !AuthState.IsAuthenticated || grid is null)
+        {
+            return;
+        }
+
+        initialLoadRequested = true;
+        await grid.Reload();
+    }
+
+    private async Task LoadData(LoadDataArgs args)
+    {
+        var top = args.Top is > 0 ? args.Top.Value : 50;
+        var skip = args.Skip is > 0 ? args.Skip.Value : 0;
+        var page = (skip / top) + 1;
+
+        var stopwatch = Stopwatch.StartNew();
+        var payload = await ApiClient.GetShowcaseRowsAsync(page, top);
+        stopwatch.Stop();
+
+        rows = payload.Items ?? [];
+        totalRecords = payload.TotalRecords > 0 ? payload.TotalRecords : 1_000_000;
+
+        var roundTrip = stopwatch.Elapsed.TotalMilliseconds;
+        timingText = payload.ServerProcessingMs > 0
+            ? $"Son yukleme: {roundTrip:F1} ms (round-trip) | Sunucu: {payload.ServerProcessingMs:F1} ms"
+            : $"Son yukleme: {roundTrip:F1} ms (round-trip)";
+        actualApiGenerationText = payload.ActualGeneratedRows > 0 && payload.ActualGenerationMs > 0 && payload.ActualNsPerRow > 0
+            ? $"API gercek uretim: {payload.ActualGeneratedRows:N0} satir / {payload.ActualGenerationMs:F2} ms | {payload.ActualNsPerRow:N0} ns/satir"
+            : string.Empty;
+
+        if (payload.SimulatedTotalRecords > 0 && payload.EstimatedServerMsForSimulatedTotal > 0 && payload.EstimatedRowsPerSecond > 0)
+        {
+            var seconds = payload.EstimatedServerMsForSimulatedTotal / 1000d;
+            estimatedText = $"1 milyar satir tahmini sunucu uretim suresi: {seconds:F2} s | {payload.EstimatedRowsPerSecond:N0} satir/s";
+            return;
+        }
+
+        estimatedText = string.Empty;
+    }
+
+    private string Translate(string key, string fallback) => AuthState.T(key, fallback);
+}
