@@ -1,6 +1,8 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using System.Text.Json;
@@ -17,6 +19,7 @@ using Hangfire;
 using HangfireBasicAuthenticationFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -25,6 +28,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -107,7 +111,18 @@ namespace WebAPI
             services.AddTransient<PostgreSqlLogger>();
             services.AddTransient<MsSqlLogger>();
             services.AddScoped<IpControlAttribute>();
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    name: "sqlserver",
+                    timeout: TimeSpan.FromSeconds(5),
+                    tags: new[] { "db", "sql", "ready" })
+                .AddHangfire(
+                    options => options.MaximumJobsFailed = 5,
+                    name: "hangfire",
+                    timeout: TimeSpan.FromSeconds(5),
+                    tags: new[] { "scheduler", "hangfire", "ready" })
+                .AddCheck("self", () => HealthCheckResult.Healthy());
 
             var rateLimitingConfig = Configuration.GetSection("RateLimiting");
 
@@ -250,7 +265,31 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/healthz");
+                endpoints.MapHealthChecks("/healthz", new HealthCheckOptions
+                {
+                    ResponseWriter = async (context, report) =>
+                    {
+                        context.Response.ContentType = "application/json";
+                        var response = new
+                        {
+                            status = report.Status.ToString(),
+                            checks = report.Entries.Select(e => new
+                            {
+                                name = e.Key,
+                                status = e.Value.Status.ToString(),
+                                duration = e.Value.Duration.TotalMilliseconds,
+                                description = e.Value.Description,
+                                exception = e.Value.Exception?.Message
+                            }),
+                            totalDuration = report.TotalDuration.TotalMilliseconds
+                        };
+                        await context.Response.WriteAsJsonAsync(response);
+                    }
+                });
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => false
+                });
             });
         }
     }

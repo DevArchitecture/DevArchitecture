@@ -54,6 +54,9 @@
 		<PackageReference Include="NuGet.Packaging" />
 		<PackageReference Include="NuGet.Protocol" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
+	<PackageReference Include="AspNetCore.HealthChecks.SqlServer" />
+	<PackageReference Include="AspNetCore.HealthChecks.Redis" />
+	<PackageReference Include="AspNetCore.HealthChecks.Hangfire" />
 	</ItemGroup>
 
 	<ItemGroup>
