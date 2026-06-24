@@ -6,6 +6,7 @@ using System.Threading.RateLimiting;
 using System.Text.Json;
 using Business;
 using Business.Helpers;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -207,6 +208,8 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             app.UseRateLimiter();
 
