@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Entities.Dtos;
 
 namespace WebAPI.Controllers
@@ -29,6 +30,7 @@ namespace WebAPI.Controllers
         // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Group>))]
         // [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupsQuery()));
@@ -44,6 +46,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Group))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetById( int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupQuery { GroupId = id }));
@@ -59,6 +62,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("lookups")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> Getselectedlist()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupLookupQuery()));
@@ -74,6 +78,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Add([FromBody] CreateGroupCommand createGroup)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createGroup));
@@ -89,6 +94,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Update([FromBody] UpdateGroupDto updateGroupDto)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupCommand{ Id = updateGroupDto.Id, GroupName = updateGroupDto.GroupName }));
@@ -104,6 +110,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteGroupCommand{ Id = id }));

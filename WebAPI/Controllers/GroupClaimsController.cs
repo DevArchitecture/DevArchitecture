@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Entities.Dtos;
 
 namespace WebAPI.Controllers
@@ -29,6 +30,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GroupClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimsQuery()));
@@ -44,6 +46,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GroupClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetById( int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetGroupClaimQuery { Id = id }));
@@ -59,6 +62,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("groups/{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetGroupClaimsByGroupId([FromRoute]int id)
         {
             return GetResponseOnlyResultData(
@@ -75,6 +79,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Add([FromBody] CreateGroupClaimCommand createGroupClaim)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createGroupClaim));
@@ -90,6 +95,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Update([FromBody] UpdateGroupClaimDto updateGroupClaimDto)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateGroupClaimCommand{ Id = updateGroupClaimDto.Id, GroupId = updateGroupClaimDto.GroupId, ClaimIds = updateGroupClaimDto.ClaimIds }));
@@ -105,6 +111,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteGroupClaimCommand{Id = id}));

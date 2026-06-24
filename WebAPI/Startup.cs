@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using System.Text.Json;
 using Business;
 using Business.Helpers;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
@@ -107,27 +108,50 @@ namespace WebAPI
             services.AddScoped<IpControlAttribute>();
             services.AddHealthChecks();
 
+            var rateLimitingConfig = Configuration.GetSection("RateLimiting");
+
             services.AddRateLimiter(options =>
             {
                 options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
+                options.OnRejected = async (context, cancellationToken) =>
+                {
+                    context.HttpContext.Response.ContentType = "application/json";
+                    var retryAfter = context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfterTime)
+                        ? (int)retryAfterTime.TotalSeconds
+                        : 60;
+                    var response = new
+                    {
+                        statusCode = 429,
+                        message = "Too many requests. Please try again later.",
+                        retryAfter
+                    };
+                    await context.HttpContext.Response.WriteAsync(
+                        JsonSerializer.Serialize(response), cancellationToken);
+                };
+
+                var authConfig = rateLimitingConfig.GetSection("Auth");
                 options.AddFixedWindowLimiter("auth", limiterOptions =>
                 {
-                    limiterOptions.PermitLimit = 10;
-                    limiterOptions.Window = TimeSpan.FromMinutes(1);
-                    limiterOptions.QueueLimit = 0;
+                    limiterOptions.PermitLimit = authConfig.GetValue<int>("PermitLimit");
+                    limiterOptions.Window = TimeSpan.FromMinutes(authConfig.GetValue<int>("WindowMinutes"));
+                    limiterOptions.QueueLimit = authConfig.GetValue<int>("QueueLimit");
                 });
 
+                var crudConfig = rateLimitingConfig.GetSection("Crud");
                 options.AddFixedWindowLimiter("crud", limiterOptions =>
                 {
-                    limiterOptions.PermitLimit = 100;
-                    limiterOptions.Window = TimeSpan.FromMinutes(1);
+                    limiterOptions.PermitLimit = crudConfig.GetValue<int>("PermitLimit");
+                    limiterOptions.Window = TimeSpan.FromMinutes(crudConfig.GetValue<int>("WindowMinutes"));
+                    limiterOptions.QueueLimit = crudConfig.GetValue<int>("QueueLimit");
                 });
 
+                var readConfig = rateLimitingConfig.GetSection("Read");
                 options.AddFixedWindowLimiter("read", limiterOptions =>
                 {
-                    limiterOptions.PermitLimit = 200;
-                    limiterOptions.Window = TimeSpan.FromMinutes(1);
+                    limiterOptions.PermitLimit = readConfig.GetValue<int>("PermitLimit");
+                    limiterOptions.Window = TimeSpan.FromMinutes(readConfig.GetValue<int>("WindowMinutes"));
+                    limiterOptions.QueueLimit = readConfig.GetValue<int>("QueueLimit");
                 });
             });
 

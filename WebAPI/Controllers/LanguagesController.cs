@@ -7,6 +7,7 @@ using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Entities.Dtos;
 
 namespace WebAPI.Controllers
@@ -29,6 +30,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("codes")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetLookupListWithCode()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpWithCodeQuery()));
@@ -45,6 +47,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("lookups")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetLookupList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesLookUpQuery()));
@@ -60,6 +63,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguagesQuery()));
@@ -75,6 +79,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetById(int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetLanguageQuery { Id = id }));
@@ -90,6 +95,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguage)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createLanguage));
@@ -105,6 +111,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Update([FromBody] UpdateLanguageDto updateLanguageDto)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateLanguageCommand{Id = updateLanguageDto.Id, Name = updateLanguageDto.Name, Code = updateLanguageDto.Code}));
@@ -120,6 +127,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteLanguageCommand{Id=id}));

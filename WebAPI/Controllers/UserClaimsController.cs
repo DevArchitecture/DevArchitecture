@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Entities.Dtos;
 
 namespace WebAPI.Controllers
@@ -28,6 +29,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsQuery()));
@@ -43,6 +45,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetByUserId([FromRoute] int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupQuery { UserId = id }));
@@ -58,6 +61,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("users/{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetOperationClaimByUserId([FromRoute]int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimLookupByUserIdQuery { Id = id }));
@@ -73,6 +77,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Add([FromBody] CreateUserClaimCommand createUserClaim)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createUserClaim));
@@ -88,6 +93,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Update([FromBody] UpdateUserClaimDto updateUserClaimDto)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new  UpdateUserClaimCommand{UserId = updateUserClaimDto.UserId, ClaimId = updateUserClaimDto.ClaimIds}));
@@ -103,6 +109,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteUserClaimCommand{Id = id}));
