@@ -124,6 +124,12 @@ namespace WebAPI
                     tags: new[] { "scheduler", "hangfire", "ready" })
                 .AddCheck("self", () => HealthCheckResult.Healthy());
 
+            services.AddResponseCaching(options =>
+            {
+                options.MaximumBodySize = 1024 * 1024; // 1 MB
+                options.SizeLimit = 100 * 1024 * 1024; // 100 MB
+            });
+
             var rateLimitingConfig = Configuration.GetSection("RateLimiting");
 
             services.AddRateLimiter(options =>
@@ -221,6 +227,8 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseResponseCaching();
 
             app.UseMiddleware<GlobalExceptionMiddleware>();
 
