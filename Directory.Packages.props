@@ -52,7 +52,7 @@
     <PackageVersion Include="Oracle.EntityFrameworkCore" Version="10.23.26200" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.1" />
     <PackageVersion Include="Radzen.Blazor" Version="6.0.0" />
-    <PackageVersion Include="Refit" Version="10.1.6" />
+    <PackageVersion Include="Refit" Version="12.0.0" />
     <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Formatting.Elasticsearch" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Http" Version="9.2.1" />
