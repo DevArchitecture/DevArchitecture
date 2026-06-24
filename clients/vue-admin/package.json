@@ -12,6 +12,7 @@
     "@primeuix/themes": "^2.0.3",
     "axios": "^1.15.0",
     "jwt-decode": "^4.0.0",
+    "pinia": "^3.0.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.5.5",
     "vue": "^3.5.32",
