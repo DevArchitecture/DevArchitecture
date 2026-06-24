@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -39,9 +41,12 @@ namespace Core.CrossCuttingConcerns.Exceptions
             var (statusCode, message) = exception switch
             {
                 UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
+                SecurityException => (StatusCodes.Status401Unauthorized, "Security error"),
+                ValidationException => (StatusCodes.Status400BadRequest, exception.Message),
                 ArgumentException => (StatusCodes.Status400BadRequest, exception.Message),
                 KeyNotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
                 InvalidOperationException => (StatusCodes.Status409Conflict, exception.Message),
+                NotSupportedException => (StatusCodes.Status400BadRequest, exception.Message),
                 _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred")
             };
 

@@ -189,8 +189,6 @@ namespace WebAPI
 
             app.UseDeveloperExceptionPage();
 
-            app.ConfigureCustomExceptionMiddleware();
-
             app.UseDbOperationClaimCreator().GetAwaiter().GetResult();
             
             if (!env.IsProduction())
