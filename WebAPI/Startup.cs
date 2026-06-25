@@ -146,25 +146,36 @@ namespace WebAPI
                     }
                 });
 
-                c.IncludeXmlComments(Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml"));
+                var xmlFile = Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml");
+                if (File.Exists(xmlFile))
+                {
+                    c.IncludeXmlComments(xmlFile);
+                }
             });
 
             services.AddTransient<FileLogger>();
             services.AddTransient<PostgreSqlLogger>();
             services.AddTransient<MsSqlLogger>();
             services.AddScoped<IpControlAttribute>();
-            services.AddHealthChecks()
-                .AddSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
+
+            var healthChecksBuilder = services.AddHealthChecks()
+                .AddCheck("self", () => HealthCheckResult.Healthy());
+
+            var sqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            if (!string.IsNullOrEmpty(sqlConnectionString))
+            {
+                healthChecksBuilder.AddSqlServer(
+                    sqlConnectionString,
                     name: "sqlserver",
                     timeout: TimeSpan.FromSeconds(5),
-                    tags: new[] { "db", "sql", "ready" })
-                .AddHangfire(
+                    tags: new[] { "db", "sql", "ready" });
+            }
+
+            healthChecksBuilder.AddHangfire(
                     options => options.MaximumJobsFailed = 5,
                     name: "hangfire",
                     timeout: TimeSpan.FromSeconds(5),
-                    tags: new[] { "scheduler", "hangfire", "ready" })
-                .AddCheck("self", () => HealthCheckResult.Healthy());
+                    tags: new[] { "scheduler", "hangfire", "ready" });
 
             services.AddResponseCaching(options =>
             {

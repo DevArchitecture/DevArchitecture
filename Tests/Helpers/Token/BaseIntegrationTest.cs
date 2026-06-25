@@ -1,29 +1,32 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
+﻿using System.Net.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using WebAPI;
 
 namespace Tests.Helpers.Token
 {
     [TestFixture]
-    public abstract class BaseIntegrationTest : WebApplicationFactory<Startup>
+    public abstract class BaseIntegrationTest
     {
-        private static readonly JwtSecurityTokenHandler s_TokenHandler = new ();
-
-        public string Issuer { get; } = "www.devarchitecture.com";
-        public string Audience { get; } = "www.devarchitecture.com";
-        public SigningCredentials SigningCredentials { get; }
+        private WebApplicationFactory<Startup> _factory;
 
         protected HttpClient HttpClient { get; set; }
-
-        protected WebApplicationFactory<Startup> Factory => new ();
 
         [SetUp]
         public void Setup()
         {
-            HttpClient = CreateClient();
+            _factory = new WebApplicationFactory<Startup>();
+            HttpClient = _factory.CreateClient();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            HttpClient?.Dispose();
+            _factory?.Dispose();
         }
     }
 }

@@ -58,34 +58,7 @@ namespace Core.DependencyResolvers
                 return new UriManager(uri);
             });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc(SwaggerMessages.Version, new OpenApiInfo
-                {
-                    Version = SwaggerMessages.Version,
-                    Title = SwaggerMessages.Title,
-                    Description = SwaggerMessages.Description
-                    // TermsOfService = new Uri(SwaggerMessages.TermsOfService),
-                    // Contact = new OpenApiContact
-                    // {
-                    //    Name = SwaggerMessages.ContactName,
-                    // },
-                    // License = new OpenApiLicense
-                    // {
-                    //    Name = SwaggerMessages.LicenceName,
-                    // },
-                });
-
-                c.OperationFilter<AddAuthHeaderOperationFilter>();
-                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
-                {
-                    Description = "`Token only!!!` - without `Bearer_` prefix",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Scheme = "bearer"
-                });
-            });
+            services.AddSwaggerGen();
         }
     }
 }
