@@ -3,8 +3,8 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="AspNetCore.HealthChecks.Hangfire" Version="8.0.2" />
-    <PackageVersion Include="AspNetCore.HealthChecks.Redis" Version="8.0.2" />
+    <PackageVersion Include="AspNetCore.HealthChecks.Hangfire" Version="9.0.0" />
+    <PackageVersion Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
     <PackageVersion Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.2" />
     <PackageVersion Include="AutoMapper" Version="16.1.1" />
     <PackageVersion Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
@@ -54,6 +54,8 @@
     <PackageVersion Include="NuGet.Protocol" Version="7.3.1" />
     <PackageVersion Include="Oracle.EntityFrameworkCore" Version="10.23.26200" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.2.1" />
+    <PackageVersion Include="SharpCompress" Version="0.36.0" />
+    <PackageVersion Include="Snappier" Version="1.1.6" />
     <PackageVersion Include="Radzen.Blazor" Version="6.0.0" />
     <PackageVersion Include="Refit" Version="12.0.0" />
     <PackageVersion Include="Serilog" Version="4.3.1" />
