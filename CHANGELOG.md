@@ -31,6 +31,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Fix root package.json JSON error and sync React lock file**
 
 
+- **Set health check ResultStatusCodes to always return 200** *(docker)*
+
+
 
 
 ### Miscellaneous
