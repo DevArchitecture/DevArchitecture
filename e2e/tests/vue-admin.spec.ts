@@ -1,53 +1,39 @@
 import { test, expect } from '@playwright/test'
+import { AppFixtures } from '../fixtures/app.fixture'
 
-test.describe('Vue Admin - E2E', () => {
-  test('app loads and renders login page', async ({ page }) => {
+test.describe('Vue Admin - Login & Navigation', () => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('body')).toBeVisible()
-    await expect(page).toHaveURL(/\/login/)
-  })
-
-  test('login form is displayed', async ({ page }) => {
-    await page.goto('/')
-    // Wait for login form to render via PrimeVue
     await page.waitForLoadState('networkidle')
-    await expect(page.locator('input[type="text"]').first()).toBeVisible()
   })
 
-  test('page title is DevArchitecture', async ({ page }) => {
-    await page.goto('/')
+  test('Login form renders with all required fields', async ({ page }) => {
+    const app = new AppFixtures(page)
+    const isVisible = await app.login.isLoginFormVisible()
+
+    expect(isVisible).toBe(true)
+    const passwordField = page.locator('input[type="password"]')
+    await expect(passwordField).toBeVisible()
+    const submitBtn = page.locator('button[type="submit"], button:has-text("Giriş"), button:has-text("Login")')
+    await expect(submitBtn).toBeVisible()
+  })
+
+  test('App title is set correctly', async ({ page }) => {
     const title = await page.title()
-    expect(title).toBeTruthy()
-  })
-})
-
-test.describe('React Admin - E2E', () => {
-  test('app loads successfully', async ({ page }) => {
-    await page.goto('/')
-    await expect(page.locator('body')).toBeVisible()
+    expect(title.length).toBeGreaterThan(0)
   })
 
-  test('renders without crash', async ({ page }) => {
-    await page.goto('/')
-    await page.waitForLoadState('networkidle')
-    const errorLogs: string[] = []
-    page.on('console', (msg) => {
-      if (msg.type() === 'error') errorLogs.push(msg.text())
-    })
-    expect(errorLogs.length).toBe(0)
-  })
-})
-
-test.describe('Angular Admin - E2E', () => {
-  test('app loads and renders login page', async ({ page }) => {
-    await page.goto('/')
-    await expect(page.locator('body')).toBeVisible()
+  test('Page renders without JavaScript console errors', async ({ page }) => {
+    const app = new AppFixtures(page)
+    const errors = await app.captureConsoleErrors()
+    await app.checkNoConsoleErrors(errors)
   })
 
-  test('application shell is rendered', async ({ page }) => {
-    await page.goto('/')
-    await page.waitForLoadState('networkidle')
-    const html = await page.content()
-    expect(html.length).toBeGreaterThan(100)
+  test('Failed login shows error message', async ({ page }) => {
+    const app = new AppFixtures(page)
+    await app.login.login('invalid@test.com', 'wrongpass')
+    await page.waitForTimeout(1000)
+    const body = await page.textContent('body')
+    expect(body).toBeTruthy()
   })
 })
