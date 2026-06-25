@@ -77,6 +77,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add Blazor component verification tests**
 
 
+- **Add Groups (5) and Languages (22) handler tests**
+
+
 ## [2.0.0] - 2026-06-25
 
 
