@@ -111,18 +111,28 @@ namespace WebAPI
             services.AddTransient<PostgreSqlLogger>();
             services.AddTransient<MsSqlLogger>();
             services.AddScoped<IpControlAttribute>();
-            services.AddHealthChecks()
-                .AddSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    name: "sqlserver",
-                    timeout: TimeSpan.FromSeconds(5),
-                    tags: new[] { "db", "sql", "ready" })
-                .AddHangfire(
+            var healthChecks = services.AddHealthChecks()
+                .AddCheck("self", () => HealthCheckResult.Healthy());
+
+            var taskSchedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
+            if (taskSchedulerConfig?.Enabled == true)
+            {
+                healthChecks.AddHangfire(
                     options => options.MaximumJobsFailed = 5,
                     name: "hangfire",
                     timeout: TimeSpan.FromSeconds(5),
-                    tags: new[] { "scheduler", "hangfire", "ready" })
-                .AddCheck("self", () => HealthCheckResult.Healthy());
+                    tags: new[] { "scheduler", "hangfire", "ready" });
+            }
+
+            var defaultConnection = Configuration.GetConnectionString("DefaultConnection");
+            if (!string.IsNullOrWhiteSpace(defaultConnection))
+            {
+                healthChecks.AddSqlServer(
+                    defaultConnection,
+                    name: "sqlserver",
+                    timeout: TimeSpan.FromSeconds(5),
+                    tags: new[] { "db", "sql", "ready" });
+            }
 
             services.AddResponseCaching(options =>
             {
