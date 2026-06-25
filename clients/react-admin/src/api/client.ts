@@ -84,6 +84,12 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+const dispatchAppError = (message: string) => {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("app-error", { detail: { message } }));
+  }
+};
+
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -94,6 +100,14 @@ apiClient.interceptors.response.use(
       if (typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
         window.location.href = "/login";
       }
+      return Promise.reject(error);
+    }
+    if (status === 403) {
+      dispatchAppError("You do not have permission to perform this action.");
+    } else if (status === 429) {
+      dispatchAppError("Too many requests. Please slow down and try again.");
+    } else if (status && status >= 500) {
+      dispatchAppError("A server error occurred. Please try again later.");
     }
     return Promise.reject(error);
   }
