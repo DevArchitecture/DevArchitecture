@@ -52,6 +52,9 @@ Improve Flutter client's `api_translate_service` to robustly parse various API r
 - **Consolidate exception handling and remove duplicate middleware** *(backend)*
 
 
+- **Add SecurityTokenException handling to return 401** *(security)*
+
+
 
 
 ### Documentation
