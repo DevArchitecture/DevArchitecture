@@ -27,6 +27,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Remove npm workspaces config, fix Docker Hangfire health check, clean up playwright**
 
 
+- **Fix root package.json JSON error and sync React lock file**
+
+
 
 
 ### Testing
