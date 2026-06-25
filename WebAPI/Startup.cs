@@ -332,6 +332,12 @@ namespace WebAPI
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/healthz", new HealthCheckOptions
                 {
+                    ResultStatusCodes =
+                    {
+                        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                        [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                        [HealthStatus.Unhealthy] = StatusCodes.Status200OK
+                    },
                     ResponseWriter = async (context, report) =>
                     {
                         context.Response.ContentType = "application/json";
