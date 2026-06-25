@@ -94,6 +94,12 @@ apiClient.interceptors.response.use(
       if (typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
         window.location.href = "/login";
       }
+    } else if (status === 403) {
+      window.dispatchEvent(new CustomEvent('app-error', { detail: { message: 'You do not have permission to perform this action' } }));
+    } else if (status === 429) {
+      window.dispatchEvent(new CustomEvent('app-error', { detail: { message: 'Too many requests. Please try again later.' } }));
+    } else if (status && status >= 500) {
+      window.dispatchEvent(new CustomEvent('app-error', { detail: { message: 'Server error. Please try again later.' } }));
     }
     return Promise.reject(error);
   }

@@ -11,6 +11,23 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 ---
 
+## [2.0.0] - 2026-06-24
+
+### Features
+- **Add test coverage for backend exception handling, pagination, and health checks** *(backend)*
+- **Add Vue frontend unit tests for API client, error handler, and form validation** *(frontend)*
+- **Add Angular error handler service tests** *(frontend)*
+- **Add React error handling hook and API client improvements** *(frontend)*
+- **Enhance Swagger documentation with JWT authentication** *(docs)*
+
+### Bug Fixes
+- **Update AspNetCore.HealthChecks packages from 8.0.2 to 9.0.0** *(deps)*
+- **Enable CentralPackageTransitivePinningEnabled to resolve vulnerability warnings** *(build)*
+- **Fix SharpCompress moderate severity vulnerability** *(security)*
+- **Fix Snappier high severity vulnerability** *(security)*
+
+---
+
 ## [unreleased]
 
 
