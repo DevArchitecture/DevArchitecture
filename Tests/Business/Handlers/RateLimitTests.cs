@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Handlers.Users.Queries;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using FluentAssertions;
 using Moq;
@@ -60,9 +62,9 @@ namespace Tests.Business.Handlers
             {
                 new User { UserId = 1, FullName = "User 1", Email = "user1@test.com" },
                 new User { UserId = 2, FullName = "User 2", Email = "user2@test.com" }
-            };
+            }.AsQueryable();
 
-            repoMock.Setup(x => x.GetListAsync()).ReturnsAsync(users);
+            repoMock.Setup(x => x.GetListAsync()).ReturnsAsync(users.AsEnumerable());
 
             mapperMock.Setup(x => x.Map<UserDto>(It.IsAny<User>()))
                 .Returns((User u) => new UserDto { UserId = u.UserId, FullName = u.FullName });
