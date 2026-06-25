@@ -20,9 +20,9 @@ DevArchitecture is an open-source framework for rapid application development us
 | Tool | Version / notes |
 |------|------------------|
 | [.NET SDK](https://dotnet.microsoft.com/download) | **10.x** (`TargetFramework`: `net10.0`) |
-| [Node.js](https://nodejs.org/) | **LTS** (for most clients); `UiPreparation/UI` declares **Node ≥ 20.11.1** and **npm ≥ 10.5.0** in `package.json` `engines` |
+| [Node.js](https://nodejs.org/) | **LTS** (for most clients) |
 | npm | Ships with Node |
-| [Flutter SDK](https://docs.flutter.dev/get-started/install) | For `UiPreparation/FlutterUi`: `pubspec.yaml` **Dart SDK `>=3.4.1 <4.0.0`** (comment: tested **3.22.3**) |
+| [Flutter SDK](https://docs.flutter.dev/get-started/install) | For `UiPreparation/FlutterUi` |
 
 For local HTTPS (API and clients), run once:
 
@@ -173,6 +173,29 @@ API: `src/environments/environment.ts` → `getApiUrl` = `https://localhost:5101
 - **API**: JWT, versioned REST (`/api/v1`), shared contract for translations / language codes and admin modules.
 - **Look & feel (`clients/*`)**: Sakai-style shell (emerald primary, slate neutrals). Vue / Angular / React use dark mode via **`localStorage`** key **`devarch.darkMode`**; Blazor aligns Radzen theme variables to the same palette.
 - **NuGet**: **`Directory.Packages.props`** centralizes package versions.
+
+---
+
+## Version History
+
+| Version | Date | Highlights |
+|---------|------|------------|
+| **v2.0.0** | 2026-06-24 | Security fixes, API integration tests, React/Angular/Vue E2E tests, Swagger JWT auth |
+| **v1.1.0** | 2026-06-24 | Rate limiting, global exception handling, health checks, pagination, response caching |
+| **v1.0.0** | 2026-04-20 | Initial release: .NET 10, Vue/Angular/React/Blazor clients, JWT auth, CQRS |
+
+---
+
+## Testing
+
+| Layer | Framework | Run command |
+|-------|-----------|-------------|
+| Backend unit | NUnit | `dotnet test` |
+| Backend API | WebApplicationFactory | `dotnet test --filter "WebAPI"` |
+| Vue unit | Vitest | `cd clients/vue-admin && npx vitest run` |
+| React unit | Vitest | `cd clients/react-admin && npx vitest run` |
+| Angular unit | Jasmine | `cd clients/angular-admin && npx ng test --watch=false` |
+| E2E (Vue/React/Angular) | Playwright | `cd e2e && npm test` |
 
 ---
 
