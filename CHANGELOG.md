@@ -15,12 +15,20 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 
 
+
 ### Bug Fixes
 
 - **Add DefaultConnection to Docker settings for health check** *(docker)*
 
 
 - **Add RateLimiting config for Docker smoke tests** *(docker)*
+
+
+
+
+### Testing
+
+- **Add API integration tests (health, auth, swagger) and fix health check duplicate**
 
 
 ## [2.0.0] - 2026-06-25
