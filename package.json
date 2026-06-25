@@ -10,5 +10,8 @@
     "dev:vue": "npm --workspace clients/vue-admin run dev",
     "build:react": "npm --workspace clients/react-admin run build",
     "build:vue": "npm --workspace clients/vue-admin run build"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1"
   }
 }

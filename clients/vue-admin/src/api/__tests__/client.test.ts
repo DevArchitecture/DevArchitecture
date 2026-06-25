@@ -15,7 +15,7 @@ vi.mock('@/stores/notification', () => ({
 
 describe('API Client', () => {
   beforeEach(() => {
-    localStorage.clear()
+    vi.stubGlobal('localStorage', { getItem: vi.fn(), setItem: vi.fn(), removeItem: vi.fn(), clear: vi.fn() })
   })
 
   it('creates axios instance with correct base URL', async () => {
