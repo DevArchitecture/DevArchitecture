@@ -42,11 +42,17 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add Playwright E2E test workflow for all clients** *(e2e)*
 
 
+- **Add page object models, fixtures, and comprehensive E2E test suite** *(e2e)*
+
+
 
 
 ### Miscellaneous
 
 - **Regenerate lock files from scratch for CI consistency**
+
+
+- **Add gitignore and cleanup generated files** *(e2e)*
 
 
 
