@@ -6,6 +6,5 @@
     "dev:vue": "npm --workspace clients/vue-admin run dev",
     "build:react": "npm --workspace clients/react-admin run build",
     "build:vue": "npm --workspace clients/vue-admin run build"
-  }
 }
 }
