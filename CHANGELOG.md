@@ -18,6 +18,7 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 
 
+
 ### Bug Fixes
 
 - **Add DefaultConnection to Docker settings for health check** *(docker)*
@@ -36,6 +37,13 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 
 - **Update SharpCompress to 0.49.1 and Snappier to 1.3.1** *(security)*
+
+
+
+
+### Documentation
+
+- **Add pagination usage example for issue #97**
 
 
 
