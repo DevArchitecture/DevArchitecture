@@ -171,11 +171,15 @@ namespace WebAPI
                     tags: new[] { "db", "sql", "ready" });
             }
 
-            healthChecksBuilder.AddHangfire(
+            var schedulerConfig = Configuration.GetSection("TaskSchedulerOptions").Get<TaskSchedulerConfig>();
+            if (schedulerConfig?.Enabled == true)
+            {
+                healthChecksBuilder.AddHangfire(
                     options => options.MaximumJobsFailed = 5,
                     name: "hangfire",
                     timeout: TimeSpan.FromSeconds(5),
                     tags: new[] { "scheduler", "hangfire", "ready" });
+            }
 
             services.AddResponseCaching(options =>
             {
