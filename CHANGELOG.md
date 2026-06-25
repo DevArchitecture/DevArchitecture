@@ -45,6 +45,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add page object models, fixtures, and comprehensive E2E test suite** *(e2e)*
 
 
+- **Add webServer auto-start, test scripts, fix test runner** *(e2e)*
+
+
 
 
 ### Miscellaneous
