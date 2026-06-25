@@ -31,6 +31,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add API integration tests (health, auth, swagger) and fix health check duplicate**
 
 
+- **Add React unit tests, Playwright E2E config, fix Vue tests**
+
+
 ## [2.0.0] - 2026-06-25
 
 
