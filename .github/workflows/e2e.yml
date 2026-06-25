@@ -1,0 +1,97 @@
+name: E2E Tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1' # Every Monday at 6 AM
+
+jobs:
+  e2e-vue:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+      - name: Start Vue app
+        run: |
+          cd ../clients/vue-admin
+          npm ci
+          npx vite --port 5174 &
+          sleep 5
+      - name: Run E2E tests (Vue)
+        run: npx playwright test --project=vue-admin
+        timeout-minutes: 5
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-vue-results
+          path: e2e/test-results/
+
+  e2e-react:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+      - name: Start React app
+        run: |
+          cd ../clients/react-admin
+          npm ci
+          npx vite --port 5173 &
+          sleep 5
+      - name: Run E2E tests (React)
+        run: npx playwright test --project=react-admin
+        timeout-minutes: 5
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-react-results
+          path: e2e/test-results/
+
+  e2e-angular:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+      - name: Start Angular app
+        run: |
+          cd ../clients/angular-admin
+          npm ci
+          npx ng serve --port 4200 &
+          sleep 10
+      - name: Run E2E tests (Angular)
+        run: npx playwright test --project=angular-admin
+        timeout-minutes: 5
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-angular-results
+          path: e2e/test-results/
