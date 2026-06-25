@@ -20,6 +20,7 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 
 
+
 ### Bug Fixes
 
 - **Unnecessary redis cache initialization removed and naming improved**
@@ -53,6 +54,9 @@ Improve Flutter client's `api_translate_service` to robustly parse various API r
 
 
 - **Add SecurityTokenException handling to return 401** *(security)*
+
+
+- **Exclude test files from Vue build and install vitest** *(build)*
 
 
 
@@ -136,6 +140,13 @@ Includes corresponding UI components in Angular, Blazor, React, and Vue clients 
 
 
 - **V2.0.0 - security fixes, tests, React client, Swagger enhancement**
+
+
+
+
+### Miscellaneous
+
+- **Update package-lock.json**
 
 
 
