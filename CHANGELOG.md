@@ -51,6 +51,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add webServer auto-start, test scripts, fix test runner** *(e2e)*
 
 
+- **Fix security vulns, add Users handler tests, update README**
+
+
 
 
 ### Miscellaneous
