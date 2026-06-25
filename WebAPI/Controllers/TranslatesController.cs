@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Entities.Dtos;
 
 namespace WebAPI.Controllers
@@ -27,6 +28,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("languages/{lang}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetTranslatesByLang([FromRoute] string lang)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesByLangQuery() { Lang = lang }));
@@ -42,6 +44,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslatesQuery()));
@@ -57,6 +60,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Translate>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("dtos")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetTranslateListDto()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateListDtoQuery()));
@@ -72,6 +76,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Translate))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetById(int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetTranslateQuery { Id = id }));
@@ -87,6 +92,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Add([FromBody] CreateTranslateCommand createTranslate)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createTranslate));
@@ -102,6 +108,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Update([FromBody] UpdateTranslateDto updateTranslateDto)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateTranslateCommand{Id = updateTranslateDto.Id, LangId = updateTranslateDto.LangId, Value = updateTranslateDto.Value,Code = updateTranslateDto.Code }));
@@ -117,6 +124,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new DeleteTranslateCommand{Id = id}));

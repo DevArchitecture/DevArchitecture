@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Entities.Dtos;
 
 namespace WebAPI.Controllers
@@ -28,6 +29,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetList()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimsQuery()));
@@ -43,6 +45,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OperationClaim))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id}")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetByid([FromRoute]int id)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimQuery() { Id = id }));
@@ -58,6 +61,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SelectionItem>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("lookups")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetOperationClaimLookup()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimLookupQuery()));
@@ -73,6 +77,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Update([FromBody] UpdateOperationClaimDto updateOperationClaimDto)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(new UpdateOperationClaimCommand{Id = updateOperationClaimDto.Id, Alias = updateOperationClaimDto.Alias, Description = updateOperationClaimDto.Description}));
@@ -88,6 +93,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OperationClaim>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("cache")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetUserClaimsFromCache()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetUserClaimsFromCacheQuery()));

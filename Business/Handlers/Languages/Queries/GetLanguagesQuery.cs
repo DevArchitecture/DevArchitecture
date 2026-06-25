@@ -10,9 +10,11 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Business.Handlers.Languages.Queries
 {
+    [ResponseCache(Duration = 60)]
     public class GetLanguagesQuery : IRequest<IDataResult<IEnumerable<Language>>>
     {
         public class GetLanguagesQueryHandler : IRequestHandler<GetLanguagesQuery, IDataResult<IEnumerable<Language>>>

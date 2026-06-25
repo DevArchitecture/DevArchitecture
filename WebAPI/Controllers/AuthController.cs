@@ -7,6 +7,7 @@ using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
 using Entities.Dtos;
 using IResult = Core.Utilities.Results.IResult;
@@ -32,6 +33,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost("login")]
+        [EnableRateLimiting("auth")]
         public async Task<IActionResult> Login([FromBody] LoginUserQuery loginModel)
         {
             var result = await Mediator.Send(loginModel);
@@ -44,6 +46,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost("refresh-token")]
+        [EnableRateLimiting("auth")]
         public async Task<IActionResult> LoginWithRefreshToken([FromBody] LoginWithRefreshTokenQuery command)
         {
             var result = await Mediator.Send(command);
@@ -61,6 +64,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpPost("register")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
             return GetResponseOnlyResult(await Mediator.Send(createUser));
@@ -78,6 +82,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpPut("forgot-password")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand forgotPassword)
         {
             return GetResponseOnlyResult(await Mediator.Send(forgotPassword));
@@ -93,6 +98,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut("user-password")]
+        [EnableRateLimiting("crud")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordCommand command)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(command));
@@ -109,6 +115,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost("verify")]
+        [EnableRateLimiting("auth")]
         public async Task<IActionResult> Verification([FromBody] VerifyCidQuery verifyCid)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(verifyCid));
@@ -122,6 +129,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [HttpPost("test")]
+        [EnableRateLimiting("auth")]
         public IActionResult LoginTest()
         {
             var auth = Request.Headers["Authorization"];

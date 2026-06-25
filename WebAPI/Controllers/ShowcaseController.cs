@@ -3,6 +3,7 @@ using Business.Handlers.Showcase.Queries;
 using Core.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace WebAPI.Controllers
 {
@@ -20,6 +21,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShowcasePageDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("rows")]
+        [EnableRateLimiting("read")]
         public async Task<IActionResult> GetRows([FromQuery] int page = 1, [FromQuery] int pageSize = 50)
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetShowcaseRowsQuery

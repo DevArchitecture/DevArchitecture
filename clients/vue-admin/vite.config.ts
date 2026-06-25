@@ -27,6 +27,7 @@ export default defineConfig({
   appType: "spa",
   resolve: {
     alias: {
+      "@": path.resolve(__dirname, "src"),
       primeicons: resolvePrimeIconsPackageRoot()
     }
   },

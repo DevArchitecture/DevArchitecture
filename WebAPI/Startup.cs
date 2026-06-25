@@ -1,9 +1,14 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
+using System.Text.Json;
 using Business;
 using Business.Helpers;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -14,12 +19,16 @@ using Hangfire;
 using HangfireBasicAuthenticationFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -102,7 +111,71 @@ namespace WebAPI
             services.AddTransient<PostgreSqlLogger>();
             services.AddTransient<MsSqlLogger>();
             services.AddScoped<IpControlAttribute>();
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    name: "sqlserver",
+                    timeout: TimeSpan.FromSeconds(5),
+                    tags: new[] { "db", "sql", "ready" })
+                .AddHangfire(
+                    options => options.MaximumJobsFailed = 5,
+                    name: "hangfire",
+                    timeout: TimeSpan.FromSeconds(5),
+                    tags: new[] { "scheduler", "hangfire", "ready" })
+                .AddCheck("self", () => HealthCheckResult.Healthy());
+
+            services.AddResponseCaching(options =>
+            {
+                options.MaximumBodySize = 1024 * 1024; // 1 MB
+                options.SizeLimit = 100 * 1024 * 1024; // 100 MB
+            });
+
+            var rateLimitingConfig = Configuration.GetSection("RateLimiting");
+
+            services.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                options.OnRejected = async (context, cancellationToken) =>
+                {
+                    context.HttpContext.Response.ContentType = "application/json";
+                    var retryAfter = context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfterTime)
+                        ? (int)retryAfterTime.TotalSeconds
+                        : 60;
+                    var response = new
+                    {
+                        statusCode = 429,
+                        message = "Too many requests. Please try again later.",
+                        retryAfter
+                    };
+                    await context.HttpContext.Response.WriteAsync(
+                        JsonSerializer.Serialize(response), cancellationToken);
+                };
+
+                var authConfig = rateLimitingConfig.GetSection("Auth");
+                options.AddFixedWindowLimiter("auth", limiterOptions =>
+                {
+                    limiterOptions.PermitLimit = authConfig.GetValue<int>("PermitLimit");
+                    limiterOptions.Window = TimeSpan.FromMinutes(authConfig.GetValue<int>("WindowMinutes"));
+                    limiterOptions.QueueLimit = authConfig.GetValue<int>("QueueLimit");
+                });
+
+                var crudConfig = rateLimitingConfig.GetSection("Crud");
+                options.AddFixedWindowLimiter("crud", limiterOptions =>
+                {
+                    limiterOptions.PermitLimit = crudConfig.GetValue<int>("PermitLimit");
+                    limiterOptions.Window = TimeSpan.FromMinutes(crudConfig.GetValue<int>("WindowMinutes"));
+                    limiterOptions.QueueLimit = crudConfig.GetValue<int>("QueueLimit");
+                });
+
+                var readConfig = rateLimitingConfig.GetSection("Read");
+                options.AddFixedWindowLimiter("read", limiterOptions =>
+                {
+                    limiterOptions.PermitLimit = readConfig.GetValue<int>("PermitLimit");
+                    limiterOptions.Window = TimeSpan.FromMinutes(readConfig.GetValue<int>("WindowMinutes"));
+                    limiterOptions.QueueLimit = readConfig.GetValue<int>("QueueLimit");
+                });
+            });
 
             base.ConfigureServices(services);
         }
@@ -137,8 +210,6 @@ namespace WebAPI
 
             app.UseDeveloperExceptionPage();
 
-            app.ConfigureCustomExceptionMiddleware();
-
             app.UseDbOperationClaimCreator().GetAwaiter().GetResult();
             
             if (!env.IsProduction())
@@ -156,6 +227,12 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseResponseCaching();
+
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
+            app.UseRateLimiter();
 
             app.UseAuthentication();
 
@@ -196,7 +273,31 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/healthz");
+                endpoints.MapHealthChecks("/healthz", new HealthCheckOptions
+                {
+                    ResponseWriter = async (context, report) =>
+                    {
+                        context.Response.ContentType = "application/json";
+                        var response = new
+                        {
+                            status = report.Status.ToString(),
+                            checks = report.Entries.Select(e => new
+                            {
+                                name = e.Key,
+                                status = e.Value.Status.ToString(),
+                                duration = e.Value.Duration.TotalMilliseconds,
+                                description = e.Value.Description,
+                                exception = e.Value.Exception?.Message
+                            }),
+                            totalDuration = report.TotalDuration.TotalMilliseconds
+                        };
+                        await context.Response.WriteAsJsonAsync(response);
+                    }
+                });
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => false
+                });
             });
         }
     }
