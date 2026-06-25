@@ -24,6 +24,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add RateLimiting config for Docker smoke tests** *(docker)*
 
 
+- **Remove npm workspaces config, fix Docker Hangfire health check, clean up playwright**
+
+
 
 
 ### Testing
