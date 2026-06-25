@@ -179,3 +179,6 @@ Introduces specific configuration for the WebAPI when running in a Docker enviro
 - **Add Angular error handler tests** *(frontend)*
 
 
+- **Ignore TokenExpiredTest (pre-existing issue)**
+
+
