@@ -54,6 +54,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Fix security vulns, add Users handler tests, update README**
 
 
+- **Add scaffolding script for new entities (handlers, controller, tests)** *(cli)*
+
+
 
 
 ### Miscellaneous
