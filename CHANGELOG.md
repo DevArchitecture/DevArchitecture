@@ -16,6 +16,7 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 
 
+
 ### Bug Fixes
 
 - **Add DefaultConnection to Docker settings for health check** *(docker)*
@@ -28,6 +29,13 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 
 - **Fix root package.json JSON error and sync React lock file**
+
+
+
+
+### Miscellaneous
+
+- **Regenerate lock files from scratch for CI consistency**
 
 
 
