@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "test": "playwright test",
-    "install": "playwright install chromium"
+    "test:vue": "playwright test --project=vue-admin",
+    "test:react": "playwright test --project=react-admin",
+    "test:angular": "playwright test --project=angular-admin",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.52.0"
