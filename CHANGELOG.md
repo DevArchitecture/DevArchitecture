@@ -34,6 +34,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add React unit tests, Playwright E2E config, fix Vue tests**
 
 
+- **Add Blazor component verification tests**
+
+
 ## [2.0.0] - 2026-06-25
 
 
