@@ -11,24 +11,8 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 
 ---
 
-## [2.0.0] - 2026-06-24
-
-### Features
-- **Add test coverage for backend exception handling, pagination, and health checks** *(backend)*
-- **Add Vue frontend unit tests for API client, error handler, and form validation** *(frontend)*
-- **Add Angular error handler service tests** *(frontend)*
-- **Add React error handling hook and API client improvements** *(frontend)*
-- **Enhance Swagger documentation with JWT authentication** *(docs)*
-
-### Bug Fixes
-- **Update AspNetCore.HealthChecks packages from 8.0.2 to 9.0.0** *(deps)*
-- **Enable CentralPackageTransitivePinningEnabled to resolve vulnerability warnings** *(build)*
-- **Fix SharpCompress moderate severity vulnerability** *(security)*
-- **Fix Snappier high severity vulnerability** *(security)*
-
----
-
 ## [unreleased]
+
 
 
 
@@ -76,6 +60,9 @@ Improve Flutter client's `api_translate_service` to robustly parse various API r
 
 The `.github/README.md` file, which contained detailed comparisons to the 'Intentum' project, has been removed. References and specific comparisons to 'Intentum' have also been stripped from comments within GitHub Actions workflows (`ci.yml`, `nuget-release.yml`, `pages.yml`). This change streamlines the repository's internal documentation and workflow explanations, making them self-contained and directly relevant to this project without external contextual dependencies.
 
+
+
+- **Enhance Swagger documentation with JWT auth** *(api)*
 
 
 
@@ -145,6 +132,9 @@ Includes corresponding UI components in Angular, Blazor, React, and Vue clients 
 - **Add Vue API client wrapper** *(frontend)*
 
 
+- **V2.0.0 - security fixes, tests, React client, Swagger enhancement**
+
+
 
 
 ### Other
@@ -166,5 +156,12 @@ Introduces specific configuration for the WebAPI when running in a Docker enviro
 
 
 - **Remove unused 'nexus' NuGet source and format Blazor admin HTML** *(build)*
+
+
+
+
+### Testing
+
+- **Add Angular error handler tests** *(frontend)*
 
 
