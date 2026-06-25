@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Core.CrossCuttingConcerns.Exceptions
 {
@@ -40,6 +41,7 @@ namespace Core.CrossCuttingConcerns.Exceptions
 
             var (statusCode, message) = exception switch
             {
+                SecurityTokenException => (StatusCodes.Status401Unauthorized, "Invalid or expired token"),
                 UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
                 SecurityException => (StatusCodes.Status401Unauthorized, "Security error"),
                 ValidationException => (StatusCodes.Status400BadRequest, exception.Message),
