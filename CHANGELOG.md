@@ -83,6 +83,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Add Groups (5) and Languages (22) handler tests**
 
 
+- **Add 6 handler test suites (GroupClaims, Logs, OpClaims, Showcase, Translates, UserClaims) + Blazor component tests**
+
+
 ## [2.0.0] - 2026-06-25
 
 
