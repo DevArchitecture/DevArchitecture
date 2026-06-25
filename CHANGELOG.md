@@ -35,6 +35,9 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Set health check ResultStatusCodes to always return 200** *(docker)*
 
 
+- **Update SharpCompress to 0.49.1 and Snappier to 1.3.1** *(security)*
+
+
 
 
 ### Features
