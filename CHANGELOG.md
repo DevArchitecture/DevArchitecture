@@ -39,6 +39,14 @@ This file is generated from **conventional commits** via [git-cliff](https://git
 - **Update SharpCompress to 0.49.1 and Snappier to 1.3.1** *(security)*
 
 
+- **Update login page selector for PrimeReact 10 compatibility** *(e2e)*
+
+PrimeReact 10 InputText renders without explicit type="text" attribute.
+Changed selector from input[type="text"] to input.p-inputtext:not([type="password"])
+and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
+
+
+
 
 
 ### Documentation
