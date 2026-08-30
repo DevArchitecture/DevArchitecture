@@ -9,7 +9,7 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page
-    this.usernameInput = page.locator('input[type="text"]').first()
+    this.usernameInput = page.locator('input.p-inputtext:not([type="password"])').first()
     this.passwordInput = page.locator('input[type="password"]').first()
     this.submitButton = page.locator('button[type="submit"], button:has-text("Giriş"), button:has-text("Login")').first()
     this.errorMessage = page.locator('.p-message, .error, [role="alert"]').first()
@@ -28,6 +28,7 @@ export class LoginPage {
   }
 
   async isLoginFormVisible(): Promise<boolean> {
-    return this.usernameInput.isVisible()
+    await this.usernameInput.waitFor({ state: 'visible', timeout: 10000 })
+    return true
   }
 }
