@@ -47,6 +47,29 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 
 
 
+- **Enforce JWT signing key validation and max token lifetime (#123)** *(security)*
+
+- fail fast at startup when TokenOptions:SecurityKey is missing or < 32 bytes
+- reject previously published sample keys in Production/Staging
+- remove committed key from base appsettings.json (env override supported)
+- reject tokens expiring more than AccessTokenExpiration+1min in the future
+- add TokenOptionsValidatorTests and ForgedTokenLifetimeTests
+- document secure key configuration in README (EN/TR)
+
+
+
+- **Unwrap paginated responses and fetch all list pages** *(clients)*
+
+- honor pageNumber/pageSize query params in UsersController.GetList
+- add fetch-all helper (Vue/React) and getAllRows (Angular) that unwrap
+  PaginatedResult bodies and loop pages, keeping bare-array endpoints working
+- use it for resource lists and relation-dialog lookups (group users list)
+- add UsersPaginationTests, client unit tests and e2e coverage for the
+  users list and group-users dialog
+- repair stale Angular scaffold spec that broke test compilation
+
+
+
 
 
 ### Documentation
