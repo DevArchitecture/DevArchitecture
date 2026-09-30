@@ -15,6 +15,7 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { FilterMatchMode } from "primereact/api";
 import { authStore, crudApi } from "../api/client";
+import { fetchAllRows } from "../api/pagination";
 import { CLIENT_MODULES } from "../config/modules";
 
 type FieldType = "text" | "number" | "boolean" | "textarea" | "lookup";
@@ -249,8 +250,7 @@ export function ResourcePage() {
       await loadLanguageLookupOptions();
     }
     try {
-      const { data } = await crudApi.list(moduleConfig.resourcePath);
-      setRows(Array.isArray(data) ? (data as Record<string, unknown>[]) : []);
+      setRows(await fetchAllRows(moduleConfig.resourcePath));
       if (showMessage) {
         notifyToast("info", t("notify.listRefreshed", "List refreshed"));
       }
@@ -432,8 +432,7 @@ export function ResourcePage() {
 
     setRelationLookupLoading(true);
     try {
-      const { data } = await crudApi.list(resourcePath);
-      const list = Array.isArray(data) ? (data as Record<string, unknown>[]) : [];
+      const list = await fetchAllRows(resourcePath);
       const options = list
         .map((row) => {
           const getId = (...keys: string[]) => {

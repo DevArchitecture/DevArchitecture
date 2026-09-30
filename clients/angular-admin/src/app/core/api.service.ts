@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of, switchMap } from "rxjs";
 import { environment } from "../../environments/environment";
+
+export const PAGE_SIZE = 100;
 
 export type ClientModule = {
   key: string;
@@ -35,6 +37,42 @@ export class ApiService {
       headers: this.noCacheHeaders,
       params: new HttpParams().set("_ts", Date.now().toString())
     });
+  }
+
+  private getPage(resourcePath: string, pageNumber: number): Observable<unknown> {
+    return this.http.get<unknown>(`${environment.apiBaseUrl}${resourcePath}`, {
+      headers: this.noCacheHeaders,
+      params: new HttpParams()
+        .set("_ts", Date.now().toString())
+        .set("pageNumber", pageNumber.toString())
+        .set("pageSize", PAGE_SIZE.toString())
+    });
+  }
+
+  private unwrapRows(body: unknown): unknown[] | null {
+    if (Array.isArray(body)) return body;
+    if (body && typeof body === "object" && Array.isArray((body as { data?: unknown }).data)) {
+      return (body as { data: unknown[] }).data;
+    }
+    return null;
+  }
+
+  getAllRows(resourcePath: string): Observable<unknown[]> {
+    const collect = (pageNumber: number, acc: unknown[]): Observable<unknown[]> =>
+      this.getPage(resourcePath, pageNumber).pipe(
+        switchMap((body) => {
+          const pageRows = this.unwrapRows(body);
+          if (!pageRows) return of(acc);
+          const all = [...acc, ...pageRows];
+          if (Array.isArray(body)) return of(all);
+          const totalRecords = Number((body as { totalRecords?: unknown }).totalRecords);
+          if (!Number.isFinite(totalRecords) || all.length >= totalRecords || pageRows.length === 0) {
+            return of(all);
+          }
+          return collect(pageNumber + 1, all);
+        })
+      );
+    return collect(1, []);
   }
 
   create(resourcePath: string, payload: unknown): Observable<unknown> {

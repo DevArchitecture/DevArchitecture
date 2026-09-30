@@ -15,6 +15,7 @@ import Dropdown from "primevue/dropdown";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 import { authStore, crudApi } from "../services/api";
+import { fetchAllRows } from "../api/pagination";
 import { CLIENT_MODULES } from "../config/modules";
 
 type FieldType = "text" | "textarea" | "number" | "boolean" | "lookup";
@@ -285,8 +286,7 @@ const loadData = async (showMessage = false) => {
     await loadLanguageLookupOptions();
   }
   try {
-    const { data } = await crudApi.list(moduleConfig.value.resourcePath);
-    rows.value = Array.isArray(data) ? (data as Record<string, unknown>[]) : [];
+    rows.value = await fetchAllRows(moduleConfig.value.resourcePath);
     selectedRow.value = null;
     if (showMessage) {
       toastNotify("info", t("notify.listRefreshed", "List refreshed"));
@@ -447,8 +447,7 @@ const loadRelationLookup = async (type: Exclude<RelationDialogType, "password">)
 
   relationLookupLoading.value = true;
   try {
-    const { data } = await crudApi.list(resourcePath);
-    const list = Array.isArray(data) ? (data as Record<string, unknown>[]) : [];
+    const list = await fetchAllRows(resourcePath);
     relationLookupOptions.value = list
       .map((row) => {
         const getId = (...keys: string[]) => {

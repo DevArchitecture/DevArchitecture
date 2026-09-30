@@ -459,9 +459,9 @@ export class ResourcePageComponent implements OnInit {
       this.loadLanguageLookupOptions();
     }
 
-    this.apiService.getList(this.resourcePath).subscribe({
-      next: (response) => {
-        this.rows = Array.isArray(response) ? (response as Record<string, unknown>[]) : [];
+    this.apiService.getAllRows(this.resourcePath).subscribe({
+      next: (rows) => {
+        this.rows = rows as Record<string, unknown>[];
         this.selectedRow = null;
         this.tableFilterValue = "";
         if (showMessage) {
@@ -768,9 +768,9 @@ export class ResourcePageComponent implements OnInit {
     }
 
     this.relationLookupLoading = true;
-    this.apiService.getList(resourcePath).subscribe({
+    this.apiService.getAllRows(resourcePath).subscribe({
       next: (response) => {
-        const rows = Array.isArray(response) ? (response as Record<string, unknown>[]) : [];
+        const rows = response as Record<string, unknown>[];
         this.relationLookupOptions = rows
           .map((row) => this.toLookupOption(type, row))
           .filter((item): item is LookupOption => item !== null);

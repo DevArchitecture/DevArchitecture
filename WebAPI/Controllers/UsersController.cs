@@ -28,9 +28,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         [EnableRateLimiting("read")]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery()));
+            return GetResponseOnlyResultData(await Mediator.Send(new GetUsersQuery(pageNumber, pageSize)));
         }
 
         /// <summary>

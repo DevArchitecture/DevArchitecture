@@ -183,9 +183,9 @@ export const authStore = {
 };
 
 export const crudApi = {
-  list(resourcePath: string) {
+  list(resourcePath: string, params?: Record<string, number>) {
     return apiClient.get(resourcePath, {
-      params: { _ts: Date.now() }
+      params: { ...(params ?? {}), _ts: Date.now() }
     });
   },
   create(resourcePath: string, payload: unknown) {
