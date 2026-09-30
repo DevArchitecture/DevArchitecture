@@ -57,6 +57,35 @@ dotnet watch run --project ./WebAPI/WebAPI.csproj
 
 ---
 
+## Güvenlik — JWT imzalama anahtarı
+
+> İlgili: [issue #123 — public olarak sabitlenmiş JWT anahtarı](https://github.com/DevArchitecture/DevArchitecture/issues/123)
+
+- Baz yapılandırma `WebAPI/appsettings.json` **imzalama anahtarı içermez** (`TokenOptions:SecurityKey` boştur). Başlangıçta `Core/Utilities/Security/Jwt/TokenOptionsValidator.cs` anahtar yoksa veya **32 bayttan (256 bit) kısaysa** `InvalidOperationException` ile **hızlıca başarısız olur**; API güvensiz yapılandıramayla başlamaz.
+- Deployment'a özel anahtarı ortam değişkeniyle verin (repo'ya asla commit etmeyin):
+
+  ```bash
+  # deployment başına bir kez üretin ve secret manager'da saklayın
+  export TokenOptions__SecurityKey="$(openssl rand -base64 32)"
+  dotnet watch run --project ./WebAPI/WebAPI.csproj
+  ```
+
+  Docker örneği:
+
+  ```bash
+  docker run -e ASPNETCORE_ENVIRONMENT=Production \
+             -e TokenOptions__SecurityKey="<your-secret>" ...
+  ```
+
+- Bu depoda daha önce yayınlanan **bilinen örnek anahtarlar**, ortam `Production` veya `Staging` olduğunda **otomatik reddedilir**.
+- `appsettings.Development.json` içinde **public geliştirme örnek anahtarı** vardır — yalnızca yerel geliştirme içindir. `appsettings.Docker.json` içindeki **public smoke-test anahtarı** CI konteyner `/healthz` smoke testi tarafından kullanılır — gerçek bir deployment'ta kullanmayın; `TokenOptions__SecurityKey` ile ezerin.
+- **Token ömrü:** normal `exp` doğrulamasına ek olarak, JWT bearer işleyicisi süresi `AccessTokenExpiration` dakikasından (+1 dakika clock toleransı) ileride biten token'ları reddeder; sahte uzun ömürlü token'lar (örn. 1 yıl) kabul edilmez.
+- Bir deployment bu depoda yayınlanmış bir anahtarı kullandıysa **compromised kabul edip döndürün (rotate)**.
+
+Regresyon testleri: `Tests/Core/Security/Jwt/TokenOptionsValidatorTests.cs`, `Tests/WebAPI/ForgedTokenLifetimeTests.cs`.
+
+---
+
 ## İstemciler — `clients/`
 
 Özet tablo (detaylar aşağıdaki alt başlıklarda):

@@ -88,6 +88,10 @@ namespace WebAPI
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
+            TokenOptionsValidator.Validate(tokenOptions, HostEnvironment.EnvironmentName);
+
+            var maxTokenLifetime = TimeSpan.FromMinutes(tokenOptions.AccessTokenExpiration + 1);
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -101,6 +105,19 @@ namespace WebAPI
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey),
                         ClockSkew = TimeSpan.Zero
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            if (context.SecurityToken.ValidTo > DateTime.UtcNow.Add(maxTokenLifetime))
+                            {
+                                context.Fail("Token lifetime exceeds the configured maximum.");
+                            }
+
+                            return Task.CompletedTask;
+                        }
                     };
                 });
             services.AddSwaggerGen(c =>

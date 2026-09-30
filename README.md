@@ -57,6 +57,35 @@ dotnet watch run --project ./WebAPI/WebAPI.csproj
 
 ---
 
+## Security — JWT signing key
+
+> Related: [issue #123 — publicly hard-coded JWT key](https://github.com/DevArchitecture/DevArchitecture/issues/123)
+
+- The base `WebAPI/appsettings.json` ships **without** a signing key (`TokenOptions:SecurityKey` is empty). At startup, `Core/Utilities/Security/Jwt/TokenOptionsValidator.cs` **fails fast** (`InvalidOperationException`) when the key is missing or shorter than **32 bytes (256 bits)**, so the API cannot start with an insecure configuration.
+- Provide a deployment-specific key through environment configuration (never commit it):
+
+  ```bash
+  # generate once per deployment and store it in your secret manager
+  export TokenOptions__SecurityKey="$(openssl rand -base64 32)"
+  dotnet watch run --project ./WebAPI/WebAPI.csproj
+  ```
+
+  Docker example:
+
+  ```bash
+  docker run -e ASPNETCORE_ENVIRONMENT=Production \
+             -e TokenOptions__SecurityKey="<your-secret>" ...
+  ```
+
+- **Known sample keys** that used to ship in this repository are rejected automatically when the environment is `Production` or `Staging`.
+- `appsettings.Development.json` contains a **public development sample key** — acceptable for local development only. `appsettings.Docker.json` contains a **public smoke-test key** used by the CI container `/healthz` smoke test — never use it for a real deployment; override it with `TokenOptions__SecurityKey`.
+- **Token lifetime:** besides normal `exp` validation, the JWT bearer handler rejects tokens whose expiration is more than `AccessTokenExpiration` minutes (+1 minute clock tolerance) in the future, so forged long-lived tokens (e.g. 1 year) are refused.
+- If any deployment has ever used a key published in this repository, treat it as compromised and **rotate** it.
+
+Regression tests: `Tests/Core/Security/Jwt/TokenOptionsValidatorTests.cs`, `Tests/WebAPI/ForgedTokenLifetimeTests.cs`.
+
+---
+
 ## Clients — `clients/`
 
 Quick reference (details in the sections below):
