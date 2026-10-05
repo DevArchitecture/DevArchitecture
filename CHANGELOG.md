@@ -70,6 +70,17 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 
 
 
+- **Start WebAPI and seed group data in E2E workflow** *(e2e)*
+
+- the scheduled E2E run never started the backend, so the login-dependent
+  specs timed out waiting for devarch.token on all three jobs
+- run the API in Development (EF InMemory) on https://localhost:5101 in the
+  background while npm/playwright install, wait on /healthz and seed a group
+  row so the group-users relation dialog test has something to select
+- ignore HTTPs errors in Playwright because CI only has an untrusted dev cert
+
+
+
 
 
 ### Documentation
