@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 6 * * 1' # Every Monday at 6 AM
 
+env:
+  DOTNET_VERSION: "10.0.x"
+
 jobs:
   e2e-vue:
     runs-on: ubuntu-latest
@@ -16,10 +19,39 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Prepare HTTPS dev certificate
+        run: dotnet dev-certs https
+      - name: Start API
+        run: |
+          cd ..
+          dotnet run --project WebAPI/WebAPI.csproj -c Release --launch-profile Dev_Development > /tmp/webapi.log 2>&1 &
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
+      - name: Wait for API and seed test data
+        run: |
+          for i in $(seq 1 150); do
+            if curl -skf https://localhost:5101/healthz > /dev/null; then
+              break
+            fi
+            sleep 3
+          done
+          if ! curl -skf https://localhost:5101/healthz > /dev/null; then
+            echo "--- webapi.log ---"
+            cat /tmp/webapi.log
+            exit 1
+          fi
+          token=$(curl -sk -X POST https://localhost:5101/api/v1/Auth/login \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"admin@adminmail.com","password":"Q1w212*_*"}' | jq -r '.data.token')
+          curl -skf -X POST https://localhost:5101/api/v1/groups \
+            -H "Authorization: Bearer $token" \
+            -H 'Content-Type: application/json' \
+            -d '{"groupName":"E2E Test Group"}'
       - name: Start Vue app
         run: |
           cd ../clients/vue-admin
@@ -46,10 +78,39 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Prepare HTTPS dev certificate
+        run: dotnet dev-certs https
+      - name: Start API
+        run: |
+          cd ..
+          dotnet run --project WebAPI/WebAPI.csproj -c Release --launch-profile Dev_Development > /tmp/webapi.log 2>&1 &
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
+      - name: Wait for API and seed test data
+        run: |
+          for i in $(seq 1 150); do
+            if curl -skf https://localhost:5101/healthz > /dev/null; then
+              break
+            fi
+            sleep 3
+          done
+          if ! curl -skf https://localhost:5101/healthz > /dev/null; then
+            echo "--- webapi.log ---"
+            cat /tmp/webapi.log
+            exit 1
+          fi
+          token=$(curl -sk -X POST https://localhost:5101/api/v1/Auth/login \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"admin@adminmail.com","password":"Q1w212*_*"}' | jq -r '.data.token')
+          curl -skf -X POST https://localhost:5101/api/v1/groups \
+            -H "Authorization: Bearer $token" \
+            -H 'Content-Type: application/json' \
+            -d '{"groupName":"E2E Test Group"}'
       - name: Start React app
         run: |
           cd ../clients/react-admin
@@ -76,10 +137,39 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Prepare HTTPS dev certificate
+        run: dotnet dev-certs https
+      - name: Start API
+        run: |
+          cd ..
+          dotnet run --project WebAPI/WebAPI.csproj -c Release --launch-profile Dev_Development > /tmp/webapi.log 2>&1 &
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
+      - name: Wait for API and seed test data
+        run: |
+          for i in $(seq 1 150); do
+            if curl -skf https://localhost:5101/healthz > /dev/null; then
+              break
+            fi
+            sleep 3
+          done
+          if ! curl -skf https://localhost:5101/healthz > /dev/null; then
+            echo "--- webapi.log ---"
+            cat /tmp/webapi.log
+            exit 1
+          fi
+          token=$(curl -sk -X POST https://localhost:5101/api/v1/Auth/login \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"admin@adminmail.com","password":"Q1w212*_*"}' | jq -r '.data.token')
+          curl -skf -X POST https://localhost:5101/api/v1/groups \
+            -H "Authorization: Bearer $token" \
+            -H 'Content-Type: application/json' \
+            -d '{"groupName":"E2E Test Group"}'
       - name: Start Angular app
         run: |
           cd ../clients/angular-admin

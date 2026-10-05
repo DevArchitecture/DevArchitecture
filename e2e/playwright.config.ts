@@ -8,6 +8,8 @@ export default defineConfig({
   workers: 1,
   use: {
     headless: true,
+    // The WebAPI runs on the ASP.NET dev certificate in CI, which no browser trusts.
+    ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
