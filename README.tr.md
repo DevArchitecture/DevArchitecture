@@ -77,8 +77,8 @@ dotnet watch run --project ./WebAPI/WebAPI.csproj
              -e TokenOptions__SecurityKey="<your-secret>" ...
   ```
 
-- Bu depoda daha önce yayınlanan **bilinen örnek anahtarlar**, ortam `Production` veya `Staging` olduğunda **otomatik reddedilir**.
-- `appsettings.Development.json` içinde **public geliştirme örnek anahtarı** vardır — yalnızca yerel geliştirme içindir. `appsettings.Docker.json` içindeki **public smoke-test anahtarı** CI konteyner `/healthz` smoke testi tarafından kullanılır — gerçek bir deployment'ta kullanmayın; `TokenOptions__SecurityKey` ile ezerin.
+- Bu depoda daha önce yayınlanan **bilinen örnek anahtarlar**, `Development` dışındaki tüm ortamlarda **otomatik reddedilir**.
+- `appsettings.Development.json` içinde **public geliştirme örnek anahtarı** vardır — yalnızca yerel geliştirme içindir. `appsettings.Docker.json` **anahtar içermez**; konteyner imajı ve `scripts/smoke-webapi.sh` anahtarı çalışma anında `TokenOptions__SecurityKey` ile verir.
 - **Token ömrü:** normal `exp` doğrulamasına ek olarak, JWT bearer işleyicisi süresi `AccessTokenExpiration` dakikasından (+1 dakika clock toleransı) ileride biten token'ları reddeder; sahte uzun ömürlü token'lar (örn. 1 yıl) kabul edilmez.
 - Bir deployment bu depoda yayınlanmış bir anahtarı kullandıysa **compromised kabul edip döndürün (rotate)**.
 

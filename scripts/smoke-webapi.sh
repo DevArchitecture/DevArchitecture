@@ -9,8 +9,11 @@ CONTAINER_NAME="devarchitecture-webapi-smoke"
 echo "Building image: ${IMAGE_TAG}"
 docker build -t "${IMAGE_TAG}" -f WebAPI/Dockerfile .
 
+SMOKE_JWT_KEY="$(openssl rand -base64 48)"
+
 echo "Starting container on host port ${HOST_PORT}"
-docker run -d --rm --name "${CONTAINER_NAME}" -p "${HOST_PORT}:8080" "${IMAGE_TAG}" >/dev/null
+docker run -d --rm --name "${CONTAINER_NAME}" -p "${HOST_PORT}:8080" \
+  -e "TokenOptions__SecurityKey=${SMOKE_JWT_KEY}" "${IMAGE_TAG}" >/dev/null
 
 cleanup() {
   echo "Stopping smoke container"

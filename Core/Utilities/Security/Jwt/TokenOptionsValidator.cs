@@ -40,7 +40,8 @@ namespace Core.Utilities.Security.Jwt
                     $"for HMAC-SHA256. Current size: {keyLengthInBytes} bytes.");
             }
 
-            if (IsDeploymentEnvironment(environmentName) && PubliclyKnownSecurityKeys.Contains(tokenOptions.SecurityKey))
+            // The sample key only ships in appsettings.Development.json; any other environment must override it.
+            if (!IsLocalDevelopment(environmentName) && PubliclyKnownSecurityKeys.Contains(tokenOptions.SecurityKey))
             {
                 throw new InvalidOperationException(
                     $"TokenOptions:SecurityKey is a publicly known sample key and cannot be used in the " +
@@ -49,10 +50,9 @@ namespace Core.Utilities.Security.Jwt
             }
         }
 
-        private static bool IsDeploymentEnvironment(string environmentName)
+        private static bool IsLocalDevelopment(string environmentName)
         {
-            return string.Equals(environmentName, "Production", StringComparison.OrdinalIgnoreCase) ||
-                   string.Equals(environmentName, "Staging", StringComparison.OrdinalIgnoreCase);
+            return string.Equals(environmentName, "Development", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

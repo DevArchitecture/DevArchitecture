@@ -77,8 +77,8 @@ dotnet watch run --project ./WebAPI/WebAPI.csproj
              -e TokenOptions__SecurityKey="<your-secret>" ...
   ```
 
-- **Known sample keys** that used to ship in this repository are rejected automatically when the environment is `Production` or `Staging`.
-- `appsettings.Development.json` contains a **public development sample key** — acceptable for local development only. `appsettings.Docker.json` contains a **public smoke-test key** used by the CI container `/healthz` smoke test — never use it for a real deployment; override it with `TokenOptions__SecurityKey`.
+- **Known sample keys** that used to ship in this repository are rejected automatically in every environment except `Development`.
+- `appsettings.Development.json` contains a **public development sample key** — acceptable for local development only. `appsettings.Docker.json` ships **without** a key; the container image and `scripts/smoke-webapi.sh` supply one at runtime through `TokenOptions__SecurityKey`.
 - **Token lifetime:** besides normal `exp` validation, the JWT bearer handler rejects tokens whose expiration is more than `AccessTokenExpiration` minutes (+1 minute clock tolerance) in the future, so forged long-lived tokens (e.g. 1 year) are refused.
 - If any deployment has ever used a key published in this repository, treat it as compromised and **rotate** it.
 

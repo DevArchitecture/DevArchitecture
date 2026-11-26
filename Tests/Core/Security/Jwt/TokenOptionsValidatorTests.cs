@@ -103,6 +103,55 @@ namespace Tests.Core.Security.Jwt
         }
 
         [Test]
+        public void Validate_DockerSmokeKeyInDockerEnvironment_Throws()
+        {
+            var tokenOptions = new TokenOptions
+            {
+                Issuer = "www.devarchitecture.com",
+                Audience = "www.devarchitecture.com",
+                AccessTokenExpiration = 10,
+                SecurityKey = DockerSmokeKey
+            };
+
+            Action act = () => TokenOptionsValidator.Validate(tokenOptions, "Docker");
+
+            act.Should().Throw<InvalidOperationException>()
+                .WithMessage("*TokenOptions__SecurityKey*");
+        }
+
+        [Test]
+        public void Validate_PubliclyKnownKeyInAnyNonDevelopmentEnvironment_Throws()
+        {
+            var tokenOptions = new TokenOptions
+            {
+                Issuer = "www.devarchitecture.com",
+                Audience = "www.devarchitecture.com",
+                AccessTokenExpiration = 10,
+                SecurityKey = DevelopmentKey
+            };
+
+            Action act = () => TokenOptionsValidator.Validate(tokenOptions, "QA");
+
+            act.Should().Throw<InvalidOperationException>();
+        }
+
+        [Test]
+        public void Validate_UniqueKeyInDockerEnvironment_DoesNotThrow()
+        {
+            var tokenOptions = new TokenOptions
+            {
+                Issuer = "www.devarchitecture.com",
+                Audience = "www.devarchitecture.com",
+                AccessTokenExpiration = 10,
+                SecurityKey = "d41d8cd98f00b204e9800998ecf8427e9a1b3c5d7e2f4a6b8c0d1e2f3a4b5c6d"
+            };
+
+            Action act = () => TokenOptionsValidator.Validate(tokenOptions, "Docker");
+
+            act.Should().NotThrow();
+        }
+
+        [Test]
         public void Validate_PubliclyKnownKeyInDevelopment_DoesNotThrow()
         {
             var tokenOptions = new TokenOptions
