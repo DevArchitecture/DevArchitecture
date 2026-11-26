@@ -80,6 +80,7 @@ namespace Core.Utilities.Security.Jwt
         private static IEnumerable<Claim> SetClaims(User user)
         {
             var claims = new List<Claim>();
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")));
             claims.AddNameIdentifier(user.UserId.ToString());
             if (user.CitizenId > 0)
             {

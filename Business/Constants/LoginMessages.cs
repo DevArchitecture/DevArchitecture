@@ -4,5 +4,6 @@
     {
         public static string PasswordError => "PasswordError";
         public static string SuccessfulLogin => "SuccessfulLogin";
+        public static string SuccessfulLogout => "SuccessfulLogout";
     }
 }

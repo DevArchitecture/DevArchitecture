@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Threading.RateLimiting;
 using System.Text.Json;
 using Business;
 using Business.Helpers;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Exceptions;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Extensions;
@@ -114,6 +116,20 @@ namespace WebAPI
                             if (context.SecurityToken.ValidTo > DateTime.UtcNow.Add(maxTokenLifetime))
                             {
                                 context.Fail("Token lifetime exceeds the configured maximum.");
+                                return Task.CompletedTask;
+                            }
+
+                            var jti = context.Principal?.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
+                            if (string.IsNullOrEmpty(jti))
+                            {
+                                context.Fail("Token does not contain a jti claim.");
+                                return Task.CompletedTask;
+                            }
+
+                            var cacheManager = context.HttpContext.RequestServices.GetRequiredService<ICacheManager>();
+                            if (cacheManager.IsAdd($"{CacheKeys.RevokedTokenForJti}={jti}"))
+                            {
+                                context.Fail("Token has been revoked.");
                             }
 
                             return Task.CompletedTask;

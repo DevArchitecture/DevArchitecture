@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +27,8 @@ namespace Tests.Helpers.Token
 
         public static string GenerateJwtToken(IEnumerable<Claim> claims, double value = 5)
         {
-            return s_tokenHandler.WriteToken(new JwtSecurityToken(Issuer, Audience, claims, DateTime.UtcNow, DateTime.UtcNow.AddSeconds(value), SigningCredentials));
+            var allClaims = claims.Concat(new[] { new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")) });
+            return s_tokenHandler.WriteToken(new JwtSecurityToken(Issuer, Audience, allClaims, DateTime.UtcNow, DateTime.UtcNow.AddSeconds(value), SigningCredentials));
         }
     }
 }

@@ -54,6 +54,19 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
+        /// Revokes the current access token and clears the stored refresh token
+        /// </summary>
+        /// <returns></returns>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            return GetResponseOnlyResult(await Mediator.Send(new LogoutCommand()));
+        }
+
+        /// <summary>
         ///  Make it User Register operations
         /// </summary>
         /// <param name="createUser"></param>

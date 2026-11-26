@@ -80,9 +80,10 @@ dotnet watch run --project ./WebAPI/WebAPI.csproj
 - **Known sample keys** that used to ship in this repository are rejected automatically in every environment except `Development`.
 - `appsettings.Development.json` contains a **public development sample key** — acceptable for local development only. `appsettings.Docker.json` ships **without** a key; the container image and `scripts/smoke-webapi.sh` supply one at runtime through `TokenOptions__SecurityKey`.
 - **Token lifetime:** besides normal `exp` validation, the JWT bearer handler rejects tokens whose expiration is more than `AccessTokenExpiration` minutes (+1 minute clock tolerance) in the future, so forged long-lived tokens (e.g. 1 year) are refused.
+- **Token revocation:** every access token carries a `jti` claim, and tokens without one are rejected. `POST /api/v1/auth/logout` revokes the caller's token (kept in the configured cache until it expires) and clears the stored refresh token. Revocation state lives in `ICacheManager`: the default in-memory cache forgets it on restart and does not share it between instances, so configure the Redis cache (`CacheOptions`) for multi-instance deployments.
 - If any deployment has ever used a key published in this repository, treat it as compromised and **rotate** it.
 
-Regression tests: `Tests/Core/Security/Jwt/TokenOptionsValidatorTests.cs`, `Tests/WebAPI/ForgedTokenLifetimeTests.cs`.
+Regression tests: `Tests/Core/Security/Jwt/TokenOptionsValidatorTests.cs`, `Tests/WebAPI/ForgedTokenLifetimeTests.cs`, `Tests/WebAPI/TokenRevocationTests.cs`.
 
 ---
 

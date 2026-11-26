@@ -80,9 +80,10 @@ dotnet watch run --project ./WebAPI/WebAPI.csproj
 - Bu depoda daha önce yayınlanan **bilinen örnek anahtarlar**, `Development` dışındaki tüm ortamlarda **otomatik reddedilir**.
 - `appsettings.Development.json` içinde **public geliştirme örnek anahtarı** vardır — yalnızca yerel geliştirme içindir. `appsettings.Docker.json` **anahtar içermez**; konteyner imajı ve `scripts/smoke-webapi.sh` anahtarı çalışma anında `TokenOptions__SecurityKey` ile verir.
 - **Token ömrü:** normal `exp` doğrulamasına ek olarak, JWT bearer işleyicisi süresi `AccessTokenExpiration` dakikasından (+1 dakika clock toleransı) ileride biten token'ları reddeder; sahte uzun ömürlü token'lar (örn. 1 yıl) kabul edilmez.
+- **Token iptali:** her access token bir `jti` claim'i taşır, taşımayan token'lar reddedilir. `POST /api/v1/auth/logout` çağıranın token'ını iptal eder (süresi dolana kadar yapılandırılmış cache'te tutulur) ve kayıtlı refresh token'ı temizler. İptal durumu `ICacheManager` içinde tutulur: varsayılan in-memory cache restart'ta unutur ve örnekler arasında paylaşılmaz; çok örnekli (multi-instance) deployment'lar için Redis cache (`CacheOptions`) yapılandırın.
 - Bir deployment bu depoda yayınlanmış bir anahtarı kullandıysa **compromised kabul edip döndürün (rotate)**.
 
-Regresyon testleri: `Tests/Core/Security/Jwt/TokenOptionsValidatorTests.cs`, `Tests/WebAPI/ForgedTokenLifetimeTests.cs`.
+Regresyon testleri: `Tests/Core/Security/Jwt/TokenOptionsValidatorTests.cs`, `Tests/WebAPI/ForgedTokenLifetimeTests.cs`, `Tests/WebAPI/TokenRevocationTests.cs`.
 
 ---
 
