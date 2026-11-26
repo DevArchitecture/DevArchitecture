@@ -81,6 +81,16 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 
 
 
+- **Reject committed JWT keys outside Development (#125)** *(security)*
+
+- remove the committed smoke-test signing key from appsettings.Docker.json
+- fail startup on publicly known sample keys in every environment except Development
+  (previously Production/Staging only, so the Docker image silently kept a public key)
+- smoke script now injects a per-run random TokenOptions__SecurityKey
+- cover Docker and unknown environments in TokenOptionsValidatorTests
+
+
+
 
 
 ### Documentation
