@@ -91,6 +91,9 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 
 
 
+- **Pass a generated JWT signing key to the Docker smoke container (#125)** *(ci)*
+
+
 
 
 ### Documentation
