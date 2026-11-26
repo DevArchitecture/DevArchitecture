@@ -117,6 +117,15 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 - **Add scaffolding script for new entities (handlers, controller, tests)** *(cli)*
 
 
+- **Add jti claim and server-side token revocation (#125)** *(security)*
+
+- every access token now carries a jti claim; tokens without one are rejected
+- POST /api/v1/auth/logout revokes the caller's jti and clears the stored refresh token
+- JwtBearer OnTokenValidated rejects revoked jti values through ICacheManager
+- integration tests cover logout revocation and missing-jti rejection
+
+
+
 
 
 ### Miscellaneous
