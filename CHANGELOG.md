@@ -114,6 +114,15 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 - **Bind to the PORT injected by the platform** *(deploy)*
 
 
+- **Keep navigation under the deployment base path** *(clients)*
+
+The Blazor app used absolute NavigateTo("/login") calls and Vue/React reset the
+session with window.location.href = "/login". Under a sub-path deployment
+(GitHub Pages /blazor, Oracle /vue, ...) those escaped the app root. Use relative
+paths / import.meta.env.BASE_URL instead.
+
+
+
 
 
 ### Documentation
