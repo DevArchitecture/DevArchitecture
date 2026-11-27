@@ -149,6 +149,21 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 
 
 
+- **Single-VM Docker Compose stack for Oracle Always Free** *(deploy)*
+
+- deploy/oracle: api + postgres + redis + caddy on one origin; the clients are
+  built with /api/v1 so there is no CORS and no per-client URL
+- the web image builds the four clients (node + dotnet SDK stages) and serves
+  them behind Caddy, which also terminates TLS and proxies /api and /healthz
+- Database__AutoMigrate creates the schema on a fresh database; the repository
+  ships no migrations, so EnsureCreated is used when none exist
+- Blazor HttpClient now has the app base address, so relative API paths work
+- setup.sh installs Docker, opens the VM firewall, writes .env and starts the
+  stack; README covers the Oracle console steps and operations
+- docs/free-deployment.md points at the new single-VM option
+
+
+
 
 
 ### Miscellaneous
