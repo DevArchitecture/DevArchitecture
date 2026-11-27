@@ -1,3 +1,4 @@
+using System;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,14 @@ namespace WebAPI
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            // Platforms such as Render inject PORT and route traffic only to it.
+            // The Dockerfile default (8080) stays in place when PORT is not set.
+            var port = Environment.GetEnvironmentVariable("PORT");
+            if (!string.IsNullOrWhiteSpace(port))
+            {
+                Environment.SetEnvironmentVariable("ASPNETCORE_URLS", $"http://+:{port}");
+            }
+
             CreateHostBuilder(args).Build().Run();
         }
 
