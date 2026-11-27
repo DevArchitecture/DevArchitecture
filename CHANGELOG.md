@@ -126,6 +126,9 @@ paths / import.meta.env.BASE_URL instead.
 - **Redirect home without a full page load** *(blazor)*
 
 
+- **Mask passwords and tokens in log parameters** *(logging)*
+
+
 
 
 ### Documentation
