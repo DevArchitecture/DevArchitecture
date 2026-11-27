@@ -206,6 +206,9 @@ paths / import.meta.env.BASE_URL instead.
 - **Add .nojekyll so Blazor _framework assets are served** *(pages)*
 
 
+- **Expose postgres and redis on loopback for SSH tunnels** *(deploy)*
+
+
 
 
 ### Testing
