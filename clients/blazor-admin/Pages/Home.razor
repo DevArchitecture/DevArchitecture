@@ -4,6 +4,8 @@
 @code {
     protected override void OnInitialized()
     {
-        NavigationManager.NavigateTo("dashboard", true);
+        // Client-side navigation: a forced reload would request /blazor/dashboard from the
+        // static host, which has no server-side fallback for the sub-path.
+        NavigationManager.NavigateTo("dashboard");
     }
 }
