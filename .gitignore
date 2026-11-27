@@ -467,3 +467,4 @@ fabric.properties
 .history/
 .idea/*
 UiPreparation/.DS_Store
+deploy/oracle/.env

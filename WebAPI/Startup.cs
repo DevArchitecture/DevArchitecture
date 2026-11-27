@@ -17,6 +17,7 @@ using Core.Utilities.IoC;
 using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
 using Core.Utilities.TaskScheduler.Hangfire.Models;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using Hangfire;
 using HangfireBasicAuthenticationFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,6 +30,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -295,6 +297,23 @@ namespace WebAPI
 
 
             var configurationManager = app.ApplicationServices.GetService<ConfigurationManager>();
+
+            // Opt-in schema creation for a fresh deployment (deploy/oracle sets Database__AutoMigrate=true).
+            // The repository ships without migrations, so fall back to EnsureCreated when none exist.
+            if (configurationManager.Mode == ApplicationMode.Production &&
+                Configuration.GetValue<bool>("Database:AutoMigrate"))
+            {
+                using var scope = app.ApplicationServices.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ProjectDbContext>();
+                if (dbContext.Database.GetMigrations().Any())
+                {
+                    dbContext.Database.Migrate();
+                }
+                else
+                {
+                    dbContext.Database.EnsureCreated();
+                }
+            }
             switch (configurationManager.Mode)
             {
                 case ApplicationMode.Development:

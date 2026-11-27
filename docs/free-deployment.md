@@ -1,5 +1,11 @@
 # Free public demo deployment
 
+Two zero-cost layouts are supported:
+
+- **Split** (this page): API on Render, the four clients on GitHub Pages.
+- **Single VM**: everything on one Oracle Always Free ARM VM with Docker Compose, HTTPS and
+  Postgres. See [`deploy/oracle/README.md`](../deploy/oracle/README.md).
+
 Run the API and all four admin clients on free tiers:
 
 | Piece | Host | URL shape |

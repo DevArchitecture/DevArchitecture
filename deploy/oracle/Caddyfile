@@ -1,0 +1,40 @@
+{$DOMAIN} {
+	encode zstd gzip
+
+	handle_path /vue/* {
+		root * /srv/vue
+		try_files {path} /index.html
+		file_server
+	}
+
+	handle_path /react/* {
+		root * /srv/react
+		try_files {path} /index.html
+		file_server
+	}
+
+	handle_path /angular/* {
+		root * /srv/angular
+		try_files {path} /index.html
+		file_server
+	}
+
+	handle_path /blazor/* {
+		root * /srv/blazor
+		try_files {path} /index.html
+		file_server
+	}
+
+	handle /api/* {
+		reverse_proxy api:8080
+	}
+
+	handle /healthz {
+		reverse_proxy api:8080
+	}
+
+	handle {
+		root * /srv/landing
+		file_server
+	}
+}
