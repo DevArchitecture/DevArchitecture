@@ -39,6 +39,7 @@ services:
       CacheOptions__Host: redis
       CacheOptions__Port: "6379"
       CacheOptions__Database: "0"
+      SeriLogConfigurations__PostgreConfiguration__ConnectionString: Host=db;Port=5432;Database=${POSTGRES_DB:-devarchitecture};Username=${POSTGRES_USER:-devarch};Password=${POSTGRES_PASSWORD}
     depends_on:
       db:
         condition: service_healthy

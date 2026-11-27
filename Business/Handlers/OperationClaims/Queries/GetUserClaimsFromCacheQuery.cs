@@ -35,7 +35,7 @@ namespace Business.Handlers.OperationClaims.Queries
             }
 
             [PerformanceAspect(5)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             // TODO:[SecuredOperation(Priority = 1)]
             // No [CacheAspect]: the handler returns data for the current user, but the aspect key is
             // built from the request, which has no user id. The per-user value is already cached

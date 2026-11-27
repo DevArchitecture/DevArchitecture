@@ -31,7 +31,7 @@ namespace Business.Handlers.UserClaims.Commands
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(CreateUserClaimCommand request, CancellationToken cancellationToken)
             {
                 var userClaim = new UserClaim

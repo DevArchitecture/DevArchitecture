@@ -29,7 +29,7 @@ namespace Business.Handlers.Groups.Commands
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
             {
                 try

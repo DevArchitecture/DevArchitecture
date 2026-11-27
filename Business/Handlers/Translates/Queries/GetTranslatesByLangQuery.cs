@@ -27,7 +27,7 @@ namespace Business.Handlers.Translates.Queries
             }
 
 
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<Dictionary<string, string>>> Handle(GetTranslatesByLangQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<Dictionary<string, string>>(

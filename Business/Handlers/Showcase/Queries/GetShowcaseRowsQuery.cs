@@ -26,7 +26,7 @@ namespace Business.Handlers.Showcase.Queries
         {
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public Task<IDataResult<ShowcasePageDto>> Handle(GetShowcaseRowsQuery request, CancellationToken cancellationToken)
             {
                 const int totalRecords = 1_000_000;

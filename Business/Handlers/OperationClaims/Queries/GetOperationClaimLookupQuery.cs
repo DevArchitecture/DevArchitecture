@@ -25,7 +25,7 @@ namespace Business.Handlers.OperationClaims.Queries
             }
 
             [SecuredOperation(Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetOperationClaimLookupQuery request, CancellationToken cancellationToken)
             {
                 var list = await _operationClaimRepository.GetListAsync();

@@ -35,7 +35,7 @@ namespace Business.Handlers.Users.Queries
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<PaginatedResult<IEnumerable<UserDto>>>> Handle(
                 GetUsersQuery request, CancellationToken cancellationToken)
             {

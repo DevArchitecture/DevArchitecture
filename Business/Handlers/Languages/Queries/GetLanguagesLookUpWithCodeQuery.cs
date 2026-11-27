@@ -24,7 +24,7 @@ namespace Business.Handlers.Languages.Queries
                 _mediator = mediator;
             }
 
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpWithCodeQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<SelectionItem>>(

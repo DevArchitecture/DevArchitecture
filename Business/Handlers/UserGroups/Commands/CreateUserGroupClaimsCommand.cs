@@ -29,7 +29,7 @@ namespace Business.Handlers.UserGroups.Commands
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(CreateUserGroupClaimsCommand request, CancellationToken cancellationToken)
             {
                 foreach (var claim in request.UserGroups)

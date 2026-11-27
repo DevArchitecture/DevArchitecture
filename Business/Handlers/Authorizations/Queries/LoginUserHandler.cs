@@ -27,7 +27,7 @@ namespace Business.Handlers.Authorizations.Queries
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [ValidationAspect(typeof(LoginUserValidator), Priority = 1)]
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect(typeof(PostgreSqlLogger))]
         public async Task<IDataResult<LoginUserResult>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             var provider = _coordinator.SelectProvider(request.Provider);

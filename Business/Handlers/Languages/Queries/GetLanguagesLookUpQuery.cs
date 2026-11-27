@@ -30,7 +30,7 @@ namespace Business.Handlers.Languages.Queries
             [SecuredOperation(Priority = 1)]
             [PerformanceAspect(5)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(GetLanguagesLookUpQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<SelectionItem>>(

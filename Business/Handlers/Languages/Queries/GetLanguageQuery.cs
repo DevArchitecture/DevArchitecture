@@ -26,7 +26,7 @@ namespace Business.Handlers.Languages.Queries
             }
 
             [SecuredOperation(Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<Language>> Handle(GetLanguageQuery request, CancellationToken cancellationToken)
             {
                 var language = await _languageRepository.GetAsync(p => p.Id == request.Id);

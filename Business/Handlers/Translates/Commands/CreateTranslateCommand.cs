@@ -39,7 +39,7 @@ namespace Business.Handlers.Translates.Commands
             [SecuredOperation(Priority = 1)]
             [ValidationAspect(typeof(CreateTranslateValidator), Priority = 2)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(CreateTranslateCommand request, CancellationToken cancellationToken)
             {
                 var isThereTranslateRecord = _translateRepository.Query()

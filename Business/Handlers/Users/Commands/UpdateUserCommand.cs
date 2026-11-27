@@ -32,7 +32,7 @@ namespace Business.Handlers.Users.Commands
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
                 var isThereAnyUser = await _userRepository.GetAsync(u => u.UserId == request.UserId);

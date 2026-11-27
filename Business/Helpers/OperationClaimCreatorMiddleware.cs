@@ -61,6 +61,15 @@ namespace Business.Helpers
                 UserId = adminUser.UserId,
                 OperationClaims = operationClaims
             });
+
+            // Production does not run the fake-data seeder, so make sure the demo has a group.
+            var groupRepository = ServiceTool.ServiceProvider.GetService<IGroupRepository>();
+            var defaultGroup = await groupRepository.GetAsync(x => x.GroupName == "Default Group");
+            if (defaultGroup == null)
+            {
+                groupRepository.Add(new Group { GroupName = "Default Group" });
+                await groupRepository.SaveChangesAsync();
+            }
         }
 
         private static IEnumerable<string> GetOperationNames()

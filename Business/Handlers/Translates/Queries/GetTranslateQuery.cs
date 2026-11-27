@@ -26,7 +26,7 @@ namespace Business.Handlers.Translates.Queries
             }
 
             [SecuredOperation(Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<Translate>> Handle(GetTranslateQuery request, CancellationToken cancellationToken)
             {
                 var translate = await _translateRepository.GetAsync(p => p.Id == request.Id);

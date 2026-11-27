@@ -41,7 +41,7 @@ namespace Business.Handlers.Users.Commands
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
                 var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);

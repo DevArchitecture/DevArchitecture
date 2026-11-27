@@ -26,7 +26,7 @@ namespace Business.Handlers.UserGroups.Queries
 
             [SecuredOperation(Priority = 1)]
             [CacheAspect(10)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<IEnumerable<UserGroup>>> Handle(GetUserGroupsQuery request, CancellationToken cancellationToken)
             {
                 return new SuccessDataResult<IEnumerable<UserGroup>>(await _userGroupRepository.GetListAsync());

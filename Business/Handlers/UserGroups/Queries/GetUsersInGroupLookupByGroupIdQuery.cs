@@ -27,7 +27,7 @@ namespace Business.Handlers.UserGroups.Queries
             }
 
             [SecuredOperation(Priority = 1)]            
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<IEnumerable<SelectionItem>>> Handle(
                 GetUsersInGroupLookupByGroupIdQuery request, CancellationToken cancellationToken)
             {

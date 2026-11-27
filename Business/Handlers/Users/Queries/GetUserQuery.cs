@@ -27,7 +27,7 @@ namespace Business.Handlers.Users.Queries
             }
 
             [SecuredOperation(Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.GetAsync(p => p.UserId == request.UserId);

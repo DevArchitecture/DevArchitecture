@@ -31,7 +31,7 @@ namespace Business.Handlers.Authorizations.Queries
                 _cacheManager = cacheManager;
             }
 
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(LoginWithRefreshTokenQuery request, CancellationToken cancellationToken)
             {
                 var userToCheck = await _userRepository.GetByRefreshToken(request.RefreshToken);

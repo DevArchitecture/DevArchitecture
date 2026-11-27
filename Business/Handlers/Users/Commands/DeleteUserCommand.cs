@@ -26,7 +26,7 @@ namespace Business.Handlers.Users.Commands
 
             [SecuredOperation(Priority = 1)]
             [CacheRemoveAspect()]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
             {
                 var userToDelete = _userRepository.Get(p => p.UserId == request.UserId);
