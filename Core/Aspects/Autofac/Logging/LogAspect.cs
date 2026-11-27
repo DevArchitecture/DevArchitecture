@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
@@ -9,6 +10,7 @@ using Core.Utilities.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Core.Aspects.Autofac.Logging
 {
@@ -41,10 +43,14 @@ namespace Core.Aspects.Autofac.Logging
             var logParameters = new List<LogParameter>();
             for (var i = 0; i < invocation.Arguments.Length; i++)
             {
+                var parameterName = invocation.GetConcreteMethod().GetParameters()[i].Name;
+                var isSensitiveParameter = SensitiveNameParts.Any(part =>
+                    parameterName.Contains(part, StringComparison.OrdinalIgnoreCase));
+
                 logParameters.Add(new LogParameter
                 {
-                    Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
-                    Value = invocation.Arguments[i],
+                    Name = parameterName,
+                    Value = isSensitiveParameter ? "***" : MaskSensitive(invocation.Arguments[i]),
                     Type = invocation.Arguments[i].GetType().Name,
                 });
             }
@@ -59,6 +65,48 @@ namespace Core.Aspects.Autofac.Logging
                     : _httpContextAccessor.HttpContext.User.Identity.Name
             };
             return JsonConvert.SerializeObject(logDetail);
+        }
+
+        private static readonly string[] SensitiveNameParts =
+        {
+            "password", "securitykey", "refreshtoken", "token"
+        };
+
+        private static object MaskSensitive(object value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            var token = JToken.Parse(JsonConvert.SerializeObject(value));
+            Mask(token);
+            return token;
+        }
+
+        private static void Mask(JToken token)
+        {
+            if (token is JObject obj)
+            {
+                foreach (var property in obj.Properties().ToList())
+                {
+                    if (SensitiveNameParts.Any(part => property.Name.Contains(part, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        property.Value = "***";
+                    }
+                    else
+                    {
+                        Mask(property.Value);
+                    }
+                }
+            }
+            else if (token is JArray array)
+            {
+                foreach (var item in array)
+                {
+                    Mask(item);
+                }
+            }
         }
     }
 }
