@@ -176,6 +176,16 @@ paths / import.meta.env.BASE_URL instead.
 
 
 
+- **Log to postgres and seed a default group in production** *(deploy)*
+
+- switch every [LogAspect] and the exception aspect from FileLogger to
+  PostgreSqlLogger so the Logs table is populated
+- pass the postgres connection string to the logger via compose env
+- create the default group at startup when it is missing (production does not
+  run the fake-data seeder)
+
+
+
 
 
 ### Miscellaneous
