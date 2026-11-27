@@ -82,6 +82,7 @@ jobs:
           API_BASE_URL: ${{ vars.API_BASE_URL }}
         run: |
           mkdir -p site
+          touch site/.nojekyll
           cp -r clients/vue-admin/dist site/vue
           cp -r clients/react-admin/dist site/react
           cp -r clients/angular-admin/dist/angular-admin/browser site/angular
