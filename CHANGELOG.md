@@ -94,6 +94,23 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 - **Pass a generated JWT signing key to the Docker smoke container (#125)** *(ci)*
 
 
+- **Restore query cache and align seeded data**
+
+- CacheAspect: re-enable cache read/write. The aspect had been left in a
+  pass-through "safe mode"; MemoryCacheManager now keeps a registry of the
+  keys it writes and implements RemoveByPattern, so CacheRemoveAspect
+  invalidation works with the in-memory provider as well.
+- GetUserClaimsFromCacheQuery: drop [CacheAspect]. Its key is built from the
+  request, which carries no user id, so enabling the cache would serve one
+  user's claims to another. The per-user value is already cached under
+  UserIdForClaim={userId} at login.
+- FakeDataMiddlleware: seed en-US instead of en-EN, and create the default
+  group through the repository because CreateGroupCommand is guarded by
+  SecuredOperation and there is no HttpContext during startup.
+- Tests: cover MemoryCacheManager task materialization and pattern removal.
+
+
+
 
 
 ### Documentation
