@@ -3,6 +3,9 @@ name: devarchitecture
 services:
   db:
     image: postgres:17-alpine
+    # Loopback only: reach it through an SSH tunnel, never from the internet.
+    ports:
+      - "127.0.0.1:5432:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-devarchitecture}
       POSTGRES_USER: ${POSTGRES_USER:-devarch}
@@ -18,6 +21,9 @@ services:
 
   redis:
     image: redis:7-alpine
+    # Loopback only: reach it through an SSH tunnel, never from the internet.
+    ports:
+      - "127.0.0.1:6379:6379"
     restart: unless-stopped
 
   api:
