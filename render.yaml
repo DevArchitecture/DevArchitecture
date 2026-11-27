@@ -1,0 +1,21 @@
+# Free demo deployment for the DevArchitecture API.
+#
+# The image runs with ASPNETCORE_ENVIRONMENT=Docker (see WebAPI/Dockerfile), which uses
+# the in-memory database and the fake data seeded at startup. Nothing else is required.
+#
+# For a persistent database, switch ASPNETCORE_ENVIRONMENT and AppSettings__Mode to
+# Production, set ConnectionStrings__DArchPgContext and run the migrations once.
+# Details: docs/free-deployment.md
+services:
+  - type: web
+    name: devarchitecture-api
+    runtime: docker
+    dockerfilePath: ./WebAPI/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      # Generate with: openssl rand -base64 48
+      # The API refuses to start without a key of at least 32 bytes.
+      - key: TokenOptions__SecurityKey
+        sync: false

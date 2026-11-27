@@ -3,10 +3,11 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Blazor.Admin.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Blazor.Admin.Services;
 
-public sealed class ApiClient(HttpClient httpClient, AuthState authState, IAuthSessionStorage sessionStorage)
+public sealed class ApiClient(HttpClient httpClient, AuthState authState, IAuthSessionStorage sessionStorage, IConfiguration configuration)
 {
     private static readonly JsonSerializerOptions CamelCaseSerialize = new()
     {
@@ -14,7 +15,7 @@ public sealed class ApiClient(HttpClient httpClient, AuthState authState, IAuthS
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
-    public string BaseUrl => "https://localhost:5101/api/v1";
+    public string BaseUrl => configuration["ApiBaseUrl"] ?? "https://localhost:5101/api/v1";
 
     public async Task<bool> LoginAsync(string email, string password, string lang)
     {

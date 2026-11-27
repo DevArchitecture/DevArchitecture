@@ -5,7 +5,7 @@ export type ClientModule = {
   resourcePath?: string;
 };
 
-export const API_BASE_URL = "https://localhost:5101/api/v1";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://localhost:5101/api/v1";
 export const API_VERSION = "1.0";
 
 export const CLIENT_MODULES: ClientModule[] = [

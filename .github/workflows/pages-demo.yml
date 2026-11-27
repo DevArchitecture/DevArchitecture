@@ -1,0 +1,147 @@
+name: Deploy demo UI to GitHub Pages
+
+# Manual only: the demo publishes the four admin clients under
+# <pages-base>/vue, /react, /angular and /blazor.
+#
+# Prerequisites (docs/free-deployment.md):
+#   - Settings -> Pages -> Source: GitHub Actions
+#   - Settings -> Secrets and variables -> Actions -> Variables:
+#       API_BASE_URL = https://<your-api>.onrender.com/api/v1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check API_BASE_URL
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          if [ -z "$API_BASE_URL" ]; then
+            echo "Set the repository variable API_BASE_URL (e.g. https://devarchitecture-api.onrender.com/api/v1)." >&2
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build Vue
+        working-directory: clients/vue-admin
+        env:
+          VITE_API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          npm ci
+          npm run build -- --base="${{ steps.pages.outputs.base_path }}/vue/"
+
+      - name: Build React
+        working-directory: clients/react-admin
+        env:
+          VITE_API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          npm ci
+          npm run build -- --base="${{ steps.pages.outputs.base_path }}/react/"
+
+      - name: Build Angular
+        working-directory: clients/angular-admin
+        run: |
+          npm ci
+          sed -i "s|https://localhost:5101/api/v1|${{ vars.API_BASE_URL }}|g" src/environments/environment.ts
+          npx ng build --base-href "${{ steps.pages.outputs.base_path }}/angular/"
+
+      - name: Build Blazor
+        working-directory: clients/blazor-admin
+        run: |
+          printf '{"ApiBaseUrl":"%s"}' "${{ vars.API_BASE_URL }}" > wwwroot/appsettings.json
+          dotnet publish -c Release -o out
+          sed -i "s|<base href=\"/\"|<base href=\"${{ steps.pages.outputs.base_path }}/blazor/\"|" out/wwwroot/index.html
+
+      - name: Assemble Pages artifact
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          mkdir -p site
+          cp -r clients/vue-admin/dist site/vue
+          cp -r clients/react-admin/dist site/react
+          cp -r clients/angular-admin/dist/angular-admin/browser site/angular
+          cp -r clients/blazor-admin/out/wwwroot site/blazor
+
+          cat > site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>DevArchitecture demo</title>
+            <style>
+              body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 4rem auto; padding: 0 1rem; line-height: 1.5; }
+              code { background: #f2f2f2; padding: .1rem .3rem; border-radius: 4px; }
+            </style>
+          </head>
+          <body>
+            <h1>DevArchitecture</h1>
+            <p>.NET 10 API and the four admin clients, running on free tiers.</p>
+            <ul>
+              <li><a href="vue/">Vue 3 + PrimeVue</a></li>
+              <li><a href="react/">React + PrimeReact</a></li>
+              <li><a href="angular/">Angular + PrimeNG</a></li>
+              <li><a href="blazor/">Blazor WASM + Radzen</a></li>
+            </ul>
+            <p>API: <a id="api" href="__API_BASE_URL__">__API_BASE_URL__</a></p>
+            <p>Sign in with <code>admin@adminmail.com</code> / <code>Q1w212*_*</code>.</p>
+          </body>
+          </html>
+          HTML
+          sed -i "s|__API_BASE_URL__|${API_BASE_URL}|g" site/index.html
+
+          cat > site/404.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head><meta charset="utf-8"><title>DevArchitecture demo</title></head>
+          <body>
+            <p>Page not found. <a href="./">Home</a></p>
+            <script>
+              var base = "__BASE_PATH__";
+              var app = location.pathname.slice(base.length).split("/").filter(Boolean)[0];
+              var known = ["vue", "react", "angular", "blazor"];
+              location.replace(known.indexOf(app) !== -1 ? base + "/" + app + "/" : base + "/");
+            </script>
+          </body>
+          </html>
+          HTML
+          sed -i "s|__BASE_PATH__|${BASE_PATH}|g" site/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
