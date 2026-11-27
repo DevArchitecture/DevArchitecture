@@ -24,9 +24,18 @@ namespace Core.Aspects.Autofac.Caching
 
         public override void Intercept(IInvocation invocation)
         {
-            // Temporary safe mode: bypass cache interception to prevent
-            // stale/invalid cache materialization from breaking CRUD list endpoints.
+            var methodName = string.Format($"{invocation.Arguments[0]}.{invocation.Method.Name}");
+            var arguments = invocation.Arguments;
+            var key = $"{methodName}({BuildKey(arguments)})";
+            var returnType = invocation.Method.ReturnType.GenericTypeArguments.FirstOrDefault();
+            if (_cacheManager.IsAdd(key))
+            {
+                invocation.ReturnValue = _cacheManager.Get(key, returnType);
+                return;
+            }
+
             invocation.Proceed();
+            _cacheManager.Add(key, invocation.ReturnValue, _duration, returnType);
         }
 
 

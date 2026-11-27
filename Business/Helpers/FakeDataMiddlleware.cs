@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Business.Fakes.Handlers.Languages;
 using Business.Fakes.Handlers.Translates;
-using Business.Handlers.Groups.Commands;
+using Core.Entities.Concrete;
 using Core.Utilities.IoC;
+using DataAccess.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,7 @@ namespace Business.Helpers
             var mediator = ServiceTool.ServiceProvider.GetService<IMediator>();
 
             await mediator.Send(new CreateLanguageInternalCommand { Code = "tr-TR", Name = "Türkçe" });
-            await mediator.Send(new CreateLanguageInternalCommand { Code = "en-EN", Name = "English" });
+            await mediator.Send(new CreateLanguageInternalCommand { Code = "en-US", Name = "English" });
 
             await mediator.Send(new CreateTranslateInternalCommand { LangId = 1, Code = "AppName", Value = "Flutter DevArchitecture" });
             await mediator.Send(new CreateTranslateInternalCommand { LangId = 2, Code = "AppName", Value = "Flutter DevArchitecture" });
@@ -915,11 +916,15 @@ namespace Business.Helpers
             await mediator.Send(new CreateTranslateInternalCommand { LangId = 1, Code = "MobilePhones", Value = "Cep Telefonları" });
             await mediator.Send(new CreateTranslateInternalCommand { LangId = 2, Code = "MobilePhones", Value = "Mobile Phones" });
             
-            // Create default group
-            await mediator.Send(new CreateGroupCommand
+            // Seed the default group directly: CreateGroupCommand is guarded by SecuredOperation
+            // and there is no HttpContext while the application starts.
+            var groupRepository = ServiceTool.ServiceProvider.GetService<IGroupRepository>();
+            var defaultGroup = await groupRepository.GetAsync(x => x.GroupName == "Default Group");
+            if (defaultGroup == null)
             {
-                GroupName = "Default Group"
-            });
+                groupRepository.Add(new Group { GroupName = "Default Group" });
+                await groupRepository.SaveChangesAsync();
+            }
         }
     }
 }

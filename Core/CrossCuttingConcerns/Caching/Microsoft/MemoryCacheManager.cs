@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceStack.Text;
-using static ServiceStack.Diagnostics;
 
 namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
@@ -19,6 +16,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
     public class MemoryCacheManager : ICacheManager
     {
         private readonly IMemoryCache _cache;
+        private readonly ConcurrentDictionary<string, byte> _keys = new ConcurrentDictionary<string, byte>();
 
         public MemoryCacheManager()
             : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
@@ -32,12 +30,12 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void Add(string key, object data, int duration)
         {
-            _cache.Set(key, data, TimeSpan.FromMinutes(duration));
+            Set(key, data, TimeSpan.FromMinutes(duration));
         }
 
         public void Add(string key, object data)
         {
-            _cache.Set(key, data);
+            Set(key, data, null);
         }
 
         public void Add(string key, dynamic data, int duration, Type type)
@@ -95,13 +93,30 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
         public void Remove(string key)
         {
             _cache.Remove(key);
+            _keys.TryRemove(key, out _);
         }
 
         public void RemoveByPattern(string pattern)
         {
-            // Disabled due runtime instability in reflection-based key scanning.
-            // CacheAspect is currently running in bypass mode, so this is safe.
-            _ = pattern;
+            var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (var key in _keys.Keys.Where(k => regex.IsMatch(k)).ToList())
+            {
+                Remove(key);
+            }
+        }
+
+        private void Set(string key, object data, TimeSpan? expiration)
+        {
+            var options = new MemoryCacheEntryOptions()
+                .RegisterPostEvictionCallback((evictedKey, _, _, _) => _keys.TryRemove((string)evictedKey, out _));
+
+            if (expiration.HasValue)
+            {
+                options.AbsoluteExpirationRelativeToNow = expiration;
+            }
+
+            _keys[key] = 0;
+            _cache.Set(key, data, options);
         }
     }
 }

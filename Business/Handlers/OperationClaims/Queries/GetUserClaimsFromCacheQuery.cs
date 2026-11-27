@@ -4,7 +4,6 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using Business.Constants;
-using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
 using Core.CrossCuttingConcerns.Caching;
@@ -36,9 +35,11 @@ namespace Business.Handlers.OperationClaims.Queries
             }
 
             [PerformanceAspect(5)]
-            [CacheAspect(10)]
             [LogAspect(typeof(FileLogger))]
             // TODO:[SecuredOperation(Priority = 1)]
+            // No [CacheAspect]: the handler returns data for the current user, but the aspect key is
+            // built from the request, which has no user id. The per-user value is already cached
+            // under "UserIdForClaim={userId}" at login.
             public async Task<IDataResult<IEnumerable<string>>> Handle(GetUserClaimsFromCacheQuery request, CancellationToken cancellationToken)
             {
                 var userId = _contextAccessor.HttpContext.User.Claims
