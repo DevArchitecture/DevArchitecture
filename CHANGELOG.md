@@ -176,6 +176,9 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 - **Replace the Pages placeholder with the demo deploy workflow**
 
 
+- **Add .nojekyll so Blazor _framework assets are served** *(pages)*
+
+
 
 
 ### Testing
