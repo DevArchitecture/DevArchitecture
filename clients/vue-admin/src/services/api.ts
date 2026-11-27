@@ -30,7 +30,7 @@ apiClient.interceptors.response.use(
     if (status === 401 && !requestUrl.includes("/auth/login")) {
       authStore.clearToken();
       if (typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
-        window.location.href = "/login";
+        window.location.href = `${import.meta.env.BASE_URL}login`;
       }
     }
     return Promise.reject(error);

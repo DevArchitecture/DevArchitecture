@@ -23,3 +23,6 @@
 **/values.dev.yaml
 LICENSE
 README.md
+**/.angular
+**/dist
+**/out

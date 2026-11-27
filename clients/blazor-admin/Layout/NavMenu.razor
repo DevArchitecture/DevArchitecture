@@ -76,7 +76,7 @@
     {
         await SessionStorage.ClearAsync();
         AuthState.Logout();
-        NavigationManager.NavigateTo("/login");
+        NavigationManager.NavigateTo("login");
     }
 
     private void Navigate(string route)

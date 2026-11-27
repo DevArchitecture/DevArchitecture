@@ -45,7 +45,7 @@
     {
         if (AuthState.IsSessionReady && AuthState.IsAuthenticated)
         {
-            NavigationManager.NavigateTo("/dashboard");
+            NavigationManager.NavigateTo("dashboard");
             return;
         }
 
@@ -76,7 +76,7 @@
 
         await ApiClient.SwitchUiLanguageAsync(model.Lang);
 
-        NavigationManager.NavigateTo("/dashboard");
+        NavigationManager.NavigateTo("dashboard");
     }
 
     private string Translate(string key, string fallback) => AuthState.T(key, fallback);

@@ -92,7 +92,7 @@ apiClient.interceptors.response.use(
     if (status === 401 && !requestUrl.includes("/auth/login")) {
       authStore.clearToken();
       if (typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
-        window.location.href = "/login";
+        window.location.href = `${import.meta.env.BASE_URL}login`;
       }
     } else if (status === 403) {
       window.dispatchEvent(new CustomEvent('app-error', { detail: { message: 'You do not have permission to perform this action' } }));
