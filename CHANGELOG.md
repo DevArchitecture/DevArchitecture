@@ -111,6 +111,9 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 
 
 
+- **Bind to the PORT injected by the platform** *(deploy)*
+
+
 
 
 ### Documentation
