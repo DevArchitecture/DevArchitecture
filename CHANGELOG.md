@@ -156,6 +156,20 @@ and replaced snapshot isVisible() with waitFor({ state: 'visible' }).
 - **Add gitignore and cleanup generated files** *(e2e)*
 
 
+- **Add free demo deployment (Render + GitHub Pages)**
+
+- render.yaml: free Docker web service for the API, with the JWT key as a
+  required deploy-time variable (the app refuses to start without it)
+- GitHub Actions workflow builds the four admin clients under /vue, /react,
+  /angular and /blazor on GitHub Pages, plus a landing page and a 404 fallback
+- externalize the API base URL: VITE_API_BASE_URL for Vue/React, a CI sed for
+  Angular, wwwroot/appsettings.json for Blazor
+- honour X-Forwarded-For/Proto so UseHttpsRedirection does not loop behind a
+  reverse proxy
+- docs/free-deployment.md: end-to-end steps, limits and optional Neon Postgres
+
+
+
 
 
 ### Testing
